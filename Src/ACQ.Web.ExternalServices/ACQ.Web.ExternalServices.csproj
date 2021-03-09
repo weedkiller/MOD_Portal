@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F7400814-8252-4F19-A22C-5FB7C9D10892}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ACQ.Web.ExternalServices</RootNamespace>
+    <AssemblyName>ACQ.Web.ExternalServices</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Email\EmailHelper.cs" />
+    <Compile Include="Email\OTPHelper.cs" />
+    <Compile Include="GeneratedPassword\GeneratedHashKey.cs" />
+    <Compile Include="Payment\ForiegnPaymentGateway.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityAudit\CaptchaImage.cs" />
+    <Compile Include="SecurityAudit\SecurityProtect.cs" />
+    <Compile Include="SecurityAudit\TripleDES.cs" />
+    <Compile Include="SecurityAudit\uploadDoc.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ACQ.Web.ViewModel\ACQ.Web.ViewModel.csproj">
+      <Project>{31FCC2F3-1105-44F9-9AD6-99D44F2B7526}</Project>
+      <Name>ACQ.Web.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\ACQ.Web.ExternalServices.dll" />
+    <Content Include="bin\Debug\ACQ.Web.ExternalServices.pdb" />
+    <Content Include="bin\Debug\ACQ.Web.ViewModel.dll" />
+    <Content Include="bin\Debug\ACQ.Web.ViewModel.pdb" />
+    <Content Include="bin\Debug\System.Web.Mvc.dll" />
+    <Content Include="bin\Release\ACQ.Web.ExternalServices.dll" />
+    <Content Include="bin\Release\ACQ.Web.ExternalServices.pdb" />
+    <Content Include="bin\Release\ACQ.Web.ViewModel.dll" />
+    <Content Include="bin\Release\ACQ.Web.ViewModel.pdb" />
+    <Content Include="bin\Release\System.Web.Mvc.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\ACQ.Web.ViewModel.dll.config" />
+    <None Include="bin\Release\ACQ.Web.ViewModel.dll.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

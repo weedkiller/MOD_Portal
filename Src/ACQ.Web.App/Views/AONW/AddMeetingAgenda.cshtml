@@ -1,0 +1,344 @@
+﻿@model ACQ.Web.ViewModel.AONW.MeetingAgenda
+@{
+    ViewBag.Title = "AddMeetingAgenda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string msg = TempData["Msg"] != null ? TempData["Msg"].ToString() : "";
+    string formSubmitActionName = "CreateAgenda";
+    if (Model.Pid > 0)
+    {
+        formSubmitActionName = "UpdateMeetingAgenda";
+        ViewBag.Title = "EditMeetingAgenda";
+    }
+}
+<style>
+    #meetingagendatable_length {
+        display: none;
+    }
+
+    #meetingagendatable_filter {
+        display: none;
+    }
+
+    #meetingagendatable_info {
+        display: none;
+    }
+
+    #meetingagendatable_paginate {
+        display: none;
+    }
+    .flip-scroll {
+        overflow: scroll;
+       height:900px;
+        Width: 100%;
+    }
+</style>
+<div class="row m-0">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet-body flip-scroll">
+                        <h4 class="text-center">Add Meeting Agenda for @ViewBag.mtype Dated </h4>
+                        <div class="bg-white p-3">
+                            <div class="needs-validation p-2" novalidate="">
+                                
+                                <div class="clearfix mt-0"></div>
+                                @using (Html.BeginForm(formSubmitActionName, "AONW", FormMethod.Post, new { enctype = "multipart/form-data",id="meetAgenda" }))
+                                {
+                                    <input type="hidden" name="meeting_id" id="meeting_id" value="@Model.meeting_id" />
+                                    <input type="hidden" name="Pid" id="Pid" value="@Model.Pid" />
+                                    <div class="row">
+
+                                        <!--<div class="col-md-6" id="aonshow">
+    <div class="form-group">
+        <label class="form-label" for="recovery-item">Date</label>-->
+                                        @*<select id="AgendaItem" class="form-select form-control" name="AgendaItem">
+        </select>*@
+                                        <!--<div class="form-floating">
+                @{
+
+                    string dateValue = @Model.MeetingAgendaDate.HasValue ? Model.MeetingAgendaDate.Value.ToString("yyyy-MM-dd") : "";
+                }
+                <input type="date" class="form-control" id="date" name="MeetingAgendaDate" value="@dateValue" required />
+            </div>
+        </div>
+    </div>-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="recovery-email"> Type of Agenda <i class="danger">*</i></label>
+                                                <select class="form-select form-control" id="TypeofAgenda" name="AgendaItem" onchange="SelectVersion()" required>
+                                                    <option value="">-Select-</option>
+                                                    <option value="AON Accord" @if (Model.AgendaItem != null) { if ("AON Accord" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        AON Accord
+                                                    </option>
+                                                    <option value="Others" @if (Model.AgendaItem != null) { if ("Others" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        Others
+                                                    </option>
+                                                    <option value="Previous Meeting" @if (Model.AgendaItem != null) { if ("Previous Meeting" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        Minutes of Previous Meetings
+                                                    </option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select valid type of Agenda</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group" id="TypeofAgenda">
+                                                <label class="form-label" for="recovery-email"> Select Agenda item <i class="danger">*</i></label>
+                                                <select class="form-select form-control" width="auto" id="drpTypeofAgenda" name="TypeofAgenda">
+                                                    <option value="">-Select-</option>
+                                                    @if (ViewBag.dropdownTypeofAgenda != null)
+                                                    {
+                                                        foreach (var item in ViewBag.dropdownTypeofAgenda)
+                                                        {
+                                                            if (item.aon_id == Model.TypeofAgenda)
+                                                            {
+                                                                <option value="@item.aon_id" width="auto" selected="selected"><span class="hh">@item.item_description</span></option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option width="auto" value="@item.aon_id"><span class="hh">@item.item_description</span></option>
+                                                            }
+                                                        }
+                                                    }
+
+                                                </select>
+                                                <div class="invalid-feedback">Please select valid type of Agenda</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" id="Previous_Meeting">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Previous_Meeting">Text</label>
+                                                <div class="form-floating">
+                                                    @Html.TextAreaFor(x => x.Previous_Meeting, new { @class = "form-control", @name = "Previous_Meeting", @id = "Previous_Meeting", @placeholder = "Text" })
+                                                    <input type="hidden" name="Previous_Meeting" value="" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="hideAccord" typeof="hidden">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Accord" id="Aon_selected">AON Accorded</label>
+                                                <div class="form-floating">
+                                                    <select id="Accord" class="form-select form-control" name="IsActive">
+                                                        <option value="">-Select-</option>
+                                                        <option value="Y" @if (Model.IsActive == "Y") { @Html.Raw("selected='selected'") }>Yes</option>
+
+                                                        <option value="N" @if (Model.IsActive == "N") { @Html.Raw("selected='selected'") }>No</option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Background">Background <i class="danger">*</i></label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Background" rows="3" name="Background"></textarea>
+                                                    <input type="hidden" name="Background" value="@Html.Raw(Model.Background)" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Proposal">Proposal <i class="danger">*</i></label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Proposal" rows="3" name="Proposal"></textarea>
+                                                    <input type="hidden" name="Proposal" value="@Html.Raw(Model.Proposal)" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Background">Approval sought <i class="danger">*</i></label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Approval_sought" rows="3" name="Approval_sought"></textarea>
+                                                    <input type="hidden" name="Approval_sought" value="@Html.Raw(Model.Approval_sought)" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Discussion">Discussion</label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" id="Discussion" rows="3" value="@Model.Discussion" name="Discussion"></textarea>
+                                                    <input type="hidden" name="Discussion" value="@Html.Raw(Model.Discussion)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Decision">Decision</label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" id="Decision" rows="3" value="@Model.Decision" name="Decision"></textarea>
+                                                    <input type="hidden" name="Decision" value="@Html.Raw(Model.Decision)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="clearfix"></div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary float-right" type="submit" onchange="propsal()">Save Meeting Agenda</button>
+                                            <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewMeeting';">Back</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="meetingagendatable">
+                                        <thead>
+                                        <th>Type of Agenda </th>
+                                        <th>Agenda Item</th>
+                                        <th>Action</th>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    @msg
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/CkEditor/lang/en.js"></script>
+<script src="~/assets/js/CkEditor/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace('Discussion');
+    CKEDITOR.replace('Proposal');
+    CKEDITOR.replace('Decision');
+    CKEDITOR.replace('Background');
+    CKEDITOR.replace('Approval_sought');
+    var proposalHdn = $("input[name=Proposal]");
+    var discussionHdn = $("input[name=Discussion]");
+    var decisionHdn = $("input[name=Decision]");
+    var background = $("input[name=Background]");
+    var approval_sought = $("input[name=Approval_sought]");
+    $(document).ready(function () {
+        SelectVersion();
+         var mtype = '@msg';
+        if (mtype != '')
+            $("#exampleModal").modal('show');
+        else
+            $("#exampleModal").modal('hide');
+
+
+        CKEDITOR.instances['Proposal'].setData($(proposalHdn).val());
+        CKEDITOR.instances['Discussion'].setData($(discussionHdn).val());
+        CKEDITOR.instances['Decision'].setData($(decisionHdn).val());
+        CKEDITOR.instances['Background'].setData($(background).val());
+        CKEDITOR.instances['Approval_sought'].setData($(approval_sought).val());
+        
+
+        $.fn.dataTable.ext.errMode = 'none';
+        var mid = '@Model.meeting_id';
+            $("#meeting_id").val(mid);
+            table = $('#meetingagendatable').DataTable({
+                paging: false
+            });
+            table.destroy();
+            $.ajax({
+                type: "GET",
+                url: "/AONW/BindMeetingAgenda?id=" + mid,
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+            function OnSuccess(response) {
+                $("#meetingagendatable").DataTable(
+                    {
+                        data: response,
+                        columns: [
+                            { 'data': 'AgendaItem' },
+                            { 'data': 'TypeofAgendaDescription' },
+                            
+                            {
+                                "data": "Pid", "render": function (data) {
+                                    var url = '/AONW/EditMeetingAgenda/?ID='+data;
+                                    var meetIdObj = $.grep(response, function (element) { return element.Pid == data });
+                                    var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id ;
+                                    return "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
+                                }
+                            }
+                        ],
+                    });
+        };
+        $('#meetAgenda').on('submit', function () {
+            var proposal = CKEDITOR.instances['Proposal'].getData();
+            var mySelection = $('#TypeofAgenda').val();
+            if (mySelection == "AON Accord" && proposal == "") {
+                $("#exampleModal .modal-body p").html('Please Fill Propsal Field First');
+                $("#exampleModal").modal('show');
+                //alert("Please Fill Propsal Field First");
+                return false;
+            }
+            $(proposalHdn).val(proposal);
+            var decision = CKEDITOR.instances['Decision'].getData();
+            $(decisionHdn).val(decision);
+            var discusion = CKEDITOR.instances['Discussion'].getData();
+            $(discussionHdn).val(discusion);
+            var back = CKEDITOR.instances['Background'].getData();
+            $(background).val(back);
+            var approval = CKEDITOR.instances['Approval_sought'].getData();
+            $(approval_sought).val(approval);
+        });
+    });
+   
+   
+ 
+    function SelectVersion() {
+        var mySelection = $('#TypeofAgenda').val();
+        var drpTypeofAgenda = $('#drpTypeofAgenda');
+        if (mySelection == "Others" || mySelection == "Previous Meeting") {
+            $('div[id ="hideAccord"]').hide();
+            $('div[id="Previous_Meeting"]').show();
+            $('div[id ="TypeofAgenda"]').hide();
+            $(drpTypeofAgenda).removeAttr('required');
+        }
+        if (mySelection == "") {
+            $('div[id ="hideAccord"]').hide();
+            $('div[id ="hideAccord"]').hide();
+            $('div[id ="TypeofAgenda"]').hide(); 
+        }
+        if (mySelection == "AON Accord")
+        {
+            $('div[id ="hideAccord"]').show();
+            $('div[id="Previous_Meeting"]').hide();
+            $('div[id ="TypeofAgenda"]').show();
+            $(drpTypeofAgenda).attr('required','required');
+        }
+       
+    }
+</script>
+

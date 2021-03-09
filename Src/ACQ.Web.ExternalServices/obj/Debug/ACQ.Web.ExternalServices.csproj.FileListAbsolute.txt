@@ -1,0 +1,79 @@
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\MOD_Portal_V1\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Microsoft.Web.Infrastructure.xml
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-V2\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb

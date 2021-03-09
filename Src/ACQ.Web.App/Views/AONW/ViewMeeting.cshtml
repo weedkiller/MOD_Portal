@@ -1,0 +1,73 @@
+﻿@model ACQ.Web.ViewModel.AONW.SechduleMeetingAgedaViewModel
+@{
+    ViewBag.Title = "ViewMeeting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row m-0">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="tabHead mb-3">
+                        <div class="row">
+                            <div class="col-md-6"><h4>View Meetings</h4></div>
+
+                        </div>
+                    </div>
+                    <div class="bg-white p-3">
+                        <div class="clearfix"></div>
+                        <a href="@Url.Action("createMeeting","AONW")" id="movetoaddmeeting" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i>&nbsp;  Meetings</a>
+                        <div class="mt-1"></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered ">
+                               
+                                    <thead>
+                                    <th>Meeting Type</th>
+                                    <th>Meeting Date</th>
+                                    <th>Remarks</th>
+                                    <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ListofMeeting)
+                                        {
+                                            <tr>
+                                                <td>@item.dac_dpb</td>
+                                                <td>@Convert.ToDateTime(@item.meeting_date.ToString()).ToShortDateString()</td>
+                                                <td>@item.Remarks</td>
+                                                <td class="d-flex">
+                                                    @*<input type="hidden" id="id" value="@m.meeting_id" />*@
+                                                    <a href="@Url.Action("AddMeetingAgenda","AoNW", new {ID = @item.meeting_id,mtype=@item.dac_dpb,dated=@item.meeting_date })" onclick="return confirm('Are you sure you want to add agenda of this meeting?')" type="submit" class="btn btn-info btn-sm" title="Add Agenda"><i class="fa fa-plus-circle mr-1"></i></a>&nbsp;
+                                                    <a href="@Url.Action("EditMeeting","AoNW", new {ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to edit meeting?')" type="submit" class="btn btn-info btn-sm" title="Edit Meeting"><i class="fa fa-edit mr-1"></i></a>&nbsp;
+                                                    <a href="@Url.Action("DeleteMeeting","AoNW", new {ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-danger btn-sm" title="Delete Meeting"><i class="fa fa-trash mr-1"></i></a>&nbsp;
+                                                    <a href=@Url.Action("GenerateReport","AoNW", new {ID = @item.meeting_id }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Meeting with Agenda"><i class="fa fa-print mr-1"></i></a>
+
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                            
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function ()
+{
+    if ('@ViewBag.Msg' != "" || '@ViewBag.Msg' != null)
+    {
+
+        $("#myModal").modal('show');
+    }
+        else {
+            $("#myModal").modal('hide');
+        }
+});
+</script>
+

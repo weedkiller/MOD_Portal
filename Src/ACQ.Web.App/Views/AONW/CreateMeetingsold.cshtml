@@ -1,0 +1,212 @@
+﻿@model IEnumerable<MOD.Models.SechduleMeetingAgedaViewModel>
+@{
+    ViewBag.Title = "CreateMeetings";
+}
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <style>
+        #meetingagendatable_length {
+            display: none;
+        }
+
+        #meetingagendatable_filter {
+            display: none;
+        }
+
+        #meetingagendatable_info {
+            display: none;
+        }
+
+        #meetingagendatable_paginate {
+            display: none;
+        }
+    </style>
+</head>
+<div class="form-row mb-1">
+    <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12" style="border-right:1px solid;">
+            <div class="col col-lg-12">
+                <h2 class="labeltext text-center">Create Meetings</h2>
+            </div>
+            @using (Html.BeginForm("CreateMeetings", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    <label>Select Meeting Type</label>
+                    <select class="form-control" id="dac_dpb" name="dac_dpb">
+                        <option>-Select-</option>
+                        <option>DAC</option>
+                        <option>DPB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date of Meeting</label>
+                    <input id="meeting_date" name="meeting_date" class="form-control" type="date" />
+                </div>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea id="Remarks" name="Remarks" class="form-control" rows="4" cols="20"></textarea>
+                </div>
+                <div class="clearfix"></div>
+                <button class="btn btn-info btn-sm float-right" type="submit">Save Register</button>
+            }
+            <div class="clearfix mt-1"></div>
+            <hr />
+            <div class="col-sm-12" style="height:300px; overflow:scroll; width:100%">
+                <table class="table table-responsive table-bordered table-hover">
+                    @if (ViewBag.Grid1 != null)
+                    {
+                        <tr>
+                            <th>dac_dpb</th>
+                            <th>meeting_date</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                        </tr>
+                        foreach (var m in ViewBag.Grid1)
+                        {
+                            <tr>
+                                <td>@m.dac_dpb</td>
+                                <td>@m.meeting_date</td>
+                                <td>@m.Remarks</td>
+                                <td class="text-nowrap">
+                                    <input type="hidden" id="id" value="@m.meeting_id" />
+                                    <button id="btn" type="submit" class="btn btn-info btn-sm">Add Agenda</button>
+                                    @*<a href="@Url.Action("EditMeeting","AoNW", new {ID = @m.meeting_id })" onclick="return confirm('Are you sure you want to Edit This Item : @m.dac_dpb?')" type="submit" class="btn-data btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</a>*@
+                                    <a href="@Url.Action("DeleteMeeting","AoNW", new {ID = @m.meeting_id })" onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn-data btn btn-danger btn-sm"><i class="fa fa-trash mr-1"></i>Delete</a>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="display:none; margin-left:10px;" id="agenda">
+                @using (Html.BeginForm("CreateAgenda", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="col col-lg-12">
+                        <h2 class="labeltext text-center">Meetings Agenda</h2>
+                    </div>
+                    <input id="meeting_id" type="hidden" name="meeting_id" />
+                    <div class="form-group">
+                        <label>Type of Agenda</label>
+                        <select class="form-control" id="TypeofAgenda" name="TypeofAgenda">
+                            <option value="AoN Accord">-Select-</option>
+                            <option value="AoN Accord">AoN Accord</option>
+                            <option value="AoN Change">AoN Change</option>
+                            <option value="Policy Directives">policy Directives</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="aonshow" style="display:none;">
+                        <label>Agenda Item</label>
+                        <select id="AgendaItem" class="form-control" name="AgendaItem">
+                        </select>
+                    </div>
+                    <div class="form-group" id="otheraon" style="display:none;">
+                        <label>Agenda Items</label>
+                        <textarea class="form-control" id="AgendaItem1" name="AgendaItem1" rows="3"></textarea>
+                    </div>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-info float-right btn-sm" onclick="Msg()" type="submit">Save Register</button>
+                }
+                <div class="clearfix mt-1"></div>
+                <hr />
+                <div class="col-sm-12" style="height:300px; overflow:scroll; width:100%">
+                    <table id="meetingagendatable" class="table table-responsive table-bordered table-hover">
+                        <thead>
+                            <tr style="background-color: beige;">
+                                <th>Type of Agenda</th>
+                                <th>Agenda items</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.fn.dataTable.ext.errMode = 'none';
+        $("#btn").click(function () {
+            var mid = $("#id").val();
+            $("#meeting_id").val(mid);
+            $("#agenda").show();
+            table = $('#meetingagendatable').DataTable({
+                paging: false
+            });
+            table.destroy();
+            $.ajax({
+                type: "GET",
+                url: "/AONW/BindMeetingAgenda?id=" + mid.trim(),
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+
+                }
+            });
+            function OnSuccess(response) {
+                $("#meetingagendatable").DataTable(
+                    {
+                        data: response,
+                        columns: [
+                            { 'data': 'TypeofAgenda' },
+                            { 'data': 'AgendaItem' },
+                            {
+                                "data": "Pid", "render": function (data) {
+                                       var url = '@Url.Action("DeleteMeetingAgenda", "AoNW")/' + data;
+                                    return "<a  id='a' href='"+url+"' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-eye'></i>Delete</a > ";
+                                }
+                            }
+                        ],
+                    });
+            };
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#TypeofAgenda").on("change", function () {
+            var answer = $("#TypeofAgenda").val();
+            if (answer == "AoN Accord") {
+                $("#aonshow").show();
+                $("#otheraon").hide();
+                $.ajax(
+                    {
+                        url: '/AONW/BindDDl',
+                        type: 'GET',
+                        data: "",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $('#AgendaItem').html('');
+                            var options = '';
+                            options += '<option value="Select">Select</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                options += '<option value="' + data[i].item_description + '">' + data[i].item_description + '</option>';
+                            }
+                            $('#AgendaItem').append(options);
+                        }
+                    });
+            }
+            else {
+                $("#aonshow").hide();
+                $("#otheraon").show();
+            }
+        });
+    });
+</script>
+
+
+
+

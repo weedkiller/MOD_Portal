@@ -1,0 +1,75 @@
+﻿@model ACQ.Web.ViewModel.AONW.SechduleMeetingAgedaViewModel
+@{
+    ViewBag.Title = "GenerateReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+ .flip-scroll {
+        overflow: scroll;
+       height:900px;
+        Width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="box-properties col-md-12">
+        <div class="portlet-body flip-scroll">
+            <p><b>Copy No.</b></p>
+            <h2 style="text-align:center ;margin-top:-10px"><b>No.5(11)DAC(Sectt)/2020</b></h2>
+            <p style="text-align:center;margin-top:-10px"><b>Government of India</b></p>
+            <p style="text-align:center;margin-top:-10px"><b>Ministry of  Defence</b></p>
+            <p style="text-align:center;margin-top:-10px"><b>[Acquisition Wing]</b></p>
+            <p class="text-right" style="margin-top:-10px"><b>Dated:</b>@Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString()</p>
+            <p style="text-align:center"> <b>MINUTES OF THE MEETING OF DEFENCE ACQUISTION COUNCIL(XX/20XX) MEETING</b></p>
+            <p style="text-align:center">
+                <b>HELD ON @Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString()</b>
+            </p>
+            <p>1.   The @Model.dac_dpb @Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString() meeting chaired by Hon'ble Raksha Mantri, Shri rajnath Singh was held on XX february 20XX</p>
+            <p>
+                2.   The Follwing officers particpated.
+            </p>
+            <p>@Html.Raw(Model.officers_participated)</p>
+            @{
+                var prevMeetings = Model.TrnListMeeting.Where(x => x.AgendaItem == "Previous Meeting").ToList();
+            }
+            @if (prevMeetings.Count > 0)
+            {
+                <p><b>CONFIRMATION OF MINUTES OF PREVIOUS DAC MEETING</b></p>
+                foreach (var item in prevMeetings)
+                {
+
+                    <p style="text-decoration:underline">
+                        @item.Previous_Meeting
+                    </p>
+
+                }
+            }
+            <p><b>ITEM 2: CAPITAL ACQUSITION PROPOSALS OF THE SERVICES </b></p>
+            @foreach (var item in Model.TrnListMeeting.Where(x => x.AgendaItem == "AON Accord").GroupBy(g => g.ServiceLead).ToList())
+            {
+
+                <p><b>A.   <u>@item.FirstOrDefault().ServiceLead PROPOSALS</u></b> </p>
+                foreach (var items in item)
+                {
+                    <p> <b><u>PROPOSAL</u>:</b> @Html.Raw(items.Proposal)</p>
+                    <p><b><u>BACKGROUND:</u></b></p>
+                    <p>@Html.Raw(items.Background)</p>
+                    <p>
+                        <b><u>APPROVAL SOUGHT:</u></b>
+                        @Html.Raw(items.Approval_sought)
+                    </p>
+                    <p><b><u>DISCUSSION:</u></b></p>
+                    <p> @Html.Raw(items.Discussion)</p>
+                    <p><b> <u>DECISION:</u></b></p>
+                    <p> @Html.Raw(items.Decision)</p>
+                }
+            }
+            @{
+                var others = Model.TrnListMeeting.Where(x => x.AgendaItem == "Others").ToList();
+            }
+            @if (others.Count > 0)
+            {
+                <p><b>There being no other points, deliberations of the DAC/DPB were concluded.</b></p>
+            }
+        </div>
+    </div>
+</div>
