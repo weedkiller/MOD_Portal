@@ -183,7 +183,7 @@ namespace ACQ.Web.App.Controllers
                                 obj.SocSDDesignation = Encryption.Encrypt(contentControlText[96].ToString());
                                 obj.SocSDPhone = Encryption.Encrypt(contentControlText[97].ToString());
                                 obj.SocSDDate = Encryption.Encrypt(contentControlText[98].ToString());
-                                obj.SoDate = System.DateTime.Now;
+                                obj.SoDate = DateTime.Now;
                                 obj.Tax_Duties = "Inclusive Tax & Duties";
                                 obj.Type_of_Acquisition = "";
                                 obj.AMC_applicable = "";
@@ -194,7 +194,7 @@ namespace ACQ.Web.App.Controllers
                                 obj.AoN_validity = 6;
                                 obj.AoN_validity_unit = "Month";
                                 obj.CreatedBy = null;
-                                obj.CreatedOn = System.DateTime.Now;
+                                obj.CreatedOn = DateTime.Now;
                                 obj.DeletedBy = 1;
                                 obj.DeletedOn = null;
                                 obj.IsDeleted = false;

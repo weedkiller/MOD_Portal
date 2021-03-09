@@ -1378,6 +1378,7 @@
     <Content Include="Views\Shared\_LayoutErrorPage.cshtml" />
     <Content Include="Views\AONW\ViewSocMaster.cshtml" />
     <Content Include="Views\SocPdfRegistration\ViewfileandDoc.cshtml" />
+    <Content Include="Views\AONW\AddSocCommit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

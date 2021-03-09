@@ -251,7 +251,8 @@
     </div>
 
     <div class="col-md-12 clearfix d-none" id="divComment">
-        <button class="btn btn-info ml-3 float-right" id="submitComment" type="button">Comment</button>
+        <a href="@Url.Action("AddSocCommit","AONW",new { id = Model.aon_id,item=Model.item_description })" type="button" class="btn btn-primary float-right">Comment</a>
+        @*<button class="btn btn-info ml-3 float-right" id="submitComment" type="button">Comment</button>*@
         <button class="btn btn-info float-right" id="btncancel" type="button">Cancel</button>
     </div>
 

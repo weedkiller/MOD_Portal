@@ -569,19 +569,24 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
+        public ActionResult AddSocCommit(int id)
+        {
+            SocCommentViewModel model = new SocCommentViewModel();
+            model.SoCId = id;
+            Session["item"]= Request.QueryString["item"].ToString();
+            ViewBag.aonId = Session["item"].ToString();
+            return View(model);
 
+        }
         [HttpPost]
-        public async Task<ActionResult> AddSocCommit(int id, string mComment)
+        public async Task<ActionResult> AddSocCommit(SocCommentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    SocCommentViewModel model = new SocCommentViewModel();
-                    model.Comments = mComment;
                     model.IsActive = "Y";
                     model.SocCommentID = 0;
-                    model.SoCId = id;
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
 
                     using (var client = new HttpClient())
@@ -604,7 +609,8 @@ namespace ACQ.Web.App.Controllers
                     throw ex;
                 }
             }
-            return View("ViewSocMaster", new { ID = id, mtype = "m" });
+            ViewBag.aonId = Session["item"].ToString();
+            return View(model);
         }
 
         [HttpPost]
