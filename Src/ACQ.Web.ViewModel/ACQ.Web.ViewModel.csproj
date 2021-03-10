@@ -60,11 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AONW\acqmstmemberSendMailViewModel.cs" />
     <Compile Include="AONW\AttachmentViewModel.cs" />
     <Compile Include="AONW\Class1.cs" />
     <Compile Include="AONW\SAVESOCVIEWMODEL.cs" />
     <Compile Include="AONW\SechduleMeetingAgedaViewModel.cs" />
     <Compile Include="AONW\SocCommentViewModel.cs" />
+    <Compile Include="AONW\tbl_tbl_User.cs" />
     <Compile Include="EFile\Efile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResendOTP\ResendOTPViewModel.cs" />

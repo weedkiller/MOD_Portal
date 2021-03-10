@@ -8,6 +8,7 @@ namespace ACQ.Web.ViewModel.AONW
 {
    public class SocCommentViewModel
     {
+        public List<SocCommentViewModel> SOCVIEWComment { get; set; }
         public int SocCommentID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> SoCId { get; set; }

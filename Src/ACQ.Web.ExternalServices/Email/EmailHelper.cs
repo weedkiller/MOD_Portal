@@ -1,4 +1,5 @@
 ﻿//using ACQ.Web.ViewModel.IndexPage;
+using ACQ.Web.ViewModel.AONW;
 using ACQ.Web.ViewModel.User;
 using System;
 using System.Configuration;
@@ -202,6 +203,27 @@ namespace ACQ.Web.ExternalServices.Email
             return mailPath.Replace("{Name}", InputModel.InternalEmailID)
            //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
            .Replace("{subject}", InputModel.UserName).Replace("{otp}", emailOTP);
+        }
+
+        public static acqmstmemberSendMailViewModel SendAllDetails(string email, string mailPath)
+        {
+            acqmstmemberSendMailViewModel usOutputViewModel = new acqmstmemberSendMailViewModel();
+            try
+            {
+                string Body = EmailHelper.SendOTpPopulateBody(email, mailPath);
+                EmailHelper.SendEmail(email, Body);
+
+            }
+            catch (Exception)
+            {
+            }
+            return usOutputViewModel;
+        }
+        private static string SendOTpPopulateBody(string email,  string mailPath)
+        {
+            return mailPath.Replace("{Name}", email)
+           //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
+           .Replace("{subject}", email).Replace("{otp}", email);
         }
 
     }

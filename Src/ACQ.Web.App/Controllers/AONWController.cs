@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using ACQ.Web.ExternalServices.SecurityAudit;
+using ACQ.Web.ExternalServices.Email;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -53,6 +54,77 @@ namespace ACQ.Web.App.Controllers
 
             Socmodel.SOCVIEW = listData;
             return View(Socmodel);
+        }
+        public ActionResult ViewSOCComment()
+        {
+            
+            SocCommentViewModel Socmodel = new SocCommentViewModel();
+            List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
+            var id = Session["UserID"].ToString();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetCommenttDetails?ID=" + id + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
+
+                }
+            }
+
+            Socmodel.SOCVIEWComment = listData;
+            return View(Socmodel);
+        }
+        public ActionResult ViewSocSendMail(int ID)
+        {
+            acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
+            List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Session["id"] = ID;
+                    listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
+
+                }
+            }
+
+            Socmodel.SOCMailVIEW = listData;
+            return View(Socmodel);
+        }
+        public ActionResult SendMailToAll()
+        {
+            acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
+            List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
+            var id = Session["id"].ToString();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + id + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
+                    foreach(var dummyList in listData)
+                    {
+                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
+                        EmailHelper.SendAllDetails( dummyList.Email, mailPath);
+                        ViewBag.Message = "RegistrationSuccessful";
+                    }
+
+
+                }
+            }
+
+            Socmodel.SOCMailVIEW = listData;
+            return RedirectToAction("ViewSOCRegistration");
         }
         [HttpPost]
         public async Task<ActionResult> WAonCreate(SAVESOCVIEWMODEL model, HttpPostedFileBase file)

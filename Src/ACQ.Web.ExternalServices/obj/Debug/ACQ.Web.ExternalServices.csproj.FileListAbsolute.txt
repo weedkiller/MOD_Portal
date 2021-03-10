@@ -77,3 +77,14 @@ C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalService
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
