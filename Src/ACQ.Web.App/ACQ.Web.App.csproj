@@ -1379,8 +1379,12 @@
     <Content Include="Views\AONW\ViewSocMaster.cshtml" />
     <Content Include="Views\SocPdfRegistration\ViewfileandDoc.cshtml" />
     <Content Include="Views\AONW\AddSocCommit.cshtml" />
+
     <Content Include="Views\AONW\ViewSocSendMail.cshtml" />
     <Content Include="Views\AONW\ViewSOCComment.cshtml" />
+
+    <Content Include="Views\AONW\GenerateReport.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
