@@ -1,8 +1,8 @@
 ﻿@model ACQ.Web.ViewModel.AONW.acqmstmemberSendMailViewModel
 
-<div class="modal-dialog">
+<!--<div class="modal-dialog">
     <!-- Modal content-->
-    <div class="modal-content">
+<!--<div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Alert</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -18,7 +18,7 @@
                                 {
                                     <div class="row">
                                         <div class="col col-12">
-                                            <div id="div1" class="portlet-body flip-scroll" style="overflow: scroll; height: 850px; Width: 100%;">
+                                            <div id="div1" class="portlet-body flip-scroll" style="overflow: scroll; height: 500px; Width: 100%;">
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -62,11 +62,11 @@
             <button type="button" id="btnclose" class="btn btn-primary" data-dismiss="modal">OK</button>
         </div>
     </div>
-</div>
+</div>-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function () {-->
         $('#btnclose').click(function () {
         var link = '@Url.Action("SendMailToAll", "AONW")';
         window.location.href = link;
@@ -75,3 +75,73 @@
 
 
 </script>
+
+<div class="row m-0">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet-body flip-scroll">
+                        <h4 class="text-center">SoC Comment </h4>
+                        <div class="bg-white p-3">
+                            <div class="needs-validation p-2" novalidate="">
+
+                                <div class="clearfix mt-0"></div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 ">
+                                        <label>@TempData["msg"]</label>
+                                        @if (Model != null && Model.SOCMailVIEW.Count() > 0)
+                                        {
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div id="div1" class="portlet-body flip-scroll">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">SNO.</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Meeting Type</th>
+                                                    <th scope="col">Designation</th>
+                                                    <th scope="col">EmailId</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int count = 1;}
+                                                @foreach (var SOC in Model.SOCMailVIEW)
+                                                {
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td class="text-wrap">@SOC.meeting_type</td>
+                                    <td>Version @SOC.member_type</td>
+                                    <td>@SOC.designation</td>
+                                    <td>@SOC.Email</td>
+
+                                </tr>count++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12">
+                                        <button type="button" id="btnclose" class="btn btn-primary  float-right" data-dismiss="modal">Send to All</button>
+                                        <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewSOCRegistration';">Back</button>
+                                    </div>
+                                </div>
+                            </div>}
+                                    </div>
+
+                                    
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
