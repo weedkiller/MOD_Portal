@@ -4,26 +4,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
- .flip-scroll {
+    .flip-scroll {
         overflow: scroll;
-       height:900px;
+        height: 900px;
         Width: 100%;
     }
 </style>
 <div class="row">
+    <button class="btn btn-primary" onclick="printHtml()">print</button>
     <div class="box-properties col-md-12">
         <div class="portlet-body flip-scroll">
             <p><b>Copy No.</b></p>
-            <h2 style="text-align:center ;margin-top:-10px"><b>No.5(11)DAC(Sectt)/2020</b></h2>
+            @*<h2 style="text-align:center ;margin-top:-10px"><b>No.5(11)DAC(Sectt)/2020</b></h2>*@
             <p style="text-align:center;margin-top:-10px"><b>Government of India</b></p>
             <p style="text-align:center;margin-top:-10px"><b>Ministry of  Defence</b></p>
             <p style="text-align:center;margin-top:-10px"><b>[Acquisition Wing]</b></p>
             <p class="text-right" style="margin-top:-10px"><b>Dated:</b>@Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString()</p>
-            <p style="text-align:center"> <b>MINUTES OF THE MEETING OF DEFENCE ACQUISTION COUNCIL(XX/20XX) MEETING</b></p>
+            @if (Model.dac_dpb == "DAC")
+            {
+                <p style="text-align:center"> <b>MINUTES OF THE MEETING OF DEFENCE ACQUISTION COUNCIL (@Model.Meeting_Number) MEETING</b></p>
+            }
+            else
+            {
+                <p style="text-align:center"> <b>MINUTES OF THE MEETING OF DEFENCE PERCUREMENT BOARD (@Model.Meeting_Number) MEETING</b></p>
+            }
             <p style="text-align:center">
                 <b>HELD ON @Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString()</b>
             </p>
-            <p>1.   The @Model.dac_dpb @Convert.ToDateTime(Model.meeting_date.ToString()).ToShortDateString() meeting chaired by Hon'ble Raksha Mantri, Shri rajnath Singh was held on XX february 20XX</p>
+            <p>1.   The @Model.dac_dpb (@Model.Meeting_Number) meeting chaired by Hon’ble Raksha Mantri, Shri Rajnath Singh was held on  @Model.meeting_date.Value.ToString("dd MMMM yyyy")</p>
             <p>
                 2.   The Follwing officers particpated.
             </p>
@@ -33,12 +41,11 @@
             }
             @if (prevMeetings.Count > 0)
             {
-                <p><b>CONFIRMATION OF MINUTES OF PREVIOUS DAC MEETING</b></p>
+                <p><b>ITEM 1:CONFIRMATION OF MINUTES OF PREVIOUS DAC MEETING</b></p>
                 foreach (var item in prevMeetings)
                 {
-
-                    <p style="text-decoration:underline">
-                        @item.Previous_Meeting
+                    <p>
+                        @item.TypeofAgendaDescription
                     </p>
 
                 }
@@ -46,11 +53,12 @@
             <p><b>ITEM 2: CAPITAL ACQUSITION PROPOSALS OF THE SERVICES </b></p>
             @foreach (var item in Model.TrnListMeeting.Where(x => x.AgendaItem == "AON Accord").GroupBy(g => g.ServiceLead).ToList())
             {
-
+                int count = 0;
                 <p><b>A.   <u>@item.FirstOrDefault().ServiceLead PROPOSALS</u></b> </p>
                 foreach (var items in item)
                 {
-                    <p> <b><u>PROPOSAL</u>:</b> @Html.Raw(items.Proposal)</p>
+                    count = count + 1;
+                    <p> <b><u>PROPOSAL No. @count</u>:</b> @Html.Raw(items.Proposal)</p>
                     <p><b><u>BACKGROUND:</u></b></p>
                     <p>@Html.Raw(items.Background)</p>
                     <p>
@@ -68,8 +76,39 @@
             }
             @if (others.Count > 0)
             {
-                <p><b>There being no other points, deliberations of the DAC/DPB were concluded.</b></p>
+                <p><b><u>Others:</u></b></p>
+                foreach (var item in others)
+                {
+
+                    <p style="text-decoration:underline">
+                        <b>  @item.TypeofAgendaDescription</b>
+                    </p>
+
+                }
+
             }
+            <p><b>There being no other points, deliberations of the @Model.dac_dpb were concluded.</b></p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p style="text-align:center;margin-top:-10px"><b>Secretary @Model.dac_dpb</b></p>
+            <p><b>Distribution: As per Distribution List</b></p>
+            <p>@Html.Raw(Model.Distribution_List)</p>
         </div>
     </div>
 </div>
+<script>
+
+    function printHtml() {
+        var contents = $(".portlet-body").html();
+        let printWindow = window.open('', 'PRINT', 'height=800,width=1200');
+        printWindow.document.write('<html><head><title></title></head>');
+        printWindow.document.write('<body>');
+        printWindow.document.write(contents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    }
+</script>

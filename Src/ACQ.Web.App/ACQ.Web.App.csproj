@@ -1259,6 +1259,7 @@
     <Content Include="Scripts\jquery-3.5.1.min.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1379,6 +1380,7 @@
     <Content Include="Views\AONW\ViewSocMaster.cshtml" />
     <Content Include="Views\SocPdfRegistration\ViewfileandDoc.cshtml" />
     <Content Include="Views\AONW\AddSocCommit.cshtml" />
+    <Content Include="Views\AONW\GenerateReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

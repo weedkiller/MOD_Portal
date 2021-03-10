@@ -863,6 +863,8 @@ namespace ACQ.Web.App.Controllers
                     throw ex;
                 }
             }
+            ViewBag.dated = Session["mdate"].ToString();
+            ViewBag.mtype = Session["mtype"].ToString();
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id, ViewBag.mtype, ViewBag.dated });
         }
         public ActionResult AddMeetingAgenda(int id, string mtype, string dated)
@@ -889,6 +891,8 @@ namespace ACQ.Web.App.Controllers
                 f.item_description = string.Concat(f.Service_Lead_Service, "-", f.SoCCase, "-", f.UniqueID, "-", f.item_description);
             });
             Session["dropdownTypeofAgenda"] = dropdownTypeofAgenda;
+            Session["mdate"] = dated;
+            Session["mtype"] = mtype;
             ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
             #endregion
 
@@ -913,6 +917,8 @@ namespace ACQ.Web.App.Controllers
                 }
                 List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = (List<SAVESOCVIEWMODEL>)Session["dropdownTypeofAgenda"];
                 ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
+                ViewBag.dated = Session["mdate"].ToString();
+                ViewBag.mtype = Session["mtype"].ToString();
                 return View("AddMeetingAgenda", model);
             }
             catch (Exception ex)
@@ -949,6 +955,8 @@ namespace ACQ.Web.App.Controllers
             }
 
             id = _model.meeting_id.Value;
+            ViewBag.dated = Session["mdate"].ToString();
+            ViewBag.mtype = Session["mtype"].ToString();
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id, ViewBag.mtype, ViewBag.dated });
         }
         public ActionResult DeleteMeetingAgenda(int id,int meeting_id)
@@ -975,7 +983,8 @@ namespace ACQ.Web.App.Controllers
             {
                 throw ex;
             }
-
+            ViewBag.dated = Session["mdate"].ToString();
+            ViewBag.mtype = Session["mtype"].ToString();
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id = meeting_id, ViewBag.mtype, ViewBag.dated });
         }
 

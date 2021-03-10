@@ -54,3 +54,13 @@ C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\D
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 C:\Users\Uttam Kumar\Downloads\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.xml
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
+C:\Users\nbansal\Documents\Repository\MOD-ACQProcess-GIT\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
