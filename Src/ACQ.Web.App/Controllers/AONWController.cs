@@ -36,6 +36,15 @@ namespace ACQ.Web.App.Controllers
         #region Main SOC Page All Code
         public ActionResult ViewSOCRegistration()
         {
+            string mSercive = "";
+            if (Session["Department"].ToString() == "IDS")
+            {
+                mSercive = "Joint Staff";
+            }
+            else
+            {
+                mSercive = Session["Department"].ToString();
+            }
             SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
             List<SAVESOCVIEWMODEL> listData = new List<SAVESOCVIEWMODEL>();
             using (var client = new HttpClient())
@@ -51,7 +60,14 @@ namespace ACQ.Web.App.Controllers
                 }
             }
 
-            Socmodel.SOCVIEW = listData;
+            if (mSercive != "Acquisition Wing")
+            {
+                Socmodel.SOCVIEW = listData.Where(x => x.Service_Lead_Service == mSercive).ToList();
+            }
+            else
+            {
+                Socmodel.SOCVIEW = listData;
+            }
             return View(Socmodel);
         }
         [HttpPost]

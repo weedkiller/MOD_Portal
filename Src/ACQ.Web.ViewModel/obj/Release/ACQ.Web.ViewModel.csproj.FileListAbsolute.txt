@@ -22,3 +22,17 @@ D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ViewModel
 D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CopyComplete
 D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.dll
 D:\CurrentProject2020\ACQApplication\MOD_Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.dll.config
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.SqlServer.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Newtonsoft.Json.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.Mvc.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.pdb
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Microsoft.Web.Infrastructure.xml

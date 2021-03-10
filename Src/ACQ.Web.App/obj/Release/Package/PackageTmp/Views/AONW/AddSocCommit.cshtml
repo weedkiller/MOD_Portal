@@ -1,0 +1,146 @@
+﻿@model ACQ.Web.ViewModel.AONW.SocCommentViewModel
+@{
+    ViewBag.Title = "AddSocCommit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #meetingagendatable_length {
+        display: none;
+    }
+
+    #meetingagendatable_filter {
+        display: none;
+    }
+
+    #meetingagendatable_info {
+        display: none;
+    }
+
+    #meetingagendatable_paginate {
+        display: none;
+    }
+
+    .flip-scroll {
+        overflow: scroll;
+        height: 900px;
+        Width: 100%;
+    }
+</style>
+<div class="row m-0">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet-body flip-scroll">
+                        <h4 class="text-center">SoC Comment </h4>
+                        <div class="bg-white p-3">
+                            <div class="needs-validation p-2" novalidate="">
+
+                                <div class="clearfix mt-0"></div>
+                               
+                                    @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="SoCId" id="SoCId" value="@Model.SoCId" />
+
+                                        <div class="row">
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="Background">Item Description :<b> @ViewBag.aonId </b></label>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="Comments">Comment</label>
+                                                    <div class="form-floating">
+                                                        <textarea class="form-control" id="Comments" rows="3" value="@Model.Comments" name="Comments"></textarea>
+                                                        <input type="hidden" name="Comments" value="@Html.Raw(Model.Comments)" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12">
+                                                <button class="btn btn-primary float-right" type="submit">Save Comment</button>
+                                                <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewSocMaster';">Back</button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row register-form">
+                                <div class="col-md-12 ">
+                                    <div id="lblmsg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/CkEditor/lang/en.js"></script>
+<script src="~/assets/js/CkEditor/ckeditor.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        //CKEDITOR.replace('Comments');
+        //var discussionHdn = $("input[name=Comments]");
+        //CKEDITOR.instances['Comments'].setData($(discussionHdn).val());
+    });
+
+    if ('@ViewBag.Msg' === "Record Saved Successfully") {
+
+        $('#lblmsg').html('Record Saved Successfully');
+            $('#myModal').modal({
+
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+
+    if ('@ViewBag.Msg' === "Record Not Saved Successfully") {
+
+        $('#lblmsg').html('Record Not Saved Successfully');
+            $('#myModal').modal({
+
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+
+</script>
+

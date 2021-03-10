@@ -55,6 +55,7 @@ namespace ACQ.Web.App.Controllers
             var marksModel = expando as IDictionary<string, object>;
             string filepath = "";
             string fullpath = "";
+            string mSercive = "";
             if (Request.Files.Count > 0)
             {
 
@@ -109,7 +110,14 @@ namespace ACQ.Web.App.Controllers
 
                             }
 
-
+                            if(Session["Department"].ToString()== "IDS")
+                            {
+                                mSercive = "Joint Staff";
+                            }
+                            else
+                            {
+                                mSercive = Session["Department"].ToString();
+                            }
 
 
                             if (contentControlText.Count > 0)
@@ -156,6 +164,22 @@ namespace ACQ.Web.App.Controllers
                                     return View();
                                 }
 
+                                if (Session["SectionID"].ToString() == "1" || Session["SectionID"].ToString() == "12" || Session["SectionID"].ToString() == "13")
+                                {
+
+                                }
+                                else
+                                {
+                                    if (contentControlText[1].ToString() == mSercive)
+                                    {
+                                        
+                                    }
+                                    else
+                                    {
+                                        ViewBag.UploadStatus = "Type";
+                                        return View();
+                                    }
+                                }
 
                                 obj.aon_id = 0;
                                 obj.item_description = Encryption.Encrypt(contentControlText[0].ToString().Trim());
@@ -362,8 +386,8 @@ namespace ACQ.Web.App.Controllers
                                     {
 
                                         HttpPostedFileBase fileA = filesA[i];
-                                        
-                                        if(i==0)
+
+                                        if (i == 0)
                                         {
                                             mFilename = "SOC";
                                         }
@@ -403,7 +427,7 @@ namespace ACQ.Web.App.Controllers
 
 
                                     TempData["FileAA"] = fileDetailsA;
-                                    
+
 
                                     //if (TempData["FileA"] != null)
                                     //{
@@ -536,8 +560,8 @@ namespace ACQ.Web.App.Controllers
                     fsCrypt.Close();
 
                     result.success = true;
-                    result.url =  filename;
-                    result.name =  filename;
+                    result.url = filename;
+                    result.name = filename;
                 }
 
             }
