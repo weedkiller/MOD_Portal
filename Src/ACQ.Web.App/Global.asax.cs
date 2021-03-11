@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -18,6 +19,7 @@ namespace ACQ.Web.App
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters);
+            AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
         }
 
         protected void Application_Error()

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "LoginReturnMsg";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<style>
+    .cs-signin-form::before {
+        background: none;
+    }
+
+    body {
+        /* background: url('/Content/images/loginBg.jpg') no-repeat center center fixed;*/
+
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .cs-signin-form .cs-signin-form-inner {
+        background-color: #fff0;
+        z-index: 5;
+        border-left: 2px solid #fff;
+        border-radius: 10px;
+        box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
+        -webkit-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
+        -o-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
+        -ms-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
+        border-left: 2px solid #fff;
+    }
+
+    .invalidmsg {
+        color: red;
+        position: absolute;
+        top: 8px;
+        right: 5px;
+        font-size: 19px;
+    }
+</style>
+
+
+<style>
+    .ValidateColor {
+        color: red;
+        float: left;
+        position: absolute;
+        font-size: 14px;
+        left: 4%;
+    }
+
+    .bb {
+        position: relative;
+    }
+
+    #Otp {
+        text-transform: uppercase;
+    }
+
+    #CaptchaInputText {
+        text-transform: uppercase;
+    }
+</style>
+
+
+<div class="navbar-custom topnav-navbar topnav-navbar-dark" style="height: 95px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <a href="" class="topnav-logo mt-2">
+                    <span class="topnav-logo-sm">
+                        <img src="~/assets/images/ddp_logo.png" height="65" />
+                    </span>
+                </a>
+            </div>
+
+            <div class="col-7 d-flex justify-content-center align-items-center">
+                <h1 class="mt-3 topHeadline">ACQUISITION PORTAL</h1>
+            </div>
+
+            <div class="col-2">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="login_bg">
+    
+        <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
+            <div class="cs-signin-form mt-5" style="min-height:358px !important; margin-bottom:0px!important;">
+                <div class="cs-signin-form-inner pb-4" style="background: white;">
+                    <div class="cs-view show" id="signin-view">
+                        <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login Failed !  Please white list your pc ip Address </h1>
+                        <br />
+
+                        Contact us : Mr Bhupinder Garg <br /> Mobile number : 9008790926
+
+                        <br />
+                        <a href="@Url.Action("Login","Account")" type="button" class="btn btn-primary float-right">Back</a>
+                        <br /> <br /> <br /> <br />
+                        <br /> <br /> <br /> <br />
+
+                    </div>
+                </div>
+            </div>
+        </section>
+   
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

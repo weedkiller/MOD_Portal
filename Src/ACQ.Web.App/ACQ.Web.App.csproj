@@ -244,8 +244,6 @@
     <Content Include="bin\ACQ.Web.ExternalServices.dll" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\CaptchaMvc.dll" />
-    <Content Include="bin\CaptchaMvc.pdb" />
-    <Content Include="bin\CaptchaMvc.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
@@ -1384,6 +1382,7 @@
     <Content Include="Views\AONW\ViewSocSendMail.cshtml" />
     <Content Include="Views\AONW\ViewSOCComment.cshtml" />
     <Content Include="Views\AONW\GenerateReport.cshtml" />
+    <Content Include="Views\Account\LoginReturnMsg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

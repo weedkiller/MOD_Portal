@@ -1,0 +1,152 @@
+﻿@{ ViewBag.Title = "createMeeting";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="row m-0">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="tabHead mb-3">
+                        <div class="row">
+                            <div class="col-md-6"><h4>Create Meeting</h4></div>
+
+                        </div>
+                    </div>
+                    <div class="bg-white p-3">
+                        <div class="needs-validation p-2" novalidate="">
+                            <div class="">
+                                @using (Html.BeginForm("SaveMeetings", "AONW", FormMethod.Post, new { enctype = "multipart/form-data", id = "meetAgenda" }))
+                                {
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Select Meeting Type</label>
+                                            <select class="form-select form-control" id="dac_dpb" name="dac_dpb">
+                                                <option selected>--Select--</option>
+                                                <option>DAC</option>
+                                                <option>DPB</option>
+                                                @* <option>PRE-DAC</option>*@
+                                            </select>
+                                            <div class="invalid-feedback">Please select valid meeting type</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Meeting Number</label>
+                                            <input type="text" class="form-control" placeholder="Meeting No." id="Meeting_Number" name="Meeting_Number" />
+                                            <div class="invalid-feedback">Please select Date type</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Date of Meeting</label>
+                                            <input id="meeting_date" name="meeting_date" placeholder="Date of Meeting" class="form-control" type="date" />
+                                            <div class="invalid-feedback">Please enter date of meeting</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="issue_date">Issue Date</label>
+                                            <input id="issue_date" name="issue_date" placeholder="Issue Date" class="form-control" type="date" />
+                                            <div class="invalid-feedback">Please enter issue date</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Remarks</label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" placeholder="Remarks" id="Remarks" name="Remarks"></textarea>
+                                            </div>
+                                            <div class="invalid-feedback">Please enter remarks (max 5000 words)</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Proposal">officers participated <i class="danger">*</i></label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" required id="officers_participated" rows="3" name="officers_participated"></textarea>
+                                                <input type="hidden" name="officers_participated" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Proposal">Distribution List <i class="danger">*</i></label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" required id="Distribution_List" rows="3" name="Distribution_List"></textarea>
+                                                <input type="hidden" name="Distribution_List" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="float-md-right">
+                                            <a href="@Url.Action("ViewMeeting","AONW")" id="movetoaddmeeting" class="btn btn-info   mb-3 mt-2">&nbsp; Back</a>&nbsp;
+                                            <button class="btn btn-primary  mb-3 mt-2" type="submit">Save Meeting</button>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                }
+                            </div>
+                            <div class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @ViewBag.Msg
+            </div>
+            <div class="modal-footer">
+                <a href="@Url.Action("ViewMeeting","AONW")" type="button" class="btn btn-primary">Ok</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/CkEditor/lang/en.js"></script>
+<script src="~/assets/js/CkEditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('Distribution_List');
+    CKEDITOR.replace('officers_participated');
+    var officerHdn = $("input[name=officers_participated]");
+    var distributionHdn = $("input[name=Distribution_List]");
+
+        $(document).ready(function ()
+        {
+            CKEDITOR.instances['Distribution_List'].setData($(distributionHdn).val());
+            CKEDITOR.instances['officers_participated'].setData($(officerHdn).val());
+
+            var mtype = '@ViewBag.Msg';
+            if (mtype != "")
+             {
+        $("#exampleModal").modal('show');
+             }
+        else {
+            $("#exampleModal").modal('hide');
+                }
+        });
+    $('#meetAgenda').on('submit', function () {
+        var officer = CKEDITOR.instances['officers_participated'].getData();
+        $(officerHdn).val(officer);
+        var distribution = CKEDITOR.instances['Distribution_List'].getData();
+        $(decisionHdn).val(distribution);
+    });
+</script>
+
+
+
