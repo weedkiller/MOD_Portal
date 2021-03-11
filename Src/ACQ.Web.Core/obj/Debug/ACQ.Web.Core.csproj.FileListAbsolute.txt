@@ -1,11 +1,3 @@
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
 E:\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
 E:\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
 E:\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
@@ -14,3 +6,11 @@ E:\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.c
 E:\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

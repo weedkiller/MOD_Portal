@@ -220,6 +220,7 @@
     <Content Include="assets\js\html2canvas.min.js" />
     <Content Include="assets\js\jbvalidator.min.js" />
     <Content Include="assets\js\jquery v3.4.1.js" />
+    <Content Include="assets\js\jquery-3.2.1.slim.min.js" />
     <Content Include="assets\js\jquery.dataTables.min.css" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
     <Content Include="assets\js\jquery.min.js" />
@@ -231,6 +232,7 @@
     <Content Include="assets\js\newtheme\theme.min.js" />
     <Content Include="assets\js\notify.min.js" />
     <Content Include="assets\js\pdfmake.min.js" />
+    <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\qrcode.js" />
     <Content Include="assets\js\qrcode.min.js" />
     <Content Include="assets\js\script-custom-editor.js" />
@@ -1379,12 +1381,9 @@
     <Content Include="Views\AONW\ViewSocMaster.cshtml" />
     <Content Include="Views\SocPdfRegistration\ViewfileandDoc.cshtml" />
     <Content Include="Views\AONW\AddSocCommit.cshtml" />
-
     <Content Include="Views\AONW\ViewSocSendMail.cshtml" />
     <Content Include="Views\AONW\ViewSOCComment.cshtml" />
-
     <Content Include="Views\AONW\GenerateReport.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
