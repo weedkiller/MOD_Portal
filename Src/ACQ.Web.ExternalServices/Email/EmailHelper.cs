@@ -10,127 +10,151 @@ namespace ACQ.Web.ExternalServices.Email
 {
     public class EmailHelper
     {
-    //    public static BadgeRegistrationViewModel SendLinkBadgeRegistration(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
-    //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
-    //        try
-    //        {
-    //            string Body = EmailHelper.SendLinkBadgeRegistrationBody(InputModel, mailPath);
-    //            EmailHelper.SendEmail(InputModel.Email, Body);
-    //        }
-    //        catch (Exception)
-    //        {
-    //        }
-    //        return usOutputViewModel;
-    //    }
-    //    private static string SendLinkBadgeRegistrationBody(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
+        //    public static BadgeRegistrationViewModel SendLinkBadgeRegistration(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
+        //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
+        //        try
+        //        {
+        //            string Body = EmailHelper.SendLinkBadgeRegistrationBody(InputModel, mailPath);
+        //            EmailHelper.SendEmail(InputModel.Email, Body);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        return usOutputViewModel;
+        //    }
+        //    private static string SendLinkBadgeRegistrationBody(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
 
-    //        return mailPath
-    //            .Replace("{Url}", InputModel.SendLink);
-    //    }
+        //        return mailPath
+        //            .Replace("{Url}", InputModel.SendLink);
+        //    }
 
-    //    public static BadgeRegistrationViewModel SendBadgePassess(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
-    //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
-    //        try
-    //        {
-    //            string Body = EmailHelper.SendBadgePassessBody(InputModel, mailPath);
-    //            EmailHelper.SendEmail(InputModel.Email, Body);
-    //        }
-    //        catch (Exception)
-    //        {
-    //        }
-    //        return usOutputViewModel;
-    //    }
-    //    private static string SendBadgePassessBody(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
+        //    public static BadgeRegistrationViewModel SendBadgePassess(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
+        //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
+        //        try
+        //        {
+        //            string Body = EmailHelper.SendBadgePassessBody(InputModel, mailPath);
+        //            EmailHelper.SendEmail(InputModel.Email, Body);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        return usOutputViewModel;
+        //    }
+        //    private static string SendBadgePassessBody(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
 
-    //        return mailPath;
-                
-    //    }
-    //    public static BadgeRegistrationViewModel DownloadBadgePassess(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
-    //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
-    //        try
-    //        {
-    //            string Body = EmailHelper.DownloadBadgePassessBody(InputModel, mailPath);
-    //            EmailHelper.SendEmail(InputModel.Email, Body);
-    //        }
-    //        catch (Exception)
-    //        {
-    //        }
-    //        return usOutputViewModel;
-    //    }
-    //    private static string DownloadBadgePassessBody(BadgeRegistrationViewModel InputModel, string mailPath)
-    //    {
+        //        return mailPath;
 
-    //        return mailPath
-    //        .Replace("{Url}", InputModel.SendLink);
-    //    }
+        //    }
+        //    public static BadgeRegistrationViewModel DownloadBadgePassess(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
+        //        BadgeRegistrationViewModel usOutputViewModel = new BadgeRegistrationViewModel();
+        //        try
+        //        {
+        //            string Body = EmailHelper.DownloadBadgePassessBody(InputModel, mailPath);
+        //            EmailHelper.SendEmail(InputModel.Email, Body);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        return usOutputViewModel;
+        //    }
+        //    private static string DownloadBadgePassessBody(BadgeRegistrationViewModel InputModel, string mailPath)
+        //    {
 
-    //    public static EventPageViewModel SendEventUsernamaandpassword(EventPageViewModel InputModel, string mailPath)
-    //    {
-    //        EventPageViewModel usOutputViewModel = new EventPageViewModel();
-    //        try
-    //        {
-    //            string Body = EmailHelper.SendEventUsernamaandpasswordBody(InputModel, mailPath);
-    //            EmailHelper.SendEmail(InputModel.Email, Body);
-    //        }
-    //        catch (Exception)
-    //        {
-    //        }
-    //        return usOutputViewModel;
-    //    }
-    //    private static string SendEventUsernamaandpasswordBody(EventPageViewModel InputModel, string mailPath)
-    //    {
+        //        return mailPath
+        //        .Replace("{Url}", InputModel.SendLink);
+        //    }
 
-    //        return mailPath
-    //            .Replace("{Url}", InputModel.UrlPath)
-    //            .Replace("{UserName}", InputModel.UserName)
-    //            .Replace("{Password}", InputModel.Password);
-    //    }
-    //    public static NodalCompanyViewModel SendNodalUsernamaandpassword(NodalCompanyViewModel InputModel, string mailPath)
-    //    {
-    //        NodalCompanyViewModel usOutputViewModel = new NodalCompanyViewModel();
-    //        try
-    //        {
-    //            string Body = EmailHelper.SendNodalUsernamaandpasswordBody(InputModel, mailPath);
-    //            EmailHelper.SendEmail(InputModel.Email, Body);
-    //        }
-    //        catch (Exception)
-    //        {
-    //        }
-    //        return usOutputViewModel;
-    //    }
-    //    private static string SendNodalUsernamaandpasswordBody(NodalCompanyViewModel InputModel, string mailPath)
-    //    {
+        //    public static EventPageViewModel SendEventUsernamaandpassword(EventPageViewModel InputModel, string mailPath)
+        //    {
+        //        EventPageViewModel usOutputViewModel = new EventPageViewModel();
+        //        try
+        //        {
+        //            string Body = EmailHelper.SendEventUsernamaandpasswordBody(InputModel, mailPath);
+        //            EmailHelper.SendEmail(InputModel.Email, Body);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        return usOutputViewModel;
+        //    }
+        //    private static string SendEventUsernamaandpasswordBody(EventPageViewModel InputModel, string mailPath)
+        //    {
 
-    //        return mailPath
-    //            .Replace("{Url}", InputModel.UrlPathMails)
-    //            .Replace("{UserName}", InputModel.UserName)
-    //            .Replace("{Password}", InputModel.Password);
-    //    }
+        //        return mailPath
+        //            .Replace("{Url}", InputModel.UrlPath)
+        //            .Replace("{UserName}", InputModel.UserName)
+        //            .Replace("{Password}", InputModel.Password);
+        //    }
+        //    public static NodalCompanyViewModel SendNodalUsernamaandpassword(NodalCompanyViewModel InputModel, string mailPath)
+        //    {
+        //        NodalCompanyViewModel usOutputViewModel = new NodalCompanyViewModel();
+        //        try
+        //        {
+        //            string Body = EmailHelper.SendNodalUsernamaandpasswordBody(InputModel, mailPath);
+        //            EmailHelper.SendEmail(InputModel.Email, Body);
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        return usOutputViewModel;
+        //    }
+        //    private static string SendNodalUsernamaandpasswordBody(NodalCompanyViewModel InputModel, string mailPath)
+        //    {
+
+        //        return mailPath
+        //            .Replace("{Url}", InputModel.UrlPathMails)
+        //            .Replace("{UserName}", InputModel.UserName)
+        //            .Replace("{Password}", InputModel.Password);
+        //    }
 
         private static void SendEmail(string Email, string Body)
         {
             try
             {
+                // SmtpClient smtpClient = new SmtpClient();
+                // MailMessage message = new MailMessage();
+                // MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["FromAddress"].ToString(), ConfigurationManager.AppSettings["FromName"].ToString());
+                // smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
+                // message.From = mailAddress;
+                // message.To.Add(Email);
+                // message.Priority = MailPriority.High;
+                // message.Subject = "OTP";
+                // message.Body = Body.ToString();
+                // message.IsBodyHtml = true;
+
+                ///// smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
+                // smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                // smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
+                // smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(), ConfigurationManager.AppSettings["MailPassword"].ToString());
+                // smtpClient.Send(message);
+
+
+
+
                 SmtpClient smtpClient = new SmtpClient();
                 MailMessage message = new MailMessage();
                 MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["FromAddress"].ToString(), ConfigurationManager.AppSettings["FromName"].ToString());
-                smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
+                smtpClient.Host = "smtp.gmail.com";
+                //smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
                 message.From = mailAddress;
                 message.To.Add(Email);
+
                 message.Priority = MailPriority.High;
-                message.Subject = "OTP";
+                message.Subject = " MOD";
                 message.Body = Body.ToString();
                 message.IsBodyHtml = true;
                 smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = true;
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
                 smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
-                smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(), ConfigurationManager.AppSettings["MailPassword"].ToString());
+                smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(),
+                    ConfigurationManager.AppSettings["MailPassword"].ToString());
                 smtpClient.Send(message);
             }
             catch (Exception ex)
@@ -191,6 +215,7 @@ namespace ACQ.Web.ExternalServices.Email
             {
                 string Body = EmailHelper.SendOTpPopulateBody(InputModel, emailOTP, mailPath);
                 EmailHelper.SendEmail(InputModel.ExternalEmailID, Body);
+                // EmailHelper.SendEmail("shifalibaisoya@gmail.com", Body);
 
             }
             catch (Exception)
@@ -219,7 +244,7 @@ namespace ACQ.Web.ExternalServices.Email
             }
             return usOutputViewModel;
         }
-        private static string SendOTpPopulateBody(string email,  string mailPath)
+        private static string SendOTpPopulateBody(string email, string mailPath)
         {
             return mailPath.Replace("{Name}", email)
            //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)

@@ -82,7 +82,7 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetCommenttDetails?ID=" + id + "").Result;
+                HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
@@ -102,7 +102,7 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendAllMail?ID=" + ID + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     Session["id"] = ID;
