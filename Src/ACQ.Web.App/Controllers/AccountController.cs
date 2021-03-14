@@ -23,7 +23,7 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel login)
         {

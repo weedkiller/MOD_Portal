@@ -5,316 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <!-- External CSS libraries -->
-    <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="~/assets/fontawesome-5.12.1/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="~/assets/css/theme.min.css">
-    <link href="~/assets/js/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="~/assets/css/custom.css" rel="stylesheet" />
-    <!-- Custom stylesheet -->
+    <title>Acquisition Portal </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- External CSS libraries -->
+    <link href="~/assets/css/bootstrapv4.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
-    <link href="~/assets/js/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="~/assets/js/jquery v3.4.1.js"></script>
-    <script src="~/assets/js/jquery.dataTables.min.js"></script>
-    <script src="~/assets/js/jbvalidator.min.js"></script>
-    <style>
-        #bg-text {
-            color: #0000009c;
-            font-size: 39px;
-            transform: rotate( 300deg );
-            -webkit-transform: rotate( 300deg );
-            position: absolute;
-            top: 300px;
-            left: 495px;
-            font-family: fangsong;
-            text-transform: inherit;
-        }
+    <link href="~/assets/fontawesome-5.12.1/css/all.min.css" rel="stylesheet" />
 
-        #bg-text1 {
-            color: #0000009c;
-            font-size: 39px;
-            transform: rotate( 300deg );
-            -webkit-transform: rotate( 300deg );
-            position: absolute;
-            top: 930px;
-            left: 1105px;
-            font-family: fangsong;
-            text-transform: inherit;
-        }
-
-        #bg-text2 {
-            color: #0000009c;
-            font-size: 39px;
-            transform: rotate( 300deg );
-            -webkit-transform: rotate( 300deg );
-            position: absolute;
-            right: 325px;
-            font-family: fangsong;
-            text-transform: inherit;
-            top: 545px;
-        }
-    </style>
-    @*<script>
-            document.addEventListener('contextmenu', event => event.preventDefault());
-        </script>*@
+    <script src="~/assets/js/jquery.min.js"></script>
 </head>
 
 <body>
-    @*@RenderSection("scripts", required: false)*@
-    <section class="jarallax bg-gradient" data-jarallax="" data-speed="0.25" style="background-image: none; z-index:1;">
-        <span class="bg-overlay bg-gradient" style="opacity: .8;"></span>
-        <div class="container-fluid bg-overlay-content">
-            <div class="row">
-                <div class="col-4">
-                    <label class="userlbl"><i class="fas fa-user-cog"></i> Welcome :- @Session["UserName"].ToString()</label>
-                </div>
-                <div class="col">
-                    <h4 class="text-white text-center m-0 p-2 moda">ACQUISITION PORTAL </h4>
-                </div>
-                <div class="col-2 all-right">
-                    <!-- Dropdown -->
-                    @*<p><label>Welcome:- @Session["UserName"].ToString()</label></p>*@
-                    <div class="btn-group dropdown">
-                        <p type="button" class="m-0 btn dropdown-toggle" style="color:white;top: 10px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-alt mr-2"></i>My Profile
-                        </p>
-                        <div class="dropdown-menu">
-                            <a href="/Account/ChangePassword" class="dropdown-item"><i class="fas fa-lock mr-2"></i>Change Password</a>
-                            <a href="/Account/Logout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-        <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100;">
-        </div>
-    </section>
     <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="">
-                <!-- Sidebar-->
-                <div class="cz-sidebar rounded-lg col-bg box-shadow-lg h-100" id="shop-sidebar">
-                    <div class="cz-sidebar-header box-shadow-sm">
-                        <button class="close ml-auto" type="button" data-dismiss="sidebar" aria-label="Close"><span class="d-inline-block font-size-xs font-weight-normal align-middle">Close</span><span class="d-inline-block align-middle ml-2" aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="cz-sidebar-body" data-simplebar="init" data-simplebar-auto-hide="true">
-                        <div class="simplebar-wrapper" style="margin: -30px -16px -30px -30px;">
-                            <div class="simplebar-height-auto-observer-wrapper">
-                                <div class="simplebar-height-auto-observer"></div>
-                            </div>
-                            <div class="simplebar-mask">
-                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                    <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;">
-                                        <div class="simplebar-content" style="padding: 30px 16px 30px 30px;">
-                                            <!-- Categories-->
+        <!-----Side Navigation------>
+        <nav id="sidebar" class="sidebar" style="background:#1c2f61;">
+            <div class="sidebar-content js-simplebar" style="background:#1c2f61;" data-simplebar="init">
+                <div class="simplebar-wrapper" style="margin: 0px;">
+                    <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                            <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+                                <div class="simplebar-content" style="padding: 0px;">
+                                    <a class="sidebar-brand" href="index.html">
+                                        <img src="~/assets/media/images/ddp_logo.png" width="50" />
+                                    </a>
 
-                                            <div class="widget widget-categories mb-4 pb-4">
-                                                <h4 class="h4 text-dark invisible"><i class="fas fa-bars "></i> Menu</h4>
-                                                <div class="accordion mt-n1" id="shop-categories">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="accordion-heading">
-                                                                <a class="collapsed" href="#SoC" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Printing">
-                                                                    <i class="fas fa-print"></i>  SoC<span class="accordion-indicator"><i class="fas fa-chevron-up"></i></span>
-                                                                </a>
-                                                            </h3>
-                                                        </div>
-                                                        <div class="collapse" id="SoC" data-parent="#shop-categories">
-                                                            <div class="card-body">
-                                                                <div class="widget widget-links">
-                                                                    <ul class="widget-list">
-                                                                        @*@if (Session["SectionID"].ToString() == "1" || Session["SectionID"].ToString() == "12" || Session["SectionID"].ToString() == "13")
-                                                                        {*@
-                                                                            <li class="widget-list-item" id="mAccess"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("SocPdfRegistration", "SocPdfRegistration")"><span><i class="fas fa-layer-group"></i>  SoC Upload</span></a></li>
-                                                                            <li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  SoC View</span></a></li>
-                                                                            <li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  Approval for sending SoC to DAC/DPB</span></a></li>
-                                                                        @*}
-                                                                        else
-                                                                        {*@
-                                                                            @*<li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  SoC View</span></a></li>*@
+                                    <ul class="sidebar-nav">
+                                        <li class="sidebar-item active">
+                                            <a href="#pages" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                                <span class="align-middle">SoC</span>
+                                            </a>
+                                            <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
+                                                @*@if (Session["SectionID"].ToString() == "1" || Session["SectionID"].ToString() == "12" || Session["SectionID"].ToString() == "13")
+                                                    {*@
+                                                <li class="sidebar-item" id="mAccess">
+                                                    <a class="sidebar-link" id="SoUp" href="@Url.Action("SocPdfRegistration", "SocPdfRegistration")"><span><i class="fas fa-layer-group"></i>  SoC Upload</span></a>
+                                                </li>
+                                                <li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  SoC View</span></a></li>
+                                                <li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  Approval for sending SoC to DAC/DPB</span></a></li>
+                                                @*}
+                                                    else
+                                                    {*@
+                                                <li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  SoC View</span></a></li>
 
-                                                                        @*}*@
+                                                @*}*@
 
 
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            </ul>
+                                        </li>
 
-
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <h3 class="accordion-heading">
-                                                                <a class="collapsed" href="#Meeting" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Printing">
-                                                                    <i class="fas fa-print"></i>  MoM<span class="accordion-indicator"><i class="fas fa-chevron-up"></i></span>
-                                                                </a>
-                                                            </h3>
-                                                        </div>
-                                                        <div class="collapse" id="Meeting" data-parent="#shop-categories">
-                                                            <div class="card-body">
-                                                                <div class="widget widget-links">
-                                                                    <ul class="widget-list">
-
-                                                                        <li class="widget-list-item" id="mAccess"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("ViewMeeting","AoNW")"><span><i class="fas fa-layer-group"></i>  View Meeting</span></a></li>
-                                                                        @*<li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span><i class="fas fa-layer-group"></i>  Minutes of Meeting</span></a></li>*@
-
-                                                                        @*@if (Session["SectionID"].ToString() == "1" || Session["SectionID"].ToString() == "12" || Session["SectionID"].ToString() == "13")
-        {*@
-                                                                        <div class="card">
-                                                                            <div class="card-header">
-                                                                                <h3 class="accordion-heading">
-                                                                                    <a class="collapsed" href="#Meeting" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Printing">
-                                                                                        <i class="fas fa-print"></i>  MoM<span class="accordion-indicator"><i class="fas fa-chevron-up"></i></span>
-                                                                                    </a>
-                                                                                </h3>
-                                                                            </div>
-                                                                            <div class="collapse" id="Meeting" data-parent="#shop-categories">
-                                                                                <div class="card-body">
-                                                                                    <div class="widget widget-links">
-                                                                                        <ul class="widget-list">
-
-                                                                                            <li class="widget-list-item" id="mAccess"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("ViewMeeting", "AoNW")"><span><i class="fas fa-layer-group"></i>  View Meeting</span></a></li>
-                                                                                            @*<li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span><i class="fas fa-layer-group"></i>  Minutes of Meeting</span></a></li>*@
-
-
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="card">
-                                                                            <div class="card-header">
-                                                                                <h3 class="accordion-heading">
-                                                                                    <div class="form-group">
-                                                                                        <div class="">
-                                                                                            <h3 class="accordion-heading">
-                                                                                                <a href="@Url.Action("ViewSOCComment","AONW")" id="ShowData">Show Comment</a>
-                                                                                            </h3>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </h3>
-                                                                            </div>
-                                                                           
-                                                                        </div>
-                                                                        
-
-                                                                        @*<div class="card">
-                                                                    <div class="card-header">
-                                                                        <h3 class="accordion-heading">
-                                                                            <a class="collapsed" href="#Progress" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Printing">
-                                                                                <i class="fas fa-print"></i>  SoC Progress<span class="accordion-indicator"><i class="fas fa-chevron-up"></i></span>
-                                                                            </a>
-                                                                        </h3>
-                                                                    </div>
-                                                                    <div class="collapse" id="Progress" data-parent="#shop-categories">
-                                                                        <div class="card-body">
-                                                                            <div class="widget widget-links">
-                                                                                <ul class="widget-list">
-        =======
-                                                            @*}*@
-                                                                        @*<div class="card">
-                        <div class="card-header">
-                            <h3 class="accordion-heading">
-                                <a class="collapsed" href="#Progress" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="Printing">
-                                    <i class="fas fa-print"></i>  SoC Progress<span class="accordion-indicator"><i class="fas fa-chevron-up"></i></span>
-                                </a>
-                            </h3>
-                        </div>
-                        <div class="collapse" id="Progress" data-parent="#shop-categories">
-                            <div class="card-body">
-                                <div class="widget widget-links">
-                                    <ul class="widget-list">
-        >>>>>>> 97bfef546ef50a8cc836b51143a5fe4ddc445cb3
-
-                                        <li class="widget-list-item" id="mAccess"><a class="widget-list-link d-flex justify-content-between align-items-center" href="@Url.Action("SocTimeline","AoNW")"><span><i class="fas fa-layer-group"></i>  Timeline for SoC</span></a></li>
-                                        <li class="widget-list-item" id="mPrintingUser"><a class="widget-list-link d-flex justify-content-between align-items-center" href="#"><span><i class="fas fa-layer-group"></i>  Comparison with DAP timelines</span></a></li>
-
+                                        <li class="sidebar-item active">
+                                            <a href="#mom" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                                <span class="align-middle">MoM</span>
+                                            </a>
+                                            <ul id="mom" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
+                                                <li class="sidebar-item" id="view_meet">
+                                                    <a class="sidebar-link" href="@Url.Action("ViewMeeting","AoNW")"><span><i class="fas fa-layer-group"></i>  View Meeting</span></a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>*@
-</div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                </div>
+                    </div><div class="simplebar-placeholder" style="width: auto; height: 1061px;"></div>
+                </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar simplebar-visible" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar simplebar-visible" style="height: 141px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div>
             </div>
-
-
-
         </nav>
 
-        <!-- Page Content  -->
-        <div id="content">
 
+        <div class="main">
+            <!-----Header Start----->
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+                <div class="container-fluid">
+                    <div class="row w-100">
+                        <div class="col-md-3 d-flex align-items-center">
+                            <label class="userlbl mb-0"><i class="fas fa-user-cog"></i> Welcome :- @Session["UserName"].ToString()</label>
+                        </div>
+                        <div class="col-md-6 headettxt">
+                            ACQUISITION PORTAL
+                        </div>
+                        <div class="col-md-3 pr-0 d-flex justify-content-end align-items-center">
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user-alt mr-2"></i>My Profile
 
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info togpos">
-                    <i class="fas fa-align-left"></i>
-                    <span>  Menu</span>
-                </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-align-justify"></i>
-                </button>
-
-
-            </div>
-
-
-
-
-            <div>
-
-                @RenderBody()
-            </div>
-
-
-
-
-            <p id="bg-text">Login as @Session["UserName"].ToString()</p>
-            <p id="bg-text1">Login as @Session["UserName"].ToString()</p>
-            <p id="bg-text2">Login as @Session["UserName"].ToString()</p>
-
-
-
-
-        </div>
-
-    </div>
-
-    <!-------------footer start-------------->
-    <footer class="bg-dark footer-bx">
-        <div class="bg-darker">
-            <div class="container">
-                <div class="pb-2 pt-3 fnt-s text-light opacity-80 text-center">
-                    © All rights reserved. 2021
-                    <a class="text-light" href="#" target="_blank" rel="noopener"> By Acquisition Portal</a>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="/Account/ChangePassword" class="dropdown-item"><i class="fas fa-lock mr-2"></i>Change Password</a>
+                                    <a href="/Account/Logout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </footer>
+            </nav>
 
-    <div class="cz-handheld-toolbar">
-        <div class="d-table table-fixed w-100">
-            <a class="d-table-cell cz-handheld-toolbar-item" href="#shop-sidebar" data-toggle="sidebar">
-                <span class="cz-handheld-toolbar-icon"><svg class="svg-inline--fa fa-bars fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg><!-- <i class="fas fa-bars"></i> --></span>
-                <span class="cz-handheld-toolbar-label">MY ACCOUNT</span>
-            </a>
+            <main class="content">
+                @RenderBody()
+            </main>
+
+            <!-------------footer start-------------->
+            <footer class="bg-dark footer-bx">
+                <div class="bg-darker">
+                    <div class="container">
+                        <div class="pb-2 pt-3 fnt-s text-light opacity-80 text-center">
+                            © All rights reserved. 2021
+                            <a class="text-light" href="#" target="_blank" rel="noopener"> By Acquisition Portal</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-------------footer end-------------->
         </div>
     </div>
-    <!-------------footer end-------------->
+
+
+
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/fontawesome-5.12.1/js/all.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {

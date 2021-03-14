@@ -4,6 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+    $(document).ready(function () {
+        $("#pages").addClass("show");
+        $("#mAccess").addClass("activetextclr");
+    });
+</script>
+
+
 @* custom browse file js *@
 <script>
     $(document).ready(function () {
@@ -13,18 +21,18 @@
 
 
 </script>
-<div class="mt-3 box-properties">
+<div class="mt-3 container-fluid"">
 
-    <div class="tabHead mb-3">
+    <div class="tabHead mb-1">
         <div class="row">
-            <div class="col-md-6"><h4>SoC Upload</h4></div>
+            <div class="col-md-6"><h3>SoC Upload</h3></div>
 
         </div>
     </div>
-    <div class="mt-3">
 
+    <div class="">
         <form method="post" enctype="multipart/form-data">
-            <div class="jumbotron socBox">
+            <div class="card flex-fill w-100 p-3">
                 <div class="form-group row">
 
                     <label for=" " class="col-sm-3 col-form-label">SoC Type</label>
@@ -136,6 +144,7 @@
         </form>
        
     </div>
+
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
