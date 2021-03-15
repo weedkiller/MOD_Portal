@@ -27,18 +27,82 @@ namespace ACQ.Web.App
             string ipaddress = Request.UserHostAddress;
             Exception ex = Server.GetLastError();
             Server.ClearError();
-            //Response.Redirect(String.Format("~/Error"));
+            Response.Redirect(String.Format("~/Account/Error"));
+
+            //Exception exception = Server.GetLastError();
+            //HttpException httpException = exception as HttpException;
+
+
         }
 
-        public class SessionExpireAttribute : ActionFilterAttribute
+        protected void Application_BeginRequest()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_MapRequestHandler()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_PostMapRequestHandler()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_AcquireRequestState()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_PreRequestHandlerExecute()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_PostRequestHandlerExecute()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_EndRequest()
+        {
+            Response.Redirect(String.Format("~/Account/Error"));
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var app = sender as HttpApplication;
+            if (app != null && app.Context != null)
+            {
+                app.Context.Response.Headers.Remove("Server");
+                app.Response.Headers.Remove("Server");           //Remove Server Header   
+                app.Response.Headers.Remove("X-AspNet-Version"); //Remove X-AspNet-Version Header
+            }
+        }
+        public class SessionExpire : ActionFilterAttribute
         {
             public override void OnActionExecuting(ActionExecutingContext filterContext)
             {
                 HttpContext ctx = HttpContext.Current;
                 // check  sessions here
-                if (HttpContext.Current.Session["Comp_ReferenceNo"] == null)
+                if (HttpContext.Current.Session["UserName"] == null)
                 {
-                    filterContext.Result = new RedirectResult(HttpContext.Current.Session["UrlPath"].ToString());
+                    filterContext.Result = new RedirectResult("~/Account/Login");
+                    return;
+                }
+                base.OnActionExecuting(filterContext);
+            }
+        }
+        public class SessionExpireRefNo : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
+            {
+                HttpContext ctx = HttpContext.Current;
+                // check  sessions here
+                if (HttpContext.Current.Session["UserName"] == null)
+                {
+                    filterContext.Result = new RedirectResult("~/Account/Login");
                     return;
                 }
                 base.OnActionExecuting(filterContext);

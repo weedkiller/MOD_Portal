@@ -51,7 +51,6 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Xml.XmlDocument.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Xml.XPath.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Xml.XPath.XDocument.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Buffers.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
@@ -126,3 +125,12 @@ E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.Co
 E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\shifali\Mod10march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\MOD_Portal\Src\ACQ.Web.App\bin\AngleSharp.Css.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\AngleSharp.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\HtmlSanitizer.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encoding.CodePages.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\AngleSharp.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\AngleSharp.Css.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\HtmlSanitizer.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Runtime.CompilerServices.Unsafe.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encoding.CodePages.xml

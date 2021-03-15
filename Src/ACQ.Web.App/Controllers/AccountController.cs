@@ -2,12 +2,16 @@
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
+using Ganss.XSS;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -17,26 +21,50 @@ namespace ACQ.Web.App.Controllers
 {
     public class AccountController : Controller
     {
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
         // GET: Account
+
+       
         public ActionResult Login()
         {
+            Session["CAPTCHA"] = GetRandomText();
             return View();
         }
-        //[ValidateAntiForgeryToken]
+        public ActionResult Error()
+        {
+           
+            return View();
+        }
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel login)
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
             //return View();
             IEnumerable<LoginViewModel> model = null;
             try
             {
                 //Captcha Code Here
-                if (!this.IsCaptchaValid("Captcha is not valid"))
+               // FormCollection form = new FormCollection();
+
+                string clientCaptcha = form["clientCaptcha"];
+                string serverCaptcha = Session["CAPTCHA"].ToString();
+
+
+                 clientCaptcha = sanitizer.Sanitize(clientCaptcha);
+                if (!clientCaptcha.Equals(serverCaptcha.ToUpper()))
                 {
-                    ViewBag.errormessage = "Entered Captcha is not Valid.";
+                    ViewBag.ShowCAPTCHA = serverCaptcha;
+
+                    ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
+                //if (!this.IsCaptchaValid("Captcha is not valid"))
+                //{
+                //    ViewBag.errormessage = "Entered Captcha is not Valid.";
+                //    return View();
+                //}
                 if (ModelState.IsValid)
                 {
                     using (var client = new HttpClient())
@@ -152,6 +180,65 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex) 
             { return View(); }
+        }
+
+        // <summary>
+        /// get random string
+        /// </summary>
+        /// <returns></returns>
+        private string GetRandomText()
+        {
+            StringBuilder randomText = new StringBuilder();
+            string alphabets = "012345679ACEFGHKLMNPRSWXZabcdefghijkhlmnopqrstuvwxyzjjfjdjjdfjdj";
+            Random r = new Random();
+            for (int j = 0; j <= 7; j++)
+            {
+                randomText.Append(alphabets[r.Next(alphabets.Length)]);
+            }
+            return randomText.ToString();
+        }
+
+        public FileResult GetCaptchaImage()
+        {
+            string text = Session["CAPTCHA"].ToString();
+
+            //first, create a dummy bitmap just to get a graphics object
+            Image img = new Bitmap(1, 1);
+            Graphics drawing = Graphics.FromImage(img);
+
+            Font font = new Font("Blox BRK", 25);
+            //measure the string to see how big the image needs to be
+            SizeF textSize = drawing.MeasureString(text, font);
+
+            //free up the dummy image and old graphics object
+            img.Dispose();
+            drawing.Dispose();
+
+            //create a new image of the right size
+            img = new Bitmap((int)textSize.Width + 40, (int)textSize.Height + 20);
+            drawing = Graphics.FromImage(img);
+
+            Color backColor = Color.AntiqueWhite;
+            Color textColor = Color.Chartreuse;
+            //paint the background
+            drawing.Clear(backColor);
+
+            //create a brush for the text
+            Brush textBrush = new SolidBrush(textColor);
+
+            drawing.DrawString(text, font, textBrush, 40, 20);
+
+            drawing.Save();
+
+            font.Dispose();
+            textBrush.Dispose();
+            drawing.Dispose();
+
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            img.Dispose();
+
+            return File(ms.ToArray(), "image/png");
         }
         [HttpGet]
         public ActionResult VerifyOtp( )
