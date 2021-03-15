@@ -49,6 +49,7 @@ namespace ACQ.Web.App.Controllers
             public string error { get; set; }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SoCPdfRegistration(HttpPostedFileBase file, string SoC_Type)
         {
             dynamic expando = new ExpandoObject();

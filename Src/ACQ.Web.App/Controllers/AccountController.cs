@@ -14,8 +14,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
-
+using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -38,7 +37,7 @@ namespace ACQ.Web.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        //[SessionExpire]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
             //return View();
@@ -60,6 +59,7 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
+                
                 //if (!this.IsCaptchaValid("Captcha is not valid"))
                 //{
                 //    ViewBag.errormessage = "Entered Captcha is not Valid.";
@@ -69,7 +69,11 @@ namespace ACQ.Web.App.Controllers
                 {
                     using (var client = new HttpClient())
                     {
-                        
+                         
+
+                        login.InternalEmailID = sanitizer.Sanitize(login.InternalEmailID);
+                        login.Password = sanitizer.Sanitize(login.Password);
+
                         client.BaseAddress = new Uri(WebAPIUrl);
                         
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
@@ -342,13 +346,18 @@ namespace ACQ.Web.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionExpire]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
             if (ModelState.IsValid)
             {
                 if (Session["UserName"] != null)
                 {
+                    //input=
                     input.UserName = Session["UserName"].ToString();
+                    input.UserName = sanitizer.Sanitize(input.UserName);
+                    input.Password = sanitizer.Sanitize(input.Password);
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");

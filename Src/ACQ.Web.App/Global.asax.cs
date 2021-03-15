@@ -35,40 +35,6 @@ namespace ACQ.Web.App
 
         }
 
-        protected void Application_BeginRequest()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_MapRequestHandler()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_PostMapRequestHandler()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_AcquireRequestState()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_PreRequestHandlerExecute()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_PostRequestHandlerExecute()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
-
-        protected void Application_EndRequest()
-        {
-            Response.Redirect(String.Format("~/Account/Error"));
-        }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {

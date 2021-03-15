@@ -42,6 +42,8 @@
 
                             @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post))
                             {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary()
                                 <input type="hidden" name="SoCId" id="SoCId" value="@Model.SoCId" />
 
                                 <div class="row">
