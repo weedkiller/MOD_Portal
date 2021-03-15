@@ -244,6 +244,20 @@ namespace ACQ.Web.ExternalServices.Email
             }
             return usOutputViewModel;
         }
+        public static void SendToParticipants(string email, string mailPath)
+        {
+            
+            try
+            {
+                //string Body = EmailHelper.SendOTpPopulateBody(email, mailPath);
+                EmailHelper.SendEmail(email, mailPath);
+
+            }
+            catch (Exception)
+            {
+            }
+            
+        }
         private static string SendOTpPopulateBody(string email, string mailPath)
         {
             return mailPath.Replace("{Name}", email)

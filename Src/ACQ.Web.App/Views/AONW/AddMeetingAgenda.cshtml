@@ -18,6 +18,36 @@
         acqMasterLabel = AcqMasterList.Where(x => x.aon_id == Model.TypeofAgenda).Select(s => s.item_description).FirstOrDefault();
     }
     string aocMasterJson = Json.Encode(AcqMasterList);
+
+    int userID = 0;
+
+    if (Model.MeetingAgendaComment != null)
+    {
+        userID = Model.MeetingAgendaComment.UserID;
+    }
+    string hiddenClass = "";
+    string itemDescription = "";
+    string disableClass = "";
+    if (Model.Pid == 0 && userID > 0)
+    {
+        hiddenClass = "hiddenRow";
+    }
+    if (Model.Pid > 0 && userID > 0)
+    {
+        disableClass = "disable";
+
+    }
+    bool isViewComment = false;
+
+    if (Model.MeetingAgendaCommentList.Count > 0)
+    {
+        isViewComment = true;
+
+    }
+    if (!string.IsNullOrEmpty(Model.Previous_Meeting))
+    {
+        itemDescription = Model.Previous_Meeting;
+    }
 }
 <style>
     #meetingagendatable_length {
@@ -35,160 +65,310 @@
     #meetingagendatable_paginate {
         display: none;
     }
+
+    .flip-scroll {
+        overflow: scroll;
+        height: 900px;
+        Width: 100%;
+    }
+
+    .form-label {
+        font-size: 1.2rem;
+    }
+
+    .ui-autocomplete {
+        border: 1px solid #d4d4d4;
+        max-width: 37%;
+        list-style: none;
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+
+        .ui-autocomplete li {
+            padding: 5px 10px 5px 10px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+            .ui-autocomplete li:hover {
+                background-color: #e9e9e9;
+            }
+
+    .margin-b-3 {
+        margin-bottom: 3px;
+    }
+
+    .hiddenRow {
+        display: none;
+    }
 </style>
 <div class="row m-0">
-    <div class="col-md-12">
-            <h4 class="text-center">Add Meeting Agenda for @ViewBag.mtype Dated @ViewBag.dated </h4>
-            <div class="bg-white p-3">
-                <div class="needs-validation p-2" novalidate="">
+    <div class="mt-3 box-properties col-md-12">
+        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
 
-                    <div class="clearfix mt-0"></div>
-                    <div class="form-group">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="meetingagendatable">
-                                <thead>
-                                <th>Type of Agenda </th>
-                                <th>Agenda Item</th>
-                                <th>Action</th>
-                                </thead>
-                            </table>
+                <div class="col-md-12">
+                    <div class="portlet-body flip-scroll">
+                        
+                        <div class="bg-white p-3">
+                            <h4 class="text-center">Meeting Agenda for @ViewBag.mtype Dated @ViewBag.dated </h4>
+                            <div class="needs-validation p-2" novalidate="">
+
+                                <div class="clearfix mt-0"></div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="meetingagendatable">
+                                            <thead>
+                                            <th>Type of Agenda </th>
+                                            <th>Agenda Item</th>
+                                            <th>Action</th>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                @using (Html.BeginForm(formSubmitActionName, "AONW", FormMethod.Post, new { enctype = "multipart/form-data", id = "meetAgenda" }))
+                                {
+                                    <input type="hidden" name="meeting_id" id="meeting_id" value="@Model.meeting_id" />
+                                    <input type="hidden" name="Pid" id="Pid" value="@Model.Pid" />
+                                    <input type="hidden" name="Comments" id="Comments" value="@Model.Comments" />
+                                    <div class="row @hiddenClass">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="recovery-email"> Type of Agenda <i class="text-danger">*</i></label>
+                                                <select class="form-select form-control @disableClass" id="TypeofAgenda" @if (userID == 0) { @Html.Raw("name='AgendaItem' required ") } onchange="SelectVersion()">
+                                                    <option value="">-Select-</option>
+                                                    <option value="AON Accord" @if (Model.AgendaItem != null) { if ("AON Accord" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        AON Accord
+                                                    </option>
+                                                    <option value="Previous Meeting" @if (Model.AgendaItem != null) { if ("Previous Meeting" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        Minutes of Previous Meetings
+                                                    </option>
+                                                    <option value="Others" @if (Model.AgendaItem != null) { if ("Others" == Model.AgendaItem) { @Html.Raw("Selected") } }>
+                                                        Others
+                                                    </option>
+                                                </select>
+
+                                                <div class="invalid-feedback">Please select valid type of Agenda</div>
+                                            </div>
+                                            @if (Model.Pid > 0 && userID > 0)
+                                            {
+                                                <input type="hidden" name="AgendaItem" value="@Model.AgendaItem" />
+                                            }
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group" id="TypeofAgenda">
+                                                <label class="form-label" for="recovery-email"> Select Agenda item <i class="text-danger">*</i></label>
+                                                @*<input id="drpTypeofAgenda" class="form-control  @disableClass" value="@acqMasterLabel" required />*@
+
+                                                <select class="form-select form-control @disableClass" width="auto" id="drpTypeofAgenda" name="TypeofAgenda">
+                                                    <option value="">-Select-</option>
+                                                    @if (ViewBag.dropdownTypeofAgenda != null)
+                                                    {
+                                                        foreach (var item in ViewBag.dropdownTypeofAgenda)
+                                                        {
+                                                            if (item.aon_id == Model.TypeofAgenda)
+                                                            {
+                                                                itemDescription = item.item_description;
+                                                                <option value="@item.aon_id" width="auto" selected="selected"><span class="hh">@item.item_description</span></option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option width="auto" value="@item.aon_id"><span class="hh">@item.item_description</span></option>
+                                                            }
+                                                        }
+                                                    }
+
+                                                </select>
+                                                <div class="invalid-feedback">Please select valid type of Agenda</div>
+                                            </div>
+                                            @if (Model.Pid > 0 && userID > 0)
+                                            {
+                                                <input type="hidden" name="TypeofAgenda" value="@Model.TypeofAgenda" />
+                                            }
+                                            </div>
+
+                                        <div class="col-md-12" id="Previous_Meeting">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Previous_Meeting">Agenda item <i class="text-danger">*</i> </label>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control @disableClass" id="previous_Meeting" rows="3" name="Previous_Meeting" value="@Model.Previous_Meeting"></textarea>
+                                                    @*@Html.TextAreaFor(x => x.Previous_Meeting, new { @class = "form-control disableClass", @name = "Previous_Meeting", @id = "previous_Meeting", @placeholder = "Text" })*@
+                                                    @*<input type="hidden" name="Previous_Meeting" value="" required />*@
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label" for="Background">Background <i class="text-danger">*</i></label>
+                                                    </div>
+                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenCommentModal('background')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
+                                                            @*<button class="btn-sm btn-primary" onclick="return DeleteComment('background')" title="Delete Comment"><i class="fa fa-plus-circle mr-1"></i>Delete Comment</button>*@
+                                                        </div>
+                                                    }
+                                                    else if (isViewComment)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenViewModal('BackgroundComment')" title="View Comment"><i class="fa fa-eye mr-1"></i>View Comment</button>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Background" rows="3" name="Background"></textarea>
+                                                    <input type="hidden" name="Background" value='@Html.Raw(Model.Background)' required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label" for="Proposal">Proposal <i class="text-danger">*</i></label>
+                                                    </div>
+                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenCommentModal('proposal')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
+                                                            @*<button class="btn-sm btn-primary" onclick="return DeleteComment('proposal')" title="Delete Comment"><i class="fa fa-plus-circle mr-1"></i>Delete Comment</button>*@
+                                                        </div>
+                                                    }
+                                                    else if (isViewComment)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenViewModal('ProposalComment')" title="View Comment"><i class="fa fa-eye mr-1"></i>View Comment</button>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Proposal" rows="3" name="Proposal"></textarea>
+                                                    <input type="hidden" name="Proposal" value='@Html.Raw(Model.Proposal)' required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label" for="Background">Approval sought <i class="text-danger">*</i></label>
+                                                    </div>
+                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenCommentModal('approvalsought')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
+                                                            @*<button class="btn-sm btn-primary" onclick="return DeleteComment('approvalsought')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Delete Comment</button>*@
+                                                        </div>
+                                                    }
+                                                    else if (isViewComment)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenViewModal('ApprovalSoughtComment')" title="View Comment"><i class="fa fa-eye mr-1"></i>View Comment</button>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" required id="Approval_sought" rows="3" name="Approval_sought"></textarea>
+                                                    <input type="hidden" name="Approval_sought" value='@Html.Raw(Model.Approval_sought)' required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label" for="Discussion">Discussion</label>
+                                                    </div>
+                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenCommentModal('discussion')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
+                                                            @*<button class="btn-sm btn-primary" onclick="return DeleteComment('discussion')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Delete Comment</button>*@
+                                                        </div>
+                                                    }
+                                                    else if (isViewComment)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenViewModal('DiscussionComment')" title="View Comment"><i class="fa fa-eye mr-1"></i>View Comment</button>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" id="Discussion" rows="3" value="@Model.Discussion" name="Discussion"></textarea>
+                                                    <input type="hidden" name="Discussion" value='@Html.Raw(Model.Discussion)' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label" for="Decision">Decision</label>
+                                                    </div>
+                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenCommentModal('decision')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
+                                                            @*<button class="btn-sm btn-primary" onclick="return DeleteComment('decision')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Delete Comment</button>*@
+                                                        </div>
+                                                    }
+                                                    else if (isViewComment)
+                                                    {
+                                                        <div class="col-md-6 text-right margin-b-3">
+                                                            <button class="btn-sm btn-primary" onclick="return OpenViewModal('DecisionComment')" title="View Comment"><i class="fa fa-eye mr-1"></i>View Comment</button>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" id="Decision" rows="3" value="@Model.Decision" name="Decision"></textarea>
+                                                    <input type="hidden" name="Decision" value='@Html.Raw(Model.Decision)' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="hideAccord" typeof="hidden">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Accord" id="Aon_selected">AON Accorded</label>
+                                                <div class="form-floating">
+                                                    <select id="Accord" class="form-select form-control  @disableClass" @if (userID == 0) { @Html.Raw("name='IsActive'") }>
+                                                        <option value="">-Select-</option>
+                                                        <option value="Y" @if (Model.IsActive == "Y") { @Html.Raw("selected='selected'") }>Yes</option>
+
+                                                        <option value="N" @if (Model.IsActive == "N") { @Html.Raw("selected='selected'") }>No</option>
+
+                                                    </select>
+
+                                                </div>
+                                                @if (Model.Pid > 0 && userID > 0)
+                                                {
+                                                    <input type="hidden" name="IsActive" value="@Model.AgendaItem" />
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary float-right" type="submit">Save Meeting Agenda</button>
+                                            <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewMeeting';">Back</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
                         </div>
                     </div>
-                    @using (Html.BeginForm(formSubmitActionName, "AONW", FormMethod.Post, new { enctype = "multipart/form-data", id = "meetAgenda" }))
-                    {
-                        <input type="hidden" name="meeting_id" id="meeting_id" value="@Model.meeting_id" />
-                        <input type="hidden" name="Pid" id="Pid" value="@Model.Pid" />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="recovery-email"> Type of Agenda <i class="text-danger">*</i></label>
-                                    <select class="form-select form-control" id="TypeofAgenda" name="AgendaItem" onchange="SelectVersion()" required>
-                                        <option value="">-Select-</option>
-                                        <option value="AON Accord" @if (Model.AgendaItem != null) { if ("AON Accord" == Model.AgendaItem) { @Html.Raw("Selected") } }>
-                                            AON Accord
-                                        </option>
-                                        <option value="Previous Meeting" @if (Model.AgendaItem != null) { if ("Previous Meeting" == Model.AgendaItem) { @Html.Raw("Selected") } }>
-                                            Minutes of Previous Meetings
-                                        </option>
-                                        <option value="Others" @if (Model.AgendaItem != null) { if ("Others" == Model.AgendaItem) { @Html.Raw("Selected") } }>
-                                            Others
-                                        </option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select valid type of Agenda</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group" id="TypeofAgenda">
-                                    <label class="form-label" for="recovery-email"> Select Agenda item <i class="text-danger">*</i></label>
-                                    <input id="drpTypeofAgenda" class="form-control" value="@acqMasterLabel" required />
-                                    <input type="hidden" name="TypeofAgenda" value="@Model.TypeofAgenda" />
-                                    @*<select class="form-select form-control" width="auto" id="drpTypeofAgenda" name="TypeofAgenda">
-                                        <option value="">-Select-</option>
-                                        @if (ViewBag.dropdownTypeofAgenda != null)
-                                        {
-                                            foreach (var item in ViewBag.dropdownTypeofAgenda)
-                                            {
-                                                if (item.aon_id == Model.TypeofAgenda)
-                                                {
-                                                    <option value="@item.aon_id" width="auto" selected="selected"><span class="hh">@item.item_description</span></option>
-                                                }
-                                                else
-                                                {
-                                                    <option width="auto" value="@item.aon_id"><span class="hh">@item.item_description</span></option>
-                                                }
-                                            }
-                                        }
-
-                                    </select>*@
-                                    <div class="invalid-feedback">Please select valid type of Agenda</div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12" id="Previous_Meeting">
-                                <div class="form-group">
-                                    <label class="form-label" for="Previous_Meeting">Agenda item <i class="text-danger">*</i> </label>
-                                    <div class="form-floating">
-                                        @Html.TextAreaFor(x => x.Previous_Meeting, new { @class = "form-control", @name = "Previous_Meeting", @id = "previous_Meeting", @placeholder = "Text" })
-                                        @*<input type="hidden" name="Previous_Meeting" value="" required />*@
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="Background">Background <i class="text-danger">*</i></label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control" required id="Background" rows="3" name="Background"></textarea>
-                                        <input type="hidden" name="Background" value='@Html.Raw(Model.Background)' required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="Proposal">Proposal <i class="text-danger">*</i></label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control" required id="Proposal" rows="3" name="Proposal"></textarea>
-                                        <input type="hidden" name="Proposal" value='@Html.Raw(Model.Proposal)' required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="Background">Approval sought <i class="text-danger">*</i></label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control" required id="Approval_sought" rows="3" name="Approval_sought"></textarea>
-                                        <input type="hidden" name="Approval_sought" value='@Html.Raw(Model.Approval_sought)' required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="Discussion">Discussion</label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="Discussion" rows="3" value="@Model.Discussion" name="Discussion"></textarea>
-                                        <input type="hidden" name="Discussion" value='@Html.Raw(Model.Discussion)' />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="Decision">Decision</label>
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="Decision" rows="3" value="@Model.Decision" name="Decision"></textarea>
-                                        <input type="hidden" name="Decision" value='@Html.Raw(Model.Decision)' />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" id="hideAccord" typeof="hidden">
-                                <div class="form-group">
-                                    <label class="form-label" for="Accord" id="Aon_selected">AON Accorded</label>
-                                    <div class="form-floating">
-                                        <select id="Accord" class="form-select form-control" name="IsActive">
-                                            <option value="">-Select-</option>
-                                            <option value="Y" @if (Model.IsActive == "Y") { @Html.Raw("selected='selected'") }>Yes</option>
-
-                                            <option value="N" @if (Model.IsActive == "N") { @Html.Raw("selected='selected'") }>No</option>
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-md-12">
-                                <button class="btn btn-primary float-right" type="submit" onchange="propsal()">Save Meeting Agenda</button>
-                                <button class="btn btn-secondary float-right mr-3" type="button" onclick="window.location='/AONW/ViewMeeting';">Back</button>
-                            </div>
-                        </div>
-                    }
                 </div>
-
             </div>
+        </div>
     </div>
 </div>
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -209,7 +389,60 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Add Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form onsubmit="return AddComment();">
+                <div class="modal-body">
+                    <label>Agenda Item : @itemDescription</label>
+                    <textarea class="form-control" id="commentArea" name="commentArea"></textarea>
+                    <input type="hidden" id="commentType" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="commentViewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewCommentModalLabel">View Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="commentViewTable">
+                        <thead>
+                        <th>Name </th>
+                        <th>Comment</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
+@*<script src="~/Scripts/bootstrap-autocomplete.js"></script>*@
+
 <script src="~/assets/js/CkEditor/lang/en.js"></script>
 <script src="~/assets/js/CkEditor/ckeditor.js"></script>
 
@@ -224,9 +457,13 @@
     var decisionHdn = $("input[name=Decision]");
     var background = $("input[name=Background]");
     var approval_sought = $("input[name=Approval_sought]");
+    var userID = '@userID';
+
     $(document).ready(function () {
         SelectVersion();
-        AocMasterAutoComplete();
+
+        SetCommentObj();
+        DisableFields();
          var mtype = '@msg';
         if (mtype != '')
             $("#exampleModal").modal('show');
@@ -274,8 +511,11 @@
                                 "data": "Pid", "render": function (data) {
                                     var url = '/AONW/EditMeetingAgenda/?ID='+data;
                                     var meetIdObj = $.grep(response, function (element) { return element.Pid == data });
-                                    var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id ;
-                                    return "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
+                                    var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id;
+                                    var html = "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >";
+                                    if (userID == '0')
+                                        html += "&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
+                                    return html;
                                 }
                             }
                         ],
@@ -312,7 +552,11 @@
             }
 
             $(approval_sought).val(approval);
+
+            var commentString = JSON.stringify(commentObj);
+            $('#Comments').val(commentString);
         });
+        //AocMasterAutoComplete();
     });
 
 
@@ -345,22 +589,127 @@
     function AocMasterAutoComplete() {
 
         var listObj = JSON.parse('@Html.Raw(aocMasterJson)');
-        $("#drpTypeofAgenda").autocomplete({
-            source: function (request,response) {
-                response($.map(listObj, function (item) {
-                    return {
-                        label: item.item_description,
-                        value:item.aon_id
-                    };
-                }));
-            },
-            select: function (event, ui) {
-                event.preventDefault();
-                $("input[name=TypeofAgenda]").val(ui.item.value);
-                $("#drpTypeofAgenda").val(ui.item.label);
+
+        if ($("#drpTypeofAgenda").length > 0) {
+            //$("#drpTypeofAgenda").autocomplete({
+            //    source: function (request, response) {
+            //        response($.map(listObj, function (item) {
+            //            return {
+            //                label: item.item_description,
+            //                value: item.aon_id
+            //            };
+            //        }));
+            //    },
+            //    select: function (event, ui) {
+            //        event.preventDefault();
+            //        $("input[name=TypeofAgenda]").val(ui.item.value);
+            //        $("#drpTypeofAgenda").val(ui.item.label);
+            //    }
+            //});
+
+            $("#drpTypeofAgenda").autoComplete({
+                resolver: 'custom',
+                events: {
+                    search: function (qry, callback) {
+                        callback($.map(listObj, function (item) {
+                            return {
+                                text: item.item_description,
+                                value: item.aon_id
+                            };
+                        }));
+                    }
+                }
+            });
+        }
+    }
+    var commentModal = $('#commentModal');
+    var commentObj = {ID:0,UserID:0,MeetingAgendaID:0,ProposalComment:"",BackgroundComment:"",ApprovalSoughtComment:"",DiscussionComment:"",DecisionComment:""};
+    var commentList = [];
+    function OpenCommentModal(commentType) {
+        $(commentModal).find('#commentType').val(commentType);
+        var msg = "";
+        if (commentType == "proposal")
+            msg= commentObj.ProposalComment;
+        else if (commentType == "background")
+            msg= commentObj.BackgroundComment;
+        else if (commentType == "approvalsought")
+            msg =commentObj.ApprovalSoughtComment;
+        else if (commentType == "decision")
+            msg=commentObj.DecisionComment ;
+        else if (commentType == "discussion")
+            msg = commentObj.DiscussionComment;
+        $(commentModal).find('#commentModalLabel').html('Add comment for ' + commentType );
+        $(commentModal).find('#commentArea').val(msg);
+        $(commentModal).modal('show');
+        return false;
+    }
+    function AddComment() {
+        var commentArea = $(commentModal).find('#commentArea').val();
+        var commentType = $(commentModal).find('#commentType').val();
+        if (commentType == "proposal")
+            commentObj.ProposalComment = commentArea;
+        else if (commentType == "background")
+            commentObj.BackgroundComment = commentArea;
+        else if (commentType == "approvalsought")
+            commentObj.ApprovalSoughtComment = commentArea;
+        else if (commentType == "decision")
+            commentObj.DecisionComment = commentArea;
+        else if (commentType == "discussion")
+            commentObj.DiscussionComment = commentArea;
+        $(commentModal).modal('hide');
+        return false;
+    }
+    function DeleteComment(commentType) {
+        if (commentType == "proposal")
+            commentObj.ProposalComment = "";
+        else if (commentType == "background")
+            commentObj.BackgroundComment = "";
+        else if (commentType == "approvalsought")
+            commentObj.ApprovalSoughtComment = "";
+        else if (commentType == "decision")
+            commentObj.DecisionComment = "";
+        else if (commentType == "discussion")
+            commentObj.DiscussionComment = "";
+        $("#exampleModal .modal-body p").html('Comment Deleted Successfully');
+        $("#exampleModal").modal('show');
+        return false;
+    }
+    function SetCommentObj() {
+        var id = '@Model.Pid';
+        var userid = '@userID';
+        var isViewComment = '@isViewComment';
+        if (id != '0' && userid!='0') {
+            var comments = '@Html.Raw(Model.Comments)';
+            commentObj = JSON.parse(comments);
+        }
+        else if (isViewComment == "True") {
+           var comments = '@Html.Raw(Model.Comments)';
+            commentList = JSON.parse(comments);
+        }
+    }
+    function OpenViewModal(commentType) {
+
+        var Html = "";
+        $.map(commentList, function (ele) {
+            for (var propname in ele) {
+                if (propname == commentType) {
+                    Html += "<tr><td>" + ele.Username + "</td><td>" + ele[propname] + "</td></tr>";
+                }
             }
         });
+        $("#commentViewModal #commentViewTable tbody").html(Html);
+        $("#commentViewModal").modal('show');
+        return false;
     }
-
+    function DisableFields() {
+        var editor;
+        if (userID != '0') {
+            $('.disable').attr('disabled', 'disabled');
+            CKEDITOR.on('instanceReady', function (ev) {
+                editor = ev.editor;
+                editor.setReadOnly();
+            });
+        }
+    }
 </script>
 

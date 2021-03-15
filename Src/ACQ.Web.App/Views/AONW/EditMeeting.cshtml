@@ -19,6 +19,7 @@
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary()
                                     <input type="hidden" name="meeting_id" value="@Model.meeting_id" />
+                                    <input type="hidden" name="Status" value="@Model.Status" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -66,8 +67,13 @@
                                         <div class="form-group">
                                             <label class="form-label" for="Proposal">officers participated <i class="danger">*</i></label>
                                             <div class="form-floating">
-                                                @Html.TextAreaFor(x => x.officers_participated, new { @class = "form-control", @placeholder = "Remarks", @id = "officers_participated", @name = "officers_participated" })
-                                                <input type="hidden" name="officers_participated" value="@Html.Raw(Model.officers_participated)" required />
+                                                @{
+                                                    var participantsList = ViewBag.ParticipantsList as List<ACQ.Web.ViewModel.AONW.MeetingParticipants>;
+
+                                                    Html.RenderPartial("_MeetingParticipants", participantsList);
+                                                }
+                                                @*@Html.TextAreaFor(x => x.officers_participated, new { @class = "form-control", @placeholder = "Remarks", @id = "officers_participated", @name = "officers_participated" })
+                        <input type="hidden" name="officers_participated" value="@Html.Raw(Model.officers_participated)" required />*@
                                             </div>
                                         </div>
                                     </div>
@@ -76,10 +82,23 @@
                                             <label class="form-label" for="Proposal">Distribution List <i class="danger">*</i></label>
                                             <div class="form-floating">
                                                 @Html.TextAreaFor(x => x.Distribution_List, new { @class = "form-control", @placeholder = "Distribution List", @id = "Distribution_List", @name = "Distribution_List" })
-                                                <input type="hidden" name="Distribution_List" value="@Html.Raw(Model.Distribution_List)" required />
+                                                <input type="hidden" name="Distribution_List" value='@Html.Raw(Model.Distribution_List)' required />
                                             </div>
                                         </div>
                                     </div>
+                                    @*<div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="status">Status</label>
+                                            <div class="form-floating">
+
+                                                <select name="Status" id="status" class="form-select form-control">
+                                                    <option @if (Model.Status == "Draft") { @Html.Raw("selected") }>Draft</option>
+                                                    <option @if (Model.Status == "Approved") { @Html.Raw("selected") }>Approved</option>
+                                                    <option @if (Model.Status == "Final") { @Html.Raw("selected") }>Final</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                     <div class="col-md-12">
                                         <div class="float-md-right">
                                             <button class="btn btn-primary mb-3 mt-2" type="submit">Update Meetings</button>

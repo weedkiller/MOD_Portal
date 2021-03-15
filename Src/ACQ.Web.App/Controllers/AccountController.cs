@@ -94,24 +94,24 @@ namespace ACQ.Web.App.Controllers
                                 model1.ExternalEmailID= model.First().ExternalEmailID.ToString();
                                 model1.InternalEmailID= model.First().InternalEmailID.ToString();
                                 model1.UserName = model.First().UserName.ToString();
-                                var remoteIpAddress = Request.UserHostAddress;
-                                string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                                if (string.IsNullOrEmpty(ip))
-                                {
-                                    ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                                }
-                                string ipaddress = model.First().IPAddress.ToString();
-                                if (ipaddress == remoteIpAddress)
-                                {
+                                //var remoteIpAddress = Request.UserHostAddress;
+                                //string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                                //if (string.IsNullOrEmpty(ip))
+                                //{
+                                //    ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                                //}
+                                //string ipaddress = model.First().IPAddress.ToString();
+                                //if (ipaddress == remoteIpAddress)
+                                //{
                                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
                                     EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
                                     ViewBag.Message = "RegistrationSuccessful";
                                     return View();
-                                }
-                                else
-                                {
-                                    return RedirectToAction("LoginReturnMsg", "Account");
-                                }
+                                //}
+                                //else
+                                //{
+                                //    return RedirectToAction("LoginReturnMsg", "Account");
+                                //}
                                 
                             }
                             else

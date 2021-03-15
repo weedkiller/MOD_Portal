@@ -1185,6 +1185,7 @@
     <Content Include="Email\BadgePassess.html" />
     <Content Include="Email\SendLinkBadgeRegistration - Copy.html" />
     <Content Include="Email\DownloadBadge.html" />
+    <Content Include="Email\SendMeetingMailToParticipants.html" />
     <Content Include="Email\SendOTPMailFormat.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -1459,7 +1460,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56934</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56934/</IISUrl>
+          <IISUrl>http://localhost:56924/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
