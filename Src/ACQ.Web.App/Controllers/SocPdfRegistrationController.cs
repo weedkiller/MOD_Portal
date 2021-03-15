@@ -14,6 +14,8 @@ using System.Web;
 using System.Web.Mvc;
 using Path = System.IO.Path;
 using ACQ.Web.ExternalServices.SecurityAudit;
+using System.Net.Http.Headers;
+using Microsoft.Graph;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -70,47 +72,70 @@ namespace ACQ.Web.App.Controllers
                         ViewBag.SoC = fileSoC.FileName;
                         string filename = DateTime.Now.ToString("ddmmhhss") + fileSoC.FileName;
 
+                        if (fileSoC.ContentType != "application/msword" && fileSoC.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        {
+                            ViewBag.UploadStatusmsg = "Please upload only .doc or .docx file";
+                            ViewBag.UploadStatus = "errormsg";
+                            return View();
+                        }
+
+
                         string FileExtension = Path.GetExtension(fileSoC.FileName);
                         if (FileExtension == ".doc" || FileExtension == ".docx")
                         {
-                            ViewBag.UploadStatus = "";
-                            filepath = UploadfilePath + filename;
-                            fileSoC.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
-                            Uploadencryption(fileSoC);
-                            fullpath = Server.MapPath(UploadfilePath) + filename;
+
+                            
                         }
-                        objattach.AttachmentFileName = "SOC";
-                        objattach.Path = filename;
-                        objattach.RefId = 2;
+                        else
+                        {
+                            ViewBag.UploadStatusmsg = "Please upload only .doc or .docx file";
+                            ViewBag.UploadStatus = "errormsg";
+                            return View();
+                        }
+                        //filepath = UploadfilePath + filename;
+                        var FileDataContent = Request.Files[0];
+                        var stream = FileDataContent.InputStream;
+                        var fileName = Path.GetFileName(FileDataContent.FileName);
+                        var UploadPath = Server.MapPath("~/App_Data/uploads");
+                        Directory.CreateDirectory(UploadPath);
+                        string path = Path.Combine(UploadPath, fileName);
+                        try
+                        {
+                            if (System.IO.File.Exists(path))
+                                System.IO.File.Delete(path);
+                            using (var fileStream = System.IO.File.Create(path))
+                            {
+                                stream.CopyTo(fileStream);
+                            }
+                            // Once the file part is saved, see if we have enough to merge it  
+                            //Shared UT = new Shared();
+                            //UT.MergeFile(path);
+                        }
+                        catch (IOException ex)
+                        {
+                            // handle  
+                        }
+
                         using (var client = new HttpClient())
                         {
-
-                            //PdfReader reader = new PdfReader(fullpath);
-                            //int intPageNum = reader.NumberOfPages;
-                            //var fields = reader.AcroFields.Fields;
-
-                            //    foreach (var key in fields.Keys)
-                            //    {
-                            //        var value = reader.AcroFields.GetField(key);
-                            //        Console.WriteLine(key + " : " + value);
-                            //        marksModel.Add(key, value);
-                            //    }
-
-
                             Application word1 = new Application();
 
-                            Document doc = word1.Documents.Open(fullpath);
-
-
+                            Document doc = word1.Documents.Open(path);
 
                             List<string> contentControlText = new List<string>();
+                            //if(contentControlText.Count==0)
+                            //{
+                            //    ViewBag.UploadStatusmsg = "File format not correct";
+                            //    ViewBag.UploadStatus = "errormsg";
+                            //    return View();
+                            //}
                             foreach (ContentControl CC in doc.ContentControls)
                             {
                                 contentControlText.Add(CC.Range.Text);
 
                             }
 
-                            if(Session["Department"].ToString()== "IDS")
+                            if (Session["Department"].ToString() == "IDS")
                             {
                                 mSercive = "Joint Staff";
                             }
@@ -172,7 +197,7 @@ namespace ACQ.Web.App.Controllers
                                 {
                                     if (contentControlText[1].ToString() == mSercive)
                                     {
-                                        
+
                                     }
                                     else
                                     {
@@ -223,6 +248,15 @@ namespace ACQ.Web.App.Controllers
                                 obj.DeletedOn = null;
                                 obj.IsDeleted = false;
                                 obj.SoC_Type = SoC_Type;
+
+                                ViewBag.UploadStatus = "";
+                                fileSoC.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
+                                Uploadencryption(fileSoC);
+                                fullpath = Server.MapPath(UploadfilePath) + filename;
+
+                                objattach.AttachmentFileName = "SOC";
+                                objattach.Path = filename;
+                                objattach.RefId = 2;
                             }
                             else
                             {
@@ -231,9 +265,10 @@ namespace ACQ.Web.App.Controllers
                             }
 
 
+
                         }
 
-
+                       
 
                         SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
 
@@ -248,18 +283,7 @@ namespace ACQ.Web.App.Controllers
                             {
 
                                 objattach.aon_id = Convert.ToInt32(mID);
-                                //objattach.AttachmentFileName = "SOC";
-                                //objattach.Path = filename;
-                                //objattach.RecDate = DateTime.Now;
-                                //objattach.RefId = 1;
 
-                                //using (var client = new HttpClient())
-                                //{
-                                //    client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                //    HttpResponseMessage postJob1 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                //    postResult = postJob1.IsSuccessStatusCode;
-
-                                //}
                                 if (postResult == true)
                                 {
 
@@ -271,6 +295,12 @@ namespace ACQ.Web.App.Controllers
                                         ViewBag.SoC = fileSoCPPT.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCPPT" + "_" + fileSoCPPT.FileName.ToString();
                                         FileExtension = Path.GetExtension(fileSoCPPT.FileName);
+                                        if (fileSoCPPT.ContentType != "application/vnd.ms-powerpoint" || fileSoCPPT.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .ppt or .pptx file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
                                         if (FileExtension == ".ppt" || FileExtension == ".pptx")
                                         {
                                             ViewBag.UploadStatus = "";
@@ -280,23 +310,26 @@ namespace ACQ.Web.App.Controllers
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
 
                                         }
-                                        //objattach.aon_id = Convert.ToInt32(mID);
-                                        //objattach.AttachmentFileName = "SoC PPT";
-                                        //objattach.Path = filename;
-                                        //objattach.RecDate = DateTime.Now;
-                                        //objattach.RefId = 3;
-                                        //using (var client = new HttpClient())
-                                        //{
-                                        //    client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                        //    HttpResponseMessage postJob2 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                        //    postResult = postJob2.IsSuccessStatusCode;
-                                        //}
+                                        else
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .ppt or .pptx file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
+
                                     }
+
 
 
                                     System.Web.HttpPostedFileBase fileChairman = Request.Files[2];
                                     if (fileChairman.ContentLength > 0)
                                     {
+                                        if (fileChairman.ContentType != "application/pdf")
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
                                         ViewBag.Chairman = fileChairman.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCChairman" + "_" + fileChairman.FileName;
                                         FileExtension = Path.GetExtension(fileChairman.FileName);
@@ -308,17 +341,13 @@ namespace ACQ.Web.App.Controllers
                                             //fileChairman.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
                                         }
-                                        //objattach.aon_id = Convert.ToInt32(mID);
-                                        //objattach.AttachmentFileName = "Chairmans brief";
-                                        //objattach.Path = filename;
-                                        //objattach.RecDate = DateTime.Now;
-                                        //objattach.RefId = 5;
-                                        //using (var client = new HttpClient())
-                                        //{
-                                        //    client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                        //    HttpResponseMessage postJob2 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                        //    postResult = postJob2.IsSuccessStatusCode;
-                                        //}
+                                        else
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
+
                                     }
 
                                     System.Web.HttpPostedFileBase fileDraft = Request.Files[3];
@@ -327,6 +356,12 @@ namespace ACQ.Web.App.Controllers
                                         ViewBag.Draft = fileDraft.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCDraft" + "_" + fileDraft.FileName;
                                         FileExtension = Path.GetExtension(fileDraft.FileName);
+                                        if (fileDraft.ContentType != "application/pdf")
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
                                         if (FileExtension == ".pdf")
                                         {
                                             ViewBag.UploadStatus = "";
@@ -335,17 +370,13 @@ namespace ACQ.Web.App.Controllers
                                             //fileDraft.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
                                         }
-                                        //objattach.aon_id = Convert.ToInt32(mID);
-                                        //objattach.AttachmentFileName = "Draft RFP";
-                                        //objattach.Path = filename;
-                                        //objattach.RecDate = DateTime.Now;
-                                        //objattach.RefId = 5;
-                                        //using (var client = new HttpClient())
-                                        //{
-                                        //    client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                        //    HttpResponseMessage postJob2 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                        //    postResult = postJob2.IsSuccessStatusCode;
-                                        //}
+                                        else
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
+
                                     }
 
                                     System.Web.HttpPostedFileBase fileOtherDoucment = Request.Files[4];
@@ -354,6 +385,12 @@ namespace ACQ.Web.App.Controllers
                                         ViewBag.SoC = fileOtherDoucment.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCOther" + "_" + fileOtherDoucment.FileName;
                                         FileExtension = Path.GetExtension(fileOtherDoucment.FileName);
+                                        if (fileOtherDoucment.ContentType != "application/pdf")
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
                                         if (FileExtension == ".pdf")
                                         {
                                             ViewBag.UploadStatus = "";
@@ -362,17 +399,13 @@ namespace ACQ.Web.App.Controllers
                                             //fileOtherDoucment.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
                                         }
-                                        //objattach.aon_id = Convert.ToInt32(mID);
-                                        //objattach.AttachmentFileName = "Any Other Document";
-                                        //objattach.Path = filename;
-                                        //objattach.RecDate = DateTime.Now;
-                                        //objattach.RefId = 4;
-                                        //using (var client = new HttpClient())
-                                        //{
-                                        //    client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                        //    HttpResponseMessage postJob2 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                        //    postResult = postJob2.IsSuccessStatusCode;
-                                        //}
+                                        else
+                                        {
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatus = "errormsg";
+                                            return View();
+                                        }
+
                                     }
 
                                     if (TempData["FileAA"] != null)
@@ -429,30 +462,10 @@ namespace ACQ.Web.App.Controllers
                                     TempData["FileAA"] = fileDetailsA;
 
 
-                                    //if (TempData["FileA"] != null)
-                                    //{
-                                    //    fileDetails = TempData["FileA"] as List<Efile.FileDetail>;
-                                    //}
-
-                                    //for (int i = 0; fileDetails.Count > i; i++)
-                                    //{
-                                    //    objattach.aon_id = Convert.ToInt32(mID);
-                                    //    objattach.AttachmentFileName = fileDetails[i].FileName;
-                                    //    objattach.Path = fileDetails[i].FilePath;
-                                    //    objattach.RecDate = DateTime.Now;
-                                    //    objattach.RefId = 5;
-                                    //    using (var client = new HttpClient())
-                                    //    {
-                                    //        client.BaseAddress = new Uri(WebAPIUrl + "AONW/SaveAttachFile");
-                                    //        HttpResponseMessage postJob2 = await client.PostAsJsonAsync<AttachmentViewModel>(WebAPIUrl + "AONW/SaveAttachFile", objattach);
-                                    //        postResult = postJob2.IsSuccessStatusCode;
-                                    //    }
-                                    //}
 
                                 }
 
                                 return RedirectToActionPermanent("ViewSocMaster", "AONW", new { ID = objattach.aon_id });
-                                //ViewBag.Save = "SOC Registration Successfully";
                             }
                             else
                             {
@@ -499,10 +512,26 @@ namespace ACQ.Web.App.Controllers
             string path = Server.MapPath(UploadfilePath);
             HttpFileCollectionBase files = Request.Files;
 
+
             for (int i = 0; i < files.Count; i++)
             {
 
                 HttpPostedFileBase file = files[i];
+                if (file.ContentType != "application/pdf")
+                {
+                    ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                    ViewBag.UploadStatus = "errormsg";
+                    return View();
+                }
+                string FileExtension = Path.GetExtension(file.FileName);
+                if (FileExtension != ".pdf")
+                {
+                    ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                    ViewBag.UploadStatus = "errormsg";
+                    return View();
+                }
+
+
                 //string str= Uploadencryption(file);
                 string str = EncryptFile(file, "ugs@4321");
                 if (str != "")

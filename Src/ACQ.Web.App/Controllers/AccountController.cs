@@ -14,8 +14,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
-
+using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -38,7 +37,6 @@ namespace ACQ.Web.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
             //return View();
@@ -219,7 +217,7 @@ namespace ACQ.Web.App.Controllers
             drawing = Graphics.FromImage(img);
 
             Color backColor = Color.AntiqueWhite;
-            Color textColor = Color.Chartreuse;
+            Color textColor = Color.Black;
             //paint the background
             drawing.Clear(backColor);
 

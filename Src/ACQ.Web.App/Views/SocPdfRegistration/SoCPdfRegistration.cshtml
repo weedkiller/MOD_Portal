@@ -273,6 +273,17 @@
             });
         }
 
+        if ('@ViewBag.UploadStatus' === "errormsg") {
+
+            $('#lblmsg').html('@ViewBag.UploadStatusmsg');
+            $('#myModal').modal({
+
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+
         if ('@ViewBag.UploadStatus' === "Quantity") {
 
             $('#lblmsg').html('Quantity should not be blank');

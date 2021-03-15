@@ -134,3 +134,6 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\AngleSharp.Css.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\HtmlSanitizer.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Runtime.CompilerServices.Unsafe.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encoding.CodePages.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Graph.Core.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Graph.Core.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Buffers.xml
