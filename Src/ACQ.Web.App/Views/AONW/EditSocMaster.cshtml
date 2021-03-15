@@ -24,6 +24,8 @@
 
     @using (Html.BeginForm("EditSocMaster", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
         <input type="hidden" name="aon_id" value="@Model.aon_id" />
         <div class="form-row mb-1">
             <div class="clearfix"></div>

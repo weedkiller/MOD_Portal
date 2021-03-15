@@ -15,12 +15,16 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ExternalServices.Email;
+using Ganss.XSS;
+using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
     //[Authorize]
     public class AONWController : Controller
     {
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
+
         private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
         private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
@@ -35,6 +39,7 @@ namespace ACQ.Web.App.Controllers
         }
         #endregion
         #region Main SOC Page All Code
+        [SessionExpire]
         public ActionResult ViewSOCRegistration()
         {
             string mSercive = "";
@@ -415,6 +420,8 @@ namespace ACQ.Web.App.Controllers
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionExpire]
         public async Task<ActionResult> EditSocMaster(SAVESOCVIEWMODEL _model)
         {
 
@@ -667,6 +674,8 @@ namespace ACQ.Web.App.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionExpire]
         public async Task<ActionResult> AddSocCommit(SocCommentViewModel model)
         {
             if (ModelState.IsValid)
@@ -676,7 +685,7 @@ namespace ACQ.Web.App.Controllers
                     model.IsActive = "Y";
                     model.SocCommentID = 0;
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
-
+                   // model.UserID = sanitizer.Sanitize(model.UserID);
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");
@@ -794,6 +803,8 @@ namespace ACQ.Web.App.Controllers
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionExpire]
         public async Task<ActionResult> EditMeeting(SechduleMeetingAgedaViewModel _model)
         {
 
@@ -1084,6 +1095,8 @@ namespace ACQ.Web.App.Controllers
         }
 
         [HttpPost]
+        [SessionExpire]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> BulkUpload(HttpPostedFileBase file)
         {
             if (Request.Files.Count > 0)

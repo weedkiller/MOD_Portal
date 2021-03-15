@@ -16,6 +16,8 @@
                             <div class="">
                                 @using (Html.BeginForm("EditMeeting", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary()
                                     <input type="hidden" name="meeting_id" value="@Model.meeting_id" />
                                     <div class="row">
                                         <div class="col-md-6">
