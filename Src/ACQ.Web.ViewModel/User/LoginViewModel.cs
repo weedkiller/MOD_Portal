@@ -13,8 +13,16 @@ namespace ACQ.Web.ViewModel.User
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Emailotp { get; set; }
+
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [DataType(DataType.EmailAddress)] 
         public string InternalEmailID { get; set; }
         public string ExternalEmailID { get; set; }
+
+        [Required(ErrorMessage = "The password is required")]
+        [RegularExpression(@"(?=.*\d)(?=.*[A-Za-z]).{5,}", ErrorMessage = "Your password must be at least 5 characters long and contain at least 1 letter and 1 number")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         public string Phone { get; set; }
         public Nullable<int> DepartmentID { get; set; }
@@ -40,7 +48,7 @@ namespace ACQ.Web.ViewModel.User
         public string IsActive { get; set; }
     }
 
-    public class ChangePasswordViewModel  
+    public class ChangePasswordViewModel
     {
         public long UserID { get; set; }
         public string UserName { get; set; }

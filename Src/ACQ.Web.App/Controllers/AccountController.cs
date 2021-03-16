@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using static ACQ.Web.App.MvcApplication;
 
+
 namespace ACQ.Web.App.Controllers
 {
     public class AccountController : Controller
@@ -27,9 +28,19 @@ namespace ACQ.Web.App.Controllers
        
         public ActionResult Login()
         {
+            // Get image path  
+            string imgPath = Server.MapPath("~/assets/media/images/ddp_logo.png");
+            // Convert image to byte array  
+            byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
+            //Convert byte arry to base64string   
+            string imreBase64Data = Convert.ToBase64String(byteData);
+            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+            //Passing image data in viewbag to view  
+            ViewBag.ImageData = imgDataURL;
             Session["CAPTCHA"] = GetRandomText();
             return View();
         }
+       
         public ActionResult Error()
         {
            
@@ -58,12 +69,7 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
-                
-                //if (!this.IsCaptchaValid("Captcha is not valid"))
-                //{
-                //    ViewBag.errormessage = "Entered Captcha is not Valid.";
-                //    return View();
-                //}
+               
                 if (ModelState.IsValid)
                 {
                     using (var client = new HttpClient())

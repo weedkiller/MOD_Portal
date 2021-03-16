@@ -53,8 +53,7 @@
     <Reference Include="ACQ.Web.Core">
       <HintPath>..\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ACQ.Web.ViewModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ACQ.Web.ViewModel">
       <HintPath>..\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll</HintPath>
     </Reference>
     <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
@@ -262,13 +261,17 @@
     <Content Include="assets\js\script-custom-editor.js" />
     <Content Include="assets\js\theme.min.js" />
     <Content Include="assets\js\ValidationJavaScript.js" />
+    <Content Include="assets\media\images\bg-pattern-light.svg" />
+    <Content Include="assets\media\images\ddp_logo.png" />
+    <Content Include="assets\media\images\ddp_logo_dark.png" />
+    <Content Include="assets\previous js css\css\editor.css" />
+    <Content Include="assets\previous js css\css\jquery.dataTables.css" />
+    <Content Include="assets\previous js css\js\jquery.dataTables.min.js" />
     <Content Include="bin\ACQ.Web.App.dll" />
     <Content Include="bin\ACQ.Web.App.pdb" />
     <Content Include="bin\ACQ.Web.Core.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.pdb" />
-    <Content Include="bin\ACQ.Web.ViewModel.dll" />
-    <Content Include="bin\ACQ.Web.ViewModel.pdb" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\CaptchaMvc.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
@@ -1273,12 +1276,12 @@
     <Content Include="Content\vendor\bootstrap\js\bootstrap.min.js.map" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="assets\Web.config" />
     <None Include="bin\ACQ.Web.App.dll.config" />
     <Content Include="Content\cdnfile\font\summernote.eot" />
     <Content Include="Content\cdnfile\font\summernote.ttf" />
     <Content Include="Content\cdnfile\font\summernote.woff" />
     <Content Include="Content\cdnfile\font\summernote.woff2" />
-    <None Include="bin\ACQ.Web.ViewModel.dll.config" />
     <Content Include="Blox2.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
