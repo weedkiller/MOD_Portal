@@ -20,8 +20,10 @@ namespace ACQ.Web.ViewModel.AONW
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public string Remarks { get; set; }
         public string Meeting_Number { get; set; }
-[AllowHtml]
+        public string Status { get; set; }
+        [AllowHtml]
         public string officers_participated { get; set; }
+        public List<string> officers_participated_list { get; set; }
         [AllowHtml]
         public string Distribution_List { get; set; }
         public string TypeofAgenda { get; set; }
@@ -30,6 +32,7 @@ namespace ACQ.Web.ViewModel.AONW
         public List<MeetingAgenda> TrnListMeeting { get; set; }
         public List<AONDescription> AonDescriptionddl { get; set; }
         public List<SechduleMeetingAgedaViewModel> ListofMeeting { get; set; }
+        public List<MeetingParticipants> Participants { get; set; }
         public string Discussion { get; set; }
     }
    
@@ -73,7 +76,34 @@ namespace ACQ.Web.ViewModel.AONW
         public string MeetingAgendaDateString { get; set; }
         public string ServiceLead { get; set; }
         public string Msg { get; set; }
+        public string Comments { get; set; }
+        public MeetingAgendaComment MeetingAgendaComment { get; set; }
+        public List<MeetingAgendaComment> MeetingAgendaCommentList { get; set; }
     }
-    
+    public class MeetingParticipants
+    {
+        public int MemberID { get; set; }
+        public int UserID { get; set; }
+        public string meeting_type { get; set; }
+        public string member_type { get; set; }
+        public string designation { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public bool IsSelected { get; set; }
+         
+    }
+    public class MeetingAgendaComment
+    {
+        public int ID { get; set; }
+        public int MeetingAgendaID { get; set; }
+        public int UserID { get; set; }
+        public string Username { get; set; }
+        public string ProposalComment { get; set; }
+        public string BackgroundComment { get; set; }
+        public string ApprovalSoughtComment { get; set; }
+        public string DiscussionComment { get; set; }
+        public string DecisionComment { get; set; }
+        public bool IsDelete { get; set; }
+    }
    
 }

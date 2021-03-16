@@ -29,13 +29,7 @@ namespace ACQ.Web.App
             Server.ClearError();
             Response.Redirect(String.Format("~/Account/Error"));
 
-            //Exception exception = Server.GetLastError();
-            //HttpException httpException = exception as HttpException;
-
-
         }
-
-
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;

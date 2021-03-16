@@ -1,4 +1,4 @@
-﻿//using MOD.Models;
+//using MOD.Models;
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using static ACQ.Web.App.MvcApplication;
 
+
 namespace ACQ.Web.App.Controllers
 {
     public class AccountController : Controller
@@ -27,9 +28,19 @@ namespace ACQ.Web.App.Controllers
        
         public ActionResult Login()
         {
+            // Get image path  
+            string imgPath = Server.MapPath("~/assets/media/images/ddp_logo.png");
+            // Convert image to byte array  
+            byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
+            //Convert byte arry to base64string   
+            string imreBase64Data = Convert.ToBase64String(byteData);
+            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+            //Passing image data in viewbag to view  
+            ViewBag.ImageData = imgDataURL;
             Session["CAPTCHA"] = GetRandomText();
             return View();
         }
+       
         public ActionResult Error()
         {
            
@@ -58,12 +69,7 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
-                
-                //if (!this.IsCaptchaValid("Captcha is not valid"))
-                //{
-                //    ViewBag.errormessage = "Entered Captcha is not Valid.";
-                //    return View();
-                //}
+               
                 if (ModelState.IsValid)
                 {
                     using (var client = new HttpClient())
@@ -94,24 +100,24 @@ namespace ACQ.Web.App.Controllers
                                 model1.ExternalEmailID= model.First().ExternalEmailID.ToString();
                                 model1.InternalEmailID= model.First().InternalEmailID.ToString();
                                 model1.UserName = model.First().UserName.ToString();
-                                var remoteIpAddress = Request.UserHostAddress;
-                                string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                                if (string.IsNullOrEmpty(ip))
-                                {
-                                    ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                                }
-                                string ipaddress = model.First().IPAddress.ToString();
-                                if (ipaddress == remoteIpAddress)
-                                {
+                                //var remoteIpAddress = Request.UserHostAddress;
+                                //string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                                //if (string.IsNullOrEmpty(ip))
+                                //{
+                                //    ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                                //}
+                                //string ipaddress = model.First().IPAddress.ToString();
+                                //if (ipaddress == remoteIpAddress)
+                                //{
                                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
                                     EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
                                     ViewBag.Message = "RegistrationSuccessful";
                                     return View();
-                                }
-                                else
-                                {
-                                    return RedirectToAction("LoginReturnMsg", "Account");
-                                }
+                                //}
+                                //else
+                                //{
+                                //    return RedirectToAction("LoginReturnMsg", "Account");
+                                //}
                                 
                             }
                             else
@@ -222,7 +228,7 @@ namespace ACQ.Web.App.Controllers
             drawing = Graphics.FromImage(img);
 
             Color backColor = Color.AntiqueWhite;
-            Color textColor = Color.Chartreuse;
+            Color textColor = Color.Black;
             //paint the background
             drawing.Clear(backColor);
 
