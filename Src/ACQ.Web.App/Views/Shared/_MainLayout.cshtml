@@ -13,6 +13,7 @@
     <script src="~/assets/js/jquery.min.js"></script>
 </head>
 <body>
+
     <!-------------header start-------------->
     <div class="navbar-custom topnav-navbar topnav-navbar-dark" style="height: 95px;">
         <div class="container-fluid">
@@ -20,8 +21,7 @@
                 <div class="col-2">
                     <a href="" class="topnav-logo mt-2">
                         <span class="topnav-logo-sm">
-                        
-                            <img src="@ViewBag.ImageData" height="65"/>
+                            @{ Html.RenderAction("imagelogo", "Account"); }
                         </span>
                     </a>
                 </div>
@@ -36,7 +36,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="body_content">
         @RenderBody()
@@ -53,7 +52,8 @@
     <!-------------footer end-------------->
 
 
-
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/fontawesome-5.12.1/js/all.min.js"></script>
 
 </body>
 </html>

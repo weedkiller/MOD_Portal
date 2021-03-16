@@ -25,8 +25,7 @@ namespace ACQ.Web.App.Controllers
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
         // GET: Account
 
-       
-        public ActionResult Login()
+        public ActionResult imagelogo()
         {
             // Get image path  
             string imgPath = Server.MapPath("~/assets/media/images/ddp_logo.png");
@@ -37,13 +36,19 @@ namespace ACQ.Web.App.Controllers
             string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
             //Passing image data in viewbag to view  
             ViewBag.ImageData = imgDataURL;
+            return PartialView("View");
+
+        }
+        public ActionResult Login()
+        {
+
             Session["CAPTCHA"] = GetRandomText();
             return View();
         }
-       
+
         public ActionResult Error()
         {
-           
+
             return View();
         }
         [HttpPost]
@@ -55,13 +60,13 @@ namespace ACQ.Web.App.Controllers
             try
             {
                 //Captcha Code Here
-               // FormCollection form = new FormCollection();
+                // FormCollection form = new FormCollection();
 
                 string clientCaptcha = form["clientCaptcha"];
                 string serverCaptcha = Session["CAPTCHA"].ToString();
 
 
-                 clientCaptcha = sanitizer.Sanitize(clientCaptcha);
+                clientCaptcha = sanitizer.Sanitize(clientCaptcha);
                 if (!clientCaptcha.Equals(serverCaptcha.ToUpper()))
                 {
                     ViewBag.ShowCAPTCHA = serverCaptcha;
@@ -69,18 +74,18 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
-               
+
                 if (ModelState.IsValid)
                 {
                     using (var client = new HttpClient())
                     {
-                         
+
 
                         login.InternalEmailID = sanitizer.Sanitize(login.InternalEmailID);
                         login.Password = sanitizer.Sanitize(login.Password);
 
                         client.BaseAddress = new Uri(WebAPIUrl);
-                        
+
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                         HttpResponseMessage response = client.GetAsync("Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
@@ -97,8 +102,8 @@ namespace ACQ.Web.App.Controllers
                                 Session["Emailotp"] = model.First().Emailotp.ToString();
                                 Session["EmailID"] = model.First().InternalEmailID.ToString();
                                 Session["DepartmentID"] = model.First().DepartmentID.ToString();
-                                model1.ExternalEmailID= model.First().ExternalEmailID.ToString();
-                                model1.InternalEmailID= model.First().InternalEmailID.ToString();
+                                model1.ExternalEmailID = model.First().ExternalEmailID.ToString();
+                                model1.InternalEmailID = model.First().InternalEmailID.ToString();
                                 model1.UserName = model.First().UserName.ToString();
                                 //var remoteIpAddress = Request.UserHostAddress;
                                 //string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -109,16 +114,16 @@ namespace ACQ.Web.App.Controllers
                                 //string ipaddress = model.First().IPAddress.ToString();
                                 //if (ipaddress == remoteIpAddress)
                                 //{
-                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                                    EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
-                                    ViewBag.Message = "RegistrationSuccessful";
-                                    return View();
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
+                                EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
+                                ViewBag.Message = "RegistrationSuccessful";
+                                return View();
                                 //}
                                 //else
                                 //{
                                 //    return RedirectToAction("LoginReturnMsg", "Account");
                                 //}
-                                
+
                             }
                             else
                             {
@@ -148,7 +153,7 @@ namespace ACQ.Web.App.Controllers
                                     }
                                 }
 
-                               
+
                             }
 
                         }
@@ -187,7 +192,7 @@ namespace ACQ.Web.App.Controllers
 
                 else { return View(); }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             { return View(); }
         }
 
@@ -250,9 +255,9 @@ namespace ACQ.Web.App.Controllers
             return File(ms.ToArray(), "image/png");
         }
         [HttpGet]
-        public ActionResult VerifyOtp( )
+        public ActionResult VerifyOtp()
         {
-            
+
             return View();
         }
 
@@ -267,16 +272,16 @@ namespace ACQ.Web.App.Controllers
             string otp = Session["Emailotp"].ToString();
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
-            model.IPAddress= Request.UserHostAddress;
-            model.Action= "Verify Otp";
-            if (otp == emailotp || emailotp=="123456")
+            model.IPAddress = Request.UserHostAddress;
+            model.Action = "Verify Otp";
+            if (otp == emailotp || emailotp == "123456")
             {
                 model.Status = "OTP Verified";
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
                     HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
-                  
+
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
@@ -288,7 +293,7 @@ namespace ACQ.Web.App.Controllers
                             HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
 
                             bool postResult1 = postJob1.IsSuccessStatusCode;
-                            
+
                         }
                         return RedirectToAction("ViewSOCRegistration", "AONW");
                     }
@@ -298,7 +303,7 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
 
-               
+
             }
             else
             {
@@ -319,7 +324,7 @@ namespace ACQ.Web.App.Controllers
                         TempData["OTPNotVerified"] = "OTPNotVerified";
                         return RedirectToAction("Login", "Account");
                     }
-                   
+
                 }
 
             }
@@ -373,7 +378,7 @@ namespace ACQ.Web.App.Controllers
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
-                           
+
                             ViewBag.Message = mID.ToString();
                             UserLogViewModel model21 = new UserLogViewModel();
                             model21.UserEmail = Session["EmailID"].ToString();
@@ -396,7 +401,7 @@ namespace ACQ.Web.App.Controllers
                                     return View();
                                 }
                             }
-                           
+
                         }
                         else
                         {

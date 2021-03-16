@@ -6,8 +6,8 @@
 }
 
 <style>
-    form{
-        width:100%;
+    form {
+        width: 100%;
     }
 </style>
 
@@ -16,7 +16,7 @@
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
+
         <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
             <div class="col-md-5 p-4">
                 <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
@@ -24,7 +24,7 @@
                         <div class="cs-view show p-4" id="signin-view">
                             <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
                             <hr />
-
+                            @Html.ValidationSummary()
                             <div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">
 
                             </div>
@@ -32,7 +32,7 @@
                                 <div class="form-group" data-validate="Valid email is required: ex@abc.xyz">
                                     <label for="emailaddress">Email address</label>
                                     <input class="form-control" type="email" name="InternalEmailID" id="txtuserName" autocomplete="off" placeholder="Email">
-                                    @Html.ValidationMessageFor(x => x.InternalEmailID,null, new { @class = "danger" })
+                                    @Html.ValidationMessageFor(x => x.InternalEmailID, null, new { @class = "danger" })
                                 </div>
 
 
@@ -44,21 +44,23 @@
                                     <input class="form-control prepended-form-control" type="password" name="password" id="txtpassword" autocomplete="off" placeholder="Password">
 
                                     @Html.ValidationMessageFor(x => x.Password, null, new { @class = "danger" })
-                                    
+
                                 </div>
 
                                 <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
-                                
-                                <div >
+
+                                <div>
                                     @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
                                     <div>
                                         <img src="/Account/GetCaptchaImage" title="Captcha" />
-                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">Refresh</button>
+                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
                                         <br />
                                         <input type="text" class="form-control prepended-form-control" name="clientCaptcha" autocomplete="off" placeholder="Write above text exactly" required />
                                         <p style="font-weight:bold;color:red;">@ViewBag.CaptchaError</p>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="ValidateColor">
                                     @ViewBag.errormessage
@@ -86,43 +88,51 @@
         @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post))
         {
             @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="display:block !important">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="mb-0">OTP Verification</h4>
-                        <div class="editor-label">
-                            @ViewBag.OtpMesssage
-                            @*@TempData["OtpMesssage"]*@
-                            <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
-                            <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
-                        </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="mb-0">OTP Verification</h4>
+                    <div class="editor-label">
+                        @ViewBag.OtpMesssage
+                        @*@TempData["OtpMesssage"]*@
+                        <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
+                        <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
                     </div>
-                    <div class="modal-body">
-                        <div id="myTabContent">
-                            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group mb-0">
-                                    <label>Please enter OTP received on MoDLAN email</label>
-                                    @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
-                                    @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
-                                </div>
-                                @*<div class="w-100 text-right">
+                </div>
+                <div class="modal-body">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group mb-0">
+                                <label>Please enter OTP received on MoDLAN email</label>
+                                @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
+                                @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
+                            </div>
+                            @*<div class="w-100 text-right">
                                     <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
                                 </div>*@
-                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                    </div>
-                </div>}
-            @*</form>*@
-        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+            </div>}
+        @*</form>*@
+    </div>
 </div>
 
 
+<script>
+    $(document).on('click', '.toggle-password', function () {
 
+        $(this).toggleClass("fa-eye fa-eye-slash");
+
+        var input = $("#txtpassword");
+        input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+    });
+</script>
 
 <script>
        function resendOTP() {
@@ -131,6 +141,39 @@
     }
 
     $(document).ready(function () {
+
+        if ('@ViewBag.SentCompRefNo' === "AlreadySentCompRefNo") {
+            $('#myModal2').modal({
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        if ('@ViewBag.SentCompEmailNo' === "AlreadySentEmailNo") {
+            $('#myModal3').modal({
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        if ('@ViewBag.UANNo' === "AlreadySentUANNo") {
+            $('#myModal4').modal({
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        if ('@ViewBag.Message' === "RegistrationSuccessful") {
+                $('#resendotpMsg').hide();
+                  enablebutton();
+            $('#myModal').modal({
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+               });
+               $("#notverified").hide();
+        }
+
         if ('@TempData["OTPNotVerified"]' === "OTPNotVerified") {
             $('#resendotpMsg').hide();
             $("#notverified").show();
@@ -143,6 +186,11 @@
         }
         $("#mailotp").hide();
         $("#mobotp").hide();
+
+        if ('@ViewBag.PdfValidate' === "OnlyPDF") {
+            alert('Select Only PDF File');
+        }
+
             function enablebutton() {
                var fewSeconds = 1;
                $('#btnresendOTP').hide();
@@ -170,14 +218,12 @@
     }
 
     $('#btnclose').click(function () {
-        document.location = '@Url.Action("Login", "Account")';
+        document.location = '@Url.Action("ExhibitorRegistraionContent", "NodalRegistration")';
     });
 </script>
 
 <script type="text/javascript">
-    $("#loadbtnCaptcha").click(function () {
-     document.location = '@Url.Action("Login", "Account")';
-    });
+
     $("#btnsubmit").click(function () {
         var flag = true;
         if ($('#txtuserName').val() == '') {
@@ -215,7 +261,7 @@
         $("#dvMsg").show();
         $("#dvMsg").css("display", "block");
         $("#dvMsg").addClass("has-error");
-        //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
+            //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
 
     </script>
 }

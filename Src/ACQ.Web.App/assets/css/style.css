@@ -79,3 +79,11 @@ body{
 .activetextclr a, .activetextclr svg {
     color: white !important;
 }
+
+input {
+    border: 1px solid #d8d8d8;
+}
+
+    input:focus {
+        outline: 1px solid #becffb;
+    }
