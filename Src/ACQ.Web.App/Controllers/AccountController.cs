@@ -37,7 +37,6 @@ namespace ACQ.Web.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[SessionExpire]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
             //return View();
