@@ -1573,6 +1573,7 @@
     <Content Include="Content\XlsIO\wordIcon.jpg" />
     <Content Include="Content\XlsIO\xlsio_button.png" />
     <Content Include="Content\XlsIO\xlsio_header.png" />
+    <Content Include="Email\ChngPwdMail.html" />
     <Content Include="Email\confrmationBadgesRegistration.html" />
     <Content Include="Email\changepasswordPage.html" />
     <Content Include="Email\EventUsernamaandpassword.html" />
@@ -1826,6 +1827,7 @@
     <Content Include="Views\Account\View.cshtml" />
     <Content Include="Views\AONW\EmailToMeetingParticipants.cshtml" />
     <Content Include="Views\AONW\_MeetingParticipants.cshtml" />
+    <Content Include="Views\Account\ResetPwd.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -90,8 +90,15 @@ namespace ACQ.Web.App.Controllers
                         HttpResponseMessage response = client.GetAsync("Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
+                          
                             LoginViewModel model1 = new LoginViewModel();
                             model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                           if( model.First().Message == "Blocked")
+                            {
+                                ViewBag.Message = "Blocked";
+                                return View();
+                            }
+
                             if (model.Count() > 0)
                             {
 
@@ -269,6 +276,7 @@ namespace ACQ.Web.App.Controllers
         [HttpPost]
         public async Task<ActionResult> VerifyOtp(string emailotp)
         {
+           
             string otp = Session["Emailotp"].ToString();
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
@@ -315,17 +323,42 @@ namespace ACQ.Web.App.Controllers
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
+                        using (HttpClient client1 = new HttpClient())
+                        {
+                            client1.BaseAddress = new Uri(WebAPIUrl);
 
-                        TempData["OTPNotVerified"] = "OTPNotVerified";
-                        return RedirectToAction("Login", "Account");
+                            client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                            HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model.UserEmail + "&Status=" + model.Status + "").Result;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                model = response.Content.ReadAsAsync<UserLogViewModel>().Result;
+                                if (model.Message == "Blocked")
+                                {
+                                    ViewBag.Message = "Blocked";
+                                    TempData["OTPNot"] = "Blocked";
+                                    return RedirectToAction("Login", "Account");
+                                }
+
+                                TempData["OTPNotVerified"] = "OTPNotVerified";
+                                return RedirectToAction("Login", "Account");
+                            }
+                            else
+                            {
+                                TempData["OTPNotVerified"] = "OTPNotVerified";
+                                return RedirectToAction("Login", "Account");
+                            }
+                        }
+                       
                     }
                     else
                     {
                         TempData["OTPNotVerified"] = "OTPNotVerified";
                         return RedirectToAction("Login", "Account");
                     }
-
                 }
+
+                
 
             }
 
@@ -357,8 +390,75 @@ namespace ACQ.Web.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionExpire]
+        //[SessionExpire]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Session["UserName"] != null)
+                {
+                    //input=
+                    input.UserName = Session["UserName"].ToString();
+                    input.UserName = sanitizer.Sanitize(input.UserName);
+                    input.Password = sanitizer.Sanitize(input.Password);
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
+                        HttpResponseMessage postJob = await client.PostAsJsonAsync<ChangePasswordViewModel>(WebAPIUrl + "Account/ChangePassword", input);
+                        string url = postJob.Headers.Location.AbsoluteUri;
+                        string mID = postJob.Headers.Location.Segments[4].ToString();
+                        // string mEmail = postJob.Headers.Location.Segments[5].ToString();
+                        bool postResult = postJob.IsSuccessStatusCode;
+                        if (postResult == true)
+                        {
+
+                            ViewBag.Message = mID.ToString();
+                            UserLogViewModel model21 = new UserLogViewModel();
+                            model21.UserEmail = Session["EmailID"].ToString();
+                            model21.IPAddress = Request.UserHostAddress;
+                            model21.Status = "Sucess";
+                            model21.Action = "Change Password";
+                            using (HttpClient client1 = new HttpClient())
+                            {
+                                client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
+                                HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
+
+                                bool postResult1 = postJob1.IsSuccessStatusCode;
+                                if (postResult1 == true)
+                                {
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
+                                   // EmailHelper.SendPwdDetails(model21, model21.UserEmail, mailPath);
+                                    return View();
+                                }
+                                else
+                                {
+                                    return View();
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            ViewBag.Message = "PasswordNotChange";
+                            return View();
+                        }
+                    }
+                }
+                else { Redirect("/Account/Login"); }
+
+            }
+            return View();
+        }
+
+        public ActionResult ResetPwd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionExpire]
+        public async Task<ActionResult> ResetPwd(ChangePasswordViewModel input)
         {
             if (ModelState.IsValid)
             {

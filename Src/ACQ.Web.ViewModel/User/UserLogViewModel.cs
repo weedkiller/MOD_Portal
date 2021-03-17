@@ -15,5 +15,6 @@ namespace ACQ.Web.ViewModel.User
         public string Action { get; set; }
         public Nullable<System.DateTime> Restime { get; set; }
         public string IsActive { get; set; }
+        public string Message { get; set; }
     }
 }

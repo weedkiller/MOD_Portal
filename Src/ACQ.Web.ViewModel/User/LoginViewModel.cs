@@ -46,6 +46,7 @@ namespace ACQ.Web.ViewModel.User
 
         public Nullable<int> SrNo { get; set; }
         public string IsActive { get; set; }
+        public string Message { get; set; }
     }
 
     public class ChangePasswordViewModel

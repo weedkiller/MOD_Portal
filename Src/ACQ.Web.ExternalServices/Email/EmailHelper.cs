@@ -191,6 +191,28 @@ namespace ACQ.Web.ExternalServices.Email
         //    return usOutputViewModel;
         //}
 
+        //change password 
+        public static ChangePasswordViewModel SendPwdDetails(ChangePasswordViewModel InputModel, string emailOTP, string mailPath)
+        {
+            ChangePasswordViewModel usOutputViewModel = new ChangePasswordViewModel();
+            try
+            {
+                string Body = EmailHelper.SendOTpPopulateBody(InputModel, emailOTP, mailPath);
+                EmailHelper.SendEmail(InputModel.UserName, Body);
+                // EmailHelper.SendEmail("shifalibaisoya@gmail.com", Body);
+
+            }
+            catch (Exception)
+            {
+            }
+            return usOutputViewModel;
+        }
+        private static string SendOTpPopulateBody(ChangePasswordViewModel InputModel, string emailOTP, string mailPath)
+        {
+            return mailPath.Replace("{Name}", InputModel.UserName)
+           //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
+           .Replace("{subject}", InputModel.UserName).Replace("{otp}", emailOTP);
+        }
         public static string SendChangePasswordMail(string UserMail, string newpassord, string mailPath)
         {
             ForgetPasswordViewModel usOutputViewModel = new ForgetPasswordViewModel();

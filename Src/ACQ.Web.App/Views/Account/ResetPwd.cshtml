@@ -1,0 +1,105 @@
+﻿
+
+@model  ACQ.Web.ViewModel.User.ChangePasswordViewModel
+@using CaptchaMvc.HtmlHelpers
+
+@{
+    ViewBag.Title = "ResetPwd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    form {
+        width: 100%;
+    }
+</style>
+
+
+<div class="login_bg">
+    @using (Html.BeginForm("ResetPwd", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
+            <div class="col-md-5 p-4">
+                <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
+                    <div class="cs-signin-form-inner" style="background: white;">
+                        <div class="cs-view show p-4" id="signin-view">
+                            <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
+                            <hr />
+                            @Html.ValidationSummary()
+                            <div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">
+
+                            </div>
+                            <form class="needs-validation" id="#myform" novalidate>
+                                <div class="form-group">
+                                    <label for="recover-email">Enter New Password</label>
+                                    @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="recover-email">Confirm New Password</label>
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+
+
+                                <p id="required-EmailMsg" style="display: none;color: Red;">Please enter Email Id</p>
+                                <h7 id="usercheck"></h7>
+
+
+                                <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
+
+                                <div>
+                                    @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
+                                    <div>
+                                        <img src="/Account/GetCaptchaImage" title="Captcha" />
+                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <br />
+                                        <input type="text" class="form-control prepended-form-control" name="clientCaptcha" autocomplete="off" placeholder="Write above text exactly" required />
+                                        <p style="font-weight:bold;color:red;">@ViewBag.CaptchaError</p>
+                                    </div>
+
+                                </div>
+                                <div class="ValidateColor">
+                                    @ViewBag.errormessage
+                                </div>
+                                <h7 id="passwordcheck"> </h7>
+
+                                <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
+                                <hr class="mt-4 mb-3" style="display:none">
+                                <div class="w-100 text-center" style="display:none">
+                                    <a class="nav-link-style font-size-ms text-white" href="@Url.Action("forgetPassword", "home")" style="font-size: 15px!important;">Forgot password?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+</div>
+
+
+
+<script>
+    function CheckPassword() {
+
+        var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+        if (ConfirmPassword.value.match(decimal)) {
+            debugger;
+
+            var OldPassword = Password.value;
+            var NewPassword = ConfirmPassword.value;
+
+            window.location.href = "/User/ChangePassword?OldPassword=" + OldPassword + "&NewPassword=" + NewPassword;
+            return true;
+        }
+        else {
+            alert('To check a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character')
+            return false;
+        }
+    }
+</script>
