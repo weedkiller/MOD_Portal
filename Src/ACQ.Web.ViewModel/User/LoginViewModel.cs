@@ -46,6 +46,7 @@ namespace ACQ.Web.ViewModel.User
 
         public Nullable<int> SrNo { get; set; }
         public string IsActive { get; set; }
+        public string Message { get; set; }
     }
 
     public class ChangePasswordViewModel
@@ -61,6 +62,7 @@ namespace ACQ.Web.ViewModel.User
         [RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}$", ErrorMessage = "Passwords must be at least 8 characters and contain at 3 of 4 of the following: upper case (A-Z), lower case (a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
         public string NewPassword { get; set; }
         [Required(ErrorMessage = "Enter Confirmation New Password")]
+
         [Compare("NewPassword", ErrorMessage = "New Password and Confirmation Password Must Match.")]
         public string ConfirmPassword { get; set; }
         public string Comp_ReferenceNo { get; set; }
@@ -71,6 +73,8 @@ namespace ACQ.Web.ViewModel.User
         public string TempRefNo { get; set; }
         public string Salt { get; set; }
         public string IsActive { get; set; }
+        public string Message { get; set; }
+        public string TokenId { get; set; }
     }
 
 }

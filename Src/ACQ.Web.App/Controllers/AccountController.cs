@@ -1,5 +1,7 @@
 //using MOD.Models;
+using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
+using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
@@ -108,8 +110,15 @@ namespace ACQ.Web.App.Controllers
                         HttpResponseMessage response = client.GetAsync("Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
+                          
                             LoginViewModel model1 = new LoginViewModel();
                             model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                           if( model.First().Message == "Blocked")
+                            {
+                                ViewBag.Message = "Blocked";
+                                return View();
+                            }
+
                             if (model.Count() > 0)
                             {
 
@@ -291,6 +300,7 @@ namespace ACQ.Web.App.Controllers
         [HttpPost]
         public async Task<ActionResult> VerifyOtp(string emailotp)
         {
+           
             string otp = Session["Emailotp"].ToString();
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
@@ -364,24 +374,55 @@ namespace ACQ.Web.App.Controllers
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
+                        using (HttpClient client1 = new HttpClient())
+                        {
+                            client1.BaseAddress = new Uri(WebAPIUrl);
 
-                        TempData["OTPNotVerified"] = "OTPNotVerified";
-                        return RedirectToAction("Login", "Account");
+                            client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                            HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model.UserEmail + "&Status=" + model.Status + "").Result;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                model = response.Content.ReadAsAsync<UserLogViewModel>().Result;
+                                if (model.Message == "Blocked")
+                                {
+                                    ViewBag.Message = "Blocked";
+                                    TempData["OTPNot"] = "Blocked";
+                                    return RedirectToAction("Login", "Account");
+                                }
+
+                                TempData["OTPNotVerified"] = "OTPNotVerified";
+                                return RedirectToAction("Login", "Account");
+                            }
+                            else
+                            {
+                                TempData["OTPNotVerified"] = "OTPNotVerified";
+                                return RedirectToAction("Login", "Account");
+                            }
+                        }
+                       
                     }
                     else
                     {
                         TempData["OTPNotVerified"] = "OTPNotVerified";
                         return RedirectToAction("Login", "Account");
                     }
-
                 }
+
+                
 
             }
 
 
         }
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string emailid, string tokenid)
         {
+            //string email = Encryption.Decrypt(emailid);
+            // string token = Encryption.Decrypt(tokenid);
+            // Session["emailid"] = email;
+            // Session["tokenid"] = token; 
+            Session["emailid"] = emailid;
+            Session["tokenid"] = tokenid; 
             return View();
         }
 
@@ -421,17 +462,19 @@ namespace ACQ.Web.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionExpire]
+        //[SessionExpire]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
+            //ChangePasswordViewModel input = new ChangePasswordViewModel();
             if (ModelState.IsValid)
             {
-                if (Session["UserName"] != null)
+                if (Session["emailid"] != null)
                 {
                     //input=
-                    input.UserName = Session["UserName"].ToString();
+                    input.UserName = Session["emailid"].ToString();
+                    input.TokenId = Session["tokenid"].ToString();
                     input.UserName = sanitizer.Sanitize(input.UserName);
-                    input.Password = sanitizer.Sanitize(input.Password);
+                    input.Password = sanitizer.Sanitize(input.TokenId);
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
@@ -457,7 +500,8 @@ namespace ACQ.Web.App.Controllers
                                 bool postResult1 = postJob1.IsSuccessStatusCode;
                                 if (postResult1 == true)
                                 {
-
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
+                                   // EmailHelper.SendPwdDetails(model21, model21.UserEmail, mailPath);
                                     return View();
                                 }
                                 else
@@ -475,6 +519,60 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
                 else { Redirect("/Account/Login"); }
+
+            }
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ResetPwd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+       // [SessionExpire]
+        public async Task<ActionResult> ResetPwd(ChangePasswordViewModel input)
+        {
+            ChangePasswordViewModel model = new ChangePasswordViewModel();
+            if (!ModelState.IsValid)
+            {
+                if (Session["UserName"] != null)
+                {
+                    //input=
+                    input.UserName = Session["EmailID"].ToString();
+                    input.UserName = sanitizer.Sanitize(input.UserName);
+                    using (HttpClient client1 = new HttpClient())
+                    {
+                        client1.BaseAddress = new Uri(WebAPIUrl);
+
+                        client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        HttpResponseMessage response = client1.GetAsync("Account/ResetPwdSendLink?UserEmail=" + input.UserName + "&Status=" + input.EmailID + "").Result;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
+                            string emaid = Encryption.Decrypt(model.EmailID); 
+                            //model.TokenId = Encryption.Decrypt(model.TokenId); 
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
+                             EmailHelper.SendPwdDetails(model, emaid, mailPath);
+
+                            if (model.Message == "User Exist")
+                            {
+                                ViewBag.Msg = "User Exist";
+                                return View();
+                                
+                            }
+                            return RedirectToAction("Login", "Account");
+                        }
+                        else
+                        {
+                            return View();
+                        }
+                    }
+
+                }
+                
 
             }
             return View();
