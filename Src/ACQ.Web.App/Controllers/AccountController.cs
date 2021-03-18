@@ -489,7 +489,7 @@ namespace ACQ.Web.App.Controllers
                         {
                             model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
                             string emaid = Encryption.Decrypt(model.EmailID); 
-                            model.TokenId = Encryption.Decrypt(model.TokenId); 
+                            //model.TokenId = Encryption.Decrypt(model.TokenId); 
                             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
                              EmailHelper.SendPwdDetails(model, emaid, mailPath);
 
