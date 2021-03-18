@@ -3,8 +3,6 @@
     ViewBag.Title = "ViewSOCComment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/assets/js/jquery-3.2.1.slim.min.js" ></script>
-<script src="~/assets/js/popper.min.js" ></script>
 
 
 <style>
@@ -23,78 +21,32 @@
     #meetingagendatable_paginate {
         display: none;
     }
-
-    .flip-scroll {
-        overflow: scroll;
-        height: 900px;
-        Width: 100%;
-    }
 </style>
-<div class="modal-body">
+<div class="row m-0">
     <div class="col-md-12">
-        <div id="myTabContent">
-            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="row register-form">
-                    <div class="col-md-12 ">
-                        <label>@TempData["msg"]</label>
-                        @if (Model != null && Model.SOCVIEWComment.Count() > 0)
-                        {
-                            <div class="row">
-                                <div class="col col-12" id="dvContainer">
-                                    <div id="div1" class="portlet-body flip-scroll" style="overflow: scroll; height: 850px; Width: 100%;">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">SNO.</th>
-                                                    <th scope="col">Comment</th>
-                                                    <th scope="col"> Comment Id</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{ int count = 1;}
-                                                @foreach (var SOC in Model.SOCVIEWComment)
-                                                {
-                                                    <tr>
-                                                        <th scope="row">@count</th>
-                                                        <td class="text-wrap">@SOC.Comments</td>
-                                                        <td>Version @SOC.SocCommentID</td>
-
-                                                    </tr>
-                                                    count++;
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
+            <h3 class="text-center">SoC Comment </h3>
+            <div class="bg-white p-3">
+                <div class="needs-validation p-2" novalidate="">
+                    <div class="clearfix mt-0"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label" for="Comments">Comment</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="Comments" rows="3" value="@Model.Comments" name="Comments"></textarea>
+                                    <input type="hidden" name="Comments" value="@Html.Raw(Model.Comments)" />
                                 </div>
                             </div>
+                        </div>
 
-                            <div style="text-align:center">
-                                <input type='button' id='btn' value='Download & Print' class="btn btn-primary mb-3" onclick="printDiv()">
-                            </div>
-                        }
-                        else
-                        {
-
-                            <table id="myTable" class="table table-bordered">
-                                <tr>
-                                    <td style="border: 1px solid #dee2e6; padding:12px;">No Records Found!</td>
-                                </tr>
-                            </table>}
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewSocMaster';">Back</button>
+                        </div>
                     </div>
+
                 </div>
-               
+
             </div>
-        </div>
     </div>
 </div>
-
-<script>
-    function printDiv() {
-        var divToPrint = document.getElementById('dvContainer');
-        var newWin = window.open('', 'Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-        newWin.document.close();
-        setTimeout(function () { newWin.close(); }, 10);
-    }</script>

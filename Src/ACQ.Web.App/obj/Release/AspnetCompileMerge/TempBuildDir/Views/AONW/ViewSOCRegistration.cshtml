@@ -3,29 +3,29 @@
     ViewBag.Title = "ViewSOCRegistration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<head>
-    <style>
-        .labeltext {
-            font-family: Georgia, 'Times New Roman', Times, serif
-        }
-    </style>
-</head>
-<div class="mt-3 box-properties">
-    <div class="tabHead mb-3">
-        <div class="row">
-            <div class="col-md-6"><h4>SOC List</h4></div>
-            <div class="col-md-6"> <a href="@Url.Action("SocPdfRegistration","SocPdfRegistration")" class="btn btn-primary float-right" type="button"><i class="fas fa-plus-square mr-1"></i>SoC Upload</a></div>
-        </div>
+
+<script>
+    $(document).ready(function () {
+        $("#pages").addClass("show");
+        $("#mPrintingUser").addClass("activetextclr");
+    });
+</script>
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-md-6"><h3 class="mb-0">SOC List</h3></div>
+
+        <div class="col-md-6"> <a href="@Url.Action("SocPdfRegistration","SocPdfRegistration")" class="btn btn-primary float-right" type="button"><i class="fas fa-plus-square mr-1"></i>SoC Upload</a></div>
     </div>
+</div>
 
-    <hr />
-
+<div class="card flex-fill w-100">
     @if (Model != null && Model.SOCVIEW.Count() > 0)
     {
         <div class="row">
             <div class="col col-12">
-                <div id="div1" class="portlet-body flip-scroll" style="overflow: scroll; height: 850px; Width: 100%;">
-                    <table class="table table-bordered">
+                <div id="div1" class="portlet-body flip-scroll">
+                    <table class="table mb-0 table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">SNO.</th>
@@ -94,6 +94,7 @@
 
 </div>
 
+
 <div id="successmsg" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -122,8 +123,6 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 
 <script>
     $(document).ready(function () {

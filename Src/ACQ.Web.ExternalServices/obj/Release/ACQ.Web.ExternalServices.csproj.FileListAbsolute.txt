@@ -5,9 +5,12 @@ E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Mvc.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\Microsoft.Web.Infrastructure.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.pdb
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.dll.config
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\Microsoft.Web.Infrastructure.xml
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb
+E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.dll
+E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Razor.dll
+E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Razor.dll
+E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Deployment.dll

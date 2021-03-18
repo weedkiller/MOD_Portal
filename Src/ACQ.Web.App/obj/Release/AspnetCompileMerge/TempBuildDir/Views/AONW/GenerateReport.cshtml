@@ -3,17 +3,11 @@
     ViewBag.Title = "GenerateReport";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .flip-scroll {
-        overflow: scroll;
-        height: 900px;
-        Width: 100%;
-    }
-</style>
+
 <div class="row">
-    <button class="btn btn-primary" onclick="printHtml()">print</button>
-    <div class="box-properties col-md-12">
-        <div class="portlet-body flip-scroll">
+    <button class="btn btn-primary mb-3" onclick="printHtml()">print</button>
+    <div class="col-md-12">
+        <div class="portlet-body p-3 bg-white">
             <p><b>Copy No.</b></p>
             @*<h2 style="text-align:center ;margin-top:-10px"><b>No.5(11)DAC(Sectt)/2020</b></h2>*@
             <p style="text-align:center;margin-top:-10px"><b>Government of India</b></p>

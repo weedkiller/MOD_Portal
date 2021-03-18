@@ -12,19 +12,24 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using static ACQ.Web.App.MvcApplication;
 
 
 namespace ACQ.Web.App.Controllers
 {
+
     public class AccountController : Controller
     {
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        string accessToken = "ugs@#321";
         // GET: Account
-
+        [Route("imagelogo")]
         public ActionResult imagelogo()
         {
             // Get image path  
@@ -39,18 +44,28 @@ namespace ACQ.Web.App.Controllers
             return PartialView("View");
 
         }
+        [Route("login")]
+        [HandleError]
         public ActionResult Login()
         {
-
             Session["CAPTCHA"] = GetRandomText();
             return View();
         }
 
+        public ActionResult Index()
+        {
+            Session["CAPTCHA"] = GetRandomText();
+            return View("login");
+        }
+
+       
         public ActionResult Error()
         {
 
             return View();
         }
+
+        [Route("login")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
@@ -85,8 +100,11 @@ namespace ACQ.Web.App.Controllers
                         login.Password = sanitizer.Sanitize(login.Password);
 
                         client.BaseAddress = new Uri(WebAPIUrl);
-
+                        client.DefaultRequestHeaders.Accept.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                
+                        //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
                         HttpResponseMessage response = client.GetAsync("Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
@@ -105,24 +123,24 @@ namespace ACQ.Web.App.Controllers
                                 model1.ExternalEmailID = model.First().ExternalEmailID.ToString();
                                 model1.InternalEmailID = model.First().InternalEmailID.ToString();
                                 model1.UserName = model.First().UserName.ToString();
-                                //var remoteIpAddress = Request.UserHostAddress;
-                                //string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-                                //if (string.IsNullOrEmpty(ip))
-                                //{
-                                //    ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                                //}
-                                //string ipaddress = model.First().IPAddress.ToString();
-                                //if (ipaddress == remoteIpAddress)
-                                //{
-                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                                EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
-                                ViewBag.Message = "RegistrationSuccessful";
-                                return View();
-                                //}
-                                //else
-                                //{
-                                //    return RedirectToAction("LoginReturnMsg", "Account");
-                                //}
+                                string guid = Guid.NewGuid().ToString();
+                                Session["AuthToken"] = guid;
+                                // now create a new cookie with this guid value
+                                Response.Cookies.Add(new HttpCookie("AuthToken", guid));
+                                var remoteIpAddress = Request.UserHostAddress;
+
+                                string ipaddress = model.First().IPAddress.ToString();
+                                if (ipaddress == remoteIpAddress)
+                                {
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
+                                    EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
+                                    ViewBag.Message = "RegistrationSuccessful";
+                                    return View();
+                                }
+                                else
+                                {
+                                    return RedirectToAction("LoginReturnMsg");
+                                }
 
                             }
                             else
@@ -162,7 +180,7 @@ namespace ACQ.Web.App.Controllers
 
                             model = Enumerable.Empty<LoginViewModel>();
                             ModelState.AddModelError("", "InValid UserName and Password");
-                            login.ErrorMsg = "InValid UserName and Password";
+                            login.ErrorMsg = "Invalid UserName and Password";
                             ViewBag.Login = "NO";
                             UserLogViewModel model21 = new UserLogViewModel();
                             model21.UserEmail = login.InternalEmailID;
@@ -211,7 +229,9 @@ namespace ACQ.Web.App.Controllers
             }
             return randomText.ToString();
         }
-
+        [Route("Captcha")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master= "Account", View = "Error")]
         public FileResult GetCaptchaImage()
         {
             string text = Session["CAPTCHA"].ToString();
@@ -254,18 +274,20 @@ namespace ACQ.Web.App.Controllers
 
             return File(ms.ToArray(), "image/png");
         }
+        [Route("VerifyOtp")]
         [HttpGet]
         public ActionResult VerifyOtp()
         {
 
             return View();
         }
-
+        [Route("LoginReturnMsg")]
+        [HandleError]
         public ActionResult LoginReturnMsg()
         {
             return View();
         }
-
+        [Route("VerifyOtp")]
         [HttpPost]
         public async Task<ActionResult> VerifyOtp(string emailotp)
         {
@@ -274,7 +296,7 @@ namespace ACQ.Web.App.Controllers
             model.UserEmail = Session["EmailID"].ToString();
             model.IPAddress = Request.UserHostAddress;
             model.Action = "Verify Otp";
-            if (otp == emailotp || emailotp == "123456")
+            if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "123456")
             {
                 model.Status = "OTP Verified";
                 using (HttpClient client = new HttpClient())
@@ -295,11 +317,38 @@ namespace ACQ.Web.App.Controllers
                             bool postResult1 = postJob1.IsSuccessStatusCode;
 
                         }
-                        return RedirectToAction("ViewSOCRegistration", "AONW");
+                        if (Session["UserID"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken"] != null)
+                        {
+                            if (!Session["AuthToken"].ToString().Equals(Request.Cookies["AuthToken"].Value))
+                            {
+                                return RedirectToAction("login");
+                            }
+                            else
+                            {
+                                FormsAuthentication.SetAuthCookie(model.UserEmail, false);
+                                return RedirectToRoute(new
+                                {
+                                    controller = "AONW",
+                                   Action = "ViewSOCRegistration",
+                                    
+                                });
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("login");
+                        }
+                        
                     }
                     else
                     {
-                        return RedirectToAction("ViewSOCRegistration", "AONW");
+                       
+                        return RedirectToRoute(new
+                        {
+                            controller = "AONW",
+                            Action = "ViewSOCRegistration",
+
+                        });
                     }
                 }
 
@@ -329,7 +378,7 @@ namespace ACQ.Web.App.Controllers
 
             }
 
-            return View();
+
         }
         public ActionResult ChangePassword()
         {
@@ -351,8 +400,23 @@ namespace ACQ.Web.App.Controllers
                 bool postResult1 = postJob1.IsSuccessStatusCode;
 
             }
+            Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
+            FormsAuthentication.SignOut();
             Session.Abandon();
-            return RedirectToAction("Login", "Account");
+            Session.RemoveAll();
+
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddMonths(-20);
+            }
+
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                Response.Cookies["AuthToken"].Value = string.Empty;
+                Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
+            }
+            return RedirectToAction("login");
         }
 
         [HttpPost]

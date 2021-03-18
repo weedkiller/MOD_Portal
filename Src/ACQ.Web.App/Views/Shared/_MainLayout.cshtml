@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <!-- External CSS libraries -->
     <link href="~/assets/css/bootstrapv4.css" rel="stylesheet" />
-    <link href="~/assets/css/style.css" rel="stylesheet" />
-    <link href="~/assets/fontawesome-5.12.1/css/all.min.css" rel="stylesheet" />
-
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="~/assets/fontawesome-5.12.1/css/all.min.css" rel="stylesheet" />
+    @*@Styles.Render("~/Contentnew/css")*@
 
     <script src="~/assets/js/jquery.min.js"></script>
 </head>
@@ -21,7 +21,7 @@
                 <div class="col-2">
                     <a href="" class="topnav-logo mt-2">
                         <span class="topnav-logo-sm">
-                            @{ Html.RenderAction("imagelogo", "Account"); }
+                            @{ Html.RenderAction("imagelogo"); }
                         </span>
                     </a>
                 </div>
@@ -50,12 +50,40 @@
         </div>
     </footer>
     <!-------------footer end-------------->
-
+    @*@Scripts.Render("~/bundles/js")*@
 
     <script src="~/assets/js/app.js"></script>
-    <script src="~/assets/fontawesome-5.12.1/js/all.min.js"></script>
+        <script src="~/assets/fontawesome-5.12.1/js/all.min.js"></script>
 
 </body>
 </html>
 
+<script>
+    $(document).ready(function () {
+        function disableBack() { window.history.forward() }
 
+        window.onload = disableBack();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
+
+        $("body").on("contextmenu", function (e) {
+            return false;
+        });
+
+        $(window).keydown(function (event) {
+
+            if (event.keyCode == 116) {
+
+                event.preventDefault();
+
+                return false;
+
+            }
+
+        });
+    });
+</script>

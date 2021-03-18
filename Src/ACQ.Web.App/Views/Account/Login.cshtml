@@ -13,7 +13,7 @@
 
 
 <div class="login_bg">
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("login","Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -52,7 +52,8 @@
                                 <div>
                                     @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
                                     <div>
-                                        <img src="/Account/GetCaptchaImage" title="Captcha" />
+                                        @*<img src="/Account/GetCaptchaImage" title="Captcha" />*@
+                                        <img src="Captcha" title="Captcha" />
                                         <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
@@ -85,7 +86,7 @@
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog" style="max-width: 500px;">
-        @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post))
+        @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
         {
             @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
             <!-- Modal content-->
@@ -124,21 +125,16 @@
 </div>
 
 
-<script>
-    $(document).on('click', '.toggle-password', function () {
-
-        $(this).toggleClass("fa-eye fa-eye-slash");
-
-        var input = $("#txtpassword");
-        input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
-    });
-</script>
 
 <script>
        function resendOTP() {
         var PageName = "exhibitorReg";
            window.location.href = "/ResendOTP/SendResendOTP?Pagename=" + PageName;
     }
+
+    $('#loadbtnCaptcha').click(function () {
+        document.location = '@Url.Action("login")';
+    });
 
     $(document).ready(function () {
 
@@ -218,7 +214,7 @@
     }
 
     $('#btnclose').click(function () {
-        document.location = '@Url.Action("ExhibitorRegistraionContent", "NodalRegistration")';
+        document.location = '@Url.Action("login")';
     });
 </script>
 

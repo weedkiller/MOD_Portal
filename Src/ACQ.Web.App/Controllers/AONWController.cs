@@ -32,6 +32,7 @@ namespace ACQ.Web.App.Controllers
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
         List<AttachmentViewModel> fileDetailsF = new List<AttachmentViewModel>();
+
         // GET: AONW
         #region Index HomePage
         public ActionResult Index(SAVESOCVIEWMODEL _model)
@@ -40,7 +41,11 @@ namespace ACQ.Web.App.Controllers
         }
         #endregion
         #region Main SOC Page All Code
+        [Route("ViewSOC")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
         [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult ViewSOCRegistration()
         {
             string mSercive = "";
@@ -77,6 +82,12 @@ namespace ACQ.Web.App.Controllers
             }
             return View(Socmodel);
         }
+
+        [Route(" ViewSOCComment")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult ViewSOCComment()
         {
 
@@ -635,6 +646,12 @@ namespace ACQ.Web.App.Controllers
 
         #endregion
         #region Save Meeting Code All
+
+        [Route("ViewMeeting")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult ViewMeeting()
         {
             try
@@ -679,6 +696,11 @@ namespace ACQ.Web.App.Controllers
             }
             return RedirectToAction("AddMeetingAgenda", new { id, mtype, dated });
         }
+        [Route("createMeeting")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult createMeeting()
         {
             SetParticipantSession();
@@ -705,7 +727,7 @@ namespace ACQ.Web.App.Controllers
                     model.IsActive = "Y";
                     model.SocCommentID = 0;
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
-                   // model.UserID = sanitizer.Sanitize(model.UserID);
+                    // model.UserID = sanitizer.Sanitize(model.UserID);
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");

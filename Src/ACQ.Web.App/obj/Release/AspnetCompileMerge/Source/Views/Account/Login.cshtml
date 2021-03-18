@@ -6,140 +6,74 @@
 }
 
 <style>
-    .cs-signin-form::before {
-        background: none;
-    }
-
-    body {
-       /* background: url('/Content/images/loginBg.jpg') no-repeat center center fixed;*/
-      
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-
-    .cs-signin-form .cs-signin-form-inner {
-        background-color: #fff0;
-        z-index: 5;
-        border-left: 2px solid #fff;
-        border-radius: 10px;
-        box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
-        -webkit-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
-        -o-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
-        -ms-box-shadow: 0px 3px 20px 0px rgba(0,0,0,0.1);
-        border-left: 2px solid #fff;
-    }
-
-    .invalidmsg {
-        color: red;
-        position: absolute;
-        top: 8px;
-        right: 5px;
-        font-size: 19px;
+    form {
+        width: 100%;
     }
 </style>
-
-
-<style>
-    .ValidateColor {
-        color: red;
-        float: left;
-        position: absolute;
-        font-size: 14px;
-        left: 4%;
-    }
-
-    .bb {
-        position: relative;
-    }
-
-    #Otp {
-        text-transform: uppercase;
-    }
-
-    #CaptchaInputText {
-        text-transform: uppercase;
-    }
-</style>
-
-
-<div class="navbar-custom topnav-navbar topnav-navbar-dark" style="height: 95px;">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3">
-                <a href="" class="topnav-logo mt-2">
-                    <span class="topnav-logo-sm">
-                        <img src="~/assets/images/ddp_logo.png" height="65"/>
-                    </span>
-                </a>
-            </div>
-
-            <div class="col-7 d-flex justify-content-center align-items-center">
-                <h1 class="mt-3 topHeadline">ACQUISITION PORTAL</h1>
-            </div>
-
-            <div class="col-2">
-
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="login_bg">
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    @using (Html.BeginForm("Login","Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
+
         <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
-            <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
-                <div class="cs-signin-form-inner pb-4" style="background: white;">
-                    <div class="cs-view show" id="signin-view">
-                        <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
-                        <hr />
-
-                        @*<p class="font-size-ms text-muted mb-4 text-center">Sign in to your account using email and password provided during registration.</p>*@
-                        <form class="needs-validation" id="#myform" novalidate>
-                            <div class="input-group-overlay form-group" style="margin-top: 25px;">
-                                <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
-                                <input class="form-control prepended-form-control" type="Email" name="InternalEmailID" id="txtuserName" placeholder="Email" autocomplete="off">
-
-                                @Html.ValidationMessageFor(x => x.InternalEmailID, null, new { @class = "danger" })
-                            </div>
-                            <p id="required-EmailMsg" style="display: none;color: Red;">Please enter Email Id</p>
-                            <h7 id="usercheck"></h7>
-                            <div class="input-group-overlay cs-password-toggle form-group" style="margin-top: 25px;">
-                                <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
-                                <input class="form-control prepended-form-control" type="password" name="password" id="txtpassword" autocomplete="off" placeholder="Password">
-                                <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password eyePos"></span>
-
-                                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "danger" })
-                                @*<label class="cs-password-toggle-btn">
-                                        <input class="custom-control-input" type="checkbox">
-                                        <i class="fas fa-eye cs-password-toggle-indicator"></i><span class="sr-only">Show password</span>
-                                    </label>*@
+            <div class="col-md-5 p-4">
+                <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
+                    <div class="cs-signin-form-inner" style="background: white;">
+                        <div class="cs-view show p-4" id="signin-view">
+                            <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
+                            <hr />
+                            @Html.ValidationSummary()
+                            <div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">
 
                             </div>
+                            <form class="needs-validation" id="#myform" novalidate>
+                                <div class="form-group" data-validate="Valid email is required: ex@abc.xyz">
+                                    <label for="emailaddress">Email address</label>
+                                    <input class="form-control" type="email" name="InternalEmailID" id="txtuserName" autocomplete="off" placeholder="Email">
+                                    @Html.ValidationMessageFor(x => x.InternalEmailID, null, new { @class = "danger" })
+                                </div>
 
-                            <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
-                            <div class="w-100 text-center invalidmsg" id="dvMsg" style="display:none;">
 
-                            </div>
-                            <div id="captcha" class="captcha">
-                                @Html.Captcha("Refresh", "Enter the text you see above", 4, "<span class='ValidateColor'>Enter Captcha</span>", true)
-                                @*<img src="~/assets/images/question_mark.png" style="height: 18px; width: 15px;margin-top: -60px;margin-left: 200px;" title="Captcha is case sensitive" />*@
-                            </div>
-                            <div class="ValidateColor ml-3">
-                                @ViewBag.errormessage
-                            </div>
-                            <h7 id="passwordcheck"> </h7>
+                                <p id="required-EmailMsg" style="display: none;color: Red;">Please enter Email Id</p>
+                                <h7 id="usercheck"></h7>
+                                <div class="input-group-overlay cs-password-toggle form-group" style="margin-top: 25px;">
+                                    <label for="emailaddress">Password</label>
 
-                            <button class="btn btn-primary btn-block mb-1 mt-5 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
-                            <hr class="mt-4 mb-3" style="display:none">
-                            <div class="w-100 text-center" style="display:none">
-                                <a class="nav-link-style font-size-ms text-white" href="@Url.Action("forgetPassword", "home")" style="font-size: 15px!important;">Forgot password?</a>
-                            </div>
-                        </form>
+                                    <input class="form-control prepended-form-control" type="password" name="password" id="txtpassword" autocomplete="off" placeholder="Password">
+
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { @class = "danger" })
+
+                                </div>
+
+                                <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
+
+                                <div>
+                                    @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
+                                    <div>
+                                        <img src="/Account/GetCaptchaImage" title="Captcha" />
+                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <br />
+                                        <input type="text" class="form-control prepended-form-control" name="clientCaptcha" autocomplete="off" placeholder="Write above text exactly" required />
+                                        <p style="font-weight:bold;color:red;">@ViewBag.CaptchaError</p>
+                                    </div>
+
+                                </div>
+                                <div class="ValidateColor">
+                                    @ViewBag.errormessage
+                                </div>
+                                <h7 id="passwordcheck"> </h7>
+
+                                <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
+                                <hr class="mt-4 mb-3" style="display:none">
+                                <div class="w-100 text-center" style="display:none">
+                                    <a class="nav-link-style font-size-ms text-white" href="@Url.Action("forgetPassword", "home")" style="font-size: 15px!important;">Forgot password?</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,45 +83,44 @@
 </div>
 
 
-
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 500px;">
         @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post))
         {
             @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="display:block !important">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="mb-0">OTP Verification</h4>
-                        <div class="editor-label">
-                            @ViewBag.OtpMesssage
-                            @*@TempData["OtpMesssage"]*@
-                            <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
-                            <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
-                        </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="mb-0">OTP Verification</h4>
+                    <div class="editor-label">
+                        @ViewBag.OtpMesssage
+                        @*@TempData["OtpMesssage"]*@
+                        <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
+                        <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
                     </div>
-                    <div class="modal-body">
-                        <div id="myTabContent">
-                            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group mb-0">
-                                    <label>Please enter OTP received on MoDLAN email</label>
-                                    @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
-                                    @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
-                                </div>
-                                @*<div class="w-100 text-right">
+                </div>
+                <div class="modal-body">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group mb-0">
+                                <label>Please enter OTP received on MoDLAN email</label>
+                                @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
+                                @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
+                            </div>
+                            @*<div class="w-100 text-right">
                                     <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
                                 </div>*@
-                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                    </div>
-                </div>}
-            @*</form>*@
-        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+            </div>}
+        @*</form>*@
+    </div>
 </div>
 
 
@@ -285,7 +218,7 @@
     }
 
     $('#btnclose').click(function () {
-        document.location = '@Url.Action("ExhibitorRegistraionContent", "NodalRegistration")';
+        document.location = '@Url.Action("Login")';
     });
 </script>
 
@@ -328,7 +261,7 @@
         $("#dvMsg").show();
         $("#dvMsg").css("display", "block");
         $("#dvMsg").addClass("has-error");
-        //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
+            //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
 
     </script>
 }

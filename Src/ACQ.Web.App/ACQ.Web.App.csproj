@@ -1601,6 +1601,7 @@
     <Content Include="lib\Microsoft.Office.Interop.Word.dll" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Scripts\bootstrap-autocomplete.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -1699,6 +1700,9 @@
     <Content Include="Scripts\jquery-3.5.1.min.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1-11.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

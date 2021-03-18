@@ -16,6 +16,7 @@ using Path = System.IO.Path;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using System.Net.Http.Headers;
 using Microsoft.Graph;
+using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -23,21 +24,22 @@ namespace ACQ.Web.App.Controllers
     {
         // GET: SocPdfRegistration
 
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
         private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
         private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
         private string InitVector = @"qwertyui";
         private string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
-        //private string baseUrl = "D://";
+
+        
+
+        [Route("SoCRegistration")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult SoCPdfRegistration()
         {
 
@@ -52,6 +54,10 @@ namespace ACQ.Web.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("SoCRegistration")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public async Task<ActionResult> SoCPdfRegistration(HttpPostedFileBase file, string SoC_Type)
         {
             dynamic expando = new ExpandoObject();
@@ -108,9 +114,7 @@ namespace ACQ.Web.App.Controllers
                             {
                                 stream.CopyTo(fileStream);
                             }
-                            // Once the file part is saved, see if we have enough to merge it  
-                            //Shared UT = new Shared();
-                            //UT.MergeFile(path);
+                           
                         }
                         catch (IOException ex)
                         {
@@ -124,12 +128,7 @@ namespace ACQ.Web.App.Controllers
                             Document doc = word1.Documents.Open(path);
 
                             List<string> contentControlText = new List<string>();
-                            //if(contentControlText.Count==0)
-                            //{
-                            //    ViewBag.UploadStatusmsg = "File format not correct";
-                            //    ViewBag.UploadStatus = "errormsg";
-                            //    return View();
-                            //}
+                            
                             foreach (ContentControl CC in doc.ContentControls)
                             {
                                 contentControlText.Add(CC.Range.Text);
@@ -172,12 +171,7 @@ namespace ACQ.Web.App.Controllers
                                     return View();
                                 }
 
-                                //if (contentControlText[4].ToString() == "Click here to enter text.")
-                                //{
-                                //    ViewBag.UploadStatus = "To Be considered by";
-                                //    return View();
-                                //}
-
+                               
                                 if (contentControlText[70].ToString() == "Click here to enter text.")
                                 {
                                     ViewBag.UploadStatus = "Quantity";
@@ -504,6 +498,9 @@ namespace ACQ.Web.App.Controllers
 
 
         [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult UploadFiles(string id)
         {
             if (TempData["FileA"] != null)
@@ -553,7 +550,9 @@ namespace ACQ.Web.App.Controllers
             return Json(files.Count + " Files Uploaded!");
         }
 
-
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public string EncryptFile(HttpPostedFileBase file, string password)
         {
 
@@ -607,23 +606,15 @@ namespace ACQ.Web.App.Controllers
             return result.url;
         }
 
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public string DecryptFile(string filename, string filePath, string password)
         {
             ReturnData result = new ReturnData();
             try
             {
-
-
-
-                // HttpPostedFileBase file = Request.Files[0];
-
-
-                //string filename = Path.GetFileName(file.FileName);
-                //string filePath = @"D:\encry_myfile.pdf";
-                //string filename = "encry_myfile.pdf";
                 string outputFile = Path.Combine(baseUrl, "decry_" + filename);
-
-
                 UnicodeEncoding UE = new UnicodeEncoding();
                 byte[] key = UE.GetBytes(password);
                 byte[] IV = UE.GetBytes(InitVector);
@@ -656,7 +647,9 @@ namespace ACQ.Web.App.Controllers
 
             return result.url;
         }
-
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public void Uploadencryption(HttpPostedFileBase files)
         {
             // Add code to upload file with encryption
@@ -695,12 +688,9 @@ namespace ACQ.Web.App.Controllers
                 Response.Write("Encryption Failed! Please try again.");
             }
         }
-        //public ActionResult ViewfileandDoc()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult ViewfileandDoc()
         {
 

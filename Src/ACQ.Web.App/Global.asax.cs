@@ -20,6 +20,7 @@ namespace ACQ.Web.App
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters);
             AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Application_Error()
@@ -30,15 +31,34 @@ namespace ACQ.Web.App
             Response.Redirect(String.Format("~/Account/Error"));
 
         }
+        
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            var app = sender as HttpApplication;
-            if (app != null && app.Context != null)
+            string[] headers = { "Server", "X-AspNet-Version" };
+
+            if (!Response.HeadersWritten)
             {
-                app.Context.Response.Headers.Remove("Server");
-                app.Response.Headers.Remove("Server");           //Remove Server Header   
-                app.Response.Headers.Remove("X-AspNet-Version"); //Remove X-AspNet-Version Header
+                Response.AddOnSendingHeaders((c) =>
+                {
+                    if (c != null && c.Response != null && c.Response.Headers != null)
+                    {
+                        foreach (string header in headers)
+                        {
+                            if (c.Response.Headers[header] != null)
+                            {
+                                c.Response.Headers.Remove(header);
+                            }
+                        }
+                    }
+                });
             }
+
+        }
+
+        protected void Application_EndRequest()
+        {
+            // removing excessive headers. They don't need to see this.
+            Response.Headers.Remove("header_name");
         }
         public class SessionExpire : ActionFilterAttribute
         {
@@ -46,9 +66,9 @@ namespace ACQ.Web.App
             {
                 HttpContext ctx = HttpContext.Current;
                 // check  sessions here
-                if (HttpContext.Current.Session["UserName"] == null)
+                if (HttpContext.Current.Session["UserID"] == null)
                 {
-                    filterContext.Result = new RedirectResult("~/Account/Login");
+                    filterContext.Result = new RedirectResult("~/Account/login");
                     return;
                 }
                 base.OnActionExecuting(filterContext);
@@ -62,7 +82,7 @@ namespace ACQ.Web.App
                 // check  sessions here
                 if (HttpContext.Current.Session["UserName"] == null)
                 {
-                    filterContext.Result = new RedirectResult("~/Account/Login");
+                    filterContext.Result = new RedirectResult("~/Account/login");
                     return;
                 }
                 base.OnActionExecuting(filterContext);

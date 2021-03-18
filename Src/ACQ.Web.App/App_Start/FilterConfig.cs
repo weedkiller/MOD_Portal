@@ -12,7 +12,7 @@ namespace ACQ.Web.App
         }
         public static void RegisterHttpFilters(HttpFilterCollection filters)
         {
-            //filters.Add(new ());
+           // filters.Add(new HandleErrorAttribute());
         }
     }
 }

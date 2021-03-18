@@ -2339,11 +2339,11 @@ textarea.form-control {
   border-color: #28a745;
 }
 
-.was-validated .custom-file-input:valid ~ .custom-file-label, .custom-file-input.is-valid ~ .custom-file-label {
+.was-validated .form-control-file:valid ~ .custom-file-label, .form-control-file.is-valid ~ .custom-file-label {
   border-color: #28a745;
 }
 
-.was-validated .custom-file-input:valid:focus ~ .custom-file-label, .custom-file-input.is-valid:focus ~ .custom-file-label {
+.was-validated .form-control-file:valid:focus ~ .custom-file-label, .form-control-file.is-valid:focus ~ .custom-file-label {
   border-color: #28a745;
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
@@ -2439,11 +2439,11 @@ textarea.form-control {
   border-color: #dc3545;
 }
 
-.was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
+.was-validated .form-control-file:invalid ~ .custom-file-label, .form-control-file.is-invalid ~ .custom-file-label {
   border-color: #dc3545;
 }
 
-.was-validated .custom-file-input:invalid:focus ~ .custom-file-label, .custom-file-input.is-invalid:focus ~ .custom-file-label {
+.was-validated .form-control-file:invalid:focus ~ .custom-file-label, .form-control-file.is-invalid:focus ~ .custom-file-label {
   border-color: #dc3545;
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
@@ -3618,11 +3618,11 @@ input[type="button"].btn-block {
 
 .input-group > .form-control:focus,
 .input-group > .custom-select:focus,
-.input-group > .custom-file .custom-file-input:focus ~ .custom-file-label {
+.input-group > .custom-file .form-control-file:focus ~ .custom-file-label {
   z-index: 3;
 }
 
-.input-group > .custom-file .custom-file-input:focus {
+.input-group > .custom-file .form-control-file:focus {
   z-index: 4;
 }
 
@@ -4003,7 +4003,7 @@ input[type="button"].btn-block {
   margin-bottom: 0;
 }
 
-.custom-file-input {
+.form-control-file {
   position: relative;
   z-index: 2;
   width: 100%;
@@ -4012,21 +4012,21 @@ input[type="button"].btn-block {
   opacity: 0;
 }
 
-.custom-file-input:focus ~ .custom-file-label {
+.form-control-file:focus ~ .custom-file-label {
   border-color: #80bdff;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.custom-file-input[disabled] ~ .custom-file-label,
-.custom-file-input:disabled ~ .custom-file-label {
+.form-control-file[disabled] ~ .custom-file-label,
+.form-control-file:disabled ~ .custom-file-label {
   background-color: #e9ecef;
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
+.form-control-file:lang(en) ~ .custom-file-label::after {
   content: "Browse";
 }
 
-.custom-file-input ~ .custom-file-label[data-browse]::after {
+.form-control-file ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
 
