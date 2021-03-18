@@ -1,5 +1,7 @@
 //using MOD.Models;
+using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
+using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
@@ -364,8 +366,14 @@ namespace ACQ.Web.App.Controllers
 
             return View();
         }
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string emailid, string tokenid)
         {
+            //string email = Encryption.Decrypt(emailid);
+            // string token = Encryption.Decrypt(tokenid);
+            // Session["emailid"] = email;
+            // Session["tokenid"] = token; 
+            Session["emailid"] = emailid;
+            Session["tokenid"] = tokenid; 
             return View();
         }
 
@@ -393,14 +401,16 @@ namespace ACQ.Web.App.Controllers
         //[SessionExpire]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
+            //ChangePasswordViewModel input = new ChangePasswordViewModel();
             if (ModelState.IsValid)
             {
-                if (Session["UserName"] != null)
+                if (Session["emailid"] != null)
                 {
                     //input=
-                    input.UserName = Session["UserName"].ToString();
+                    input.UserName = Session["emailid"].ToString();
+                    input.TokenId = Session["tokenid"].ToString();
                     input.UserName = sanitizer.Sanitize(input.UserName);
-                    input.Password = sanitizer.Sanitize(input.Password);
+                    input.Password = sanitizer.Sanitize(input.TokenId);
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
@@ -449,7 +459,7 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
-
+        [HttpGet]
         public ActionResult ResetPwd()
         {
             return View();
@@ -457,60 +467,48 @@ namespace ACQ.Web.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionExpire]
+       // [SessionExpire]
         public async Task<ActionResult> ResetPwd(ChangePasswordViewModel input)
         {
-            if (ModelState.IsValid)
+            ChangePasswordViewModel model = new ChangePasswordViewModel();
+            if (!ModelState.IsValid)
             {
                 if (Session["UserName"] != null)
                 {
                     //input=
-                    input.UserName = Session["UserName"].ToString();
+                    input.UserName = Session["EmailID"].ToString();
                     input.UserName = sanitizer.Sanitize(input.UserName);
-                    input.Password = sanitizer.Sanitize(input.Password);
-                    using (HttpClient client = new HttpClient())
+                    using (HttpClient client1 = new HttpClient())
                     {
-                        client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
-                        HttpResponseMessage postJob = await client.PostAsJsonAsync<ChangePasswordViewModel>(WebAPIUrl + "Account/ChangePassword", input);
-                        string url = postJob.Headers.Location.AbsoluteUri;
-                        string mID = postJob.Headers.Location.Segments[4].ToString();
-                        // string mEmail = postJob.Headers.Location.Segments[5].ToString();
-                        bool postResult = postJob.IsSuccessStatusCode;
-                        if (postResult == true)
+                        client1.BaseAddress = new Uri(WebAPIUrl);
+
+                        client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        HttpResponseMessage response = client1.GetAsync("Account/ResetPwdSendLink?UserEmail=" + input.UserName + "&Status=" + input.EmailID + "").Result;
+
+                        if (response.IsSuccessStatusCode)
                         {
+                            model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
+                            string emaid = Encryption.Decrypt(model.EmailID); 
+                            model.TokenId = Encryption.Decrypt(model.TokenId); 
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
+                             EmailHelper.SendPwdDetails(model, emaid, mailPath);
 
-                            ViewBag.Message = mID.ToString();
-                            UserLogViewModel model21 = new UserLogViewModel();
-                            model21.UserEmail = Session["EmailID"].ToString();
-                            model21.IPAddress = Request.UserHostAddress;
-                            model21.Status = "Sucess";
-                            model21.Action = "Change Password";
-                            using (HttpClient client1 = new HttpClient())
+                            if (model.Message == "User Exist")
                             {
-                                client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                                HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
-
-                                bool postResult1 = postJob1.IsSuccessStatusCode;
-                                if (postResult1 == true)
-                                {
-
-                                    return View();
-                                }
-                                else
-                                {
-                                    return View();
-                                }
+                                ViewBag.Msg = "User Exist";
+                                return View();
+                                
                             }
-
+                            return RedirectToAction("Login", "Account");
                         }
                         else
                         {
-                            ViewBag.Message = "PasswordNotChange";
                             return View();
                         }
                     }
+
                 }
-                else { Redirect("/Account/Login"); }
+                
 
             }
             return View();

@@ -5,7 +5,7 @@
 
 @{
     ViewBag.Title = "ResetPwd";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
     form {
@@ -24,49 +24,20 @@
                 <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
                     <div class="cs-signin-form-inner" style="background: white;">
                         <div class="cs-view show p-4" id="signin-view">
-                            <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
+                            <h1 class="h2 text-center" style=" color: #3f80ea !important">Change Password </h1>
                             <hr />
                             @Html.ValidationSummary()
-                            <div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">
+                            @*<div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">*@
 
                             </div>
                             <form class="needs-validation" id="#myform" novalidate>
-                                <div class="form-group">
-                                    <label for="recover-email">Enter New Password</label>
-                                    @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                <div class="form-row mt-3">
+                                    <label for="old password"> Email<span class="required">*</span></label>
+
+                                    @Html.TextBoxFor(Model => Model.EmailID, new { @class = " form-control bb", required = "required", tabindex = "1", autofocus = "autofocus" })
+                                    @Html.ValidationMessageFor(m => m.EmailID, "", new { @class = "text-danger float-left gg" })
+                                    <p style="font-weight:bold;color:red;">@ViewBag.Msg</p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="recover-email">Confirm New Password</label>
-                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                </div>
-
-
-                                <p id="required-EmailMsg" style="display: none;color: Red;">Please enter Email Id</p>
-                                <h7 id="usercheck"></h7>
-
-
-                                <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
-
-                                <div>
-                                    @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
-                                    <div>
-                                        <img src="/Account/GetCaptchaImage" title="Captcha" />
-                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </button>
-                                        <br />
-                                        <input type="text" class="form-control prepended-form-control" name="clientCaptcha" autocomplete="off" placeholder="Write above text exactly" required />
-                                        <p style="font-weight:bold;color:red;">@ViewBag.CaptchaError</p>
-                                    </div>
-
-                                </div>
-                                <div class="ValidateColor">
-                                    @ViewBag.errormessage
-                                </div>
-                                <h7 id="passwordcheck"> </h7>
-
                                 <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
                                 <hr class="mt-4 mb-3" style="display:none">
                                 <div class="w-100 text-center" style="display:none">
@@ -76,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            
         </section>
     }
 
