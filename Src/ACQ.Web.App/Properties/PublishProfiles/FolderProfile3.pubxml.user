@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Uttam Kumar\Desktop\ACQWeb</_PublishTargetUrl>
-    <History>True|2021-03-17T10:16:49.4450451Z;True|2021-03-17T11:44:47.5348875+05:30;False|2021-03-11T21:56:49.7881312+05:30;</History>
+    <History>True|2021-03-18T16:23:34.1939714Z;True|2021-03-17T15:46:49.4450451+05:30;True|2021-03-17T11:44:47.5348875+05:30;False|2021-03-11T21:56:49.7881312+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Browsers/qt.browser">
@@ -1458,28 +1458,28 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/16/2021 11:15:17</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>03/17/2021 15:46:04</publishTime>
+      <publishTime>03/18/2021 21:52:00</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>03/17/2021 15:46:04</publishTime>
+      <publishTime>03/18/2021 21:52:00</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
       <publishTime>03/03/2021 12:29:32</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.dll">
-      <publishTime>03/17/2021 11:42:21</publishTime>
+      <publishTime>03/18/2021 21:51:54</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.pdb">
-      <publishTime>03/17/2021 11:42:21</publishTime>
+      <publishTime>03/18/2021 21:51:54</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>03/16/2021 19:57:45</publishTime>
+      <publishTime>03/18/2021 19:58:52</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>01/14/2021 21:27:58</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>03/16/2021 19:57:45</publishTime>
+      <publishTime>03/18/2021 19:58:52</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>06/11/2020 20:17:04</publishTime>
@@ -1491,13 +1491,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_Browsers.dll">
-      <publishTime>03/17/2021 15:46:18</publishTime>
+      <publishTime>03/18/2021 21:52:17</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>03/17/2021 15:46:15</publishTime>
+      <publishTime>03/18/2021 21:52:16</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>03/17/2021 15:46:15</publishTime>
+      <publishTime>03/18/2021 21:52:15</publishTime>
     </File>
     <File Include="bin/CaptchaMvc.dll">
       <publishTime>11/04/2013 13:26:56</publishTime>
@@ -2004,7 +2004,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/23/2014 13:57:34</publishTime>
     </File>
     <File Include="bin/__browserCapabilitiesCompiler.compiled">
-      <publishTime>03/17/2021 15:46:18</publishTime>
+      <publishTime>03/18/2021 21:52:17</publishTime>
     </File>
     <File Include="Blox2.ttf">
       <publishTime>05/28/2006 19:16:12</publishTime>
@@ -4391,6 +4391,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Email/changepasswordPage.html">
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
+    <File Include="Email/ChngPwdMail.html">
+      <publishTime>03/18/2021 19:58:52</publishTime>
+    </File>
     <File Include="Email/confrmationBadgesRegistration.html">
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
@@ -4422,7 +4425,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/14/2021 21:27:06</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>03/17/2021 15:46:07</publishTime>
+      <publishTime>03/18/2021 21:52:04</publishTime>
     </File>
     <File Include="Rotativa/help-wkhtmltoimage.txt">
       <publishTime>01/14/2021 21:27:02</publishTime>
@@ -4782,16 +4785,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
     <File Include="Views/Account/ChangePassword.cshtml">
-      <publishTime>03/15/2021 20:59:53</publishTime>
+      <publishTime>03/18/2021 19:58:52</publishTime>
     </File>
     <File Include="Views/Account/Error.cshtml">
       <publishTime>03/14/2021 23:24:35</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>03/17/2021 15:25:30</publishTime>
+      <publishTime>03/18/2021 20:02:20</publishTime>
     </File>
     <File Include="Views/Account/LoginReturnMsg.cshtml">
       <publishTime>03/14/2021 12:30:45</publishTime>
+    </File>
+    <File Include="Views/Account/ResetPwd.cshtml">
+      <publishTime>03/18/2021 19:58:52</publishTime>
     </File>
     <File Include="Views/Account/View.cshtml">
       <publishTime>03/16/2021 12:27:28</publishTime>
@@ -4848,7 +4854,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/10/2021 22:31:04</publishTime>
     </File>
     <File Include="Views/AONW/ViewSOCRegistration.cshtml">
-      <publishTime>03/12/2021 16:21:57</publishTime>
+      <publishTime>03/18/2021 15:35:50</publishTime>
     </File>
     <File Include="Views/AONW/ViewSocSendMail.cshtml">
       <publishTime>03/13/2021 10:18:36</publishTime>
@@ -4878,13 +4884,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/16/2021 12:27:04</publishTime>
+      <publishTime>03/18/2021 19:58:53</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>03/10/2021 22:31:04</publishTime>
     </File>
     <File Include="Views/Shared/_MainLayout.cshtml">
-      <publishTime>03/17/2021 15:27:02</publishTime>
+      <publishTime>03/18/2021 13:36:50</publishTime>
     </File>
     <File Include="Views/SocPdfRegistration/SoCPdfRegistration.cshtml">
       <publishTime>03/16/2021 12:58:18</publishTime>
@@ -4893,13 +4899,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/10/2021 22:31:04</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>03/16/2021 11:15:17</publishTime>
+      <publishTime>03/18/2021 12:34:02</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>03/10/2021 22:31:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/17/2021 11:42:33</publishTime>
+      <publishTime>03/18/2021 21:52:02</publishTime>
     </File>
   </ItemGroup>
 </Project>

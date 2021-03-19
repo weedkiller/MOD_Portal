@@ -58,4 +58,32 @@
 </body>
 </html>
 
+<script>
+    $(document).ready(function () {
+        function disableBack() { window.history.forward() }
 
+        window.onload = disableBack();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
+
+        $("body").on("contextmenu", function (e) {
+            return false;
+        });
+
+        $(window).keydown(function (event) {
+
+            if (event.keyCode == 116) {
+
+                event.preventDefault();
+
+                return false;
+
+            }
+
+        });
+    });
+</script>

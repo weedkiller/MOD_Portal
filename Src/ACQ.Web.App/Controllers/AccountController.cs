@@ -113,12 +113,41 @@ namespace ACQ.Web.App.Controllers
                           
                             LoginViewModel model1 = new LoginViewModel();
                             model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                           if( model.First().Message == "Blocked")
+                           if( model.First().Message == "Blocked" )
                             {
                                 ViewBag.Message = "Blocked";
                                 return View();
                             }
 
+                           if(model.First().Message == "LoginFailed")
+                            {
+                                model = Enumerable.Empty<LoginViewModel>();
+                                ViewBag.ErrorMsg = "Invalid UserName and Password";
+                                ModelState.AddModelError("", "InValid UserName and Password");
+                                login.ErrorMsg = "InValid UserName and Password";
+                                UserLogViewModel model21 = new UserLogViewModel();
+                                model21.UserEmail = login.InternalEmailID;
+                                model21.IPAddress = Request.UserHostAddress;
+                                model21.Status = "Invalid UserName and Password";
+                                model21.Action = "Login";
+                                using (HttpClient client1 = new HttpClient())
+                                {
+                                    client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
+                                    HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
+
+                                    bool postResult1 = postJob1.IsSuccessStatusCode;
+                                    if (postResult1 == true)
+                                    {
+
+                                        return View();
+                                    }
+                                    else
+                                    {
+                                        return View();
+                                    }
+                                }
+                            }
+                            
                             if (model.Count() > 0)
                             {
 
@@ -309,6 +338,37 @@ namespace ACQ.Web.App.Controllers
             if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "123456")
             {
                 model.Status = "OTP Verified";
+                using (HttpClient client1 = new HttpClient())
+                {
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model.UserEmail + "&Status=" + model.Status + "").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        model = response.Content.ReadAsAsync<UserLogViewModel>().Result;
+                        if (model.Message == "Blocked")
+                        {
+                            ViewBag.Message = "Blocked";
+                            TempData["OTPNot"] = "Blocked";
+                            return RedirectToAction("Login", "Account");
+                        }
+
+                        if (model.Message == "LoginFailed")
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+
+                        
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Blocked";
+                        TempData["OTPNot"] = "Blocked";
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
@@ -388,6 +448,11 @@ namespace ACQ.Web.App.Controllers
                                 {
                                     ViewBag.Message = "Blocked";
                                     TempData["OTPNot"] = "Blocked";
+                                    return RedirectToAction("Login", "Account");
+                                }
+
+                                if(model.Message == "LoginFailed")
+                                {
                                     return RedirectToAction("Login", "Account");
                                 }
 

@@ -103,7 +103,7 @@ namespace ACQ.Web.App.Controllers
                         var FileDataContent = Request.Files[0];
                         var stream = FileDataContent.InputStream;
                         var fileName = Path.GetFileName(FileDataContent.FileName);
-                        var UploadPath = Server.MapPath("~/App_Data/uploads");
+                        var UploadPath = Server.MapPath("~/excelfolder/");
                         Directory.CreateDirectory(UploadPath);
                         string path = Path.Combine(UploadPath, fileName);
                         try
@@ -255,6 +255,8 @@ namespace ACQ.Web.App.Controllers
                             }
                             else
                             {
+                               
+                                
                                 ViewBag.UploadStatus = "File format not correct";
                                 return View();
                             }
@@ -460,7 +462,7 @@ namespace ACQ.Web.App.Controllers
 
                                 }
 
-                                return RedirectToActionPermanent("ViewSocMaster", "AONW", new { ID = objattach.aon_id });
+                                return RedirectToActionPermanent("ViewSocMaster", "AONW", new { ID = Encryption.Encrypt(objattach.aon_id.ToString()) });
                             }
                             else
                             {

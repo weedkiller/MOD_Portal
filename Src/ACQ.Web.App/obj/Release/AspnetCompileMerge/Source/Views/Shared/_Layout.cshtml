@@ -49,10 +49,10 @@
                                                 @if (Session["SectionID"].ToString() == "1" || Session["SectionID"].ToString() == "12" || Session["SectionID"].ToString() == "13")
                                                 {
                                                     <li class="sidebar-item" id="mAccess">
-                                                        <a class="sidebar-link" id="SoUp" href="@Url.Action("SocPdfRegistration", "SocPdfRegistration")"><span><i class="fas fa-layer-group"></i>  SoC Upload</span></a>
+                                                        <a class="sidebar-link" id="SoUp" href="@Url.Action("SoCPdfRegistration", "SocPdfRegistration")"><span><i class="fas fa-layer-group"></i>  SoC Upload</span></a>
                                                     </li>
                                                     <li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  SoC View</span></a></li>
-                                                    <li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  Approval for sending SoC to DAC/DPB</span></a></li>
+                                                    @*<li class="sidebar-item" id="mPrintingUser"><a class="sidebar-link" href="@Url.Action("ViewSOCRegistration", "AoNW")"><span><i class="fas fa-layer-group"></i>  Approval for sending SoC to DAC/DPB</span></a></li>*@
                                                 }
                                                 else
                                                 {
@@ -107,7 +107,7 @@
 
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="/Account/ChangePassword" class="dropdown-item"><i class="fas fa-lock mr-2"></i>Change Password</a>
+                                    <a href="/Account/ResetPwd" class="dropdown-item"><i class="fas fa-lock mr-2"></i>Change Password</a>
                                     <a href="/Account/Logout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
                                 </div>
                             </div>
@@ -149,7 +149,35 @@
     </script>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        function disableBack() { window.history.forward() }
 
+        window.onload = disableBack();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
+
+        $("body").on("contextmenu", function (e) {
+            return false;
+        });
+
+        $(window).keydown(function (event) {
+
+            if (event.keyCode == 116) {
+
+                event.preventDefault();
+
+                return false;
+
+            }
+
+        });
+    });
+</script>
 
 
 

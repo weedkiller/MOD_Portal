@@ -297,8 +297,12 @@ namespace ACQ.Web.App.Controllers
                 return View("Index", model);
             }
         }
-
-        public ActionResult ViewSocMaster(int ID, string mtype)
+        [Route("ViewSocMaster")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult ViewSocMaster(string ID, string mtype)
         {
             try
             {
@@ -308,7 +312,7 @@ namespace ACQ.Web.App.Controllers
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + ID + "").Result;
+                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + Encryption.Decrypt(ID) + "").Result;
                     if (response.IsSuccessStatusCode)
                     {
                         model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
@@ -350,7 +354,7 @@ namespace ACQ.Web.App.Controllers
                         client1.BaseAddress = new Uri(WebAPIUrl);
                         //HTTP GET
                         client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client1.GetAsync("AONW/GetAttachFile?ID=" + ID + "").Result;
+                        HttpResponseMessage response = client1.GetAsync("AONW/GetAttachFile?ID=" + Encryption.Decrypt(ID) + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
                             listData = response.Content.ReadAsAsync<List<AttachmentViewModel>>().Result;
