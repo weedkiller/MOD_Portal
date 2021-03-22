@@ -6,6 +6,10 @@ body{
 
 /*---------------------New CSS-----------------*/
 
+@font-face {
+    font-family: 'Captcha code';
+    src: url('../media/Captcha code.woff') format('woff');
+}
 .topHeadline {
     color: white;
     font-weight: 700;
@@ -87,3 +91,15 @@ input {
     input:focus {
         outline: 1px solid #becffb;
     }
+
+.login_bg{
+    min-height:86vh;
+}
+
+.custom_modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 72px;
+}

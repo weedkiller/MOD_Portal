@@ -17,13 +17,14 @@ using ACQ.Web.ExternalServices.SecurityAudit;
 using System.Net.Http.Headers;
 using Microsoft.Graph;
 using static ACQ.Web.App.MvcApplication;
+using Ganss.XSS;
 
 namespace ACQ.Web.App.Controllers
 {
     public class SocPdfRegistrationController : Controller
     {
         // GET: SocPdfRegistration
-
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
         private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
         private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
@@ -201,32 +202,32 @@ namespace ACQ.Web.App.Controllers
                                     }
                                 }
 
-                                obj.aon_id = 0;
-                                obj.item_description = Encryption.Encrypt(contentControlText[0].ToString().Trim());
-                                obj.Service_Lead_Service = Encryption.Encrypt(contentControlText[1].ToString().Trim());
+                                obj.aon_id = "0";
+                                obj.item_description = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[0].ToString().Trim()));
+                                obj.Service_Lead_Service = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[1].ToString().Trim()));
                                 obj.DPP_DAP = null;
-                                obj.SystemCase = Encryption.Encrypt(contentControlText[3].ToString());
-                                obj.SoCCase = Encryption.Encrypt(contentControlText[4].ToString());
-                                obj.Categorisation = Encryption.Encrypt(contentControlText[67].ToString());
-                                obj.IC_percentage = Encryption.Encrypt(contentControlText[69].ToString());
-                                obj.Quantity = Encryption.Encrypt(contentControlText[70].ToString());
-                                obj.Cost = Encryption.Encrypt(contentControlText[73].ToString());
-                                obj.Essential_parameters = Encryption.Encrypt(contentControlText[75].ToString());
-                                obj.EPP = Encryption.Encrypt(contentControlText[77].ToString());
-                                obj.Trials_Required = Encryption.Encrypt(contentControlText[81].ToString());
-                                obj.Offset_applicable = Encryption.Encrypt(contentControlText[83].ToString());
-                                obj.Option_clause_applicable = Encryption.Encrypt(contentControlText[85].ToString());
-                                obj.Warrenty_applicable = Encryption.Encrypt(contentControlText[87].ToString());
-                                obj.Warrenty_Remarks = Encryption.Encrypt(contentControlText[88].ToString());
-                                obj.Any_other_aspect = Encryption.Encrypt(contentControlText[90].ToString());
-                                obj.SocAName = Encryption.Encrypt(contentControlText[91].ToString());
-                                obj.SocADesignation = Encryption.Encrypt(contentControlText[92].ToString());
-                                obj.SocAApprovalRef = Encryption.Encrypt(contentControlText[93].ToString());
-                                obj.SocAApprovalDate = Encryption.Encrypt(contentControlText[94].ToString());
-                                obj.SocSDName = Encryption.Encrypt(contentControlText[95].ToString());
-                                obj.SocSDDesignation = Encryption.Encrypt(contentControlText[96].ToString());
-                                obj.SocSDPhone = Encryption.Encrypt(contentControlText[97].ToString());
-                                obj.SocSDDate = Encryption.Encrypt(contentControlText[98].ToString());
+                                obj.SystemCase = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[3].ToString()));
+                                obj.SoCCase = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[4].ToString()));
+                                obj.Categorisation = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[67].ToString()));
+                                obj.IC_percentage = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[69].ToString()));
+                                obj.Quantity = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[70].ToString()));
+                                obj.Cost = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[73].ToString()));
+                                obj.Essential_parameters = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[75].ToString()));
+                                obj.EPP = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[77].ToString()));
+                                obj.Trials_Required = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[81].ToString()));
+                                obj.Offset_applicable = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[83].ToString()));
+                                obj.Option_clause_applicable = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[85].ToString()));
+                                obj.Warrenty_applicable = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[87].ToString()));
+                                obj.Warrenty_Remarks = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[88].ToString()));
+                                obj.Any_other_aspect = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[90].ToString()));
+                                obj.SocAName = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[91].ToString()));
+                                obj.SocADesignation = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[92].ToString()));
+                                obj.SocAApprovalRef = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[93].ToString()));
+                                obj.SocAApprovalDate = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[94].ToString()));
+                                obj.SocSDName = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[95].ToString()));
+                                obj.SocSDDesignation = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[96].ToString()));
+                                obj.SocSDPhone = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[97].ToString()));
+                                obj.SocSDDate = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[98].ToString()));
                                 obj.SoDate = DateTime.Now;
                                 obj.Tax_Duties = "Inclusive Tax & Duties";
                                 obj.Type_of_Acquisition = "";
@@ -234,7 +235,7 @@ namespace ACQ.Web.App.Controllers
                                 obj.AMCRemarks = "";
                                 obj.Remarks = "";
                                 obj.SoCType = "";
-                                obj.AoN_Accorded_By = Encryption.Encrypt(contentControlText[2].ToString());
+                                obj.AoN_Accorded_By = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[2].ToString()));
                                 obj.AoN_validity = 6;
                                 obj.AoN_validity_unit = "Month";
                                 obj.CreatedBy = null;
@@ -539,7 +540,7 @@ namespace ACQ.Web.App.Controllers
                     //file.SaveAs(path + file.FileName);
                     Efile.FileDetail fileDetail = new Efile.FileDetail()
                     {
-                        FileName = id,
+                        FileName = sanitizer.Sanitize(id),
                         FilePath = str,
                         Id = 1,
                     };

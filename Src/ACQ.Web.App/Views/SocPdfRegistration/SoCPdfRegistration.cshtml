@@ -3,7 +3,7 @@
     ViewBag.Title = "SoCPdfRegistration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/assets/js/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#pages").addClass("show");
@@ -13,14 +13,14 @@
 
 
 @* custom browse file js *@
-<script>
+@*<script>
     $(document).ready(function () {
         bsCustomFileInput.init()
     });
 
 
 
-</script>
+</script>*@
 <div class="mt-3 container-fluid"">
 
     <div class="tabHead mb-1">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <div class="card flex-fill w-100 p-3">
@@ -102,9 +102,8 @@
                                     </div>
 
                                 </div>
-                                <table class="table m-3" id="FilesList" style="visibility:hidden">
-
-                                    <tr class="bg-dark">
+                                <table class="table table-bordered m-3" id="FilesList" style="visibility:hidden">
+                                    <tr class="bg-primary text-white">
                                         <td>
                                             File Name(s)
                                         </td>
@@ -174,9 +173,16 @@
         var formdata = new FormData(); //FormData object
         $("#SOC_Files3").on("change", function () {
             var ValidFileExtension = ['pdf', 'PDF'];
+            var file = $("#SOC_Files3").get(0).files;
+            if (file.size >= 2 * 1024 * 1024) {
+                alert("JPG images of maximum 2MB");
+                $("#form-id").get(0).reset(); //the tricky part is to "empty" the input file here I reset the form.
+                return;
+            }
+
+           
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), ValidFileExtension) == -1) {
-                alert("Sorry !!! Allowed documents are '.pdf','.doc','.ppt'");
-                SOC_Files.value = '';
+                alert("Sorry !!! Allowed documents are '.pdf'");
                 return false;
             }
             else {
@@ -201,10 +207,10 @@
                     processData: false, // Not to process data
                     data: fileData,
                     success: function (result, status, xhr) {
-                        //alert(result);
+                        
                     },
                     error: function (xhr, status, error) {
-                       // alert(status);
+                       alert(status);
                     }
                 });
                 var fileInput = document.getElementById('SOC_Files3');
@@ -215,7 +221,7 @@
                         let srandomid = Math.random().toString(36).substring(7);
                         formdata.append(FileName, fileInput.files[i].FileName);
                         //var sFilePath = '/excelfolder/' + sfilename;
-                        var markup = "<tr id='" + srandomid + "'><td>" + FileName + "</td><td><a href='/SocPdfRegistration/ViewfileandDoc?path=" + sfilename + "' target='_blank' ><span class='glyphicon glyphicon-remove red'><i class='fas fa-eye text-white'></i></span></a>&nbsp;&nbsp;<a style='display:none' href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + FileName +
+                        var markup = "<tr id='" + srandomid + "'><td>" + FileName + "</td><td><a href='/SocPdfRegistration/ViewfileandDoc?path=" + sfilename + "' target='_blank' ><span class='glyphicon glyphicon-remove red'><i class='fas fa-eye'></i></span></a>&nbsp;&nbsp;<a style='display:none' href='#' onclick='DeleteFile(\"" + srandomid + "\",\"" + FileName +
                             "\")'><span class='glyphicon glyphicon-remove red'><i class='fas fa-trash mr-1'></i></span></a></td></tr>"; // Binding the file name
 
                         $("#FilesList tbody").append(markup);

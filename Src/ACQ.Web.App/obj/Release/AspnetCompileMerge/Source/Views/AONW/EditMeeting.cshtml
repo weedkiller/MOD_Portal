@@ -3,7 +3,7 @@
     ViewBag.Title = "EditMeeting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/assets/js/jquery.min.js"></script>
 
 <div class="row m-0">
     <div class="box-properties col-md-12">
@@ -14,7 +14,7 @@
                     <div class="bg-white p-3">
                         <div class="needs-validation p-2" novalidate="">
                             <div class="">
-                                @using (Html.BeginForm("EditMeeting", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                @using (Html.BeginForm("EditMeeting", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary()
@@ -134,7 +134,6 @@
         </div>
     </div>
 </div>
-<script src="~/assets/js/CkEditor/lang/en.js"></script>
 <script src="~/assets/js/CkEditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('Distribution_List');

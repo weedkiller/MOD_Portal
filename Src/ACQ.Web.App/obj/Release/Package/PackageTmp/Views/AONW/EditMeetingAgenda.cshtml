@@ -32,42 +32,46 @@
                         <div class="needs-validation p-2" novalidate="">
                             <div class="text-center label-info panel-success"><label>Agenda of @ViewBag.mtype dated @ViewBag.dated</label></div>
                             <div class="clearfix mt-0"></div>
-                            @using (Html.BeginForm("UpdateMeetingAgenda", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                            {
-                                <input type="hidden" name="meeting_id" id="meeting_id" value="@ViewBag.id" />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="recovery-email"> Type of Agenda</label>
-                                            @Html.DropDownListFor(model => model.TypeofAgenda, new List<SelectListItem>
-                                                 {
-                                                         new SelectListItem{ Text="AoN Accord", Value = "AoN Accord" },
-                                                        new SelectListItem{ Text="AoN Change", Value = "AoN Change" },
-                                                     new SelectListItem{ Text="Policy Directives", Value = "Policy Directives" },
-                                                 }, "--Select--", new { @class = "form-control" })
-                                            <div class="invalid-feedback">Please select valid type of Agenda</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" id="aonshow" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="form-label" for="recovery-item">Agenda Item</label>
-                                            <select id="AgendaItem" class="form-select form-control" name="AgendaItem">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6" id="otheraon" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="form-label" for="recovery-item">Agenda Item</label>
-                                            <div class="form-floating">
-                                                @Html.TextAreaFor(x => x.AgendaItem1, new { @class = "form-control", @placeholder = "Remarks" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-primary float-right" onclick="Msg()" type="submit">Save Meeting Agenda</button>
+                            @using (Html.BeginForm("UpdateMeetingAgenda", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+                            {  
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary()
+
+                            <input type="hidden" name="meeting_id" id="meeting_id" value="@ViewBag.id" />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="recovery-email"> Type of Agenda</label>
+                                        @Html.DropDownListFor(model => model.TypeofAgenda, new List<SelectListItem>
+                                             {
+                                                     new SelectListItem{ Text="AoN Accord", Value = "AoN Accord" },
+                                                    new SelectListItem{ Text="AoN Change", Value = "AoN Change" },
+                                                 new SelectListItem{ Text="Policy Directives", Value = "Policy Directives" },
+                                             }, "--Select--", new { @class = "form-control" })
+                                        <div class="invalid-feedback">Please select valid type of Agenda</div>
                                     </div>
                                 </div>
+                                <div class="col-md-6" id="aonshow" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="form-label" for="recovery-item">Agenda Item</label>
+                                        <select id="AgendaItem" class="form-select form-control" name="AgendaItem">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="otheraon" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="form-label" for="recovery-item">Agenda Item</label>
+                                        <div class="form-floating">
+                                            @Html.TextAreaFor(x => x.AgendaItem1, new { @class = "form-control", @placeholder = "Remarks" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary float-right" onclick="Msg()" type="submit">Save Meeting Agenda</button>
+                                </div>
+                            </div>
                             }
                         </div>
                     </div>

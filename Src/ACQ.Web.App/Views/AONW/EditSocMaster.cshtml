@@ -22,7 +22,7 @@
 
     <hr />
 
-    @using (Html.BeginForm("EditSocMaster", "AONW", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditSocMaster", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()

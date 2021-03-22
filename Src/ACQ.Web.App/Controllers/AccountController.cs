@@ -3,8 +3,8 @@ using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
-using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -29,28 +29,44 @@ namespace ACQ.Web.App.Controllers
     {
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
-        string accessToken = "ugs@#321";
         // GET: Account
+
         [Route("imagelogo")]
         public ActionResult imagelogo()
         {
-            // Get image path  
-            string imgPath = Server.MapPath("~/assets/media/images/ddp_logo.png");
-            // Convert image to byte array  
-            byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
-            //Convert byte arry to base64string   
-            string imreBase64Data = Convert.ToBase64String(byteData);
-            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
-            //Passing image data in viewbag to view  
-            ViewBag.ImageData = imgDataURL;
+            try
+            {
+                // Get image path  
+                string imgPath = Server.MapPath("~/assets/media/images/ddp_logo.png");
+                // Convert image to byte array  
+                byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
+                //Convert byte arry to base64string   
+                string imreBase64Data = Convert.ToBase64String(byteData);
+                string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                //Passing image data in viewbag to view  
+                ViewBag.ImageData = imgDataURL;
+                
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
             return PartialView("View");
-
         }
         [Route("login")]
-        [HandleError]
+        //[HandleError]
         public ActionResult Login()
         {
-            Session["CAPTCHA"] = GetRandomText();
+            try
+            {
+                Session["CAPTCHA"] = GetRandomText();
+                
+            }
+            catch(Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
             return View();
         }
 
@@ -60,9 +76,38 @@ namespace ACQ.Web.App.Controllers
             return View("login");
         }
 
-       
-        public ActionResult Error()
+        [Route("Error")]
+        public async Task<ActionResult> Error()
         {
+            UserLogViewModel model = new UserLogViewModel();
+            model.UserEmail = Session["EmailID"].ToString();
+            model.IPAddress = Request.UserHostAddress;
+            model.Status = "Logout Successfully";
+            model.Action = "Logout";
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
+                HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
+
+                bool postResult1 = postJob1.IsSuccessStatusCode;
+
+            }
+            Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Session.RemoveAll();
+
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddMonths(-20);
+            }
+
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                Response.Cookies["AuthToken"].Value = string.Empty;
+                Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
+            }
 
             return View();
         }
@@ -72,7 +117,22 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
-            //return View();
+            var tokenBased = string.Empty;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                var responseMessage = await client.GetAsync(requestUri: "Account/ValidLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "");
+                if(responseMessage.IsSuccessStatusCode)
+                {
+                    var resultmessage = responseMessage.Content.ReadAsStringAsync().Result;
+                    tokenBased = JsonConvert.DeserializeObject<string>(resultmessage);
+                    Session["TokenNumber"] = tokenBased;
+                    Session["UserName"] = login.InternalEmailID;
+                }
+            }
+           
             IEnumerable<LoginViewModel> model = null;
             try
             {
@@ -94,23 +154,28 @@ namespace ACQ.Web.App.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    using (var client = new HttpClient())
+                    using (var client2 = new HttpClient())
                     {
 
 
                         login.InternalEmailID = sanitizer.Sanitize(login.InternalEmailID);
                         login.Password = sanitizer.Sanitize(login.Password);
+                        client2.DefaultRequestHeaders.Clear();
+                        client2.BaseAddress = new Uri(WebAPIUrl);
+                        client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                            parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        var responseMessage = await client2.GetAsync(requestUri: "Account/GetEmployee");
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            var resultMessage = responseMessage.Content.ReadAsStringAsync().Result;
+                            resultMessage = JsonConvert.DeserializeObject<string>(resultMessage);
+                            //return Content(resultMessage);
+                        }
 
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                
-                        //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-                        HttpResponseMessage response = client.GetAsync("Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
+                        HttpResponseMessage response = client2.GetAsync(requestUri: "Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
-                          
                             LoginViewModel model1 = new LoginViewModel();
                             model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
                            if( model.First().Message == "Blocked" )
@@ -217,7 +282,7 @@ namespace ACQ.Web.App.Controllers
                         {
 
                             model = Enumerable.Empty<LoginViewModel>();
-                            ModelState.AddModelError("", "InValid UserName and Password");
+                            ModelState.AddModelError("", "Invalid UserName and Password");
                             login.ErrorMsg = "Invalid UserName and Password";
                             ViewBag.Login = "NO";
                             UserLogViewModel model21 = new UserLogViewModel();
@@ -251,6 +316,14 @@ namespace ACQ.Web.App.Controllers
             catch (Exception ex)
             { return View(); }
         }
+        [Route("AcQDashboard")]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult AcQDashboard()
+        {
+            ViewBag.path = Encryption.Encrypt(Session["UserID"].ToString());
+            return View();
+        }
 
         // <summary>
         /// get random string
@@ -268,47 +341,51 @@ namespace ACQ.Web.App.Controllers
             return randomText.ToString();
         }
         [Route("Captcha")]
-        [HandleError]
+        //[HandleError]
         [HandleError(ExceptionType = typeof(NullReferenceException), Master= "Account", View = "Error")]
         public FileResult GetCaptchaImage()
         {
-            string text = Session["CAPTCHA"].ToString();
-
-            //first, create a dummy bitmap just to get a graphics object
-            Image img = new Bitmap(1, 1);
-            Graphics drawing = Graphics.FromImage(img);
-
-            Font font = new Font("Blox BRK", 25);
-            //measure the string to see how big the image needs to be
-            SizeF textSize = drawing.MeasureString(text, font);
-
-            //free up the dummy image and old graphics object
-            img.Dispose();
-            drawing.Dispose();
-
-            //create a new image of the right size
-            img = new Bitmap((int)textSize.Width + 40, (int)textSize.Height + 20);
-            drawing = Graphics.FromImage(img);
-
-            Color backColor = Color.AntiqueWhite;
-            Color textColor = Color.Black;
-            //paint the background
-            drawing.Clear(backColor);
-
-            //create a brush for the text
-            Brush textBrush = new SolidBrush(textColor);
-
-            drawing.DrawString(text, font, textBrush, 40, 20);
-
-            drawing.Save();
-
-            font.Dispose();
-            textBrush.Dispose();
-            drawing.Dispose();
-
             MemoryStream ms = new MemoryStream();
-            img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            img.Dispose();
+            if (Session["CAPTCHA"] != null)
+            {
+                string text = Session["CAPTCHA"].ToString();
+
+                //first, create a dummy bitmap just to get a graphics object
+                Image img = new Bitmap(1, 1);
+                Graphics drawing = Graphics.FromImage(img);
+
+                Font font = new Font("Blox BRK", 25);
+                //measure the string to see how big the image needs to be
+                SizeF textSize = drawing.MeasureString(text, font);
+
+                //free up the dummy image and old graphics object
+                img.Dispose();
+                drawing.Dispose();
+
+                //create a new image of the right size
+                img = new Bitmap((int)textSize.Width + 40, (int)textSize.Height + 20);
+                drawing = Graphics.FromImage(img);
+
+                Color backColor = Color.AntiqueWhite;
+                Color textColor = Color.Black;
+                //paint the background
+                drawing.Clear(backColor);
+
+                //create a brush for the text
+                Brush textBrush = new SolidBrush(textColor);
+
+                drawing.DrawString(text, font, textBrush, 40, 20);
+
+                drawing.Save();
+
+                font.Dispose();
+                textBrush.Dispose();
+                drawing.Dispose();
+
+               
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                img.Dispose();
+            }
 
             return File(ms.ToArray(), "image/png");
         }
@@ -323,6 +400,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         public ActionResult LoginReturnMsg()
         {
+            ViewBag.remoteIpAddress = Request.UserHostAddress;
             return View();
         }
         [Route("VerifyOtp")]
@@ -490,7 +568,7 @@ namespace ACQ.Web.App.Controllers
             Session["tokenid"] = tokenid; 
             return View();
         }
-
+        [Route("Logout")]
         public async Task<ActionResult> Logout()
         {
             UserLogViewModel model = new UserLogViewModel();
@@ -527,7 +605,9 @@ namespace ACQ.Web.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[SessionExpire]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
             //ChangePasswordViewModel input = new ChangePasswordViewModel();
@@ -588,15 +668,19 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
+        [Route("ResetPwd")]
         [HttpGet]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult ResetPwd()
         {
             return View();
         }
-
+        [Route("ResetPwd")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-       // [SessionExpire]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public async Task<ActionResult> ResetPwd(ChangePasswordViewModel input)
         {
             ChangePasswordViewModel model = new ChangePasswordViewModel();
@@ -636,6 +720,10 @@ namespace ACQ.Web.App.Controllers
                         }
                     }
 
+                }
+                else
+                {
+                    return View();
                 }
                 
 

@@ -4,6 +4,7 @@
     ViewBag.Title = "ViewSocMaster";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/assets/js/jquery.min.js"></script>
 <head>
     <style>
         .danger {
@@ -15,248 +16,250 @@
         }
     </style>
 </head>
+
 <div class="mt-3 box-properties">
-    <div class="tabHead mb-3">
+    <div class="tabHead mb-2">
         <div class="row">
-            <div class="col-md-6"><h4>Review</h4></div>
+            <div class="col-md-6"><h3>Review</h3></div>
             @*<div class="col-md-6"> <a href="@Url.Action("Index","AoNW")" class="btn btn-primary float-right" type="button"><i class="fas fa-plus-square mr-1"></i>SOC Registration</a></div>*@
         </div>
     </div>
 
-    <hr />
+    <div class="bg-white p-4">
+        <input type="hidden" name="aon_id" value="@Model.aon_id" />
+        <div class="form-row mb-1">
+            <div class="clearfix"></div>
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Item Name:</label>
+                @Model.item_description
 
-    <input type="hidden" name="aon_id" value="@Model.aon_id" />
-    <div class="form-row mb-1">
-        <div class="clearfix"></div>
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Item Name:</label>
-            @Model.item_description
 
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">SOC Date: </label>
+                @Model.SoDate
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">DAC/DPB:</label>
+                @Model.AoN_Accorded_By
+
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Quantity:</label>
+                @Model.Quantity
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Cost:</label>
+                @Model.Cost
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Tax & Duties:</label>
+                @Model.Tax_Duties
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Service:</label>
+                @Model.Service_Lead_Service
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">4 digit Unique Reference no:</label>
+                @Model.SoCCase (version @Model.UniqueID)
+
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Categorization:</label>
+                @Model.Categorisation
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">SOC Date: </label>
-            @Model.SoDate
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Systems Case:</label>
+                @Model.SystemCase
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">DAC/DPB:</label>
-            @Model.AoN_Accorded_By
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">IC %:</label>
+                @Model.IC_percentage
 
 
-        </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Quantity:</label>
-            @Model.Quantity
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Cost:</label>
-            @Model.Cost
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Essential Parameters B:</label>
+                @Model.Essential_parameters
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Tax & Duties:</label>
-            @Model.Tax_Duties
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Credit Scores of EPP:</label>
+                @Model.EPP
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Service:</label>
-            @Model.Service_Lead_Service
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Trials (Waiver/Vendor Premises):</label>
+                @Model.Trials_Required
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">4 digit Unique Reference no:</label>
-            @Model.SoCCase (version @Model.UniqueID)
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Offsets:</label>
+                @Model.Offset_applicable
+
+
+            </div>
 
         </div>
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Categorization:</label>
-            @Model.Categorisation
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Option Clause:</label>
+                @Model.Option_clause_applicable
 
 
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Systems Case:</label>
-            @Model.SystemCase
-
+            </div>
 
         </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">IC %:</label>
-            @Model.IC_percentage
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Warranty:</label>
+                @Model.Warrenty_applicable
 
 
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Essential Parameters B:</label>
-            @Model.Essential_parameters
-
+            </div>
 
         </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Credit Scores of EPP:</label>
-            @Model.EPP
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">Any other aspect that require specific approval:</label>
+                @Model.Any_other_aspect
 
 
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Trials (Waiver/Vendor Premises):</label>
-            @Model.Trials_Required
-
+            </div>
 
         </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">SoC Approved by:</label><br />
+                Name :  @Model.SocAName<br />
+                Designation :  @Model.SocADesignation<br />
+                Approval Ref :  @Model.SocAApprovalRef<br />
+                Approval Date :  @Model.SocAApprovalDate<br />
 
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Offsets:</label>
-            @Model.Offset_applicable
 
-
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Option Clause:</label>
-            @Model.Option_clause_applicable
-
+            </div>
 
         </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-12">
+                <label class="labeltext font-weight-bold mb-0">SoC SD by:</label><br />
+                Name :  @Model.SocSDName<br />
+                Designation :  @Model.SocSDDesignation<br />
+                Phone No. :  @Model.SocSDPhone<br />
+                Date :  @Model.SocSDDate<br />
 
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Warranty:</label>
-            @Model.Warrenty_applicable
 
-
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">Any other aspect that require specific approval:</label>
-            @Model.Any_other_aspect
-
+            </div>
 
         </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">SoC Approved by:</label><br />
-            Name :  @Model.SocAName<br />
-            Designation :  @Model.SocADesignation<br />
-            Approval Ref :  @Model.SocAApprovalRef<br />
-            Approval Date :  @Model.SocAApprovalDate<br />
-
-
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12 mb-12">
-            <label class="labeltext font-weight-bold mb-0">SoC SD by:</label><br />
-            Name :  @Model.SocSDName<br />
-            Designation :  @Model.SocSDDesignation<br />
-            Phone No. :  @Model.SocSDPhone<br />
-            Date :  @Model.SocSDDate<br />
-
-
-        </div>
-
-    </div>
-    <div class="form-row mb-1">
-        <div class="col-md-12">
-            @if (Model != null && Model.FileDetail.Count() > 0)
-            {
-                <div class="row">
-                    <div class="col col-12">
-                        <div id="div1" class="portlet-body flip-scroll" style="overflow: scroll; Width: 100%;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">SNO.</th>
-                                        <th scope="col">File Name</th>
-                                        <th scope="col">Action</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int count = 1;}
-                                    @foreach (var SOC in Model.FileDetail)
-                                    {
+        <div class="form-row mb-1">
+            <div class="col-md-12">
+                @if (Model != null && Model.FileDetail.Count() > 0)
+                {
+                    <div class="row">
+                        <div class="col col-12">
+                            <div id="div1" class="portlet-body flip-scroll" style="overflow: auto; Width: 100%;">
+                                <table class="table table-bordered">
+                                    <thead>
                                         <tr>
-                                            <th scope="row">@count</th>
-                                            <td class="text-wrap">@SOC.AttachmentFileName</td>
-                                            <td><a href='/SocPdfRegistration/ViewfileandDoc?path=@SOC.Path' target='_blank'><span class='glyphicon glyphicon-remove red'><i class='fas fa-eye text-white'></i></span></a></td>
+                                            <th scope="col">SNO.</th>
+                                            <th scope="col">File Name</th>
+                                            <th scope="col">Action</th>
 
                                         </tr>
-                                        count++;
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @{ int count = 1;}
+                                        @foreach (var SOC in Model.FileDetail)
+                                        {
+                                            <tr>
+                                                <th scope="row">@count</th>
+                                                <td class="text-wrap">@SOC.AttachmentFileName</td>
+                                                <td><a href='/SocPdfRegistration/ViewfileandDoc?path=@SOC.Path' target='_blank'>
+                                                    <span class='glyphicon glyphicon-remove red'><i class='fas fa-eye'></i></span></a></td>
+
+                                            </tr>
+                                            count++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-danger" role="alert">
-                    Records Not Found.
-                </div>
-            }
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Records Not Found.
+                    </div>
+                }
+
+            </div>
 
         </div>
 
+        <div class="col-md-12 clearfix" id="divReview">
+
+            <button class="btn btn-info float-right" id="submit" type="button">Submit</button>
+            <button class="btn btn-secondary float-right  mr-3" id="cancel" type="button" @*onclick='Message()'*@>Cancel</button>
+        </div>
+
+        <div class="col-md-12 clearfix d-none" id="divComment">
+            <a href="@Url.Action("AddSocCommit","AONW",new { id = Model.aon_id,item=Model.item_description })" type="button" class="btn btn-primary float-right">Comment</a>
+            @*<button class="btn btn-info ml-3 float-right" id="submitComment" type="button">Comment</button>*@
+            <button class="btn btn-secondary  mr-3 float-right" id="btncancel" type="button">Cancel</button>
+        </div>
+
+
     </div>
-
-    <div class="col-md-12 clearfix" id="divReview">
-
-        <button class="btn btn-info ml-3 float-right" id="submit" type="button">Submit</button>
-        <button class="btn btn-info float-right" id="cancel" type="button" @*onclick='Message()'*@>Cancel</button>
-    </div>
-
-    <div class="col-md-12 clearfix d-none" id="divComment">
-        <a href="@Url.Action("AddSocCommit","AONW",new { id = Model.aon_id,item=Model.item_description })" type="button" class="btn btn-primary float-right">Comment</a>
-        @*<button class="btn btn-info ml-3 float-right" id="submitComment" type="button">Comment</button>*@
-        <button class="btn btn-info float-right" id="btncancel" type="button">Cancel</button>
-    </div>
-
-
     <!-- Modal -->
 
     <div id="myModal" class="modal fade" role="dialog">

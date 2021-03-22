@@ -9,7 +9,7 @@ namespace ACQ.Web.ViewModel.AONW
 {
     public class SechduleMeetingAgedaViewModel
     {
-        public int meeting_id { get; set; }
+        public string meeting_id { get; set; }
         public string dac_dpb { get; set; }
         public Nullable<System.DateTime> meeting_date { get; set; }
         public Nullable<System.DateTime> Date_of_Issue_of_Minutes { get; set; }

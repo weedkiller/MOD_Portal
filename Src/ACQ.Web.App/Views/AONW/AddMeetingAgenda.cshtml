@@ -15,7 +15,7 @@
     if (ViewBag.dropdownTypeofAgenda != null)
     {
         AcqMasterList = ViewBag.dropdownTypeofAgenda as List<ACQ.Web.ViewModel.AONW.SAVESOCVIEWMODEL>;
-        acqMasterLabel = AcqMasterList.Where(x => x.aon_id == Model.TypeofAgenda).Select(s => s.item_description).FirstOrDefault();
+        acqMasterLabel = AcqMasterList.Where(x => x.aon_id == Model.TypeofAgenda.ToString()).Select(s => s.item_description).FirstOrDefault();
     }
     string aocMasterJson = Json.Encode(AcqMasterList);
 
@@ -49,6 +49,7 @@
         itemDescription = Model.Previous_Meeting;
     }
 }
+
 <style>
     #meetingagendatable_length {
         display: none;
@@ -106,7 +107,7 @@
 </style>
 <div class="row m-0">
     <div class="mt-3 box-properties col-md-12">
-        <div class="bg-secondary rounded-lg px-3 py-4 p-sm-3">
+        <div class=" rounded-lg px-3 py-4 p-sm-3">
             <div class="row">
 
                 <div class="col-md-12">
@@ -128,8 +129,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                @using (Html.BeginForm(formSubmitActionName, "AONW", FormMethod.Post, new { enctype = "multipart/form-data", id = "meetAgenda" }))
+                                @using (Html.BeginForm(formSubmitActionName, "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data", id = "meetAgenda" }))
                                 {
+                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="meeting_id" id="meeting_id" value="@Model.meeting_id" />
                                     <input type="hidden" name="Pid" id="Pid" value="@Model.Pid" />
                                     <input type="hidden" name="Comments" id="Comments" value="@Model.Comments" />
@@ -168,7 +170,7 @@
                                                     {
                                                         foreach (var item in ViewBag.dropdownTypeofAgenda)
                                                         {
-                                                            if (item.aon_id == Model.TypeofAgenda)
+                                                            if (item.item_description!=null)
                                                             {
                                                                 itemDescription = item.item_description;
                                                                 <option value="@item.aon_id" width="auto" selected="selected"><span class="hh">@item.item_description</span></option>
@@ -187,7 +189,7 @@
                                             {
                                                 <input type="hidden" name="TypeofAgenda" value="@Model.TypeofAgenda" />
                                             }
-                                            </div>
+                                        </div>
 
                                         <div class="col-md-12" id="Previous_Meeting">
                                             <div class="form-group">
@@ -440,10 +442,7 @@
     </div>
 </div>
 
-@*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
-@*<script src="~/Scripts/bootstrap-autocomplete.js"></script>*@
-
-<script src="~/assets/js/CkEditor/lang/en.js"></script>
+<script src="~/assets/js/jquery.min.js"></script>
 <script src="~/assets/js/CkEditor/ckeditor.js"></script>
 
 <script>
@@ -478,7 +477,7 @@
         CKEDITOR.instances['Approval_sought'].setData($(approval_sought).val());
 
 
-        $.fn.dataTable.ext.errMode = 'none';
+        /*$.fn.dataTable.ext.errMode = 'none';*/
         var mid = '@Model.meeting_id';
             $("#meeting_id").val(mid);
             table = $('#meetingagendatable').DataTable({

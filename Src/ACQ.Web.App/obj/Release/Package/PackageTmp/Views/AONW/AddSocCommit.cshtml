@@ -40,7 +40,7 @@
 
                             <div class="clearfix mt-0"></div>
 
-                            @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post))
+                            @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary()

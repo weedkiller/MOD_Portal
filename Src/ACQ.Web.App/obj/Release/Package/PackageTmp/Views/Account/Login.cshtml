@@ -1,5 +1,4 @@
 ﻿@model  ACQ.Web.ViewModel.User.LoginViewModel
-@using CaptchaMvc.HtmlHelpers
 @{
     ViewBag.Title = "login";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -85,74 +84,80 @@
 
 
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="max-width: 500px;">
-        @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
-        {
-            @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header" style="display:block !important">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="mb-0">OTP Verification</h4>
-                    <div class="editor-label">
-                        @ViewBag.OtpMesssage
-                        @*@TempData["OtpMesssage"]*@
-                        <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
-                        <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div id="myTabContent">
-                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="form-group mb-0">
-                                <label>Please enter OTP received on MoDLAN email</label>
-                                @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
-                                @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
-                            </div>
-                            @*<div class="w-100 text-right">
-                                    <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
-                                </div>*@
+    <div class="custom_modal">
+        <div class="modal-dialog" style="width: 500px;">
+            @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+            {
+                @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="display:block !important">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="mb-0">OTP Verification</h4>
+                        <div class="editor-label">
+                            @ViewBag.OtpMesssage
+                            @*@TempData["OtpMesssage"]*@
+                            <strong id="notverified" style="color:red">OTP Not Verified ! Enter Valid OTP</strong><br />
+                            <strong id="resendotpMsg" style="color:green;">OTP Resent Successfully.</strong>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                </div>
-            </div>}
-        @*</form>*@
+                    <div class="modal-body">
+                        <div id="myTabContent">
+                            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="form-group mb-0">
+                                    <label>Please enter OTP received on MoDLAN email</label>
+                                    @Html.TextBoxFor(Model => Model.Emailotp, new { @class = "form-control", @placeholder = "", @maxlength = "6", id = "Otp" })
+                                    @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
+                                </div>
+                                @*<div class="w-100 text-right">
+                                <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnclose" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                </div>}
+            @*</form>*@
+        </div>
     </div>
+    
 </div>
 
 <div id="myModal2" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Alert</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <div id="myTabContent">
-                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="row register-form">
-                                <div class="col-md-12 ">
-                                    @*<label>Password Not Changed.</label>*@
-                                    <label>Your Account has been blocked.</label>
+    <div class="custom_modal">
+        <div class="modal-dialog"  style="width: 500px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alert</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div id="myTabContent">
+                            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row register-form">
+                                    <div class="col-md-12 ">
+                                        @*<label>Password Not Changed.</label>*@
+                                        <label>Your Account has been blocked.</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="clearfix"></div><br>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">OK</button>
+                <div class="clearfix"></div><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     $(document).on('click', '.toggle-password', function () {
 

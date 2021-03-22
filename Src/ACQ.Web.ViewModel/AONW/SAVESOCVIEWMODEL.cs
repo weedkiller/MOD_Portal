@@ -12,7 +12,7 @@ namespace ACQ.Web.ViewModel.AONW
     {
         public List<SAVESOCVIEWMODEL> SOCVIEW { get; set; }
         public List<AttachmentViewModel> FileDetail { get; set; }
-        public int aon_id { get; set; }
+        public string aon_id { get; set; }
         public string item_description { get; set; }
         public string DPP_DAP { get; set; }
         public string AoN_Accorded_By { get; set; }
@@ -68,7 +68,7 @@ namespace ACQ.Web.ViewModel.AONW
 
     public class SAVESOCVIEWMODELBluk
     {
-        public int aon_id { get; set; }
+        public string aon_id { get; set; }
         public string item_description { get; set; }
         public string DPP_DAP { get; set; }
         public string AoN_Accorded_By { get; set; }
@@ -120,7 +120,7 @@ namespace ACQ.Web.ViewModel.AONW
     public class SAVESOCVIEWMODELBlukPDF
     {
         public string item_description { get; set; }
-        public long id { get; set; }
+        public string id { get; set; }
         public string service_leadservice { get; set; }
         public string categorisation { get; set; }
         public string introduction { get; set; }
