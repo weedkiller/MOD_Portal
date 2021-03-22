@@ -196,5 +196,77 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult GetRoleList( int roleId)
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            List<roleViewModel> listData = new List<roleViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleById?UserID=" + roleId +"").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        listData = model.roleList;
+                        //IEnumerable<SelectListItem> subcategoriesData1 = listData.Select(m => new SelectListItem()
+                        //{
+                        //    Text = m.FormName.ToString(),
+                        //    Value = m.FormMenuID.ToString(),
+                        //});
+                        return Json(listData, JsonRequestBehavior.AllowGet);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetMenuList()
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            List<roleViewModel> listData = new List<roleViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                       
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return View();
+        }
     }
 }

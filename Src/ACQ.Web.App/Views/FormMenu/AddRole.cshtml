@@ -45,8 +45,8 @@
                                                 <th>Select</th>
                                                 <th scope="col">SNO.</th>
                                                 <th scope="col">Form Menu Name </th>
-                                                <th scope="col">Action Name</th>
-                                                <th scope="col">Controller</th>
+                                                @*<th scope="col">Action Name</th>
+                                                <th scope="col">Controller</th>*@
                                                 <th scope="col">IsActive </th>
                                             </tr>
                                         </thead>
@@ -56,13 +56,13 @@
                                             {
                                                 <tr>
                                                     <td>
-                                                        <input id="isChecked" type="checkbox" name="isChecked" value="@SOC.ID" />
+                                                        <input id="isChecked_@SOC.ID" type="checkbox" name="isChecked" value="@SOC.ID" />
                                                     </td>
                                                     <th scope="row">@count</th>
-                                                    <td class="text-wrap">@SOC.From_menu</td>
-                                                    <td>Version @SOC.ActionName</td>
-                                                    <td>@SOC.Controller</td>
-                                                    <td>@SOC.IsActive</td>
+                                                    <td class="text-wrap" id="isChecked_">@SOC.From_menu</td>
+                                                    @*<td>Version @SOC.ActionName</td>
+                                                    <td>@SOC.Controller</td>*@
+                                                    <td id="isChecked_">@SOC.IsActive</td>
                                                 </tr>
                                                 count++;
                                             }
@@ -81,7 +81,7 @@
 
                 </div>
 
-                <button class="btn btn-primary mt-4 mb-4 float-right" id="btnsubmit" type="submit" value="submit">Submit</button>
+                <button class="btn btn-primary mt-4 mb-4 float-right" id="colcatsubmitbtn" type="submit" value="submit">Submit</button>
 
 
             </div>
@@ -131,5 +131,59 @@
     });
      $('#btnclose').click(function () {
         document.location = '@Url.Action("AddRole", "FormMenu")';
+     });
+
+
+    $("#FromName").change(function () {
+
+        var selectedCategory = $(this).children("option:selected").val();
+        if (selectedCategory != "Choose option...") {
+            $('#categorycheck').hide();
+            category_err = true;
+            $("#loader-wrapper").show();
+            var categoryId = $(this).val();
+
+            $.getJSON("/FormMenu/GetRoleList", { roleId: selectedCategory },
+                function (classesData1) {
+                    
+                    var ColumnsName = "";
+                    var MandatoryColumnName = "";
+                  
+                       
+                    for (var i = 0; i < classesData1.length; i++) {
+
+                        alert('#isChecked_'+classesData1[i].Id);
+                        $('#isChecked_' + classesData1[i].Id).prop('checked', true);
+                        }
+                   
+              
+                    var strarrayColumnsName = ColumnsName;
+                    if (ColumnsName != "") {
+                        $("#colcatsubmitbtn").html("Update");
+                    }
+                    else {
+                        $("#colcatsubmitbtn").html("Submit");
+                    }
+                  
+                    
+                    $("#loader-wrapper").hide();
+
+
+                });
+
+
+            //$.get("/FormMenu/GetRoleList?roleId=" + selectedCategory, function (data) {
+            //    $('#blogTable tbody').empty();
+            //    $.each(data, function (i, item) {
+            //        for (i = 0; i <= item.length; i++) {
+                     
+            //            $('#isChecked_' + item[i]).attr('checked', true);
+            //        }
+            //    });
+            //})
+        }
+        else {
+            
+        }
     });
 </script>
