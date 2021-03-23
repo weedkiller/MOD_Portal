@@ -18,6 +18,7 @@ using System.Net.Http.Headers;
 using Microsoft.Graph;
 using static ACQ.Web.App.MvcApplication;
 using Ganss.XSS;
+using GemBox.Document;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -35,7 +36,7 @@ namespace ACQ.Web.App.Controllers
         private string InitVector = @"qwertyui";
         private string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
 
-        
+
 
         [Route("SoCRegistration")]
         [HandleError]
@@ -92,7 +93,7 @@ namespace ACQ.Web.App.Controllers
                         if (FileExtension == ".doc" || FileExtension == ".docx")
                         {
 
-                            
+
                         }
                         else
                         {
@@ -115,7 +116,7 @@ namespace ACQ.Web.App.Controllers
                             {
                                 stream.CopyTo(fileStream);
                             }
-                           
+
                         }
                         catch (IOException ex)
                         {
@@ -124,12 +125,16 @@ namespace ACQ.Web.App.Controllers
 
                         using (var client = new HttpClient())
                         {
-                            Application word1 = new Application();
 
-                            Document doc = word1.Documents.Open(path);
+                            Application word1 = new Application();
+                            object readOnly = false;
+                            object isVisible = true;
+                            object missing = System.Reflection.Missing.Value;
+                            Document doc = word1.Documents.Open(path, ref missing, ref readOnly, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref isVisible);
+
 
                             List<string> contentControlText = new List<string>();
-                            
+
                             foreach (ContentControl CC in doc.ContentControls)
                             {
                                 contentControlText.Add(CC.Range.Text);
@@ -172,7 +177,7 @@ namespace ACQ.Web.App.Controllers
                                     return View();
                                 }
 
-                               
+
                                 if (contentControlText[70].ToString() == "Click here to enter text.")
                                 {
                                     ViewBag.UploadStatus = "Quantity";
@@ -256,17 +261,21 @@ namespace ACQ.Web.App.Controllers
                             }
                             else
                             {
-                               
-                                
+
+
                                 ViewBag.UploadStatus = "File format not correct";
                                 return View();
                             }
 
+                                    //closing document object   
+                                    ((_Document)doc).Close();
 
+                            //Quit application object to end process  
+                            ((_Application)word1).Quit();
 
                         }
 
-                       
+                                   
 
                         SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
 
@@ -483,8 +492,9 @@ namespace ACQ.Web.App.Controllers
                 catch (Exception ex)
                 {
 
-
-                    ViewBag.msg = ex.Message;
+                    ViewBag.UploadStatusmsg = "Access is denied to read soc file and format";
+                    ViewBag.UploadStatus = "errormsg";
+                    //ViewBag.msg = ex.Message;
                     return View();
                 }
             }

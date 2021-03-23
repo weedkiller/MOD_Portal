@@ -84,6 +84,7 @@ E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+<<<<<<< HEAD
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
@@ -172,3 +173,8 @@ E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.cspro
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+=======
+E:\MOD_Portal\Src\ACQ.Web.App\bin\BouncyCastle.Crypto.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.xml
+>>>>>>> ebcf56d3bed3a1be4e7049646bd3c65c0b31f1af

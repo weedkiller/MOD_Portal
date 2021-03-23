@@ -51,7 +51,6 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
 E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
 E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.Core.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.Core.dll.config
@@ -85,3 +84,6 @@ E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CoreCompileInputs.c
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.dll
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.pdb
+E:\MOD_Portal\Src\ACQ.Web.App\bin\BouncyCastle.Crypto.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.xml
