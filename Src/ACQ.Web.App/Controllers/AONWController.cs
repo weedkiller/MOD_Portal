@@ -69,8 +69,8 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: Session["TokenNumber"].ToString() + ":" + Session["EmailId"].ToString());
-
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -631,17 +631,18 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public async Task<ActionResult> UpdateSocMaster(int ID)
+        public async Task<ActionResult> UpdateSocMaster(string ID)
         {
             try
             {
+                Int16 mmID = Convert.ToInt16(Encryption.Decrypt(ID));
                 SAVESOCVIEWMODELBluk model = new SAVESOCVIEWMODELBluk();
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + ID + "").Result;
+                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + mmID + "").Result;
                     if (response.IsSuccessStatusCode)
                     {
                         model = response.Content.ReadAsAsync<SAVESOCVIEWMODELBluk>().Result;
@@ -661,7 +662,7 @@ namespace ACQ.Web.App.Controllers
                                 }
                                 for (int i = 0; fileDetailsF.Count > i; i++)
                                 {
-                                    objattach.aon_id = ID;
+                                    objattach.aon_id = mmID;
                                     objattach.AttachmentFileName = fileDetailsF[i].AttachmentFileName;
                                     objattach.Path = fileDetailsF[i].Path;
                                     objattach.RecDate = DateTime.Now;
@@ -754,10 +755,11 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult AddSocCommit(int id)
+        public ActionResult AddSocCommit(string id)
         {
+            Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
             SocCommentViewModel model = new SocCommentViewModel();
-            model.SoCId = Convert.ToInt32(sanitizer.Sanitize(id.ToString()));
+            model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
             Session["item"] = Request.QueryString["item"].ToString();
             ViewBag.aonId = Session["item"].ToString();
             return View(model);
