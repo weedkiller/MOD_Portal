@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/assets/js/jquery.min.js"></script>
-
+@*@{Html.RenderAction("GetSideMenuBar", "FormMenu");}*@
 @using (Html.BeginForm("AddRole", "FormMenu", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -46,7 +46,7 @@
                                                 <th scope="col">SNO.</th>
                                                 <th scope="col">Form Menu Name </th>
                                                 @*<th scope="col">Action Name</th>
-                                                <th scope="col">Controller</th>*@
+                                                    <th scope="col">Controller</th>*@
                                                 <th scope="col">IsActive </th>
                                             </tr>
                                         </thead>
@@ -61,7 +61,7 @@
                                                     <th scope="row">@count</th>
                                                     <td class="text-wrap" id="isChecked_">@SOC.From_menu</td>
                                                     @*<td>Version @SOC.ActionName</td>
-                                                    <td>@SOC.Controller</td>*@
+                                                        <td>@SOC.Controller</td>*@
                                                     <td id="isChecked_">@SOC.IsActive</td>
                                                 </tr>
                                                 count++;
@@ -95,7 +95,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Alert</h4>
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
@@ -145,45 +145,28 @@
 
             $.getJSON("/FormMenu/GetRoleList", { roleId: selectedCategory },
                 function (classesData1) {
-                    
-                    var ColumnsName = "";
-                    var MandatoryColumnName = "";
-                  
-                       
-                    for (var i = 0; i < classesData1.length; i++) {
 
-                        alert('#isChecked_'+classesData1[i].Id);
-                        $('#isChecked_' + classesData1[i].Id).prop('checked', true);
-                        }
-                   
-              
-                    var strarrayColumnsName = ColumnsName;
-                    if (ColumnsName != "") {
+                    for (var i = 0; i < classesData1.length; i++) {
+                        $('#isChecked_' + classesData1[i].FormMenuID).attr('checked', true);
+                    }
+
+                    if (classesData1 != "") {
                         $("#colcatsubmitbtn").html("Update");
                     }
                     else {
-                        $("#colcatsubmitbtn").html("Submit");
+                        $.getJSON("/FormMenu/GetMenuListJSON",
+                            function (classesData2) {
+                                for (var i = 0; i < classesData2.length; i++) {
+                                    $('#isChecked_' + classesData2[i].ID).attr('checked', false);
+                                }
+                                $("#colcatsubmitbtn").html("Submit");
+                            });
                     }
-                  
-                    
-                    $("#loader-wrapper").hide();
-
-
                 });
 
-
-            //$.get("/FormMenu/GetRoleList?roleId=" + selectedCategory, function (data) {
-            //    $('#blogTable tbody').empty();
-            //    $.each(data, function (i, item) {
-            //        for (i = 0; i <= item.length; i++) {
-                     
-            //            $('#isChecked_' + item[i]).attr('checked', true);
-            //        }
-            //    });
-            //})
         }
         else {
-            
+
         }
     });
 </script>
