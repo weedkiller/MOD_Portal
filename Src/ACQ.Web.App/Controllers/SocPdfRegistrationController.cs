@@ -243,7 +243,7 @@ namespace ACQ.Web.App.Controllers
                                 obj.AoN_Accorded_By = Encryption.Encrypt(sanitizer.Sanitize(contentControlText[2].ToString()));
                                 obj.AoN_validity = 6;
                                 obj.AoN_validity_unit = "Month";
-                                obj.CreatedBy = null;
+                                obj.CreatedBy = Convert.ToInt16(Session["UserID"].ToString());
                                 obj.CreatedOn = DateTime.Now;
                                 obj.DeletedBy = 1;
                                 obj.DeletedOn = null;

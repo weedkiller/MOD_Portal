@@ -21,6 +21,7 @@ E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompi
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+<<<<<<< HEAD
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
@@ -45,3 +46,6 @@ E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.Vie
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod22march\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+=======
+E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+>>>>>>> 64713c1c182fb7ec10b45bd9d3899a2f4a3ee8b1

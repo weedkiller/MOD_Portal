@@ -11,8 +11,9 @@
 </style>
 
 
+
 <div class="login_bg">
-    @using (Html.BeginForm("login","Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("login", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -24,6 +25,7 @@
                             <h1 class="h2 text-center" style=" color: #3f80ea !important">Account Login </h1>
                             <hr />
                             @Html.ValidationSummary()
+
                             <div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">
 
                             </div>
@@ -110,8 +112,8 @@
                                     @Html.ValidationMessageFor(Model => Model.Emailotp, null, new { @class = "ValidateColor", id = "mailotp" })
                                 </div>
                                 @*<div class="w-100 text-right">
-                                <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
-                            </div>*@
+                                        <input id="btnresendOTP" onclick="resendOTP();" type="button" class="btn text-primary" value="Resend OTP">
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -123,12 +125,12 @@
             @*</form>*@
         </div>
     </div>
-    
+
 </div>
 
 <div id="myModal2" class="modal fade" role="dialog">
     <div class="custom_modal">
-        <div class="modal-dialog"  style="width: 500px;">
+        <div class="modal-dialog" style="width: 500px;">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -314,7 +316,7 @@
         $("#dvMsg").show();
         $("#dvMsg").css("display", "block");
         $("#dvMsg").addClass("has-error");
-                //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
+                    //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
 
     </script>
 }
