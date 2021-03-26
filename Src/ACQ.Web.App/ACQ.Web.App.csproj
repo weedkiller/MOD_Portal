@@ -609,6 +609,10 @@
     <Content Include="assets\js\CkEditor\skins\moono-lisa\images\spinner.gif" />
     <Content Include="assets\js\CkEditor\styles.js" />
     <Content Include="assets\js\CkEditor\vendor\promise.js" />
+    <Content Include="assets\js\jbvalidator.min.js" />
+    <Content Include="assets\js\jquery v3.4.1.js" />
+    <Content Include="assets\js\jquery-ui-1.12.1.min.js" />
+    <Content Include="assets\js\jquery.dataTables.min.js" />
     <Content Include="assets\js\jquery.min.js" />
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />
@@ -622,14 +626,15 @@
     <Content Include="bin\ACQ.Web.Core.pdb" />
     <Content Include="bin\ACQ.Web.ExternalServices.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.pdb" />
-    <Content Include="bin\ACQ.Web.ViewModel.dll" />
-    <Content Include="bin\ACQ.Web.ViewModel.pdb" />
     <Content Include="bin\AngleSharp.Css.dll" />
     <Content Include="bin\AngleSharp.Css.xml" />
     <Content Include="bin\AngleSharp.dll" />
     <Content Include="bin\AngleSharp.xml" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\BouncyCastle.Crypto.dll" />
+    <Content Include="bin\GemBox.Document.dll" />
+    <Content Include="bin\GemBox.Document.xml" />
     <Content Include="bin\HtmlSanitizer.dll" />
     <Content Include="bin\HtmlSanitizer.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
@@ -1606,7 +1611,6 @@
     <Content Include="assets\js\CkEditor\skins\moono-lisa\readme.md" />
     <None Include="bin\ACQ.Web.App.dll.config" />
     <None Include="bin\ACQ.Web.Core.dll.config" />
-    <None Include="bin\ACQ.Web.ViewModel.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />

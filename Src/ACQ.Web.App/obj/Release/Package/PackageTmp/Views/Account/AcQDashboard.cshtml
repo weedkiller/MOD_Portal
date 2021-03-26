@@ -3,13 +3,4 @@
     ViewBag.Title = "AcQDashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<h2>AcQDashboard</h2>
-<a href="http://localhost:51994/home/Index?id=@ViewBag.path" id="ddd"></a>
-<script>
-    $(document).ready(function () {
-        //window.location.assign("http://192.168.122.1:45459/home/index?id=@ViewBag.path");
-        var url = $('#ddd').attr('href');
-        window.open(url, '_blank');
-    });
-</script>
+<script src="~/assets/js/jquery.min.js"></script>

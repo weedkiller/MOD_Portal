@@ -84,6 +84,5 @@ E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
-E:\MOD_Portal\Src\ACQ.Web.App\bin\BouncyCastle.Crypto.dll
-E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\GemBox.Document.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll

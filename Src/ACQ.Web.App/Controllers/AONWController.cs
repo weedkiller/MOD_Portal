@@ -69,8 +69,8 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                //         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -725,14 +725,20 @@ namespace ACQ.Web.App.Controllers
                 throw ex;
             }
         }
-        public ActionResult PrepareFinalMeeting(int id, string mtype, string dated)
+        [Route("PrepareFinalMeeting")]
+        [HandleError]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult PrepareFinalMeeting(string id, string mtype, string dated)
         {
             using (var client = new HttpClient())
             {
+                Int16 mmID = Convert.ToInt16(Encryption.Decrypt(id));
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/PrepareFinalMeeting?ID=" + id + "").Result;
+                HttpResponseMessage response = client.GetAsync("AONW/PrepareFinalMeeting?ID=" + mmID + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
 
@@ -896,15 +902,16 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult EmailToMeetingParticipants(int ID)
+        public ActionResult EmailToMeetingParticipants(string ID)
         {
             List<MeetingParticipants> listData = new List<MeetingParticipants>();
+            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetParticipantsDataForMail?ID=" + ID).Result;
+                HttpResponseMessage response = client.GetAsync("AONW/GetParticipantsDataForMail?ID=" + mID).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<MeetingParticipants>>().Result;
@@ -1037,16 +1044,17 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult DeleteMeeting(int ID)
+        public ActionResult DeleteMeeting(string ID)
         {
             try
             {
+                Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/DeleteMeetingByID?ID=" + ID).Result;
+                    HttpResponseMessage response = client.GetAsync("AONW/DeleteMeetingByID?ID=" + mID).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("ViewMeeting");
@@ -1119,10 +1127,10 @@ namespace ACQ.Web.App.Controllers
                 throw ex;
             }
         }
-        [Route("BindMeetingAgenda")]
-        [HandleError]
-        [SessionExpire]
-        [SessionExpireRefNo]
+        //[Route("BindMeetingAgenda")]
+        //[HandleError]
+        //[SessionExpire]
+        //[SessionExpireRefNo]
         public async Task<JsonResult> BindMeetingAgenda(int id)
         {
             MeetingAgenda Socmodel = new MeetingAgenda();
@@ -1190,9 +1198,8 @@ namespace ACQ.Web.App.Controllers
         public async Task<ActionResult> CreateAgenda(MeetingAgenda _model)
         {
             ViewBag.AgendaItem1 = _model.AgendaItem1;
-            if (ModelState.IsValid)
-            {
-                id = Convert.ToInt32(_model.meeting_id);
+            
+               int mid = Convert.ToInt32(_model.meeting_id);
                 try
                 {
                     using (var client = new HttpClient())
@@ -1215,9 +1222,11 @@ namespace ACQ.Web.App.Controllers
                 {
                     throw ex;
                 }
-            }
+           
             ViewBag.dated = Session["mdate"].ToString();
             ViewBag.mtype = Session["mtype"].ToString();
+            string id = Encryption.Encrypt(mid.ToString());
+
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id, ViewBag.mtype, ViewBag.dated });
         }
         [Route("AddMeetingAgenda")]
@@ -1229,7 +1238,15 @@ namespace ACQ.Web.App.Controllers
             ViewBag.mtype = mtype;
             ViewBag.dated = dated;
             MeetingAgenda meetingAgenda = new MeetingAgenda();
-            meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
+            if(id=="0")
+            {
+                meetingAgenda.meeting_id = Convert.ToInt16(id);
+            }
+            else
+            {
+                meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
+            }
+           
             meetingAgenda.MeetingAgendaComment = new MeetingAgendaComment();
             meetingAgenda.MeetingAgendaCommentList = new List<MeetingAgendaComment>();
             meetingAgenda.MeetingAgendaComment.UserID = GetUserID();
@@ -1270,10 +1287,10 @@ namespace ACQ.Web.App.Controllers
                 UserID = 0;
             return UserID;
         }
-        [Route("EditMeetingAgenda")]
-        [HandleError]
-        [SessionExpire]
-        [SessionExpireRefNo]
+        //[Route("EditMeetingAgenda")]
+        //[HandleError]
+        //[SessionExpire]
+        //[SessionExpireRefNo]
         public ActionResult EditMeetingAgenda(int ID)
         {
             try
@@ -1364,10 +1381,10 @@ namespace ACQ.Web.App.Controllers
             ViewBag.mtype = Session["mtype"].ToString();
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id, ViewBag.mtype, ViewBag.dated });
         }
-        [Route("DeleteMeetingAgenda")]
-        [HandleError]
-        [SessionExpire]
-        [SessionExpireRefNo]
+        //[Route("DeleteMeetingAgenda")]
+        //[HandleError]
+        //[SessionExpire]
+        //[SessionExpireRefNo]
         public ActionResult DeleteMeetingAgenda(int id, int meeting_id)
         {
             try

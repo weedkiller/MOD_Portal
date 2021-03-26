@@ -116,22 +116,20 @@ namespace ACQ.Web.ExternalServices.Email
         {
             try
             {
-                // SmtpClient smtpClient = new SmtpClient();
-                // MailMessage message = new MailMessage();
-                // MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["FromAddress"].ToString(), ConfigurationManager.AppSettings["FromName"].ToString());
-                // smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
-                // message.From = mailAddress;
-                // message.To.Add(Email);
-                // message.Priority = MailPriority.High;
-                // message.Subject = "OTP";
-                // message.Body = Body.ToString();
-                // message.IsBodyHtml = true;
-
-                ///// smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
-                // smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
-                // smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
-                // smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(), ConfigurationManager.AppSettings["MailPassword"].ToString());
-                // smtpClient.Send(message);
+                //SmtpClient smtpClient = new SmtpClient();
+                //MailMessage message = new MailMessage();
+                //MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["FromAddress"].ToString(), ConfigurationManager.AppSettings["FromName"].ToString());
+                //smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
+                //message.From = mailAddress;
+                //message.To.Add(Email);
+                //message.Priority = MailPriority.High;
+                //message.Subject = "OTP";
+                //message.Body = Body.ToString();
+                //message.IsBodyHtml = true;
+                //smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                //smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
+                //smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(), ConfigurationManager.AppSettings["MailPassword"].ToString());
+                //smtpClient.Send(message);
 
 
 
@@ -139,22 +137,18 @@ namespace ACQ.Web.ExternalServices.Email
                 SmtpClient smtpClient = new SmtpClient();
                 MailMessage message = new MailMessage();
                 MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["FromAddress"].ToString(), ConfigurationManager.AppSettings["FromName"].ToString());
-                smtpClient.Host = "smtp.gmail.com";
-                //smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
+                smtpClient.Host = ConfigurationManager.AppSettings["smtpAddress"].ToString();
                 message.From = mailAddress;
                 message.To.Add(Email);
-
                 message.Priority = MailPriority.High;
-                message.Subject = " MOD";
+                message.Subject = "MoD (ACQUISITION) DASHBOARD";
                 message.Body = Body.ToString();
                 message.IsBodyHtml = true;
-                smtpClient.EnableSsl = true;
-                smtpClient.UseDefaultCredentials = true;
+                smtpClient.EnableSsl = false;
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
                 smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
-                smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(),
-                    ConfigurationManager.AppSettings["MailPassword"].ToString());
+                smtpClient.Credentials = (ICredentialsByHost)new NetworkCredential(ConfigurationManager.AppSettings["MailUserID"].ToString(), ConfigurationManager.AppSettings["MailPassword"].ToString());
                 smtpClient.Send(message);
             }
             catch (Exception ex)

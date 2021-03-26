@@ -29,6 +29,7 @@ namespace ACQ.Web.App.Controllers
     {
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        private static string DashboardUrl = ConfigurationManager.AppSettings["DashboardUrl"].ToString();
         // GET: Account
 
         [Route("imagelogo")]
@@ -57,17 +58,11 @@ namespace ACQ.Web.App.Controllers
         //[HandleError]
         public ActionResult Login()
         {
-            try
-            {
-                Session["CAPTCHA"] = GetRandomText();
-                
-            }
-            catch(Exception ex)
-            {
-                ex.Message.ToString();
-            }
+            Session["CAPTCHA"] = GetRandomText();
 
             return View();
+            
+            
         }
 
         public ActionResult Index()
@@ -88,8 +83,8 @@ namespace ACQ.Web.App.Controllers
             {
 
                 client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                           parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                //client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                //           parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
 
                 bool postResult1 = postJob1.IsSuccessStatusCode;
@@ -151,8 +146,8 @@ namespace ACQ.Web.App.Controllers
                         client2.DefaultRequestHeaders.Clear();
                         client2.BaseAddress = new Uri(WebAPIUrl);
                         client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                            parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        //client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                        //    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage response = client2.GetAsync(requestUri: "Account/ValidUserLogin?EmailId=" + login.InternalEmailID + "&userPassword=" + login.Password + "").Result;
                         if (response.IsSuccessStatusCode)
                         {
@@ -178,8 +173,8 @@ namespace ACQ.Web.App.Controllers
                                 using (HttpClient client1 = new HttpClient())
                                 {
                                     client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                                    client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                          //          client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          //parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                                     HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
                                     bool postResult1 = postJob1.IsSuccessStatusCode;
@@ -226,8 +221,9 @@ namespace ACQ.Web.App.Controllers
                                     {
                                         EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
                                     }
-                                
-                                    
+                                    string m = Encryption.Encrypt(Session["UserID"].ToString());
+                                    Session["encpram"] = Server.UrlEncode(m);
+                                   
                                     ViewBag.Message = "RegistrationSuccessful";
                                     return View();
                                 }
@@ -251,8 +247,8 @@ namespace ACQ.Web.App.Controllers
                                 using (HttpClient client1 = new HttpClient())
                                 {
                                     client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                                    client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                          //          client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          //parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                                     HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
                                     bool postResult1 = postJob1.IsSuccessStatusCode;
@@ -286,8 +282,8 @@ namespace ACQ.Web.App.Controllers
                             using (HttpClient client1 = new HttpClient())
                             {
                                 client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                                client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                          //      client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          //parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                                 HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
                                 bool postResult1 = postJob1.IsSuccessStatusCode;
@@ -309,15 +305,20 @@ namespace ACQ.Web.App.Controllers
                 else { return View(); }
             }
             catch (Exception ex)
-            { return View(); }
+            {
+                ViewBag.Message = ex.Message.ToString();
+                return View(); 
+            }
         }
         [Route("AcQDashboard")]
         [SessionExpire]
         [SessionExpireRefNo]
         public ActionResult AcQDashboard()
         {
-            ViewBag.path = Encryption.Encrypt(Session["UserID"].ToString());
-            return View();
+            string m = Encryption.Encrypt(Session["UserID"].ToString());
+            return Redirect(string.Format(DashboardUrl + m));
+          
+
         }
 
         // <summary>
@@ -408,6 +409,7 @@ namespace ACQ.Web.App.Controllers
             model.UserEmail = Session["EmailID"].ToString();
             model.IPAddress = Request.UserHostAddress;
             model.Action = "Verify Otp";
+           
             if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "654321")
             {
                 model.Status = "OTP Verified";
@@ -416,8 +418,8 @@ namespace ACQ.Web.App.Controllers
                     client1.BaseAddress = new Uri(WebAPIUrl);
 
                     client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    //client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                    //      parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                     HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model.UserEmail + "&Status=" + model.Status + "").Result;
 
                     if (response.IsSuccessStatusCode)
@@ -446,22 +448,19 @@ namespace ACQ.Web.App.Controllers
                 }
                 using (HttpClient client = new HttpClient())
                 {
+                    UserLogViewModel model21 = new UserLogViewModel();
+                    model21.UserEmail = Session["EmailID"].ToString();
+                    model21.IPAddress = Request.UserHostAddress;
+                    model21.Status = "Login Successfully";
+                    model21.Action = "Login";
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                    HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
-                        model.Status = "Login Successfully";
-                        model.Action = "Login";
-                        using (HttpClient client1 = new HttpClient())
-                        {
-                            client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                            HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
-
-                            bool postResult1 = postJob1.IsSuccessStatusCode;
-
-                        }
+                        
+                       
                         if (Session["UserID"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken"] != null)
                         {
                             if (!Session["AuthToken"].ToString().Equals(Request.Cookies["AuthToken"].Value))
@@ -501,13 +500,17 @@ namespace ACQ.Web.App.Controllers
             }
             else
             {
-                model.Status = "OTP Not Verified";
+                UserLogViewModel model21 = new UserLogViewModel();
+                model21.UserEmail = Session["EmailID"].ToString();
+                model21.IPAddress = Request.UserHostAddress;
+                model21.Action = "Login";
+                model21.Status = "OTP Not Verified";
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                    //     parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
@@ -516,9 +519,9 @@ namespace ACQ.Web.App.Controllers
                             client1.BaseAddress = new Uri(WebAPIUrl);
 
                             client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                            client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                            HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model.UserEmail + "&Status=" + model.Status + "").Result;
+                         //   client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         //parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                            HttpResponseMessage response = client1.GetAsync("Account/NotVerifyOtp?UserEmail=" + model21.UserEmail + "&Status=" + model21.Status + "").Result;
 
                             if (response.IsSuccessStatusCode)
                             {
@@ -570,6 +573,8 @@ namespace ACQ.Web.App.Controllers
             return View();
         }
         [Route("Logout")]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
             UserLogViewModel model = new UserLogViewModel();
@@ -624,8 +629,8 @@ namespace ACQ.Web.App.Controllers
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                        // parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage postJob = await client.PostAsJsonAsync<ChangePasswordViewModel>(WebAPIUrl + "Account/ChangePassword", input);
                         string url = postJob.Headers.Location.AbsoluteUri;
                         string mID = postJob.Headers.Location.Segments[4].ToString();
@@ -701,8 +706,8 @@ namespace ACQ.Web.App.Controllers
                         client1.BaseAddress = new Uri(WebAPIUrl);
 
                         client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        //client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                        //parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage response = client1.GetAsync("Account/ResetPwdSendLink?UserEmail=" + input.UserName + "&Status=" + input.EmailID + "").Result;
 
                         if (response.IsSuccessStatusCode)
