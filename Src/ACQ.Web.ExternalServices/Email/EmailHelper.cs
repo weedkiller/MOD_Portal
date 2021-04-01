@@ -205,7 +205,7 @@ namespace ACQ.Web.ExternalServices.Email
         {
             return mailPath.Replace("{Name}", InputModel.UserName)
            //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
-           .Replace("{Email}", InputModel.EmailID).Replace("{tokenid}", InputModel.TokenId);
+           .Replace("{Email}", emaid).Replace("{tokenid}", InputModel.TokenId);
         }
         public static string SendChangePasswordMail(string UserMail, string newpassord, string mailPath)
         {
