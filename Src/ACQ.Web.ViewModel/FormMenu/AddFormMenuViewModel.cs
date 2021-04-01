@@ -17,6 +17,8 @@ namespace ACQ.Web.ViewModel.FormMenu
         public Nullable<System.DateTime> RecTime { get; set; }
         public Nullable<int> MenuId { get; set; }
         public List<AddFormMenuViewModel> menuList { get; set; }
+        public List<AddFormMenuViewModel> parentList { get; set; }
+        public List<AddFormMenuViewModel> chidList { get; set; }
         public List<UserViewModel> UserList { get; set; }
 
         public List<roleViewModel> roleList { get; set; }

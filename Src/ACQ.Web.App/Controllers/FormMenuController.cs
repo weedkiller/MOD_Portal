@@ -18,6 +18,10 @@ namespace ACQ.Web.App.Controllers
         private object sanitizer;
 
         // GET: FormMenu
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> AddFormMenu()
         {
@@ -121,7 +125,10 @@ namespace ACQ.Web.App.Controllers
             }
             return View(model);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult AddRole()
         {
@@ -193,6 +200,148 @@ namespace ACQ.Web.App.Controllers
                 //}
                 //else { Redirect("/Account/Login"); }
 
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetRoleList( int roleId)
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            List<roleViewModel> listData = new List<roleViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleById?UserID=" + roleId +"").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        listData = model.roleList;
+                        //IEnumerable<SelectListItem> subcategoriesData1 = listData.Select(m => new SelectListItem()
+                        //{
+                        //    Text = m.FormName.ToString(),
+                        //    Value = m.FormMenuID.ToString(),
+                        //});
+                        return Json(listData, JsonRequestBehavior.AllowGet);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return View();
+        }
+
+        
+
+        [HttpGet]
+        public ActionResult GetSideMenuBar()
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
+            List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        foreach(var par in model.menuList)
+                       {
+                            
+                            if (par.MenuId == 0)
+                            {
+                                AddFormMenuViewModel mod = new AddFormMenuViewModel();
+                                mod.ID = par.ID;
+                                mod.From_menu = par.From_menu;
+                                mod.ActionName = par.ActionName;
+                                mod.Controller = par.Controller;
+                                mod.MenuId = par.MenuId;
+                                mod.IsActive = par.IsActive;
+
+                                listData.Add(mod);
+                            
+                            }
+                            else if (par.MenuId != 0)
+                            {
+                                AddFormMenuViewModel mod1 = new AddFormMenuViewModel();
+                                mod1.ID = par.ID;
+                                mod1.From_menu = par.From_menu;
+                                mod1.ActionName = par.ActionName;
+                                mod1.Controller = par.Controller;
+                                mod1.MenuId = par.MenuId;
+                                mod1.IsActive = par.IsActive;
+
+                                listData1.Add(mod1);
+                                
+                            }
+                        }
+                        model.parentList = listData;
+                        model.chidList = listData1;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+           // return View(model);
+            return PartialView(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult GetMenuListJSON()
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        listData = model.menuList;
+                        return Json(listData, JsonRequestBehavior.AllowGet);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
             }
             return View();
         }

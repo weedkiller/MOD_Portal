@@ -1657,6 +1657,7 @@
     <Content Include="Views\FormMenu\AddFormMenu.cshtml" />
     <Content Include="Views\FormMenu\AddRole.cshtml" />
     <Content Include="Views\FormMenu\GetFormMenu.cshtml" />
+    <Content Include="Views\FormMenu\GetSideMenuBar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
