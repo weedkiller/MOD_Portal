@@ -595,6 +595,7 @@ namespace ACQ.Web.App.Controllers
             return View();
         }
         [Route("Logout")]
+        [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
             UserLogViewModel model = new UserLogViewModel();

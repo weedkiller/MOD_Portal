@@ -55,6 +55,7 @@ namespace ACQ.Web.App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError]
         //[SessionExpire]
         public async Task<ActionResult> AddFormMenu(AddFormMenuViewModel input)
         {
@@ -168,6 +169,8 @@ namespace ACQ.Web.App.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
         public async Task<ActionResult> AddRole(AddFormMenuViewModel viewModel)
         {
             AddFormMenuViewModel model = new AddFormMenuViewModel();
