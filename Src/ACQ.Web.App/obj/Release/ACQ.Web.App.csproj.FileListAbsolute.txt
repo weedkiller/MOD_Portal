@@ -60,3 +60,4 @@ E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CoreCompileInputs.c
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.dll
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.pdb
+E:\MOD_Portal\Src\ACQ.Web.App\bin\CaptchaMvc.dll

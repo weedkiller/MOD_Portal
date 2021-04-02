@@ -630,8 +630,6 @@ namespace ACQ.Web.App.Controllers
         [Route("ChangePassword")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-       // [HandleError]
-        //[SessionExpire]
         [SessionExpireRefNo]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {

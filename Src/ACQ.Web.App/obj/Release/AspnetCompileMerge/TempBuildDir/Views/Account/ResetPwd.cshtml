@@ -30,11 +30,11 @@
                                     <div class="pl-2 pr-2">
                                         <label for="old password"> Email<span class="required">*</span></label>
 
-                                        @Html.TextBoxFor(Model => Model.EmailID, new { @class = " form-control bb", required = "required", tabindex = "1", autofocus = "autofocus" })
+                                        @Html.TextBoxFor(Model => Model.EmailID, new { @class = " form-control bb", required = "required", tabindex = "1", autofocus = "autofocus" , @readonly = "readonly" })
                                         @Html.ValidationMessageFor(m => m.EmailID, "", new { @class = "text-danger float-left gg" })
                                         <p style="font-weight:bold;color:red;">@ViewBag.Msg</p>
                                     </div>
-                                    <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
+                                    <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Reset Password</button>
 
                                 </form>
                             </div>
