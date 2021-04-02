@@ -1,4 +1,5 @@
 ﻿@model  ACQ.Web.ViewModel.User.LoginViewModel
+@using CaptchaMvc.HtmlHelpers
 @{
     ViewBag.Title = "login";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -50,23 +51,15 @@
 
                                 <p id="required-passwordMsg" style="display: none;color: Red;">Please enter Password</p>
 
-                                <div>
-                                    @* @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)*@
-                                    <div>
-                                        @*<img src="/Account/GetCaptchaImage" title="Captcha" />*@
-                                        <img src="Captcha" title="Captcha" />
-                                        <button id="loadbtnCaptcha" style="position: absolute; margin-left: 4px; font-size: 18px;color: red; border:none;" type="button">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </button>
-                                        <br />
-                                        <input type="text" class="form-control prepended-form-control" name="clientCaptcha" autocomplete="off" placeholder="Write above text exactly" required />
-                                        <p style="font-weight:bold;color:red;">@ViewBag.CaptchaError</p>
+                                <div class="input-group-overlay form-group mb-0">
+                                    <div id="captcha" class="captcha">
+                                        @Html.Captcha("Refresh", "Enter the text you see above", 8, "<span class='ValidateColor'>Enter Captcha</span>", true)
                                     </div>
-
+                                    <div style="color:red">
+                                        @ViewBag.CaptchaError
+                                    </div>
                                 </div>
-                                <div class="ValidateColor">
-                                    @ViewBag.errormessage
-                                </div>
+                                
                                 <h7 id="passwordcheck"> </h7>
 
                                 <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
@@ -90,6 +83,7 @@
         <div class="modal-dialog" style="width: 500px;">
             @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
             {
+                @Html.AntiForgeryToken()
                 @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -177,7 +171,7 @@
     }
 
     $('#loadbtnCaptcha').click(function () {
-        document.location = '@Url.Action("login")';
+        document.location = '@Url.Action("/Account/GetCaptchaImage")';
     });
 
     $(document).ready(function () {
@@ -316,7 +310,7 @@
         $("#dvMsg").show();
         $("#dvMsg").css("display", "block");
         $("#dvMsg").addClass("has-error");
-                    //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
+                        //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
 
     </script>
 }

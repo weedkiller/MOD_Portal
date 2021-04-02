@@ -12,11 +12,6 @@ E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Microsoft.Web.Infrastructure.dll
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.Deployment.dll
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.xml
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.SqlServer.xml
-E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.Mvc.xml
-E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.xml
-E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.Razor.xml
-E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.Razor.xml
-E:\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.Deployment.xml
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csprojAssemblyReference.cache
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
 E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CopyComplete

@@ -3,6 +3,7 @@ using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
+using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
 using Newtonsoft.Json;
 using System;
@@ -56,10 +57,8 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("login")]
         [HandleError]
-       
         public ActionResult Login()
-        {
-            Session["CAPTCHA"] = GetRandomText();
+      {
 
             return View();
             
@@ -68,7 +67,7 @@ namespace ACQ.Web.App.Controllers
 
         public ActionResult Index()
         {
-            Session["CAPTCHA"] = GetRandomText();
+            
             return RedirectToAction("login");
         }
 
@@ -128,20 +127,12 @@ namespace ACQ.Web.App.Controllers
             try
             {
                 //Captcha Code Here
-                // FormCollection form = new FormCollection();
-
-                string clientCaptcha = form["clientCaptcha"];
-                string serverCaptcha = Session["CAPTCHA"].ToString();
-
-
-                clientCaptcha = sanitizer.Sanitize(clientCaptcha);
-                if (!clientCaptcha.Equals(serverCaptcha.ToUpper()))
+                if (!this.IsCaptchaValid("Captcha is not valid"))
                 {
-                    ViewBag.ShowCAPTCHA = serverCaptcha;
-
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
+                
 
                 if (ModelState.IsValid)
                 {
@@ -150,6 +141,7 @@ namespace ACQ.Web.App.Controllers
 
 
                         login.InternalEmailID = sanitizer.Sanitize(login.InternalEmailID);
+                        login.InternalEmailID = HttpUtility.HtmlEncode(login.InternalEmailID);
                         login.Password = sanitizer.Sanitize(login.Password);
                         client2.DefaultRequestHeaders.Clear();
                         client2.BaseAddress = new Uri(WebAPIUrl);
@@ -315,6 +307,8 @@ namespace ACQ.Web.App.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message.ToString();
+                ModelState.AddModelError("", "Invalid UserName and Password");
+                login.ErrorMsg = "Invalid UserName and Password";
                 return View(); 
             }
         }
@@ -391,6 +385,9 @@ namespace ACQ.Web.App.Controllers
                 img.Dispose();
             }
 
+            //ViewBag.captch = File(ms.ToArray(), "image/png");
+            //return PartialView("Captcha");
+            //return PartialView("Captcha");
             return File(ms.ToArray(), "image/png");
         }
         [Route("VerifyOtp")]
@@ -409,6 +406,7 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("VerifyOtp")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyOtp(string emailotp)
         {
            

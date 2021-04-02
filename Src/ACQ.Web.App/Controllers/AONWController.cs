@@ -67,10 +67,9 @@ namespace ACQ.Web.App.Controllers
             {
                 client.DefaultRequestHeaders.Clear();
                 client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                //         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -822,7 +821,7 @@ namespace ACQ.Web.App.Controllers
                     List<MeetingParticipants> listData = new List<MeetingParticipants>();
                     listData = Session["participants"] as List<MeetingParticipants>;
 
-                    listData = listData.Where(x => model.officers_participated_list.Contains(x.UserID.ToString()) && x.meeting_type == model.dac_dpb).ToList();
+                    listData = listData.Where(x => model.officers_participated.Contains(x.UserID.ToString()) && x.meeting_type == model.dac_dpb).ToList();
 
                     model.Participants = new List<MeetingParticipants>();
                     model.Participants = listData;

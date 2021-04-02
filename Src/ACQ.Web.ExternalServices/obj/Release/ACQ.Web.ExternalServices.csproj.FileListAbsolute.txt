@@ -14,8 +14,3 @@ E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Razor.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Razor.dll
 E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Deployment.dll
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Mvc.xml
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.xml
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Razor.xml
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Razor.xml
-E:\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Deployment.xml

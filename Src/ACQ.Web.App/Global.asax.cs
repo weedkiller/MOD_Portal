@@ -28,7 +28,7 @@ namespace ACQ.Web.App
             string ipaddress = Request.UserHostAddress;
             Exception ex = Server.GetLastError();
             Server.ClearError();
-            Response.Redirect(String.Format("~/Account/Logout"));
+            Response.Redirect(String.Format("~/login"));
 
         }
 
@@ -68,7 +68,7 @@ namespace ACQ.Web.App
                 // check  sessions here
                 if (HttpContext.Current.Session["UserID"] == null)
                 {
-                    filterContext.Result = new RedirectResult("/Account/Login");
+                    filterContext.Result = new RedirectResult("~/login");
                     return;
                 }
                 base.OnActionExecuting(filterContext);
@@ -82,7 +82,7 @@ namespace ACQ.Web.App
                 // check  sessions here
                 if (HttpContext.Current.Session["UserName"] == null)
                 {
-                    filterContext.Result = new RedirectResult("/Account/Login");
+                    filterContext.Result = new RedirectResult("~/login");
                     return;
                 }
                 base.OnActionExecuting(filterContext);

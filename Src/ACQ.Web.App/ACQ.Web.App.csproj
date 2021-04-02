@@ -66,6 +66,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="CaptchaMvc">
+      <HintPath>D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.App\bin\CaptchaMvc.dll</HintPath>
+    </Reference>
     <Reference Include="GemBox.Document, Version=33.0.0.1155, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
       <HintPath>..\..\packages\GemBox.Document.33.0.1155\lib\net35\GemBox.Document.dll</HintPath>
     </Reference>
@@ -623,33 +626,25 @@
     <Content Include="bin\ACQ.Web.App.dll" />
     <Content Include="bin\ACQ.Web.App.pdb" />
     <Content Include="bin\ACQ.Web.Core.dll" />
-    <Content Include="bin\ACQ.Web.Core.pdb" />
     <Content Include="bin\ACQ.Web.ExternalServices.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.pdb" />
+    <Content Include="bin\ACQ.Web.ViewModel.dll" />
+    <Content Include="bin\ACQ.Web.ViewModel.pdb" />
     <Content Include="bin\AngleSharp.Css.dll" />
-    <Content Include="bin\AngleSharp.Css.xml" />
     <Content Include="bin\AngleSharp.dll" />
-    <Content Include="bin\AngleSharp.xml" />
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\BouncyCastle.Crypto.dll" />
     <Content Include="bin\GemBox.Document.dll" />
-    <Content Include="bin\GemBox.Document.xml" />
     <Content Include="bin\HtmlSanitizer.dll" />
-    <Content Include="bin\HtmlSanitizer.xml" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="bin\Microsoft.Graph.Core.dll" />
-    <Content Include="bin\Microsoft.Graph.Core.xml" />
     <Content Include="bin\Microsoft.Office.Interop.Word.dll" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
     <Content Include="bin\netstandard.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\System.AppContext.dll" />
     <Content Include="bin\System.Buffers.dll" />
-    <Content Include="bin\System.Buffers.xml" />
     <Content Include="bin\System.Collections.Concurrent.dll" />
     <Content Include="bin\System.Collections.dll" />
     <Content Include="bin\System.Collections.NonGeneric.dll" />
@@ -663,7 +658,6 @@
     <Content Include="bin\System.Diagnostics.Contracts.dll" />
     <Content Include="bin\System.Diagnostics.Debug.dll" />
     <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
-    <Content Include="bin\System.Diagnostics.DiagnosticSource.xml" />
     <Content Include="bin\System.Diagnostics.FileVersionInfo.dll" />
     <Content Include="bin\System.Diagnostics.Process.dll" />
     <Content Include="bin\System.Diagnostics.StackTrace.dll" />
@@ -692,10 +686,8 @@
     <Content Include="bin\System.Linq.Parallel.dll" />
     <Content Include="bin\System.Linq.Queryable.dll" />
     <Content Include="bin\System.Memory.dll" />
-    <Content Include="bin\System.Memory.xml" />
     <Content Include="bin\System.Net.Http.dll" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
-    <Content Include="bin\System.Net.Http.Formatting.xml" />
     <Content Include="bin\System.Net.NameResolution.dll" />
     <Content Include="bin\System.Net.NetworkInformation.dll" />
     <Content Include="bin\System.Net.Ping.dll" />
@@ -715,7 +707,6 @@
     <Content Include="bin\System.Resources.ResourceManager.dll" />
     <Content Include="bin\System.Resources.Writer.dll" />
     <Content Include="bin\System.Runtime.CompilerServices.Unsafe.dll" />
-    <Content Include="bin\System.Runtime.CompilerServices.Unsafe.xml" />
     <Content Include="bin\System.Runtime.CompilerServices.VisualC.dll" />
     <Content Include="bin\System.Runtime.dll" />
     <Content Include="bin\System.Runtime.Extensions.dll" />
@@ -736,7 +727,6 @@
     <Content Include="bin\System.Security.Principal.dll" />
     <Content Include="bin\System.Security.SecureString.dll" />
     <Content Include="bin\System.Text.Encoding.CodePages.dll" />
-    <Content Include="bin\System.Text.Encoding.CodePages.xml" />
     <Content Include="bin\System.Text.Encoding.dll" />
     <Content Include="bin\System.Text.Encoding.Extensions.dll" />
     <Content Include="bin\System.Text.RegularExpressions.dll" />
@@ -749,23 +739,14 @@
     <Content Include="bin\System.Threading.Timer.dll" />
     <Content Include="bin\System.ValueTuple.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
-    <Content Include="bin\System.Web.Helpers.xml" />
     <Content Include="bin\System.Web.Http.dll" />
     <Content Include="bin\System.Web.Http.WebHost.dll" />
-    <Content Include="bin\System.Web.Http.WebHost.xml" />
-    <Content Include="bin\System.Web.Http.xml" />
     <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\System.Web.Razor.dll" />
-    <Content Include="bin\System.Web.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\System.Xml.ReaderWriter.dll" />
     <Content Include="bin\System.Xml.XDocument.dll" />
     <Content Include="bin\System.Xml.XmlDocument.dll" />
@@ -1610,7 +1591,7 @@
     <Content Include="assets\js\CkEditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="assets\js\CkEditor\skins\moono-lisa\readme.md" />
     <None Include="bin\ACQ.Web.App.dll.config" />
-    <None Include="bin\ACQ.Web.Core.dll.config" />
+    <None Include="bin\ACQ.Web.ViewModel.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -1658,6 +1639,7 @@
     <Content Include="Views\FormMenu\AddRole.cshtml" />
     <Content Include="Views\FormMenu\GetFormMenu.cshtml" />
     <Content Include="Views\FormMenu\GetSideMenuBar.cshtml" />
+    <Content Include="Views\Account\Captcha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

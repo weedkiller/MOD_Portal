@@ -51,7 +51,6 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
 E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
 E:\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
 E:\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
@@ -61,3 +60,4 @@ E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cac
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\MOD_Portal\Src\ACQ.Web.App\bin\CaptchaMvc.dll

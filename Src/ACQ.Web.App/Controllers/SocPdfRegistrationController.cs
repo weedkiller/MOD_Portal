@@ -19,6 +19,7 @@ using Microsoft.Graph;
 using static ACQ.Web.App.MvcApplication;
 using Ganss.XSS;
 using GemBox.Document;
+using System.Linq;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -27,6 +28,7 @@ namespace ACQ.Web.App.Controllers
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
+        public decimal filesize { get; set; }
         private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
         private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
@@ -36,7 +38,72 @@ namespace ACQ.Web.App.Controllers
         private string InitVector = @"qwertyui";
         private string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
 
+        public bool FileCheckformat(HttpPostedFileBase file, string mFileExtension)
+        {
+            filesize = 1024;
+            string FileExtension = Path.GetExtension(file.FileName);
+            int count = file.FileName.Count(f => f == '.');
+            if (count > 1)
+            {
+                return false;
+            }
 
+            if (file.ContentLength > (filesize * 1024))
+            {
+                return false;
+            }
+
+            if (mFileExtension == ".doc")
+            {
+                if (file.ContentType != "application/msword" && file.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                {
+                    return false;
+                }
+
+                if (FileExtension == ".doc" || FileExtension == ".docx")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (mFileExtension == ".ppt")
+            {
+                if (file.ContentType != "application/vnd.ms-powerpoint" || file.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                {
+                    return false;
+                }
+                if (FileExtension == ".ppt" || FileExtension == ".pptx")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (file.ContentType != "application/pdf")
+                {
+                    return false;
+                }
+                if (FileExtension == ".pdf")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
 
         [Route("SoCRegistration")]
         [HandleError]
@@ -47,6 +114,8 @@ namespace ACQ.Web.App.Controllers
 
             return View();
         }
+
+
         public class ReturnData
         {
             public bool success { get; set; }
@@ -62,6 +131,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> SoCPdfRegistration(HttpPostedFileBase file, string SoC_Type)
         {
+            
             dynamic expando = new ExpandoObject();
             var marksModel = expando as IDictionary<string, object>;
             string filepath = "";
@@ -81,26 +151,13 @@ namespace ACQ.Web.App.Controllers
                         ViewBag.SoC = fileSoC.FileName;
                         string filename = DateTime.Now.ToString("ddmmhhss") + fileSoC.FileName;
 
-                        if (fileSoC.ContentType != "application/msword" && fileSoC.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                        if (!FileCheckformat(fileSoC, ".doc"))
                         {
-                            ViewBag.UploadStatusmsg = "Please upload only .doc or .docx file";
+                            ViewBag.UploadStatusmsg = "Please upload only .doc or .docx file and File size Should Be UpTo 1 MB";
                             ViewBag.UploadStatus = "errormsg";
                             return View();
                         }
 
-
-                        string FileExtension = Path.GetExtension(fileSoC.FileName);
-                        if (FileExtension == ".doc" || FileExtension == ".docx")
-                        {
-
-
-                        }
-                        else
-                        {
-                            ViewBag.UploadStatusmsg = "Please upload only .doc or .docx file";
-                            ViewBag.UploadStatus = "errormsg";
-                            return View();
-                        }
                         //filepath = UploadfilePath + filename;
                         var FileDataContent = Request.Files[0];
                         var stream = FileDataContent.InputStream;
@@ -275,7 +332,7 @@ namespace ACQ.Web.App.Controllers
 
                         }
 
-                                   
+
 
                         SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
 
@@ -293,37 +350,25 @@ namespace ACQ.Web.App.Controllers
 
                                 if (postResult == true)
                                 {
-
-
                                     System.Web.HttpPostedFileBase fileSoCPPT = Request.Files[1];
 
                                     if (fileSoCPPT.ContentLength > 0)
                                     {
                                         ViewBag.SoC = fileSoCPPT.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCPPT" + "_" + fileSoCPPT.FileName.ToString();
-                                        FileExtension = Path.GetExtension(fileSoCPPT.FileName);
-                                        if (fileSoCPPT.ContentType != "application/vnd.ms-powerpoint" || fileSoCPPT.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                                        if (!FileCheckformat(fileSoCPPT, ".ppt"))
                                         {
-                                            ViewBag.UploadStatusmsg = "Please upload only .ppt or .pptx file";
+                                            ViewBag.UploadStatusmsg = "Please upload only .ppt or .pptx file and File size Should Be UpTo 1 MB";
                                             ViewBag.UploadStatus = "errormsg";
                                             return View();
-                                        }
-                                        if (FileExtension == ".ppt" || FileExtension == ".pptx")
-                                        {
-                                            ViewBag.UploadStatus = "";
-                                            filepath = UploadfilePath + filename;
-                                            //fileSoCPPT.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
-                                            Uploadencryption(fileSoCPPT);
-                                            fullpath = Server.MapPath(UploadfilePath) + filename;
-
                                         }
                                         else
                                         {
-                                            ViewBag.UploadStatusmsg = "Please upload only .ppt or .pptx file";
-                                            ViewBag.UploadStatus = "errormsg";
-                                            return View();
+                                            ViewBag.UploadStatus = "";
+                                            filepath = UploadfilePath + filename;
+                                            Uploadencryption(fileSoCPPT);
+                                            fullpath = Server.MapPath(UploadfilePath) + filename;
                                         }
-
                                     }
 
 
@@ -331,28 +376,18 @@ namespace ACQ.Web.App.Controllers
                                     System.Web.HttpPostedFileBase fileChairman = Request.Files[2];
                                     if (fileChairman.ContentLength > 0)
                                     {
-                                        if (fileChairman.ContentType != "application/pdf")
+                                        if (!FileCheckformat(fileChairman, ".ppt"))
                                         {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                                             ViewBag.UploadStatus = "errormsg";
                                             return View();
                                         }
-                                        ViewBag.Chairman = fileChairman.FileName;
-                                        filename = objattach.aon_id.ToString() + "_" + "SOCChairman" + "_" + fileChairman.FileName;
-                                        FileExtension = Path.GetExtension(fileChairman.FileName);
-                                        if (FileExtension == ".pdf")
+                                        else
                                         {
                                             ViewBag.UploadStatus = "";
                                             filepath = UploadfilePath + filename;
                                             Uploadencryption(fileChairman);
-                                            //fileChairman.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
-                                        }
-                                        else
-                                        {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
-                                            ViewBag.UploadStatus = "errormsg";
-                                            return View();
                                         }
 
                                     }
@@ -362,26 +397,18 @@ namespace ACQ.Web.App.Controllers
                                     {
                                         ViewBag.Draft = fileDraft.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCDraft" + "_" + fileDraft.FileName;
-                                        FileExtension = Path.GetExtension(fileDraft.FileName);
-                                        if (fileDraft.ContentType != "application/pdf")
+                                        if (!FileCheckformat(fileDraft, ".pdf"))
                                         {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                                             ViewBag.UploadStatus = "errormsg";
                                             return View();
                                         }
-                                        if (FileExtension == ".pdf")
+                                        else
                                         {
                                             ViewBag.UploadStatus = "";
                                             filepath = UploadfilePath + filename;
                                             Uploadencryption(fileDraft);
-                                            //fileDraft.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
-                                        }
-                                        else
-                                        {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
-                                            ViewBag.UploadStatus = "errormsg";
-                                            return View();
                                         }
 
                                     }
@@ -391,27 +418,20 @@ namespace ACQ.Web.App.Controllers
                                     {
                                         ViewBag.SoC = fileOtherDoucment.FileName;
                                         filename = objattach.aon_id.ToString() + "_" + "SOCOther" + "_" + fileOtherDoucment.FileName;
-                                        FileExtension = Path.GetExtension(fileOtherDoucment.FileName);
-                                        if (fileOtherDoucment.ContentType != "application/pdf")
+                                        if (!FileCheckformat(fileOtherDoucment, ".pdf"))
                                         {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                                             ViewBag.UploadStatus = "errormsg";
                                             return View();
                                         }
-                                        if (FileExtension == ".pdf")
+                                        else
                                         {
                                             ViewBag.UploadStatus = "";
                                             filepath = UploadfilePath + filename;
                                             Uploadencryption(fileOtherDoucment);
-                                            //fileOtherDoucment.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
                                             fullpath = Server.MapPath(UploadfilePath) + filename;
                                         }
-                                        else
-                                        {
-                                            ViewBag.UploadStatusmsg = "Please upload only .pdf file";
-                                            ViewBag.UploadStatus = "errormsg";
-                                            return View();
-                                        }
+
 
                                     }
 
@@ -528,26 +548,17 @@ namespace ACQ.Web.App.Controllers
             {
 
                 HttpPostedFileBase file = files[i];
-                if (file.ContentType != "application/pdf")
+                if (!FileCheckformat(file, ".pdf"))
                 {
-                    ViewBag.UploadStatusmsg = "Please upload only .pdf file";
-                    ViewBag.UploadStatus = "errormsg";
-                    return View();
-                }
-                string FileExtension = Path.GetExtension(file.FileName);
-                if (FileExtension != ".pdf")
-                {
-                    ViewBag.UploadStatusmsg = "Please upload only .pdf file";
+                    ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                     ViewBag.UploadStatus = "errormsg";
                     return View();
                 }
 
-
-                //string str= Uploadencryption(file);
                 string str = EncryptFile(file, "ugs@4321");
                 if (str != "")
                 {
-                    //file.SaveAs(path + file.FileName);
+                    file.SaveAs(path + file.FileName);
                     Efile.FileDetail fileDetail = new Efile.FileDetail()
                     {
                         FileName = sanitizer.Sanitize(id),
