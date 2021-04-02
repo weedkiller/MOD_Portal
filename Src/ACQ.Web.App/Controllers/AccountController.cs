@@ -25,7 +25,7 @@ using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
-
+   
     public class AccountController : Controller
     {
         HtmlSanitizer sanitizer = new HtmlSanitizer();
@@ -568,17 +568,32 @@ namespace ACQ.Web.App.Controllers
 
 
         }
+        [HttpGet]
+        [Route("ChangePassword")]
+         
+         //[HandleError]
+      
         public ActionResult ChangePassword(string emailid, string tokenid)
         {
-            //string email = Encryption.Decrypt(emailid);
-            // string token = Encryption.Decrypt(tokenid);
-            // Session["emailid"] = email;
-            // Session["tokenid"] = token; 
-            Session["emailid"] = emailid;
-            Session["tokenid"] = tokenid; 
+            if(emailid == null && tokenid== null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+
+                string email = Cryptography.DecryptData(emailid);
+                string token = Cryptography.DecryptData(tokenid);
+                Session["UserName"] = email;
+                Session["tokenid"] = token;
+                //Session["emailid"] = emailid;
+                //Session["tokenid"] = tokenid;
+                return View();
+            }
             return View();
         }
         [Route("Logout")]
+        [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
             UserLogViewModel model = new UserLogViewModel();
@@ -612,21 +627,21 @@ namespace ACQ.Web.App.Controllers
             }
             return RedirectToAction("Login","Account");
         }
-
+        [Route("ChangePassword")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError]
-        [SessionExpire]
+       // [HandleError]
+        //[SessionExpire]
         [SessionExpireRefNo]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
             //ChangePasswordViewModel input = new ChangePasswordViewModel();
             if (ModelState.IsValid)
             {
-                if (Session["emailid"] != null)
+                if (Session["UserName"] != null)
                 {
                     //input=
-                    input.UserName = Session["emailid"].ToString();
+                    input.UserName = Session["UserName"].ToString();
                     input.TokenId = Session["tokenid"].ToString();
                     input.UserName = sanitizer.Sanitize(input.UserName);
                     input.Password = sanitizer.Sanitize(input.TokenId);
@@ -645,7 +660,7 @@ namespace ACQ.Web.App.Controllers
 
                             ViewBag.Message = mID.ToString();
                             UserLogViewModel model21 = new UserLogViewModel();
-                            model21.UserEmail = Session["EmailID"].ToString();
+                            model21.UserEmail = Session["UserName"].ToString();
                             model21.IPAddress = Request.UserHostAddress;
                             model21.Status = "Sucess";
                             model21.Action = "Change Password";
@@ -688,7 +703,10 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ResetPwd()
         {
-            return View();
+            ChangePasswordViewModel model = new ChangePasswordViewModel();
+            model.EmailID = Session["EmailID"].ToString();
+            model.EmailID = sanitizer.Sanitize(model.EmailID);
+            return View(model);
         }
         [Route("ResetPwd")]
         [HttpPost]
@@ -717,8 +735,9 @@ namespace ACQ.Web.App.Controllers
                         if (response.IsSuccessStatusCode)
                         {
                             model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
-                            string emaid = Encryption.Decrypt(model.EmailID); 
-                            //model.TokenId = Encryption.Decrypt(model.TokenId); 
+                             string emaid = Cryptography.EncryptData(model.EmailID); 
+                            //string emaid = model.EmailID;
+                            model.TokenId = Cryptography.EncryptData(model.TokenId); 
                             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
                              EmailHelper.SendPwdDetails(model, emaid, mailPath);
 
