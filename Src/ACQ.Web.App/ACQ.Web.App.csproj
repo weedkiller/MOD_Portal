@@ -220,11 +220,6 @@
     <Content Include="assets\css\bootstrapv4.css" />
     <Content Include="assets\css\light_bootstrapv4.css" />
     <Content Include="assets\css\style.css" />
-    <Content Include="assets\fontawesome-5.12.1\css\all.min.css" />
-    <Content Include="assets\fontawesome-5.12.1\js\all.min.js" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-brands-400.svg" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-regular-400.svg" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-solid-900.svg" />
     <Content Include="assets\fontawesome-5.15.3\css\all.css" />
     <Content Include="assets\fontawesome-5.15.3\css\all.min.css" />
     <Content Include="assets\fontawesome-5.15.3\css\brands.css" />
@@ -257,7 +252,6 @@
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-regular-400.svg" />
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.svg" />
     <Content Include="assets\js\app.js" />
-    <Content Include="assets\js\bootstrap.js" />
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\CkEditor\adapters\jquery.js" />
     <Content Include="assets\js\CkEditor\build-config.js" />
@@ -647,12 +641,9 @@
     <Content Include="assets\js\CkEditor\styles.js" />
     <Content Include="assets\js\CkEditor\vendor\promise.js" />
     <Content Include="assets\js\jbvalidator.min.js" />
-    <Content Include="assets\js\jquery v3.4.1.js" />
-    <Content Include="assets\js\jquery-3.6.0.js" />
     <Content Include="assets\js\jquery-3.6.0.min.js" />
     <Content Include="assets\js\jquery-ui-1.12.1.min.js" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
-    <Content Include="assets\js\jquery.min.js" />
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />
     <Content Include="assets\media\images\ddp_logo_dark.png" />
@@ -664,12 +655,11 @@
     <Content Include="bin\ACQ.Web.Core.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.dll" />
     <Content Include="bin\ACQ.Web.ExternalServices.pdb" />
-    <Content Include="bin\ACQ.Web.ViewModel.dll" />
-    <Content Include="bin\ACQ.Web.ViewModel.pdb" />
     <Content Include="bin\AngleSharp.Css.dll" />
     <Content Include="bin\AngleSharp.dll" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\BouncyCastle.Crypto.dll" />
+    <Content Include="bin\CaptchaMvc.dll" />
     <Content Include="bin\GemBox.Document.dll" />
     <Content Include="bin\HtmlSanitizer.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
@@ -1200,7 +1190,6 @@
     <Content Include="Content\images\treegrid\TeddLawson.png" />
     <Content Include="Content\images\treegrid\USA.png" />
     <Content Include="Content\images\treegrid\__Normal.png" />
-    <Content Include="Content\jquery-3.4.1.min.js" />
     <Content Include="Content\Jquery.min.js" />
     <Content Include="Content\LinearGauge\Cycling.png" />
     <Content Include="Content\LinearGauge\Cycling.svg" />
@@ -1553,6 +1542,7 @@
     <Content Include="Email\SendLinkBadgeRegistration - Copy.html" />
     <Content Include="Email\DownloadBadge.html" />
     <Content Include="Email\SendMeetingMailToParticipants.html" />
+    <Content Include="Email\SendBlockedMailFormat.html" />
     <Content Include="Email\SendOTPMailFormat.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -1598,18 +1588,6 @@
     <Content Include="Content\cdnfile\font\summernote.woff" />
     <Content Include="Content\cdnfile\font\summernote.woff2" />
     <Content Include="Blox2.ttf" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-brands-400.eot" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-brands-400.ttf" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-brands-400.woff" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-brands-400.woff2" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-regular-400.eot" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-regular-400.ttf" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-regular-400.woff" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-regular-400.woff2" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-solid-900.eot" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-solid-900.ttf" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-solid-900.woff" />
-    <Content Include="assets\fontawesome-5.12.1\webfonts\fa-solid-900.woff2" />
     <Content Include="assets\Web.config" />
     <Content Include="assets\js\CkEditor\samples\old\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="assets\js\CkEditor\samples\toolbarconfigurator\font\config.json" />
@@ -1630,7 +1608,6 @@
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff" />
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff2" />
     <None Include="bin\ACQ.Web.App.dll.config" />
-    <None Include="bin\ACQ.Web.ViewModel.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -1679,6 +1656,7 @@
     <Content Include="Views\FormMenu\GetFormMenu.cshtml" />
     <Content Include="Views\FormMenu\GetSideMenuBar.cshtml" />
     <Content Include="Views\Account\Captcha.cshtml" />
+    <Content Include="Views\Account\ResetPasswordReturnMsg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,13 +4,13 @@
     <title>Acquisition Portal </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
     <!-- External CSS libraries -->
     <link href="~/assets/css/light_bootstrapv4.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
 
-    @*@Styles.Render("~/Contentnew/css")*@
-    <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+    <script src="~/assets/js/bootstrap.min.js" nonce="r@nd0m"></script>
 
 
 </head>
@@ -52,11 +52,9 @@
         </div>
     </footer>
     <!-------------footer end-------------->
-    @*@Scripts.Render("~/bundles/js")*@
 
-    @*<script src="~/assets/fontawesome-5.12.1/js/all.min.js"></script>*@
 
-    <script>
+    <script nonce="r@nd0m">
         $(document).on('click', '.toggle-password', function () {
 
             $(this).toggleClass("fa-eye fa-eye-slash");
@@ -66,15 +64,12 @@
         });
     </script>
 
-    <script>
+    <script nonce="r@nd0m">
        function resendOTP() {
         var PageName = "exhibitorReg";
            window.location.href = "/ResendOTP/SendResendOTP?Pagename=" + PageName;
     }
 
-    $('#loadbtnCaptcha').click(function () {
-        document.location = '@Url.Action("/Account/GetCaptchaImage")';
-    });
 
     $(document).ready(function () {
 
@@ -173,7 +168,7 @@
     });
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" nonce="r@nd0m">
 
         $("#btnsubmit").click(function () {
             var flag = true;
@@ -206,7 +201,7 @@
     </script>
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
     {
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="r@nd0m">
 
             $("#dvMsg").html('Invalid UserName and Password');
             $("#dvMsg").show();
@@ -224,7 +219,7 @@
 </body>
 </html>
 
-<script>
+<script nonce="r@nd0m">
     $(document).ready(function () {
         function disableBack() { window.history.forward() }
 

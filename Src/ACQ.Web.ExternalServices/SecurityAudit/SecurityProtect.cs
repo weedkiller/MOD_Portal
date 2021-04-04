@@ -176,8 +176,8 @@ namespace ACQ.Web.ExternalServices.SecurityAudit
         }
         public static string Decrypt(string input)
         {
-            byte[] inputArray = UTF8Encoding.UTF8.GetBytes(input);
-            //byte[] inputArray = Convert.FromBase64String(input);
+            //byte[] inputArray = UTF8Encoding.UTF8.GetBytes(input);
+            byte[] inputArray = Convert.FromBase64String(input);
             TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider();
             tripleDES.Key = UTF8Encoding.UTF8.GetBytes("MOD_DPIT@2020*!0");
             tripleDES.Mode = CipherMode.ECB;
@@ -186,6 +186,8 @@ namespace ACQ.Web.ExternalServices.SecurityAudit
             byte[] resultArray = cTransform.TransformFinalBlock(inputArray, 0, inputArray.Length);
             tripleDES.Clear();
             return UTF8Encoding.UTF8.GetString(resultArray);
+
+            
         }
     }
 }

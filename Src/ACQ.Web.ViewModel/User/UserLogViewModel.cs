@@ -17,4 +17,6 @@ namespace ACQ.Web.ViewModel.User
         public string IsActive { get; set; }
         public string Message { get; set; }
     }
+
+    
 }

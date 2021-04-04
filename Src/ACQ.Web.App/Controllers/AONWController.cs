@@ -332,7 +332,8 @@ namespace ACQ.Web.App.Controllers
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl);
-                    //HTTP GET
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                     HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + Encryption.Decrypt(ID) + "").Result;
                     if (response.IsSuccessStatusCode)
@@ -779,12 +780,15 @@ namespace ACQ.Web.App.Controllers
             {
                 try
                 {
+                    model.Comments = sanitizer.Sanitize(model.Comments);
                     model.IsActive = "Y";
                     model.SocCommentID = 0;
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage postJob = await client.PostAsJsonAsync<SocCommentViewModel>(WebAPIUrl + "AONW/AddSocCommit", model);
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)

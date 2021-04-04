@@ -7,7 +7,7 @@
         width: 100%;
     }
 </style>
-<div class="mt-3 container-fluid" ">
+<div class="mt-3 container-fluid">
 
 
     <div class="login_bg">
@@ -22,21 +22,14 @@
                                 <div class="cs-view show p-3">
                                     <h1 class="h2 text-center" style=" color: #3f80ea !important">Change Password </h1>
                                     <hr />
-                                    @Html.ValidationSummary()
-                                    @*<div class="w-100 text-center invalidmsg" style="font-weight:bold;color:red; display:none;" id="dvMsg">*@
-
+                                   
                                 </div>
-                                <form class="needs-validation" id="#myform" novalidate>
-                                    <div class="pl-2 pr-2">
-                                        <label for="old password"> Email<span class="required">*</span></label>
 
-                                        @Html.TextBoxFor(Model => Model.EmailID, new { @class = " form-control bb", required = "required", tabindex = "1", autofocus = "autofocus" , @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.EmailID, "", new { @class = "text-danger float-left gg" })
-                                        <p style="font-weight:bold;color:red;">@ViewBag.Msg</p>
-                                    </div>
-                                    <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Reset Password</button>
 
-                                </form>
+                                <p style="font-weight:bold; font-size:14px;"> Click on button to create a new password</p>
+                                <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Set a new password</button>
+
+
                             </div>
                         </div>
                     </div>
@@ -47,22 +40,47 @@
 
 </div>
 
-<script>
-    function CheckPassword() {
+<div id="myModal2" class="modal fade" role="dialog">
+    <div class="custom_modal">
+        <div class="modal-dialog" style="width: 500px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alert</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div id="myTabContent">
+                            <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row register-form">
+                                    <div class="col-md-12 ">
+                                        <label>Reset password link has been sent in your email.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script nonce="r@nd0m">
+  $(document).ready(function () {
 
-        var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-        if (ConfirmPassword.value.match(decimal)) {
-            debugger;
-
-            var OldPassword = Password.value;
-            var NewPassword = ConfirmPassword.value;
-
-            window.location.href = "/User/ChangePassword?OldPassword=" + OldPassword + "&NewPassword=" + NewPassword;
-            return true;
+      if ('@ViewBag.message' === "send") {
+        $('#myModal2').modal({
+        display: 'show',
+        backdrop: 'static',
+        keyboard: false
+        });
         }
-        else {
-            alert('To check a password between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character')
-            return false;
-        }
-    }
+
+        });
+
 </script>

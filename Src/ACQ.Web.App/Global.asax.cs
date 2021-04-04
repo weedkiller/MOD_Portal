@@ -28,7 +28,7 @@ namespace ACQ.Web.App
             string ipaddress = Request.UserHostAddress;
             Exception ex = Server.GetLastError();
             Server.ClearError();
-            Response.Redirect(String.Format("~/login"));
+            Response.Redirect(String.Format("~/Error"));
 
         }
 

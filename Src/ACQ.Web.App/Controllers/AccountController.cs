@@ -25,7 +25,7 @@ using static ACQ.Web.App.MvcApplication;
 
 namespace ACQ.Web.App.Controllers
 {
-   
+
     public class AccountController : Controller
     {
         HtmlSanitizer sanitizer = new HtmlSanitizer();
@@ -47,7 +47,7 @@ namespace ACQ.Web.App.Controllers
                 string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
                 //Passing image data in viewbag to view  
                 ViewBag.ImageData = imgDataURL;
-                
+
             }
             catch (Exception ex)
             {
@@ -58,16 +58,16 @@ namespace ACQ.Web.App.Controllers
         [Route("login")]
         [HandleError]
         public ActionResult Login()
-      {
+        {
 
             return View();
-            
-            
+
+
         }
 
         public ActionResult Index()
         {
-            
+
             return RedirectToAction("login");
         }
 
@@ -122,7 +122,7 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel login, FormCollection form)
         {
-            
+
             IEnumerable<LoginViewModel> model = null;
             try
             {
@@ -132,7 +132,7 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
                     return View();
                 }
-                
+
 
                 if (ModelState.IsValid)
                 {
@@ -153,13 +153,15 @@ namespace ACQ.Web.App.Controllers
                         {
                             LoginViewModel model1 = new LoginViewModel();
                             model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                           if( model.First().Message == "Blocked" )
+                            if (model.First().Message == "Blocked")
                             {
                                 ViewBag.Message = "Blocked";
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
+                                EmailHelper.SendAllDetails(model.First().ExternalEmailID, mailPath);
                                 return View();
                             }
 
-                           if(model.First().Message == "LoginFailed")
+                            if (model.First().Message == "LoginFailed")
                             {
                                 model = Enumerable.Empty<LoginViewModel>();
                                 ViewBag.ErrorMsg = "Invalid UserName and Password";
@@ -189,7 +191,7 @@ namespace ACQ.Web.App.Controllers
                                     }
                                 }
                             }
-                            
+
                             if (model.Count() > 0)
                             {
 
@@ -200,6 +202,7 @@ namespace ACQ.Web.App.Controllers
                                 Session["Emailotp"] = model.First().Emailotp.ToString();
                                 Session["EmailID"] = model.First().InternalEmailID.ToString();
                                 Session["DepartmentID"] = model.First().DepartmentID.ToString();
+                                Session["eEmailID"] = model.First().ExternalEmailID.ToString();
                                 model1.ExternalEmailID = model.First().ExternalEmailID.ToString();
                                 model1.InternalEmailID = model.First().InternalEmailID.ToString();
                                 model1.UserName = model.First().UserName.ToString();
@@ -213,17 +216,12 @@ namespace ACQ.Web.App.Controllers
                                 if (ipaddress == remoteIpAddress)
                                 {
                                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                                    if (Session["EmailID"].ToString() == "superadmin@mod.com")
-                                    {
-                                        EmailHelper.SendOTPDetails(model1, "654321", mailPath);
-                                    }
-                                    else
-                                    {
-                                        EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
-                                    }
+
+                                    EmailHelper.SendOTPDetails(model1, model.First().Emailotp, mailPath);
+
                                     string m = Encryption.Encrypt(Session["UserID"].ToString());
                                     Session["encpram"] = Server.UrlEncode(m);
-                                   
+
                                     ViewBag.Message = "RegistrationSuccessful";
                                     return View();
                                 }
@@ -309,7 +307,7 @@ namespace ACQ.Web.App.Controllers
                 ViewBag.Message = ex.Message.ToString();
                 ModelState.AddModelError("", "Invalid UserName and Password");
                 login.ErrorMsg = "Invalid UserName and Password";
-                return View(); 
+                return View();
             }
         }
         [Route("AcQDashboard")]
@@ -319,7 +317,7 @@ namespace ACQ.Web.App.Controllers
         {
             string m = Encryption.Encrypt(Session["UserID"].ToString());
             return Redirect(string.Format(DashboardUrl + m));
-          
+
 
         }
 
@@ -332,7 +330,7 @@ namespace ACQ.Web.App.Controllers
             StringBuilder randomText = new StringBuilder();
             string alphabets = "012345679ACEFGHKLMNPRSWXZabcdefghijkhlmnopqrstuvwxyzjjfjdjjdfjdj";
             Random r = new Random();
-            for (int j = 0; j <= 7; j++)
+            for (int j = 0; j <= 5; j++)
             {
                 randomText.Append(alphabets[r.Next(alphabets.Length)]);
             }
@@ -340,7 +338,7 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("Captcha")]
         [HandleError]
-        [HandleError(ExceptionType = typeof(NullReferenceException), Master= "Account", View = "Error")]
+        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
         public FileResult GetCaptchaImage()
         {
             MemoryStream ms = new MemoryStream();
@@ -380,7 +378,7 @@ namespace ACQ.Web.App.Controllers
                 textBrush.Dispose();
                 drawing.Dispose();
 
-               
+
                 img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                 img.Dispose();
             }
@@ -409,13 +407,13 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyOtp(string emailotp)
         {
-           
+
             string otp = Session["Emailotp"].ToString();
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
             model.IPAddress = Request.UserHostAddress;
             model.Action = "Verify Otp";
-           
+
             if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "654321")
             {
                 model.Status = "OTP Verified";
@@ -435,6 +433,8 @@ namespace ACQ.Web.App.Controllers
                         {
                             ViewBag.Message = "Blocked";
                             TempData["OTPNot"] = "Blocked";
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
+                            EmailHelper.SendAllDetails(Session["eEmailID"].ToString(), mailPath);
                             return RedirectToAction("Login", "Account");
                         }
 
@@ -443,12 +443,14 @@ namespace ACQ.Web.App.Controllers
                             return RedirectToAction("Login", "Account");
                         }
 
-                        
+
                     }
                     else
                     {
                         ViewBag.Message = "Blocked";
                         TempData["OTPNot"] = "Blocked";
+                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
+                        EmailHelper.SendAllDetails(Session["eEmailID"].ToString(), mailPath);
                         return RedirectToAction("Login", "Account");
                     }
                 }
@@ -465,8 +467,7 @@ namespace ACQ.Web.App.Controllers
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
-                        
-                       
+
                         if (Session["UserID"] != null && Session["AuthToken"] != null && Request.Cookies["AuthToken"] != null)
                         {
                             if (!Session["AuthToken"].ToString().Equals(Request.Cookies["AuthToken"].Value))
@@ -479,8 +480,8 @@ namespace ACQ.Web.App.Controllers
                                 return RedirectToRoute(new
                                 {
                                     controller = "AONW",
-                                   Action = "ViewSOCRegistration",
-                                    
+                                    Action = "ViewSOCRegistration",
+
                                 });
                             }
                         }
@@ -488,11 +489,11 @@ namespace ACQ.Web.App.Controllers
                         {
                             return RedirectToAction("login");
                         }
-                        
+
                     }
                     else
                     {
-                       
+
                         return RedirectToRoute(new
                         {
                             controller = "AONW",
@@ -536,10 +537,12 @@ namespace ACQ.Web.App.Controllers
                                 {
                                     ViewBag.Message = "Blocked";
                                     TempData["OTPNot"] = "Blocked";
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
+                                    EmailHelper.SendAllDetails(Session["eEmailID"].ToString(), mailPath);
                                     return RedirectToAction("Login", "Account");
                                 }
 
-                                if(model.Message == "LoginFailed")
+                                if (model.Message == "LoginFailed")
                                 {
                                     return RedirectToAction("Login", "Account");
                                 }
@@ -553,7 +556,7 @@ namespace ACQ.Web.App.Controllers
                                 return RedirectToAction("Login", "Account");
                             }
                         }
-                       
+
                     }
                     else
                     {
@@ -562,103 +565,113 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
 
-                
+
 
             }
 
 
         }
         [HttpGet]
-        [Route("ChangePassword")]
-         
-         //[HandleError]
-      
-        public ActionResult ChangePassword(string emailid, string tokenid)
+        [Route("ResetPassword")]
+
+        public ActionResult ResetPassword(string emailid, string tokenid)
         {
-            if(emailid == null && tokenid== null)
+            if (emailid == null && tokenid == null)
             {
                 return RedirectToAction("Login", "Account");
             }
             else
             {
 
-                string email = Cryptography.DecryptData(emailid);
-                string token = Cryptography.DecryptData(tokenid);
-                Session["UserName"] = email;
-                Session["tokenid"] = token;
-                //Session["emailid"] = emailid;
-                //Session["tokenid"] = tokenid;
-                return View();
+                //string email = Cryptography.DecryptData(emailid);
+                //string token = Cryptography.DecryptData(tokenid);
+                Session["EmailID"] = emailid;
+                Session["tokenid"] = tokenid;
+                return RedirectToAction("ChangePassword");
             }
+        }
+        [Route("ResetPasswordReturnMsg")]
+        [HandleError]
+        public ActionResult ResetPasswordReturnMsg()
+        {
+            ViewBag.remoteIpAddress = Request.UserHostAddress;
             return View();
         }
-        [Route("Logout")]
-        [SessionExpireRefNo]
-        public async Task<ActionResult> Logout()
+        [HttpGet]
+        [Route("ChangePassword")]
+
+        public async Task<ActionResult> ChangePassword()
         {
-            UserLogViewModel model = new UserLogViewModel();
-            model.UserEmail = Session["EmailID"].ToString();
-            model.IPAddress = Request.UserHostAddress;
-            model.Status = "Logout Successfully";
-            model.Action = "Logout";
-            using (HttpClient client1 = new HttpClient())
+            if (Session["EmailID"] == null || Session["tokenid"] == null)
             {
-                client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
-                HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
-
-                bool postResult1 = postJob1.IsSuccessStatusCode;
-
+                return RedirectToAction("Login", "Account");
             }
-            Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
-            FormsAuthentication.SignOut();
-            Session.Abandon();
-            Session.RemoveAll();
-
-            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            else
             {
-                Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
-                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddMonths(-20);
+                using (HttpClient client = new HttpClient())
+                {
+                    resetpwdViewModel Rmode = new resetpwdViewModel();
+                    Rmode.UserName = Session["EmailID"].ToString();
+                    Rmode.mTokenId = Session["tokenid"].ToString();
+                    client.BaseAddress = new Uri(WebAPIUrl + "Account/ResetPwdlog");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                     parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<resetpwdViewModel>(WebAPIUrl + "Account/ResetPwdlog", Rmode);
+                    string mID = postJob.Headers.Location.Segments[4].ToString();
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        if (mID == "Allow")
+                        {
+                            return View();
+                        }
+                        else
+                        {
+                            return RedirectToAction("ResetPasswordReturnMsg");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("ResetPasswordReturnMsg");
+                    }
+                }
             }
 
-            if (Request.Cookies["AuthToken"] != null)
-            {
-                Response.Cookies["AuthToken"].Value = string.Empty;
-                Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
-            }
-            return RedirectToAction("Login","Account");
         }
+
         [Route("ChangePassword")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionExpireRefNo]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel input)
         {
-            //ChangePasswordViewModel input = new ChangePasswordViewModel();
+            //Captcha Code Here
+            if (!this.IsCaptchaValid("Captcha is not valid"))
+            {
+                ViewBag.CaptchaError = "Sorry, please write exact text as written above.";
+                return View();
+            }
+
             if (ModelState.IsValid)
             {
-                if (Session["UserName"] != null)
+                if (Session["EmailID"] != null)
                 {
-                    //input=
-                    input.UserName = Session["UserName"].ToString();
-                    input.TokenId = Session["tokenid"].ToString();
-                    input.UserName = sanitizer.Sanitize(input.UserName);
-                    input.Password = sanitizer.Sanitize(input.TokenId);
+                    input.UserName = sanitizer.Sanitize(Cryptography.DecryptData(Session["EmailID"].ToString()));
+                    input.Password = sanitizer.Sanitize(input.NewPassword);
+                    input.TokenId = sanitizer.Sanitize(Cryptography.DecryptData(Session["tokenid"].ToString()));
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage postJob = await client.PostAsJsonAsync<ChangePasswordViewModel>(WebAPIUrl + "Account/ChangePassword", input);
-                        string url = postJob.Headers.Location.AbsoluteUri;
                         string mID = postJob.Headers.Location.Segments[4].ToString();
-                        // string mEmail = postJob.Headers.Location.Segments[5].ToString();
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
 
                             ViewBag.Message = mID.ToString();
                             UserLogViewModel model21 = new UserLogViewModel();
-                            model21.UserEmail = Session["UserName"].ToString();
+                            model21.UserEmail = input.UserName;
                             model21.IPAddress = Request.UserHostAddress;
                             model21.Status = "Sucess";
                             model21.Action = "Change Password";
@@ -672,8 +685,7 @@ namespace ACQ.Web.App.Controllers
                                 bool postResult1 = postJob1.IsSuccessStatusCode;
                                 if (postResult1 == true)
                                 {
-                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
-                                   // EmailHelper.SendPwdDetails(model21, model21.UserEmail, mailPath);
+
                                     return View();
                                 }
                                 else
@@ -711,16 +723,14 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         [SessionExpire]
         [SessionExpireRefNo]
-        public async Task<ActionResult> ResetPwd(ChangePasswordViewModel input)
+        public async Task<ActionResult> ResetPwd(ChangePasswordViewModel model)
         {
-            ChangePasswordViewModel model = new ChangePasswordViewModel();
             if (!ModelState.IsValid)
             {
                 if (Session["UserName"] != null)
                 {
-                    //input=
-                    input.UserName = Session["EmailID"].ToString();
-                    input.UserName = sanitizer.Sanitize(input.UserName);
+                    model.EmailID = Session["eEmailID"].ToString();
+                    model.UserName = Session["EmailID"].ToString();
                     using (HttpClient client1 = new HttpClient())
                     {
                         client1.BaseAddress = new Uri(WebAPIUrl);
@@ -728,24 +738,37 @@ namespace ACQ.Web.App.Controllers
                         client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                         client1.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client1.GetAsync("Account/ResetPwdSendLink?UserEmail=" + input.UserName + "&Status=" + input.EmailID + "").Result;
+                        HttpResponseMessage response = client1.GetAsync("Account/ResetPwdSendLink?UserEmail=" + model.UserName + "&Status=" + model.UserName + "").Result;
 
                         if (response.IsSuccessStatusCode)
                         {
-                            model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
-                             string emaid = Cryptography.EncryptData(model.EmailID); 
-                            //string emaid = model.EmailID;
-                            model.TokenId = Cryptography.EncryptData(model.TokenId); 
-                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
-                             EmailHelper.SendPwdDetails(model, emaid, mailPath);
-
-                            if (model.Message == "User Exist")
+                            if (model.Message == "User not exist")
                             {
-                                ViewBag.Msg = "User Exist";
-                                return View();
-                                
+                                return RedirectToAction("Login", "Account");
                             }
-                            return RedirectToAction("Login", "Account");
+
+                            model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
+                            string mTokenId = GetRandomText();
+                            model.UserName = Cryptography.EncryptData(model.UserName);
+                            model.TokenId = Cryptography.EncryptData(mTokenId);
+                            using (HttpClient client2 = new HttpClient())
+                            {
+                                resetpwdViewModel Rmode = new resetpwdViewModel();
+                                Rmode.UserName = model.UserName;
+                                Rmode.mTokenId = model.TokenId;
+                                client2.BaseAddress = new Uri(WebAPIUrl + "Account/ResetPwdlog");
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage postJob2 = await client1.PostAsJsonAsync<resetpwdViewModel>(WebAPIUrl + "Account/ResetPwdlog", Rmode);
+
+                                bool postResult2 = postJob2.IsSuccessStatusCode;
+                                if (postResult2 == true)
+                                {
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/ChngPwdMail.html"));
+                                    EmailHelper.SendPwdDetails(model, Session["eEmailID"].ToString(), mailPath);
+                                    ViewBag.message = "send";
+                                }
+                            }
                         }
                         else
                         {
@@ -758,10 +781,46 @@ namespace ACQ.Web.App.Controllers
                 {
                     return View();
                 }
-                
+
 
             }
             return View();
+        }
+
+        [Route("Logout")]
+        [SessionExpireRefNo]
+        public async Task<ActionResult> Logout()
+        {
+            UserLogViewModel model = new UserLogViewModel();
+            model.UserEmail = Session["EmailID"].ToString();
+            model.IPAddress = Request.UserHostAddress;
+            model.Status = "Logout Successfully";
+            model.Action = "Logout";
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
+                HttpResponseMessage postJob1 = await client1.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model);
+
+                bool postResult1 = postJob1.IsSuccessStatusCode;
+
+            }
+            Response.Cookies["Login"].Expires = DateTime.Now.AddDays(-1);
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Session.RemoveAll();
+
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
+                Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddMonths(-20);
+            }
+
+            if (Request.Cookies["AuthToken"] != null)
+            {
+                Response.Cookies["AuthToken"].Value = string.Empty;
+                Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
+            }
+            return RedirectToAction("Login", "Account");
         }
     }
 }

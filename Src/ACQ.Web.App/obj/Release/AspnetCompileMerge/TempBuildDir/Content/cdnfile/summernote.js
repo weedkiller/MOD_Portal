@@ -542,7 +542,7 @@
 
     /**
      * ex) br, col, embed, hr, img, input, ...
-     * @see http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
+     * @see 
      */
     var isVoid = function (node) {
       return node && /^BR|^IMG|^HR|^IFRAME|^BUTTON/.test(node.nodeName.toUpperCase());
@@ -2925,7 +2925,7 @@
    *  * BoundaryPoint: a point of dom tree
    *  * BoundaryPoints: two boundaryPoints corresponding to the start and the end of the Range
    *
-   * See to http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Position
+   * See to 
    *
    * @singleton
    * @alternateClassName range

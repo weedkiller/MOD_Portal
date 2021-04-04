@@ -74,6 +74,7 @@
     <Compile Include="ResendOTP\ResendOTPViewModel.cs" />
     <Compile Include="User\ForgetPasswordViewModel.cs" />
     <Compile Include="User\LoginViewModel.cs" />
+    <Compile Include="User\resetpwdViewModel.cs" />
     <Compile Include="User\UserLogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

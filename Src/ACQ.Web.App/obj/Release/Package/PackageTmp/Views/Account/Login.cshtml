@@ -12,7 +12,6 @@
 </style>
 
 
-
 <div class="login_bg">
     @using (Html.BeginForm("login", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
     {
@@ -59,14 +58,11 @@
                                         @ViewBag.CaptchaError
                                     </div>
                                 </div>
-                                
+
                                 <h7 id="passwordcheck"> </h7>
 
                                 <button class="btn btn-primary btn-block mt-4 text-center" id="btnsubmit" type="submit" value="submit">Log in</button>
-                                <hr class="mt-4 mb-3" style="display:none">
-                                <div class="w-100 text-center" style="display:none">
-                                    <a class="nav-link-style font-size-ms text-white" href="@Url.Action("forgetPassword", "home")" style="font-size: 15px!important;">Forgot password?</a>
-                                </div>
+                                
                             </form>
                         </div>
                     </div>
@@ -122,6 +118,7 @@
 
 </div>
 
+
 <div id="myModal2" class="modal fade" role="dialog">
     <div class="custom_modal">
         <div class="modal-dialog" style="width: 500px;">
@@ -137,7 +134,6 @@
                             <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row register-form">
                                     <div class="col-md-12 ">
-                                        @*<label>Password Not Changed.</label>*@
                                         <label>Your Account has been blocked.</label>
                                     </div>
                                 </div>
@@ -154,167 +150,4 @@
     </div>
 </div>
 
-<script>
-    $(document).on('click', '.toggle-password', function () {
 
-        $(this).toggleClass("fa-eye fa-eye-slash");
-
-        var input = $("#txtpassword");
-        input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
-    });
-</script>
-
-<script>
-       function resendOTP() {
-        var PageName = "exhibitorReg";
-           window.location.href = "/ResendOTP/SendResendOTP?Pagename=" + PageName;
-    }
-
-    $('#loadbtnCaptcha').click(function () {
-        document.location = '@Url.Action("/Account/GetCaptchaImage")';
-    });
-
-    $(document).ready(function () {
-
-        if ('@ViewBag.SentCompRefNo' === "AlreadySentCompRefNo") {
-            $('#myModal2').modal({
-                display: 'show',
-                backdrop: 'static',
-                keyboard: false
-            });
-        }
-        if ('@ViewBag.SentCompEmailNo' === "AlreadySentEmailNo") {
-            $('#myModal3').modal({
-                display: 'show',
-                backdrop: 'static',
-                keyboard: false
-            });
-        }
-        if ('@ViewBag.UANNo' === "AlreadySentUANNo") {
-            $('#myModal4').modal({
-                display: 'show',
-                backdrop: 'static',
-                keyboard: false
-            });
-        }
-        if ('@ViewBag.Message' === "RegistrationSuccessful") {
-                $('#resendotpMsg').hide();
-                  enablebutton();
-            $('#myModal').modal({
-                display: 'show',
-                backdrop: 'static',
-                keyboard: false
-               });
-               $("#notverified").hide();
-        }
-        if ('@ViewBag.Message' === "Blocked") {
-
-            $('#myModal2').modal({
-                display: 'show',
-                backdrop: 'static',
-                keyboard: false
-               });
-
-        }
-
-        if ('@TempData["OTPNotVerified"]' === "OTPNotVerified") {
-            $('#resendotpMsg').hide();
-            $("#notverified").show();
-           $('#myModal').modal({
-               display: 'show',
-               backdrop: 'static',
-               keyboard: false
-           });
-
-        }
-        $("#mailotp").hide();
-        $("#mobotp").hide();
-
-        if ('@ViewBag.PdfValidate' === "OnlyPDF") {
-            alert('Select Only PDF File');
-        }
-
-            function enablebutton() {
-               var fewSeconds = 1;
-               $('#btnresendOTP').hide();
-               setTimeout(function () {
-                   $('#btnresendOTP').show();
-               }, fewSeconds * 1000);
-           }
-
-            if ('@TempData["ResendOtpMesssage"]' === "ReSend_Successfully") {
-               $('#notverified').hide();
-               $('#resendotpMsg').show();
-               $('#myModal').modal({
-                   display: 'show',
-                   backdrop: 'static',
-                   keyboard: false
-               });
-           }
-
-        if ('@TempData["OTPNot"]' === "Blocked") {
-            $('#myModal2').modal({
-                   display: 'show',
-                   backdrop: 'static',
-                   keyboard: false
-               });
-           }
-
-    });
-    function validateForm() {
-        $("#mobotp").show();
-        $("#mailotp").show();
-    }
-
-    $('#btnclose').click(function () {
-        document.location = '@Url.Action("login")';
-    });
-</script>
-
-<script type="text/javascript">
-
-    $("#btnsubmit").click(function () {
-        var flag = true;
-        if ($('#txtuserName').val() == '') {
-            $("#required-EmailMsg").show();
-            $("#required-EmailMsg").css("display", "block");
-            $("#required-EmailMsg").addClass("has-error");
-            flag = false;
-            return flag;
-        }
-        else {
-            $("#required-EmailMsg").hide();
-            $("#required-EmailMsg").css("display", "none");
-
-        }
-        if ($('#txtpassword').val() == '') {
-            $("#required-passwordMsg").show();
-            $("#required-passwordMsg").css("display", "block");
-            $("#required-passwordMsg").addClass("has-error");
-            $('#txtpassword').focus();
-            flag = false;
-            return flag;
-        } else {
-            $("#required-passwordMsg").hide();
-            $("#required-passwordMsg").css("display", "none");
-
-        }
-        return flag;
-    });
-</script>
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
-{
-    <script type="text/javascript">
-
-        $("#dvMsg").html('Invalid UserName and Password');
-        $("#dvMsg").show();
-        $("#dvMsg").css("display", "block");
-        $("#dvMsg").addClass("has-error");
-                        //$("#dvMsg").fadeIn(300).delay(1500).fadeOut(400);
-
-    </script>
-}
-else
-{
-
-}

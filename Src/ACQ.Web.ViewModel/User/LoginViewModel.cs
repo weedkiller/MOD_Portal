@@ -77,4 +77,5 @@ namespace ACQ.Web.ViewModel.User
         public string TokenId { get; set; }
     }
 
+    
 }
