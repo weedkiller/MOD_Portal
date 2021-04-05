@@ -53,6 +53,7 @@ namespace ACQ.Web.App.Controllers
             }
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
@@ -72,11 +73,9 @@ namespace ACQ.Web.App.Controllers
                    // input.Password = sanitizer.Sanitize(input.TokenId);
                     using (HttpClient client = new HttpClient())
                     {
-                        client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
+                        client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/AddFormMenu");
                         HttpResponseMessage postJob = await client.PostAsJsonAsync<AddFormMenuViewModel>(WebAPIUrl + "MasterFormMenu/AddFormMenu", input);
-                        //string url = postJob.Headers.Location.AbsoluteUri;
-                        //string mID = postJob.Headers.Location.Segments[4].ToString();
-                        // string mEmail = postJob.Headers.Location.Segments[5].ToString();
+                       
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
@@ -94,38 +93,7 @@ namespace ACQ.Web.App.Controllers
             return RedirectToAction("GetFormMenu", "FormMenu");
            // return View();
         }
-
-        [HttpGet]
-        public async Task<ActionResult> GetFormMenu()
-        {
-            AddFormMenuViewModel model = new AddFormMenuViewModel();
-            //List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
-            using (HttpClient client1 = new HttpClient())
-            {
-                client1.BaseAddress = new Uri(WebAPIUrl);
-
-                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    try
-                    {
-                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-
-                }
-                else
-                {
-
-                }
-            }
-            return View(model);
-        }
+   
         /// <summary>
         /// 
         /// </summary>
@@ -208,6 +176,38 @@ namespace ACQ.Web.App.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetFormMenu()
+        {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
+            //List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
         public ActionResult GetRoleList( int roleId)
         {
             AddFormMenuViewModel model = new AddFormMenuViewModel();
@@ -245,8 +245,6 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
-
-        
 
         [HttpGet]
         public ActionResult GetSideMenuBar()
@@ -313,7 +311,6 @@ namespace ACQ.Web.App.Controllers
            // return View(model);
             return PartialView(model);
         }
-
 
         [HttpGet]
         public ActionResult GetMenuListJSON()

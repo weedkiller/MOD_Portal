@@ -340,6 +340,7 @@ namespace ACQ.Web.App.Controllers
                     {
                         model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
                         model.item_description = Encryption.Decrypt(model.item_description);
+                        ViewBag.item = Encryption.Encrypt(model.item_description);
                         model.Quantity = Encryption.Decrypt(model.Quantity);
                         model.Cost = Encryption.Decrypt(model.Cost);
                         model.Categorisation = Encryption.Decrypt(model.Categorisation);
@@ -767,7 +768,7 @@ namespace ACQ.Web.App.Controllers
             SocCommentViewModel model = new SocCommentViewModel();
             model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
             Session["item"] = Request.QueryString["item"].ToString();
-            ViewBag.aonId = Session["item"].ToString();
+            ViewBag.aonId =Encryption.Decrypt(Session["item"].ToString());
             return View(model);
 
         }

@@ -96,17 +96,16 @@
     </div>
 </div>
 
-    <script src="~/assets/js/jquery v3.4.1.js"></script>
-
-<script>
+<script nonce="r@nd0m">
         $(document).ready(function ()
 {
     if ('@ViewBag.Msg' != "" || '@ViewBag.Msg' != null)
     {
-
+        alert('if');
         $("#myModal").modal('show');
     }
-        else {
+    else {
+        alert('else');
             $("#myModal").modal('hide');
         }
 });
