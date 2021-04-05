@@ -731,6 +731,7 @@ namespace ACQ.Web.App.Controllers
                 {
                     model.EmailID = Session["eEmailID"].ToString();
                     model.UserName = Session["EmailID"].ToString();
+                   
                     using (HttpClient client1 = new HttpClient())
                     {
                         client1.BaseAddress = new Uri(WebAPIUrl);
@@ -749,7 +750,7 @@ namespace ACQ.Web.App.Controllers
 
                             model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
                             string mTokenId = GetRandomText();
-                            model.UserName = Cryptography.EncryptData(model.UserName);
+                            model.UserName = Cryptography.EncryptData(Session["UserID"].ToString());
                             model.TokenId = Cryptography.EncryptData(mTokenId);
                             using (HttpClient client2 = new HttpClient())
                             {
