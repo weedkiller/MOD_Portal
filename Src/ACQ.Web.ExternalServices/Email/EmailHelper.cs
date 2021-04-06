@@ -90,6 +90,20 @@ namespace ACQ.Web.ExternalServices.Email
             }
             return usOutputViewModel;
         }
+        public static bool sendEmailEscalation(string Email,string Draft, string mailPath)
+        {
+            try
+            {
+                string Body = mailPath.Replace("{message}", Draft);
+                EmailHelper.SendEmail(Email, Body);
+            }
+            catch (Exception)
+            {
+            }
+            return true;
+        }
+
+       
         private static string SendOTpPopulateBody(LoginViewModel InputModel, string emailOTP, string mailPath)
         {
             return mailPath.Replace("{Name}", InputModel.InternalEmailID)
