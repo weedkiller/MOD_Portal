@@ -39,30 +39,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet-body flip-scroll">
-                    
-                   
                     <div class="bg-white p-3">
                         <div class="needs-validation p-2" novalidate="">
-
                             <div class="clearfix mt-0"></div>
-
-                            @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("AddSocCommit", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data", id = "myform" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary()
                                 <input type="hidden" name="SoCId" id="SoCId" value="@Model.SoCId" />
-
+                                <input type="hidden" name="id" id="id" value="@ViewBag.id" />
+                                <input type="hidden" name="item" id="item" value="@ViewBag.item" />
                                 <div class="row">
-
-
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="form-label" for="Background">Item Description :<b> @ViewBag.aonId </b></label>
-
                                         </div>
                                     </div>
-
-
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="form-label" for="Comments">Comment</label>
@@ -72,7 +64,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="clearfix"></div>
                                     <div class="col-md-12">
                                         <button class="btn btn-primary float-right mr-2" type="submit">Submit</button>
@@ -116,16 +107,57 @@
         </div>
     </div>
 </div>
-<script src="~/assets/js/CkEditor/lang/en.js"></script>
-<script src="~/assets/js/CkEditor/ckeditor.js"></script>
+<script src="~/assets/js/CkEditor/lang/en.js" defer></script>
+<script src="~/assets/js/CkEditor/ckeditor.js" defer></script>
 
-<script>
-
-
+<script nonce="r@nd0m">
     $(document).ready(function () {
         //CKEDITOR.replace('Comments');
         //var discussionHdn = $("input[name=Comments]");
         //CKEDITOR.instances['Comments'].setData($(discussionHdn).val());
+        $('#myform').submit(function () {
+            var obj = new Object();
+            obj.SoCId = $('#SoCId').val();
+            obj.Comments = $('#Comments').val();
+            if (obj != null) {
+                $.ajax({
+                    type: "POST",
+                    url: "/AONW/AddSocCommit",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == "Success") {
+                            $('#lblmsg').html('Record Saved Successfully');
+                            $('#myModal').modal({
+
+                                display: 'show',
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            setTimeout(function () {
+                                var id = $('#id').val();
+                                var item = $('#item').val();
+                                window.location.href = '/ViewSOC';
+                            }, 3000); 
+                        } else {
+                            $('#lblmsg').html('Record Not Saved Successfully');
+                            $('#myModal').modal({
+
+                                display: 'show',
+                                backdrop: 'static',
+                                keyboard: false
+                            });
+                            setTimeout(function () {
+                                var id = $('#id').val();
+                                var item = $('#item').val();
+                                window.location.href = '/ViewSOC';
+                            }, 3000); 
+                        }
+                    }
+                });
+            }
+        }); 
     });
 
     if ('@ViewBag.Msg' === "Record Saved Successfully") {

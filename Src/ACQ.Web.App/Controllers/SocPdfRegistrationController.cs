@@ -568,8 +568,6 @@ namespace ACQ.Web.App.Controllers
                     fileDetails.Add(fileDetail);
                 }
             }
-
-
             TempData["FileA"] = fileDetails;
             return Json(files.Count + " Files Uploaded!");
         }
