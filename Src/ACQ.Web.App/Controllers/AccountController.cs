@@ -655,9 +655,9 @@ namespace ACQ.Web.App.Controllers
             {
                 if (Session["EmailID"] != null)
                 {
-                    input.UserName = sanitizer.Sanitize(Cryptography.DecryptData(Session["EmailID"].ToString()));
+                    input.UserName = sanitizer.Sanitize(Encryption.Decrypt(Session["EmailID"].ToString()));
                     input.Password = sanitizer.Sanitize(input.NewPassword);
-                    input.TokenId = sanitizer.Sanitize(Cryptography.DecryptData(Session["tokenid"].ToString()));
+                    input.TokenId = sanitizer.Sanitize(Encryption.Decrypt(Session["tokenid"].ToString()));
                     using (HttpClient client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/ChangePassword");
@@ -731,6 +731,7 @@ namespace ACQ.Web.App.Controllers
                 {
                     model.EmailID = Session["eEmailID"].ToString();
                     model.UserName = Session["EmailID"].ToString();
+                   
                     using (HttpClient client1 = new HttpClient())
                     {
                         client1.BaseAddress = new Uri(WebAPIUrl);
@@ -749,8 +750,10 @@ namespace ACQ.Web.App.Controllers
 
                             model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
                             string mTokenId = GetRandomText();
-                            model.UserName = Cryptography.EncryptData(model.UserName);
-                            model.TokenId = Cryptography.EncryptData(mTokenId);
+                            //model.UserName = Cryptography.EncryptData(Session["UserID"].ToString());
+                           // model.TokenId = Cryptography.EncryptData(mTokenId);
+                            model.UserName = Encryption.Encrypt(model.UserName);
+                            model.TokenId = Encryption.Encrypt(mTokenId);
                             using (HttpClient client2 = new HttpClient())
                             {
                                 resetpwdViewModel Rmode = new resetpwdViewModel();

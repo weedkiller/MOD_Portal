@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.EscalationReportData>
+@{
+    ViewBag.Title = "validationcheck";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/assets/datatable/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+<div class="containers">
+    <div class="container-fluids">
+        <div class="card">
+            <div class="card-header">
+                <h4>Processing <button class="btn btn-sm btn-primary float-right" type="button" id="SendtoAll">Send to All</button> </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Stage Description</th>
+                                <th>Completed On</th>
+                                <th>No of Weeks</th>
+                                <th>DAP Timeline</th>
+                                <th>Escalation Time (weeks)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model!=null && Model.Count()>0)
+                            {
+                                foreach(var item in Model.ToList())
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Pkey
+                                        </td>
+                                        <td>
+                                            @item.TaskDescription
+                                        </td>
+                                        <td>
+                                            @item.completed_on
+                                        </td>
+                                        <td>
+                                            @item.no_of_weeks
+                                        </td>
+                                        <td>
+                                            @item.dap_timeline
+                                        </td>
+                                        <td>@item.EscalationTime</td>
+                                        <td>
+                                            <input type="checkbox" class="checkbox" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Stage Description</th>
+                                <th>Completed On</th>
+                                <th>No of Weeks</th>
+                                <th>DAP Timeline</th>
+                                <th>Escalation Time (weeks)</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
+<script src="~/assets/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/assets/datatable/js/dataTables.buttons.min.js"></script>
+<script src="~/assets/datatable/js/jszip.min.js"></script>
+@*<script src="~/assets/datatable/js/pdfmake.min.js"></script>*@
+<script src="~/assets/datatable/js/vfs_fonts.js"></script>
+<script src="~/assets/datatable/js/buttons.html5.min.js"></script>
+<script src="~/assets/datatable/js/buttons.print.min.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        //$('#example').DataTable({
+        //    dom: 'Bfrtip',
+        //    buttons: [
+        //        'copy', 'csv', 'excel', 'pdf', 'print'
+        //    ]
+        //});
+
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+               'excel','print'
+            ]
+        });
+    });
+</script>
+

@@ -148,5 +148,4 @@ namespace ACQ.Web.ViewModel.AONW
         public string SocSDDate { get; set; }
 
     }
-    
 }

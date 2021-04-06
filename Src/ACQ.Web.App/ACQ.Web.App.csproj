@@ -207,12 +207,14 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FormMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProcessingEmailController.cs" />
     <Compile Include="Controllers\SocPdfRegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URIHandler.cs" />
+    <Compile Include="ViewModel\EscalationReportData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.css" />
@@ -220,6 +222,15 @@
     <Content Include="assets\css\bootstrapv4.css" />
     <Content Include="assets\css\light_bootstrapv4.css" />
     <Content Include="assets\css\style.css" />
+    <Content Include="assets\datatable\css\buttons.dataTables.min.css" />
+    <Content Include="assets\datatable\css\jquery.dataTables.min.css" />
+    <Content Include="assets\datatable\js\buttons.html5.min.js" />
+    <Content Include="assets\datatable\js\buttons.print.min.js" />
+    <Content Include="assets\datatable\js\dataTables.buttons.min.js" />
+    <Content Include="assets\datatable\js\jquery.dataTables.min.js" />
+    <Content Include="assets\datatable\js\jszip.min.js" />
+    <Content Include="assets\datatable\js\pdfmake.min.js" />
+    <Content Include="assets\datatable\js\vfs_fonts.js" />
     <Content Include="assets\fontawesome-5.15.3\css\all.css" />
     <Content Include="assets\fontawesome-5.15.3\css\all.min.css" />
     <Content Include="assets\fontawesome-5.15.3\css\brands.css" />
@@ -1657,6 +1668,7 @@
     <Content Include="Views\FormMenu\GetSideMenuBar.cshtml" />
     <Content Include="Views\Account\Captcha.cshtml" />
     <Content Include="Views\Account\ResetPasswordReturnMsg.cshtml" />
+    <Content Include="Views\ProcessingEmail\validationcheck.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
