@@ -174,7 +174,8 @@ namespace ACQ.Web.App.Controllers
             }
 
             Socmodel.SOCMailVIEW = listData;
-            return RedirectToAction("ViewSOCRegistration");
+            //return RedirectToAction("ViewSOCRegistration");
+            return Json("Success",JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -764,19 +765,35 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult AddSocCommit(string id)
         {
-            Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
             SocCommentViewModel model = new SocCommentViewModel();
-            model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
-            Session["item"] = Request.QueryString["item"].ToString();
-            ViewBag.aonId =Encryption.Decrypt(Session["item"].ToString());
-            return View(model);
+            try
+            {
+                if (id != null)
+                {
+                    Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
+                    model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
+                    // Session["item"] = Request.QueryString["item"].ToString();
+                    //if(Request != null && string.IsNullOrEmpty(Request.QueryString["item"]))
+                    //{
+                        ViewBag.item = Request.QueryString["item"].ToString();
+                        //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
+                        ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
+                        ViewBag.id = id;
+                   // }
+                }
+            }
+            catch(Exception EX)
+            {
 
+            }
+            return View(model);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [SessionExpire]
         public async Task<ActionResult> AddSocCommit(SocCommentViewModel model)
         {
+            string Res = "";
             if (ModelState.IsValid)
             {
                 try
@@ -794,10 +811,12 @@ namespace ACQ.Web.App.Controllers
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
+                            Res = "Success";
                             ViewBag.Msg = "Record Saved Successfully";
                         }
                         else
                         {
+                            Res = "Failed";
                             ViewBag.Msg = "Record Not Saved Successfully";
                         }
                     }
@@ -807,8 +826,9 @@ namespace ACQ.Web.App.Controllers
                     throw ex;
                 }
             }
-            ViewBag.aonId = Session["item"].ToString();
-            return View(model);
+          //  ViewBag.aonId = Session["item"].ToString();
+            // return View(model);
+            return Json(Res, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -1246,7 +1266,7 @@ namespace ACQ.Web.App.Controllers
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(id);
             }
-            else
+            else 
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
             }
@@ -1288,7 +1308,7 @@ namespace ACQ.Web.App.Controllers
             int UserID = Convert.ToInt32(Session["UserID"]);
             int sectionID = Convert.ToInt32(Session["SectionID"]);
             if (sectionID == 13)
-                UserID = 0;
+                UserID = 1;
             return UserID;
         }
         //[Route("EditMeetingAgenda")]
@@ -1380,9 +1400,11 @@ namespace ACQ.Web.App.Controllers
                 }
             }
 
-            id = _model.meeting_id.Value;
+          //  id = _model.meeting_id.Value;
             ViewBag.dated = Session["mdate"].ToString();
             ViewBag.mtype = Session["mtype"].ToString();
+            //int Id  = (Encryption.Encrypt(_model.meeting_id.Value));
+            string id = Encryption.Encrypt(_model.meeting_id.Value.ToString());
             return RedirectToAction("AddMeetingAgenda", "AONW", new { id, ViewBag.mtype, ViewBag.dated });
         }
         //[Route("DeleteMeetingAgenda")]
