@@ -62,3 +62,11 @@ E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.We
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

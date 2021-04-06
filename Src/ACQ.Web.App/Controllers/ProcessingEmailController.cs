@@ -47,6 +47,7 @@ namespace ACQ.Web.App.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                    Session["Escdata"] = null;
                     Session["Escdata"] = listdata;
                 }
             }
@@ -69,7 +70,7 @@ namespace ACQ.Web.App.Controllers
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                                  parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln=2.50").Result;
+                        HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln="+item.CaseTaskSlno).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             string draftMsg = response.Content.ReadAsAsync<string>().Result;
