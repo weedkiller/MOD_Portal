@@ -1547,6 +1547,7 @@
     <Content Include="Email\ChngPwdMail.html" />
     <Content Include="Email\confrmationBadgesRegistration.html" />
     <Content Include="Email\changepasswordPage.html" />
+    <Content Include="Email\EscalationEmailFormat.html" />
     <Content Include="Email\EventUsernamaandpassword.html" />
     <Content Include="Email\NodalUsernamaandpassword.html" />
     <Content Include="Email\BadgePassess.html" />

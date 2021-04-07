@@ -74,6 +74,7 @@ namespace ACQ.Web.App.Controllers
         }
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        
 
         // GET: validation Check
         [Route("validationchecker")]
@@ -94,13 +95,46 @@ namespace ACQ.Web.App.Controllers
                 HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationData").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<ViewModel.EscalationReportData>>().Result;
-
+                    listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                    Session["Escdata"] = null;
+                    Session["Escdata"] = listdata;
                 }
             }
 
-
             return View(listdata);
+        }
+
+        [Route("sendEscalationEmail")]
+        [HandleError]
+        public JsonResult sendEscalationEmail(List<EscalationReportData> model)
+        {
+            if(model!=null && model.Count()>0)
+            {
+                foreach(var item in model)
+                {
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Clear();
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln="+item.CaseTaskSlno).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string draftMsg = response.Content.ReadAsAsync<string>().Result;
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                            IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                            listdata=(IEnumerable<EscalationReportData>)Session["Escdata"];
+                            string email = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault().Responsible_Level1;
+
+                            EmailHelper.sendEmailEscalation(email, draftMsg, mailPath);
+
+                        }
+                    }
+                }
+            }
+            return Json(new { Status = true, Message="success" }, JsonRequestBehavior.AllowGet);
         }
 
 

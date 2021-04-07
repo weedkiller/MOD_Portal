@@ -21,10 +21,12 @@ namespace ACQ.Web.App.ViewModel
         public Nullable<int> no_of_weeks { get; set; }
         public string dap_timeline { get; set; }
         public decimal TaskSlno { get; set; }
+        public decimal CaseTaskSlno { get; set; }
         public string Responsible_Level1 { get; set; }
         public string Responsible_Level2 { get; set; }
         public string Responsible_Level3 { get; set; }
         public string Responsible_Level4 { get; set; }
         public int EscalationTime { get; set; }
+        
     }
 }
