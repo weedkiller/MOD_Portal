@@ -30,3 +30,19 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.Exter
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ExternalServices.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ExternalServices.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Mvc.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.dll.config
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb

@@ -11,11 +11,26 @@
 
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
     <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+    <style>
+        .preloader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-image: url('/assets/media/images/loader.gif');
+            background-repeat: no-repeat;
+            background-color: #eae5e585;
+            background-position: center;
+            display: none;
+        }
+    </style>
 
 </head>
 
 <body>
-
+    <div class="preloader"></div>
     <ul class="watermark">
         <li style="left: 376px; top: 71px;"> @Session["UserName"] </li>
         <li style="left: 690px; top: 309px;"> @Session["UserName"] </li>
@@ -103,6 +118,10 @@
                                                 </li>
                                             </ul>
                                         </li>
+
+                                        <li class="sidebar-item active">
+                                            <a href="/validationchecker" class="sidebar-link">Escalation Matrix</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -160,16 +179,16 @@
             <!-------------footer end-------------->
         </div>
     </div>
-   
+
     <script src="~/assets/js/bootstrap.min.js" nonce="r@nd0m"></script>
     <script src="~/assets/fontawesome-5.15.3/js/all.min.js"></script>
-    
+
     <script nonce="r@nd0m">
         $(document).ready(function () {
             $(".sidebar-toggle").click(function () {
                 $("#sidebar").toggleClass("collapsed");
             });
-            
+
         });
     </script>
     <script type="text/javascript" nonce="r@nd0m">

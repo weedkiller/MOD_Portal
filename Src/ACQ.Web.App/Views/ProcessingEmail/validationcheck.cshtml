@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ACQ.Web.App.ViewModel.EscalationReportData>
-@using crypto
+
 @{
     ViewBag.Title = "validationcheck";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -137,9 +137,7 @@
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
-                    
                     if (response.Status == true) {
-                        
                         alert("Email has been send to the selected user");
                         window.location.href = "/validationchecker";
                     } else {
