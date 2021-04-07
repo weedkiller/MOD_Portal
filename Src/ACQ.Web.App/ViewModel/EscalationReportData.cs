@@ -17,6 +17,7 @@ namespace ACQ.Web.App.ViewModel
         public string IC_percentage { get; set; }
         public string Trials_Required { get; set; }
         public string TaskDescription { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> completed_on { get; set; }
         public Nullable<int> no_of_weeks { get; set; }
         public string dap_timeline { get; set; }
@@ -28,5 +29,15 @@ namespace ACQ.Web.App.ViewModel
         public string Responsible_Level4 { get; set; }
         public int EscalationTime { get; set; }
         
+    }
+
+    public class EscalationDraftMessage
+    {
+        public int Id { get; set; }
+        public string TaskId { get; set; }
+        public string DraftMessage_L1 { get; set; }
+        public string DraftMessage_L2 { get; set; }
+        public string DraftMessage_L3 { get; set; }
+        public string DraftMessage_L4 { get; set; }
     }
 }

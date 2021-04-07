@@ -1,11 +1,16 @@
 ﻿@model IEnumerable<ACQ.Web.App.ViewModel.EscalationReportData>
-    @using crypto
+@using crypto
 @{
     ViewBag.Title = "validationcheck";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/datatable/css/buttons.dataTables.min.css" rel="stylesheet" />
+<style>
+    table.dataTable tbody th, table.dataTable tbody td {
+        padding: 10px 18px !important;
+    }
+</style>
 
 <div class="containers">
     <div class="container-fluids">
@@ -21,8 +26,7 @@
                                 <th>Sr No</th>
                                 <th>Stage Description</th>
                                 <th>AON Id</th>
-                                <th>Completed On</th>
-                                <th>No of Weeks</th>
+                                <th>Started On</th>
                                 <th>DAP Timeline</th>
                                 <th>Escalation Time (weeks)</th>
                                 <th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /> </th>
@@ -42,17 +46,17 @@
                                         </td>
                                         <td>@item.aon_id</td>
                                         <td>
-                                            @item.completed_on
-                                        </td>
-                                        <td>
-                                            @item.no_of_weeks
+                                            @if (item.startDate != null)
+                                            {
+                                                <span>@item.startDate.Value.ToString("MM/dd/yyyy")</span>
+                                            }
                                         </td>
                                         <td>
                                             @item.dap_timeline
                                         </td>
                                         <td>@item.EscalationTime</td>
                                         <td>
-                                            <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.TaskSlno" onchange="getselect();" />
+                                            <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.TaskSlno" notes="@item.EscalationTime" notdp="@item.dap_timeline" onchange="getselect();" />
                                         </td>
                                     </tr>
                                 }
@@ -63,8 +67,7 @@
                                 <th>Sr No</th>
                                 <th>Stage Description</th>
                                 <th>AON Id</th>
-                                <th>Completed On</th>
-                                <th>No of Weeks</th>
+                                <th>Started On</th>
                                 <th>DAP Timeline</th>
                                 <th>Escalation Time (weeks)</th>
                                 <th><button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button></th>
@@ -100,7 +103,8 @@
             dom: 'Bfrtip',
             buttons: [
                 'excel', 'print'
-            ]
+            ],
+            pageLength: 25
         });
 
         getselect();
@@ -114,6 +118,8 @@
                     var EscalationReportData = {};
                     EscalationReportData["aon_id"] = parseInt($(this).children().find('.checkbox-select').attr("noaon")),
                         EscalationReportData["CaseTaskSlno"] = $(this).children().find('.checkbox-select').attr("notls");
+                    EscalationReportData["EscalationTime"] = Math.abs(parseInt($(this).children().find('.checkbox-select').attr("notes")));
+                    EscalationReportData["dap_timeline"] = $(this).children().find('.checkbox-select').attr("notdp");
                     data.push(EscalationReportData);
                 }
             });
@@ -121,13 +127,19 @@
             $(btn).attr('disabled', true);
 
             $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
                 type: "POST",
                 url: "/sendEscalationEmail",
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    
                     if (response.Status == true) {
+                        
                         alert("Email has been send to the selected user");
                         window.location.href = "/validationchecker";
                     } else {
@@ -135,16 +147,16 @@
                     }
                 },
                 failure: function (response) {
+                    deselectAll();
                     alert("Please check your internet connection...");
                 },
                 error: function (response) {
+                    deselectAll();
                     alert("Please check your internet connection...");
                 }
-            });  
+            });
         });
     });
-
-
     function getselect() {
         var selected = 0;
         $('tbody tr').each(function () {
@@ -160,21 +172,21 @@
             $('#SendtoAll').attr('disabled', true);
         }
     }
-
     function selectAll() {
         if ($('#selectall').is(":checked")) {
             $('tbody tr').each(function () {
                 $(this).children().find('.checkbox-select').attr('checked', true);
+                $(this).children().find('.checkbox-select').attr('disabled', true);
             });
             getselect();
         }
         else {
             $('tbody tr').each(function () {
                 $(this).children().find('.checkbox-select').attr('checked', false);
+                $(this).children().find('.checkbox-select').attr('disabled', false);
             });
             getselect();
         }
     }
-
 </script>
 
