@@ -1,4 +1,8 @@
-﻿using ACQ.Web.ViewModel.FormMenu;
+﻿using ACQ.Web.ExternalServices.Email;
+using ACQ.Web.ExternalServices.SecurityAudit;
+using ACQ.Web.ViewModel.FormMenu;
+using ACQ.Web.ViewModel.User;
+using Ganss.XSS;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -15,7 +19,56 @@ namespace ACQ.Web.App.Controllers
     public class FormMenuController : Controller
     {
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
-        private object sanitizer;
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
+
+
+        public FormMenuController()
+        {
+            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            {
+                BruteForceAttackss.date = System.DateTime.Now;
+                BruteForceAttackss.refreshcount = 1;
+            }
+            else
+            {
+                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                if (tt.TotalSeconds >= 30 && BruteForceAttackss.refreshcount < 4)
+                {
+                    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                }
+                else if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount >= 4)
+                {
+                    if (Session["EmailID"] != null)
+                    {
+                        IEnumerable<LoginViewModel> model = null;
+                        using (var client2 = new HttpClient())
+                        {
+                            client2.DefaultRequestHeaders.Clear();
+                            client2.BaseAddress = new Uri(WebAPIUrl);
+                            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                            client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                            HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + Session["EmailID"].ToString()).Result;
+                            if (response.IsSuccessStatusCode)
+                            {
+                                LoginViewModel model1 = new LoginViewModel();
+                                model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                if (model.First().Message == "Blocked")
+                                {
+                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
+                                    EmailHelper.SendAllDetails(model.First().ExternalEmailID, mailPath);
+                                    RedirectToAction("Logout", "Account");
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                }
+            }
+        }
 
         // GET: FormMenu
         /// <summary>

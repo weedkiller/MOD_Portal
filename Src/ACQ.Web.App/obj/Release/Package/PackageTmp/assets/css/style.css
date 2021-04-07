@@ -1,0 +1,120 @@
+body{
+  margin:0px;
+  padding:0px;
+  background: #fbfbfb; 
+}
+
+/*---------------------New CSS-----------------*/
+
+@font-face {
+    font-family: 'Captcha code';
+    src: url('../media/Captcha code.woff') format('woff');
+}
+.topHeadline {
+    color: white;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+
+.navbar-custom {
+    padding: 10px;
+    background: #222694;
+    display: flex;
+    align-items: center;
+    box-shadow: 3px 2px 12px -1px #00000059;
+    border-bottom: 1px solid #0000003b;
+}
+
+.sidebar_icon {
+    font-size: 20px;
+}
+
+.footer {
+    background: #233854;
+    padding: 15px;
+    border-top: 1px solid rgba(152,166,173,.2);
+    bottom: 0;
+    padding: 19px 24px 20px;
+    right: 0;
+    color: #98a6ad;
+    left: 0px;
+}
+
+.footer p {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.login_bg {
+    background-image: url('../media/images/bg-pattern-light.svg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.danger {
+    color: red;
+}
+
+.tab {
+    border: 1px solid #3f80ea;
+    padding: 15px;
+}
+
+.active {
+    color: white!important;
+}
+
+.ValidateColor{
+    color:red;
+}
+
+.headettxt {
+    font-size: 31px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-align: center;
+}
+
+.activetextclr a, .activetextclr svg {
+    color: white !important;
+}
+
+input {
+    border: 1px solid #d8d8d8;
+}
+
+    input:focus {
+        outline: 1px solid #becffb;
+    }
+
+.login_bg{
+    min-height:86vh;
+}
+
+.custom_modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 72px;
+}
+
+.watermark {
+    list-style-type: none;
+    position:absolute;
+  
+}
+
+    .watermark li {
+        position: absolute;
+        z-index: 999;
+        color: black;
+        font-size: 19px;
+        transform: rotate( -35deg );
+        width: max-content;
+    }

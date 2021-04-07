@@ -16,7 +16,7 @@
     @using (Html.BeginForm("login", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-
+    @ViewBag.bt
         <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
             <div class="col-md-5 p-4">
                 <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">

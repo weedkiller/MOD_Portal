@@ -3,8 +3,8 @@
     ViewBag.Title = "SoCPdfRegistration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
-<script>
+
+<script nonce="r@nd0m">
     $(document).ready(function () {
         $("#pages").addClass("show");
         $("#mAccess").addClass("activetextclr");
@@ -158,7 +158,7 @@
         </div>
     </div>
 </div>
-<script>
+<script nonce="r@nd0m">
 
     $(document).ready(function () {
         var formdata = new FormData(); //FormData object
@@ -257,6 +257,8 @@
                 backdrop: 'static',
                 keyboard: false
             });
+
+
         }
 
         if ('@ViewBag.UploadStatus' === "Type") {

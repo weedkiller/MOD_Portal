@@ -3,7 +3,7 @@
     ViewBag.Title = "AddRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/assets/js/jquery-3.6.0.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
 @*@{Html.RenderAction("GetSideMenuBar", "FormMenu");}*@
 @using (Html.BeginForm("AddRole", "FormMenu", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
 {
@@ -117,7 +117,7 @@
         </div>
     </div>
 </div>
-<script>
+<script nonce="r@nd0m">
     $(document).ready(function () {
         $("#loader-wrapper").hide();
         if ('@ViewBag.Msg' === "Save") {

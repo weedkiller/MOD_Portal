@@ -35,3 +35,4 @@ E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\A
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+E:\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
