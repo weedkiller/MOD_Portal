@@ -20,11 +20,92 @@ using static ACQ.Web.App.MvcApplication;
 using Ganss.XSS;
 using GemBox.Document;
 using System.Linq;
+using ACQ.Web.ViewModel.User;
+using ACQ.Web.ExternalServices.Email;
 
 namespace ACQ.Web.App.Controllers
 {
     public class SocPdfRegistrationController : Controller
     {
+        public SocPdfRegistrationController()
+        {
+            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            {
+                BruteForceAttackss.date = System.DateTime.Now;
+                BruteForceAttackss.refreshcount = 1;
+            }
+            else
+            {
+                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                if (tt.TotalSeconds <= 30)
+                {
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
+                }
+                else
+                {
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                      
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
+                }
+
+            }
+        }
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();

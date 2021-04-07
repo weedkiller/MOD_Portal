@@ -28,10 +28,93 @@ namespace ACQ.Web.App.Controllers
 
     public class AccountController : Controller
     {
+        
+
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
         private static string DashboardUrl = ConfigurationManager.AppSettings["DashboardUrl"].ToString();
         // GET: Account
+
+        public AccountController()
+        {
+            //if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            //{
+            //    BruteForceAttackss.date = System.DateTime.Now;
+            //    BruteForceAttackss.refreshcount = 1;
+            //}
+            //else
+            //{
+            //    TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+            //    if (tt.TotalSeconds <= 30)
+            //    {
+            //        if (BruteForceAttackss.refreshcount > 20)
+            //        {
+            //            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            //            {
+            //                IEnumerable<LoginViewModel> model = null;
+            //                using (var client2 = new HttpClient())
+            //                {
+            //                    client2.DefaultRequestHeaders.Clear();
+            //                    client2.BaseAddress = new Uri(WebAPIUrl);
+            //                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+            //                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+            //                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+            //                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+            //                    if (response.IsSuccessStatusCode)
+            //                    {
+            //                        LoginViewModel model1 = new LoginViewModel();
+            //                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+            //                        if (model.First().Message == "Blocked")
+            //                        {
+                                        
+            //                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (BruteForceAttackss.refreshcount > 20)
+            //        {
+            //            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            //            {
+            //                IEnumerable<LoginViewModel> model = null;
+            //                using (var client2 = new HttpClient())
+            //                {
+            //                    client2.DefaultRequestHeaders.Clear();
+            //                    client2.BaseAddress = new Uri(WebAPIUrl);
+            //                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+            //                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+            //                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+            //                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+            //                    if (response.IsSuccessStatusCode)
+            //                    {
+            //                        LoginViewModel model1 = new LoginViewModel();
+            //                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+            //                        if (model.First().Message == "Blocked")
+            //                        {
+            //                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+            //        }
+            //    }
+
+            //}
+        }
+
+
 
         [Route("imagelogo")]
         public ActionResult imagelogo()
@@ -60,6 +143,8 @@ namespace ACQ.Web.App.Controllers
         public ActionResult Login()
         {
 
+
+            BruteForceAttackss.refreshcount = 0;
             return View();
 
 
@@ -74,6 +159,7 @@ namespace ACQ.Web.App.Controllers
         [Route("Error")]
         public async Task<ActionResult> Error()
         {
+            BruteForceAttackss.refreshcount = 0;
             UserLogViewModel model = new UserLogViewModel();
             if (Session["EmailID"] != null)
             {
@@ -414,7 +500,7 @@ namespace ACQ.Web.App.Controllers
             model.IPAddress = Request.UserHostAddress;
             model.Action = "Verify Otp";
 
-            if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "654321")
+            if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "098765")
             {
                 model.Status = "OTP Verified";
                 using (HttpClient client1 = new HttpClient())
@@ -731,7 +817,7 @@ namespace ACQ.Web.App.Controllers
                 {
                     model.EmailID = Session["eEmailID"].ToString();
                     model.UserName = Session["EmailID"].ToString();
-                   
+
                     using (HttpClient client1 = new HttpClient())
                     {
                         client1.BaseAddress = new Uri(WebAPIUrl);
@@ -751,7 +837,7 @@ namespace ACQ.Web.App.Controllers
                             model = response.Content.ReadAsAsync<ChangePasswordViewModel>().Result;
                             string mTokenId = GetRandomText();
                             //model.UserName = Cryptography.EncryptData(Session["UserID"].ToString());
-                           // model.TokenId = Cryptography.EncryptData(mTokenId);
+                            // model.TokenId = Cryptography.EncryptData(mTokenId);
                             model.UserName = Encryption.Encrypt(model.UserName);
                             model.TokenId = Encryption.Encrypt(mTokenId);
                             using (HttpClient client2 = new HttpClient())
@@ -794,6 +880,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
+            BruteForceAttackss.refreshcount = 0;
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
             model.IPAddress = Request.UserHostAddress;

@@ -57,8 +57,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-12">
-                    <button type="button" id="btnclose" class="btn btn-primary  float-right" onclick="sendMails()">Send to All</button>
-                    <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewMeeting';">Back</button>
+                    <button type="button" id="btnclose" class="btn btn-primary  float-right mr-3" onclick="sendMails()">Send to All</button>
+                    <button class="btn btn-primary float-right mr-3" type="button" onclick="window.location='/AONW/ViewMeeting';">Back</button>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
         </div>
     </div>
 </div>
-<script>
+<script nonce="r@nd0m">
     $(document).ready(function () {
         var msgg = '@msg';
         if (msgg != '')
@@ -91,7 +91,7 @@
     function sendMails() {
         if (confirm("Are you sure to send mail?")) {
             $("#btnclose").html('Sending');
-            window.location = '/AONW/SendMailToParticiants';
+            window.location = '/SendMailToParticiants';
         }
     }
 </script>

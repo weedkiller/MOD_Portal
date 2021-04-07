@@ -18,11 +18,91 @@ using System.Web.Mvc;
 using System.Web.Security;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.App.ViewModel;
+using ACQ.Web.ExternalServices.SecurityAudit;
+using ACQ.Web.ViewModel.User;
 
 namespace ACQ.Web.App.Controllers
 {
     public class ProcessingEmailController : Controller
     {
+        public ProcessingEmailController()
+        {
+            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            {
+                BruteForceAttackss.date = System.DateTime.Now;
+                BruteForceAttackss.refreshcount = 1;
+            }
+            else
+            {
+                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                if (tt.TotalSeconds <= 30)
+                {
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
+                }
+                else
+                {
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
+                }
+
+            }
+        }
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
         
@@ -32,10 +112,9 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-
         public ActionResult validationcheck()
         {
-            IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+            IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
 
             using (var client = new HttpClient())
             {
@@ -47,7 +126,7 @@ namespace ACQ.Web.App.Controllers
                 HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationData").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                    listdata = response.Content.ReadAsAsync<IEnumerable<ViewModel.EscalationReportData>>().Result;
                     Session["Escdata"] = null;
                     Session["Escdata"] = listdata;
                 }
@@ -58,8 +137,7 @@ namespace ACQ.Web.App.Controllers
 
         [Route("sendEscalationEmail")]
         [HandleError]
-        [ValidateAntiForgeryToken]
-        public JsonResult sendEscalationEmail(List<EscalationReportData> model)
+        public JsonResult sendEscalationEmail(List<ViewModel.EscalationReportData> model)
         {
             if(model!=null && model.Count()>0)
             {
@@ -75,60 +153,13 @@ namespace ACQ.Web.App.Controllers
                         HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln="+item.CaseTaskSlno).Result;
                         if (response.IsSuccessStatusCode)
                         {
-                            try
-                            {
-                                EscalationDraftMessage draftMsg = response.Content.ReadAsAsync<EscalationDraftMessage>().Result;
-                                if(draftMsg!=null)
-                                {
-                                    if(item.EscalationTime<(Convert.ToInt32(item.dap_timeline)-1))
-                                    {
-                                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                        IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
-                                        listdata = (IEnumerable<EscalationReportData>)Session["Escdata"];
-                                        EscalationReportData level1 = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
-                                        string message = draftMsg.DraftMessage_L1.ToString();
-                                        message = message.Replace("{date}", level1.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline)*7).ToString("MM/dd/yyyy"));
-                                        EmailHelper.sendEmailEscalation(level1.Responsible_Level1, message, mailPath);
-                                    }
-                                    else if(item.EscalationTime ==(Convert.ToInt32(item.dap_timeline)-1))
-                                    {
-                                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                        IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
-                                        listdata = (IEnumerable<EscalationReportData>)Session["Escdata"];
-                                        EscalationReportData level1 = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
-                                        //send message to L1.
-                                        string L1message = draftMsg.DraftMessage_L1.ToString();
-                                        L1message = L1message.Replace("{date}", level1.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline)*7).ToString("MM/dd/yyyy"));
-                                        EmailHelper.sendEmailEscalation(level1.Responsible_Level1, L1message, mailPath);
+                            string draftMsg = response.Content.ReadAsAsync<string>().Result;
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                            IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                            listdata=(IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                            string email = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault().Responsible_Level1;
 
-                                        //send message to L2.
-                                        string L2message = draftMsg.DraftMessage_L2.ToString();
-                                        L2message = L2message.Replace("{date}", level1.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline)*7).ToString("MM/dd/yyyy"));
-                                        EmailHelper.sendEmailEscalation(level1.Responsible_Level2, L2message, mailPath);
-
-                                    }
-                                    else if(item.EscalationTime > Convert.ToInt32(item.dap_timeline))
-                                    {
-                                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                        IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
-                                        listdata = (IEnumerable<EscalationReportData>)Session["Escdata"];
-                                        EscalationReportData level1 = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
-                                        string message = draftMsg.DraftMessage_L3.ToString();
-                                        message = message.Replace("{date}", level1.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline)*7).ToString("MM/dd/yyyy"));
-                                        EmailHelper.sendEmailEscalation(level1.Responsible_Level3, message, mailPath);
-                                    }
-                                    
-                                }
-
-                                
-
-                                
-                            }
-                            catch(Exception ex)
-                            {
-
-                            }
-                            
+                            EmailHelper.sendEmailEscalation(email, draftMsg, mailPath);
 
                         }
                     }

@@ -50,6 +50,7 @@
     <Compile Include="GeneratedPassword\GeneratedHashKey.cs" />
     <Compile Include="Payment\ForiegnPaymentGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityAudit\BruteForceAttack.cs" />
     <Compile Include="SecurityAudit\CaptchaImage.cs" />
     <Compile Include="SecurityAudit\SecurityProtect.cs" />
     <Compile Include="SecurityAudit\TripleDES.cs" />

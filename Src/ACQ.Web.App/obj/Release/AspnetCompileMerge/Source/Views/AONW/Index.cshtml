@@ -461,14 +461,14 @@
 @*@section scripts {*@
 @if (!string.IsNullOrEmpty(Model.ErrorMsg))
 {
-    <script type="text/javascript">$("#Message").modal("show");</script>
+    <script type="text/javascript" nonce="r@nd0m">$("#Message").modal("show");</script>
 }
 else
 {
-    <script type="text/javascript">$("#Message").modal("hide");</script>
+    <script type="text/javascript" nonce="r@nd0m">$("#Message").modal("hide");</script>
 }
 @*}*@
-<script type="text/javascript">
+<script type="text/javascript" nonce="r@nd0m">
     $(document).ready(function () {
         $(".only-numeric").bind("keypress", function (e) {
             var keyCode = e.which ? e.which : e.keyCode
@@ -481,7 +481,7 @@ else
         });
     });
 </script>
-<script type="text/javascript">
+<script type="text/javascript" nonce="r@nd0m">
     $(document).ready(function () {
         $('#SOC_Files2').change(function () {
             var ValidFileExtension = ['pdf', 'PDF'];
@@ -521,7 +521,7 @@ else
         })
     });
 </script>
-<script>
+<script nonce="r@nd0m">
     $(document).ready(function () {
         if ('@ViewBag.Save' === "SOC Registration Successfully") {
             $('#lblmsg').html('SOC Registration Successfully');
@@ -568,7 +568,7 @@ else
 
 
 </script>
-<script>
+<script nonce="r@nd0m">
     $(function () {
         $("#datepicker").datepicker({ dateFormat: 'dd-mm-yy' });
     });

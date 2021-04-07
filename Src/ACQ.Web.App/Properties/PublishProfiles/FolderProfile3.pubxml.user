@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Uttam Kumar\Desktop\ACQWeb</_PublishTargetUrl>
-    <History>False|2021-04-01T07:27:05.0658928Z;True|2021-03-31T11:32:29.1366051+05:30;True|2021-03-22T16:33:09.3086947+05:30;True|2021-03-22T11:27:21.7153741+05:30;True|2021-03-21T17:09:42.4762716+05:30;True|2021-03-20T15:08:53.2748090+05:30;True|2021-03-20T11:29:16.6715699+05:30;True|2021-03-18T21:53:34.1939714+05:30;True|2021-03-17T15:46:49.4450451+05:30;True|2021-03-17T11:44:47.5348875+05:30;False|2021-03-11T21:56:49.7881312+05:30;</History>
+    <History>True|2021-04-06T06:44:04.1707793Z;False|2021-04-01T12:57:05.0658928+05:30;True|2021-03-31T11:32:29.1366051+05:30;True|2021-03-22T16:33:09.3086947+05:30;True|2021-03-22T11:27:21.7153741+05:30;True|2021-03-21T17:09:42.4762716+05:30;True|2021-03-20T15:08:53.2748090+05:30;True|2021-03-20T11:29:16.6715699+05:30;True|2021-03-18T21:53:34.1939714+05:30;True|2021-03-17T15:46:49.4450451+05:30;True|2021-03-17T11:44:47.5348875+05:30;False|2021-03-11T21:56:49.7881312+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Browsers/qt.browser">
@@ -46,6 +46,33 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="assets/css/theme.min.css">
       <publishTime>01/21/2021 20:50:18</publishTime>
+    </File>
+    <File Include="assets/datatable/css/buttons.dataTables.min.css">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/css/jquery.dataTables.min.css">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/buttons.html5.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/buttons.print.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/dataTables.buttons.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/jquery.dataTables.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/jszip.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/pdfmake.min.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
+    </File>
+    <File Include="assets/datatable/js/vfs_fonts.js">
+      <publishTime>04/06/2021 10:55:41</publishTime>
     </File>
     <File Include="assets/fontawesome-5.12.1/css/all.min.css">
       <publishTime>03/19/2021 10:36:14</publishTime>
@@ -1602,10 +1629,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/19/2021 10:36:14</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>04/04/2021 21:54:51</publishTime>
+      <publishTime>04/07/2021 12:42:37</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>04/04/2021 21:54:51</publishTime>
+      <publishTime>04/07/2021 12:42:37</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
       <publishTime>03/20/2021 10:12:06</publishTime>
@@ -1617,19 +1644,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/20/2021 10:12:06</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.dll">
-      <publishTime>04/04/2021 21:54:47</publishTime>
+      <publishTime>04/07/2021 11:59:03</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.pdb">
-      <publishTime>04/04/2021 21:54:47</publishTime>
+      <publishTime>04/07/2021 11:59:03</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>04/04/2021 20:31:05</publishTime>
+      <publishTime>04/07/2021 11:33:00</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>01/14/2021 21:27:58</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>04/04/2021 20:31:05</publishTime>
+      <publishTime>04/07/2021 11:33:01</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>06/11/2020 20:17:04</publishTime>
@@ -1644,13 +1671,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/10/2021 13:40:34</publishTime>
     </File>
     <File Include="bin/App_Browsers.dll">
-      <publishTime>04/04/2021 21:55:12</publishTime>
+      <publishTime>04/07/2021 12:42:51</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/04/2021 21:55:11</publishTime>
+      <publishTime>04/07/2021 12:42:50</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/04/2021 21:55:11</publishTime>
+      <publishTime>04/07/2021 12:42:50</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 18:05:32</publishTime>
@@ -1664,11 +1691,26 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/HtmlSanitizer.dll">
       <publishTime>01/15/2021 12:12:26</publishTime>
     </File>
+    <File Include="bin/Microsoft.AspNetCore.Http.Abstractions.dll">
+      <publishTime>11/12/2018 17:29:00</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNetCore.Http.Features.dll">
+      <publishTime>11/12/2018 17:28:58</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNetCore.Routing.Abstractions.dll">
+      <publishTime>11/12/2018 17:38:16</publishTime>
+    </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>03/10/2021 13:40:35</publishTime>
     </File>
+    <File Include="bin/Microsoft.Extensions.Primitives.dll">
+      <publishTime>11/11/2018 00:26:36</publishTime>
+    </File>
     <File Include="bin/Microsoft.Graph.Core.dll">
       <publishTime>01/19/2021 22:40:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Net.Http.Headers.dll">
+      <publishTime>11/12/2018 17:28:58</publishTime>
     </File>
     <File Include="bin/Microsoft.Office.Interop.Word.dll">
       <publishTime>03/10/2016 16:19:48</publishTime>
@@ -1836,7 +1878,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/03/2021 12:22:25</publishTime>
     </File>
     <File Include="bin/System.Buffers.dll">
-      <publishTime>07/19/2017 10:01:28</publishTime>
+      <publishTime>05/15/2018 13:29:34</publishTime>
     </File>
     <File Include="bin/System.Collections.Concurrent.dll">
       <publishTime>03/03/2021 12:22:25</publishTime>
@@ -2090,6 +2132,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/System.Text.Encoding.Extensions.dll">
       <publishTime>03/03/2021 12:22:25</publishTime>
     </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>05/15/2018 13:29:52</publishTime>
+    </File>
     <File Include="bin/System.Text.RegularExpressions.dll">
       <publishTime>03/03/2021 12:22:25</publishTime>
     </File>
@@ -2166,7 +2211,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/10/2021 13:40:40</publishTime>
     </File>
     <File Include="bin/__browserCapabilitiesCompiler.compiled">
-      <publishTime>04/04/2021 21:55:13</publishTime>
+      <publishTime>04/07/2021 12:42:51</publishTime>
     </File>
     <File Include="Blox2.ttf">
       <publishTime>05/28/2006 19:16:12</publishTime>
@@ -4562,6 +4607,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Email/DownloadBadge.html">
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
+    <File Include="Email/EscalationEmailFormat.html">
+      <publishTime>04/07/2021 11:28:15</publishTime>
+    </File>
     <File Include="Email/EventUsernamaandpassword.html">
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
@@ -4590,7 +4638,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/14/2021 21:27:06</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/04/2021 21:54:55</publishTime>
+      <publishTime>04/07/2021 12:42:41</publishTime>
     </File>
     <File Include="Rotativa/help-wkhtmltoimage.txt">
       <publishTime>01/14/2021 21:27:02</publishTime>
@@ -4956,13 +5004,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/01/2021 16:13:06</publishTime>
     </File>
     <File Include="Views/Account/ChangePassword.cshtml">
-      <publishTime>04/04/2021 19:46:53</publishTime>
+      <publishTime>04/06/2021 12:00:55</publishTime>
     </File>
     <File Include="Views/Account/Error.cshtml">
       <publishTime>03/14/2021 23:24:36</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>04/04/2021 19:31:41</publishTime>
+      <publishTime>04/06/2021 14:59:45</publishTime>
     </File>
     <File Include="Views/Account/LoginReturnMsg.cshtml">
       <publishTime>04/04/2021 15:56:47</publishTime>
@@ -4971,70 +5019,70 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/04/2021 21:16:20</publishTime>
     </File>
     <File Include="Views/Account/ResetPwd.cshtml">
-      <publishTime>04/04/2021 17:06:14</publishTime>
+      <publishTime>04/06/2021 12:00:19</publishTime>
     </File>
     <File Include="Views/Account/View.cshtml">
       <publishTime>03/16/2021 12:27:30</publishTime>
     </File>
     <File Include="Views/AONW/AddMeetingAgenda.cshtml">
-      <publishTime>03/25/2021 08:48:08</publishTime>
+      <publishTime>04/07/2021 11:28:17</publishTime>
     </File>
     <File Include="Views/AONW/AddSocCommit.cshtml">
-      <publishTime>04/04/2021 11:48:09</publishTime>
+      <publishTime>04/07/2021 11:30:23</publishTime>
     </File>
     <File Include="Views/AONW/BulkUpload.cshtml">
       <publishTime>03/15/2021 20:59:54</publishTime>
     </File>
     <File Include="Views/AONW/createMeeting.cshtml">
-      <publishTime>04/03/2021 11:23:42</publishTime>
+      <publishTime>04/06/2021 12:03:14</publishTime>
     </File>
     <File Include="Views/AONW/CreateMeetingsold.cshtml">
       <publishTime>03/13/2021 09:52:32</publishTime>
     </File>
     <File Include="Views/AONW/EditMeeting.cshtml">
-      <publishTime>04/03/2021 11:23:42</publishTime>
+      <publishTime>04/06/2021 12:03:29</publishTime>
     </File>
     <File Include="Views/AONW/EditMeetingAgenda.cshtml">
-      <publishTime>03/20/2021 16:43:53</publishTime>
+      <publishTime>04/06/2021 12:03:47</publishTime>
     </File>
     <File Include="Views/AONW/EditSocMaster.cshtml">
-      <publishTime>03/20/2021 16:44:13</publishTime>
+      <publishTime>04/06/2021 12:03:58</publishTime>
     </File>
     <File Include="Views/AONW/EmailToMeetingParticipants.cshtml">
-      <publishTime>03/16/2021 11:14:54</publishTime>
+      <publishTime>04/07/2021 11:28:17</publishTime>
     </File>
     <File Include="Views/AONW/GenerateReport.cshtml">
-      <publishTime>03/25/2021 08:45:25</publishTime>
+      <publishTime>04/06/2021 12:04:22</publishTime>
     </File>
     <File Include="Views/AONW/Index.cshtml">
-      <publishTime>03/20/2021 16:45:07</publishTime>
+      <publishTime>04/06/2021 12:05:01</publishTime>
     </File>
     <File Include="Views/AONW/Indexold.cshtml">
       <publishTime>03/13/2021 09:55:30</publishTime>
     </File>
     <File Include="Views/AONW/SOCApproval.cshtml">
-      <publishTime>03/13/2021 10:13:22</publishTime>
+      <publishTime>04/06/2021 12:05:10</publishTime>
     </File>
     <File Include="Views/AONW/SocTimeline.cshtml">
-      <publishTime>03/10/2021 22:31:06</publishTime>
+      <publishTime>04/06/2021 12:05:29</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeeting.cshtml">
-      <publishTime>03/26/2021 09:28:03</publishTime>
+      <publishTime>04/07/2021 11:28:15</publishTime>
     </File>
     <File Include="Views/AONW/ViewSOCComment.cshtml">
-      <publishTime>03/13/2021 10:17:42</publishTime>
+      <publishTime>04/06/2021 12:05:46</publishTime>
     </File>
     <File Include="Views/AONW/ViewSocMaster.cshtml">
-      <publishTime>04/04/2021 11:42:17</publishTime>
+      <publishTime>04/06/2021 12:06:02</publishTime>
     </File>
     <File Include="Views/AONW/ViewSOCRegistration.cshtml">
-      <publishTime>04/03/2021 11:21:48</publishTime>
+      <publishTime>04/06/2021 12:06:20</publishTime>
     </File>
     <File Include="Views/AONW/ViewSocSendMail.cshtml">
-      <publishTime>04/04/2021 11:15:29</publishTime>
+      <publishTime>04/07/2021 11:28:17</publishTime>
     </File>
     <File Include="Views/AONW/_MeetingParticipants.cshtml">
-      <publishTime>03/16/2021 11:14:54</publishTime>
+      <publishTime>04/06/2021 12:02:23</publishTime>
     </File>
     <File Include="Views/EFile/Index.cshtml">
       <publishTime>03/10/2021 22:31:06</publishTime>
@@ -5043,16 +5091,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/04/2021 09:34:18</publishTime>
     </File>
     <File Include="Views/FormMenu/AddFormMenu.cshtml">
-      <publishTime>04/03/2021 11:23:42</publishTime>
+      <publishTime>04/06/2021 12:06:53</publishTime>
     </File>
     <File Include="Views/FormMenu/AddRole.cshtml">
-      <publishTime>04/03/2021 11:23:42</publishTime>
+      <publishTime>04/06/2021 12:07:09</publishTime>
     </File>
     <File Include="Views/FormMenu/GetFormMenu.cshtml">
-      <publishTime>04/03/2021 11:23:42</publishTime>
+      <publishTime>04/06/2021 12:07:19</publishTime>
     </File>
     <File Include="Views/FormMenu/GetSideMenuBar.cshtml">
-      <publishTime>04/01/2021 10:54:58</publishTime>
+      <publishTime>04/06/2021 12:07:26</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>03/10/2021 22:31:06</publishTime>
@@ -5066,11 +5114,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/10/2021 22:31:06</publishTime>
     </File>
+    <File Include="Views/ProcessingEmail/validationcheck.cshtml">
+      <publishTime>04/07/2021 11:28:17</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>01/14/2021 21:27:02</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/04/2021 16:47:48</publishTime>
+      <publishTime>04/07/2021 11:31:37</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>03/10/2021 22:31:06</publishTime>
@@ -5079,7 +5130,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/04/2021 19:29:06</publishTime>
     </File>
     <File Include="Views/SocPdfRegistration/SoCPdfRegistration.cshtml">
-      <publishTime>04/04/2021 10:58:08</publishTime>
+      <publishTime>04/07/2021 11:28:15</publishTime>
     </File>
     <File Include="Views/SocPdfRegistration/ViewfileandDoc.cshtml">
       <publishTime>03/10/2021 22:31:06</publishTime>
@@ -5091,7 +5142,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/10/2021 22:31:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/04/2021 21:54:52</publishTime>
+      <publishTime>04/07/2021 11:59:07</publishTime>
     </File>
   </ItemGroup>
 </Project>
