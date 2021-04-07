@@ -35,41 +35,72 @@ namespace ACQ.Web.App.Controllers
             else
             {
                 TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
-                if (tt.TotalSeconds >= 30 && BruteForceAttackss.refreshcount < 4)
+                if (tt.TotalSeconds <= 30)
                 {
-                    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                }
-                else if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount >= 4)
-                {
-                    if (Session["EmailID"] != null)
+                    if (BruteForceAttackss.refreshcount > 20)
                     {
-                        IEnumerable<LoginViewModel> model = null;
-                        using (var client2 = new HttpClient())
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
                         {
-                            client2.DefaultRequestHeaders.Clear();
-                            client2.BaseAddress = new Uri(WebAPIUrl);
-                            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                            client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                            HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + Session["EmailID"].ToString()).Result;
-                            if (response.IsSuccessStatusCode)
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
                             {
-                                LoginViewModel model1 = new LoginViewModel();
-                                model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                if (model.First().Message == "Blocked")
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
                                 {
-                                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
-                                    EmailHelper.SendAllDetails(model.First().ExternalEmailID, mailPath);
-                                    RedirectToAction("Logout", "Account");
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                    }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
                 }
                 else
                 {
-                    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
                 }
+
             }
         }
         HtmlSanitizer sanitizer = new HtmlSanitizer();
@@ -95,7 +126,7 @@ namespace ACQ.Web.App.Controllers
                 HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationData").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                    listdata = response.Content.ReadAsAsync<IEnumerable<ViewModel.EscalationReportData>>().Result;
                     Session["Escdata"] = null;
                     Session["Escdata"] = listdata;
                 }
@@ -106,7 +137,7 @@ namespace ACQ.Web.App.Controllers
 
         [Route("sendEscalationEmail")]
         [HandleError]
-        public JsonResult sendEscalationEmail(List<EscalationReportData> model)
+        public JsonResult sendEscalationEmail(List<ViewModel.EscalationReportData> model)
         {
             if(model!=null && model.Count()>0)
             {
@@ -124,8 +155,8 @@ namespace ACQ.Web.App.Controllers
                         {
                             string draftMsg = response.Content.ReadAsAsync<string>().Result;
                             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                            IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
-                            listdata=(IEnumerable<EscalationReportData>)Session["Escdata"];
+                            IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                            listdata=(IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
                             string email = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault().Responsible_Level1;
 
                             EmailHelper.sendEmailEscalation(email, draftMsg, mailPath);

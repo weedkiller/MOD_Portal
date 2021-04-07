@@ -52,15 +52,54 @@
 
     
 </div>
-
+<div id="successmsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row register-form">
+                                <div class="col-md-12 ">
+                                    <label>Mail send Successfully</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Ok" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script nonce="r@nd0m">
 
     $(document).ready(function () {
         $('#btnclose').click(function () {
-        var link = '@Url.Action("SendMailToAll", "AONW")';
-        window.location.href = link;
-    });
+        @*var link = '@Url.Action("SendMailToAll", "AONW")';
+        window.location.href = link;*@
+           $.get('@Url.Action("SendMailToAll", "AONW")', function (result) {
+               // TODO: process the results of the server side call
+               if (result != null) {
+                   $("#successmsg").modal('show');
+                   setTimeout(function () {
+                       window.location.href = "/ViewSOC";
+                   }, 5000);
+               }
+});
+        });
+        $('#Ok').click(function () {
+            window.location.href = "/ViewSOC";
+        });
     })
 
 

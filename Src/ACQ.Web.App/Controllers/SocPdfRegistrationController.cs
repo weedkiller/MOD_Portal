@@ -39,7 +39,7 @@ namespace ACQ.Web.App.Controllers
                 TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
                 if (tt.TotalSeconds <= 30)
                 {
-                    if (BruteForceAttackss.refreshcount > 4)
+                    if (BruteForceAttackss.refreshcount > 20)
                     {
                         if (System.Web.HttpContext.Current.Session["EmailID"] != null)
                         {
@@ -58,9 +58,8 @@ namespace ACQ.Web.App.Controllers
                                     model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
                                     if (model.First().Message == "Blocked")
                                     {
-                                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
-                                        EmailHelper.SendAllDetails(model.First().ExternalEmailID, mailPath);
-                                        RedirectToAction("Logout", "Account");
+                                        
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
                                     }
                                 }
                             }
@@ -73,7 +72,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else
                 {
-                    if (BruteForceAttackss.refreshcount > 4)
+                    if (BruteForceAttackss.refreshcount > 20)
                     {
                         if (System.Web.HttpContext.Current.Session["EmailID"] != null)
                         {
@@ -92,9 +91,8 @@ namespace ACQ.Web.App.Controllers
                                     model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
                                     if (model.First().Message == "Blocked")
                                     {
-                                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendBlockedMailFormat.html"));
-                                        EmailHelper.SendAllDetails(model.First().ExternalEmailID, mailPath);
-                                        RedirectToAction("Logout", "Account");
+                                      
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
                                     }
                                 }
                             }

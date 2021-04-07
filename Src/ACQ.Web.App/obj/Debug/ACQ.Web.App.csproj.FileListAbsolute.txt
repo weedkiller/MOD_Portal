@@ -250,3 +250,15 @@ E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompil
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
