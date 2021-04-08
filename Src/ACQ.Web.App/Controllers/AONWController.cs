@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
+using ACQ.Web.App.ViewModel;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -1563,6 +1564,37 @@ namespace ACQ.Web.App.Controllers
             {
                 throw ex;
             }
+        }
+        #endregion
+        #region Contract
+        public ActionResult Contract()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Contract(Contracts cnt)
+        {
+            try
+            {
+               
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/SaveContract?cnt=" + cnt).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Contract");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RedirectToAction("Contract");
         }
         #endregion
     }

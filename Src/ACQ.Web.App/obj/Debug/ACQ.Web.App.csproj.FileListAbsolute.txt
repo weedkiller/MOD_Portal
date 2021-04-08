@@ -262,3 +262,15 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
