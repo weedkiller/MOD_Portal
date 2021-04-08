@@ -724,6 +724,8 @@ namespace ACQ.Web.App.Controllers
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                     parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                     HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + mmID + "").Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -1388,7 +1390,7 @@ namespace ACQ.Web.App.Controllers
             int UserID = Convert.ToInt32(Session["UserID"]);
             int sectionID = Convert.ToInt32(Session["SectionID"]);
             if (sectionID == 13)
-                UserID = 1;
+                UserID = 0;
             return UserID;
         }
         //[Route("EditMeetingAgenda")]
