@@ -153,13 +153,50 @@ namespace ACQ.Web.App.Controllers
                         HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln="+item.CaseTaskSlno).Result;
                         if (response.IsSuccessStatusCode)
                         {
-                            string draftMsg = response.Content.ReadAsAsync<string>().Result;
-                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                            IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
-                            listdata=(IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                            string email = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault().Responsible_Level1;
+                            EscalationDraftMessage draftMsg = response.Content.ReadAsAsync<EscalationDraftMessage>().Result;
 
-                            EmailHelper.sendEmailEscalation(email, draftMsg, mailPath);
+                            if(item.EscalationTime<(Convert.ToInt32(item.dap_timeline)-1))
+                            {
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
+                                string message = draftMsg.DraftMessage_L1;
+                                message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+
+                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level1, message, mailPath);
+                            }
+                            else if(item.EscalationTime == (Convert.ToInt32(item.dap_timeline) - 1) || item.EscalationTime == Convert.ToInt32(item.dap_timeline))
+                            {
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
+
+                                //send message to L1.
+                                string L1message = draftMsg.DraftMessage_L1;
+                                L1message = L1message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level1, L1message, mailPath);
+
+                                //send message to L2.
+                                string L2message = draftMsg.DraftMessage_L2;
+                                L2message = L2message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level2, L2message, mailPath);
+
+
+                            }
+                            else if(item.EscalationTime > Convert.ToInt32(item.dap_timeline))
+                            {
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
+                                string message = draftMsg.DraftMessage_L3;
+                                message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+
+                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level3, message, mailPath);
+                            }
+                            
 
                         }
                     }

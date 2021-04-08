@@ -676,6 +676,7 @@
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />
     <Content Include="assets\media\images\ddp_logo_dark.png" />
+    <Content Include="assets\media\images\loader.gif" />
     <Content Include="assets\previous js css\css\editor.css" />
     <Content Include="assets\previous js css\css\jquery.dataTables.css" />
     <Content Include="assets\previous js css\js\jquery.dataTables.min.js" />
