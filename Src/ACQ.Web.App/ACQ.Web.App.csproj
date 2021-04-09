@@ -239,6 +239,7 @@
     <Content Include="assets\css\bootstrap.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\bootstrapv4.css" />
+    <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\light_bootstrapv4.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\datatable\css\buttons.dataTables.min.css" />
@@ -673,6 +674,7 @@
     <Content Include="assets\js\jbvalidator.min.js" />
     <Content Include="assets\js\jquery-3.6.0.min.js" />
     <Content Include="assets\js\jquery-ui-1.12.1.min.js" />
+    <Content Include="assets\js\jquery-ui.js" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />

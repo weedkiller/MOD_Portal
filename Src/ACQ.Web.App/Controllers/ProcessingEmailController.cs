@@ -146,11 +146,51 @@ namespace ACQ.Web.App.Controllers
                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
                     IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
                     listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                    ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
+                    ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE==item.MSG_TYPE).FirstOrDefault();
                     //string message = draftMsg.DraftMessage_L1;
                     //message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+                    if(!string.IsNullOrEmpty(lrepot.L1_Officer_Email) && lrepot.L1_Officer_Email!="N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L1_Officer_Email, lrepot.msg, mailPath);
+                    }
 
-                    //EmailHelper.sendEmailEscalation(lrepot.Responsible_Level1, message, mailPath);
+                    if (!string.IsNullOrEmpty(lrepot.L2_Officer_Email) && lrepot.L2_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L2_Officer_Email, lrepot.msg, mailPath);
+                    }
+                    if (!string.IsNullOrEmpty(lrepot.L3_Officer_Email) && lrepot.L3_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L3_Officer_Email, lrepot.msg, mailPath);
+                    }
+                    if (!string.IsNullOrEmpty(lrepot.L4_Officer_Email) && lrepot.L4_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L4_Officer_Email, lrepot.msg, mailPath);
+                    }
+
+                    if (!string.IsNullOrEmpty(lrepot.L5_ADGAcq_Email) && lrepot.L5_ADGAcq_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L5_ADGAcq_Email, lrepot.msg, mailPath);
+                    }
+
+                    if (!string.IsNullOrEmpty(lrepot.L6_JS_AM_Email) && lrepot.L6_JS_AM_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L6_JS_AM_Email, lrepot.msg, mailPath);
+                    }
+
+                    if (!string.IsNullOrEmpty(lrepot.L7_FM_Email) && lrepot.L7_FM_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L7_FM_Email, lrepot.msg, mailPath);
+                    }
+
+                    if (!string.IsNullOrEmpty(lrepot.L8_DG_Acq_Email) && lrepot.L8_DG_Acq_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L8_DG_Acq_Email, lrepot.msg, mailPath);
+                    }
+
+                    if (!string.IsNullOrEmpty(lrepot.L9_AS_FA_Email) && lrepot.L9_AS_FA_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L9_AS_FA_Email, lrepot.msg, mailPath);
+                    }
                 }
             }
             return Json(new { Status = true, Message="success" }, JsonRequestBehavior.AllowGet);
