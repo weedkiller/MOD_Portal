@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="row">
     <button class="btn btn-primary mb-3" onclick="printHtml()">print</button>
     <div class="col-md-12">
         <div class="portlet-body p-3 bg-white">
+            <div style="z-index:-9;position:fixed;top:-400px;left:-100px;font-size:120pt;width:100%;height:800px;transform:rotate(60deg);color:gray;opacity:0.6">@Model.Status</div>
             <p><b>Copy No.</b></p>
             @*<h2 style="text-align:center ;margin-top:-10px"><b>No.5(11)DAC(Sectt)/2020</b></h2>*@
             <p style="text-align:center;margin-top:-10px"><b>Government of India</b></p>
