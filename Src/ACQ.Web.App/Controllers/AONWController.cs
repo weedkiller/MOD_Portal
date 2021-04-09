@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
+using ACQ.Web.App.ViewModel;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -1585,6 +1586,47 @@ namespace ACQ.Web.App.Controllers
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region Contract
+        public ActionResult Contract()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Contract(Contracts cnt)
+        {
+            int i = 0;
+            try
+            {
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<Contracts>(WebAPIUrl + "AONW/SaveContract", cnt);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        //TempData["Msg"] = "Record Saved Successfully";
+                        i = 1;
+                    }
+                    else
+                    {
+                        //TempData["Msg"] = "Record Not Saved Successfully";
+                        i = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(i, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

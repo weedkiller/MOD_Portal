@@ -1,12 +1,10 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Contract";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+<link href="~/assets/DatePicker/jquery-ui.css" rel="stylesheet" />
 <div class="mt-3 container-fluid">
-
+    @Html.AntiForgeryToken()
     <div class="tabHead mb-1">
         <div class="row">
             <div class="col-md-6"><h3>Enter Contract Details</h3></div>
@@ -14,44 +12,183 @@
         </div>
     </div>
 
-    <div class="">
-        <form method="post" htmlAttributes: new { autocomplete="off" , enctype="multipart/form-data" }>
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-            <div class="card flex-fill w-100 p-3">
-                <div class="form-group row">
+    <div class="_sb">
 
-                    <label for=" " class="col-sm-3 col-form-label">Contract Id</label>
-                    <div class="col-sm-">
-                        <div class="form-group m-0">
-                            <input type="text" name="ContractId" id="ContractId" placeholder="Contract Id" class="form-control" />
+        <div class="card flex-fill w-100 p-3">
 
-                        </div>
+            <div class="form-group row">
+
+                <label for=" " class="col-sm-3 col-form-label">Services<span style="color:red;">*</span> <span id="vldServices" style="color:red;display:none">Please enter Services</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <select class="form-select form-control Services" name="Services" id="Services">
+                            <option value="Army">Army</option>
+                            <option value="Navy">Navy</option>
+                            <option value="AirForce">AirForce</option>
+                        </select>
+
                     </div>
                 </div>
-                <div class="form-group row">
-
-                    <label for=" " class="col-sm-3 col-form-label">Contract Number</label>
-                    <div class="col-sm-">
-                        <div class="form-group m-0">
-                            <input type="text" name="Contract_Number" id="Contract_Number" placeholder="Contract Number" class="form-control" />
-
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-
-                    <label for=" " class="col-sm-3 col-form-label">Date Of Contract Signing</label>
-                    <div class="col-sm-">
-                        <div class="form-group m-0">
-                            <input type="text" name="DateOfContractSigning" id="DateOfContractSigning" placeholder="Date Of Contract Signing" class="form-control" />
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </form>
+            <div class="form-group row">
+
+                <label for=" " class="col-sm-3 col-form-label">Contract Id <span style="color:red;">*</span> <span id="vldContractId" style="color:red;display:none">Please enter Contract Id</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="ContractId" id="ContractId" placeholder="Contract Id" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for=" " class="col-sm-3 col-form-label">Contract Number<span style="color:red;">*</span><span id="vldContract_Number" style="color:red;display:none">Please enter Contract Number</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="Contract_Number" id="Contract_Number" placeholder="Contract Number" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for=" " class="col-sm-3 col-form-label">Description<span style="color:red;">*</span><span id="vldDescriptions" style="color:red;display:none">Please enter Description</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="Description" id="Descriptions" placeholder="Description" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for=" " class="col-sm-3 col-form-label">Category<span style="color:red;">*</span><span id="vldCategory" style="color:red;display:none">Please enter Category</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="Category" id="Category" placeholder="Category" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Date Of Contract Signing <span style="color:red;">*</span><span id="vldDateOfContractSigning" style="color:red;display:none">Please enter Date Of Contract Signing</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="DateOfContractSigning" id="DateOfContractSigning" placeholder="Date Of Contract Signing" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Effective Date/TO Date</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="EffectiveDate" id="EffectiveDate" placeholder="Effective Date/TO Date" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">ABG Date/LC Opening Date</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="ABGDate" id="ABGDate" placeholder="ABG Date/LC Opening Date" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">PWBG %</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="PWBG" id="PWBGPercentage" placeholder="PWBG %" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">PWBG Date</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="PWBGDate" id="PWBGDate" placeholder="PWBG Date" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Incoterms</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="Incoterms" id="Incoterms" placeholder="Incoterms " class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Warranty</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="Warranty" id="Warranty" placeholder="Warranty " class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Contract Value<span style="color:red;">*</span><span id="vldContractValue" style="color:red;display:none">Please enter ContractValue</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="ContractValue" id="ContractValue" placeholder="Contract Value " class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">FE Content</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="FEContent" id="FEContent" placeholder="FE Content" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Taxes and Duties</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="TaxesAndDuties" id="TaxesAndDuties" placeholder="Taxes and Duties" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Final Delivery Date<span style="color:red;">*</span><span id="vldFinalDeliveryDate" style="color:red;display:none">Please enter Final Delivery Date</span></label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="FinalDeliveryDate" id="FinalDeliveryDate" placeholder="Final Delivery Date" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for=" " class=" col-form-label">Grace Period</label>
+                <div class="col-sm-">
+                    <div class="form-group m-0">
+                        <input type="text" name="GracePeriod" id="GracePeriod" placeholder="Grace Period" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
     </div>
     <div class="tabHead mb-1">
@@ -60,74 +197,86 @@
 
         </div>
     </div>
-    <div class="">
-        @*<form method="post" htmlAttributes: new { autocomplete="off" , enctype="multipart/form-data" }>
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()*@
+    <div class="_sbd">
+
         <div class="card ">
             <div class="table-body">
                 <div class="card Stage">
                     <div class="row">
                         <div class="col-sm-4">
+
                             <div class="form-group ">
-                                <input type="text" name="StageNumber" id="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />
+                                <label>Stage Number <span style="color:red;">*</span></label>
+                                <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="stageDescription" id="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />
+                                <label>Stage Description</label>
+                                <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="StageStartdate" id="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate" />
+                                <label>Stage Start Date</label>
+                                <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="StageCompletionDate" id="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate" />
+                                <label>Stage Completion Date</label>
+                                <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+
+                            <div class="form-group ">
+                                <label>% Of Contract Value<span style="color:red;">*</span></label>
+                                <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="PercentOfContractValue" id="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group ">
-                                <input type="text" name="Amount" id="Amount" placeholder="Amount" class="form-control Amount" />
+                                <label>Amount<span style="color:red;">*</span></label>
+                                <input type="text" name="Amount" placeholder="Amount" class="form-control Amount" />
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="DueDateOfPayment" id="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment" />
+                                <label>Due Date Of Payment<span style="color:red;">*</span></label>
+                                <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="Conditions" id="Conditions" placeholder="Conditions" class="form-control Conditions" />
+                                <label>Conditions</label>
+                                <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="RevisedDateOfpayment" id="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment" />
+                                <label>Revised Date Of Payment</label>
+                                <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="ReasonsForSlippage" id="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />
+                                <label>Reason For Slippage</label>
+                                <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="ActualDateOfPayment" id="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />
+                                <label>Actual Date Of Payment<span style="color:red;">*</span></label>
+                                <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <select id="TotalPaymentMade" name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">
+                                <label>Total Payment Made<span style="color:red;">*</span></label>
+                                <select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">
                                     <option value="Basic Stage Payment">Basic Stage Payment</option>
                                     <option value="Taxes">Taxes</option>
                                     <option value="Customs Duty">Customs Duty</option>
@@ -139,12 +288,17 @@
 
                         <div class="col-sm-4">
                             <div class="form-group ">
-                                <input type="text" name="TotalPaymentMade" id="TotalPaymentMade" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />
+                                <label>Full or Part Payment Made<span style="color:red;">*</span></label>
+                                <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-sm-4">
-                            <button id="AddNewStage" class="btn btn-success AddNewStage"><i class="fa fa-plus" aria-hidden="true"></i></button>               @*<button id="DeleteStage" class="btn btn-danger DeleteStage"><i class="fa fa-trash" aria-hidden="true"></i></button>*@
+                            <button class="btn btn-success AddNewStage"><i class="fa fa-plus" aria-hidden="true"></i></button>               @*<button id="DeleteStage" class="btn btn-danger DeleteStage"><i class="fa fa-trash" aria-hidden="true"></i></button>*@
                         </div>
 
                     </div>
@@ -225,23 +379,147 @@
 
 
             </div>*@
+        <button type="button" id="btnSaveDetails" class="btn btn-success" value="Save Details" style="float:right;">Save Details</button>
 
     </div>
 
-    <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
-    <script nonce="r@nd0m">
-        $(document).ready(function () {
-            $(document).on("click",'.AddNewStage',function () {
+</div>
 
-                $('.table-body').append(' <div class="card Stage"><div class="row">                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="StageNumber" id="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="stageDescription" id="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="StageStartdate" id="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="StageCompletionDate" id="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="PercentOfContractValue" id="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="Amount" id="Amount" placeholder="Amount" class="form-control Amount" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="DueDateOfPayment" id="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="Conditions" id="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="RevisedDateOfpayment" id="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="ReasonsForSlippage" id="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="ActualDateOfPayment" id="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <select id="TotalPaymentMade" name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">                                     <option value="Basic Stage Payment">Basic Stage Payment</option>                                     <option value="Taxes">Taxes</option>                                     <option value="Customs Duty">Customs Duty</option>                                     <option value="ERV Payment">ERV Payment</option>                                 </select>                              </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <input type="text" name="TotalPaymentMade" id="TotalPaymentMade" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />                             </div>                         </div>                          <div class="col-sm-4">                             <button id="AddNewStage" class="btn btn-success AddNewStage"><i class="fa fa-plus" aria-hidden="true"></i></button></div>                      </div>                 </div>');
-
-            });
-
-
-            $(".DeleteStage").click(function () {
-                $(this).closest('row').remove();
-
-            });
-          
+<link href="~/assets/DatePicker/jquery-ui.css" rel="stylesheet" />
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script nonce="r@nd0m">
+    $(document).ready(function () {
+        $(function () {
+            $("#DateOfContractSigning").datepicker();
         });
-    </script>
+
+
+
+        $(document).on("click", '.AddNewStage', function () {
+
+            $('.table-body').append('  <div class="card Stage">                     <div class="row">                         <div class="col-sm-4">                              <div class="form-group ">                                 <label>Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label>% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Total Payment Made<span style="color:red;">*</span></label>                                 <select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">                                     <option value="Basic Stage Payment">Basic Stage Payment</option>                                     <option value="Taxes">Taxes</option>                                     <option value="Customs Duty">Customs Duty</option>                                     <option value="ERV Payment">ERV Payment</option>                                 </select>                              </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                     <option value="Yes">Yes</option>                                     <option value="No">No</option>                                  </select>                             </div>                         </div>                          <div class="col-sm-4">                             <button  class="btn btn-success AddNewStage"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button id="DeleteStage" class="btn btn-danger DeleteStage"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
+
+        });
+
+        $(document).on("click", '.DeleteStage', function () {
+
+            $(this).parent().parent().parent().remove();
+
+        });
+
+        $("#btnSaveDetails").click(function () {
+            debugger;
+            var ContractId = $('#ContractId').val();
+            var ContractNumber = $('#Contract_Number').val();
+            var DateOfContractSigning = $('#DateOfContractSigning').val();
+            var Descriptions = $('#Descriptions').val();
+            var Category = $('#Category').val();
+            var ContractValue = $('#ContractValue').val();
+            var FinalDeliveryDate = $('#FinalDeliveryDate').val();
+
+
+            var Contract = {
+                ContractId: $('#ContractId').val(),
+                Contract_Number: $('#Contract_Number').val(),
+                DateOfContractSigning: $('#DateOfContractSigning').val(),
+                Descriptions: $('#Descriptions').val(),
+                Category: $('#Category').val(),
+                EffectiveDate: $('#EffectiveDate').val(),
+                ABGDate: $('#ABGDate').val(),
+                PWBGPercentage: $('#PWBGPercentage').val(),
+                PWBGDate: $('#PWBGDate').val(),
+                Incoterms: $('#Incoterms').val(),
+                Warranty: $('#Warranty').val(),
+                ContractValue: $('#ContractValue').val(),
+                FEContent: $('#FEContent').val(),
+                TaxesAndDuties: $('#TaxesAndDuties').val(),
+                FinalDeliveryDate: $('#FinalDeliveryDate').val(),
+                GracePeriod: $('#GracePeriod').val(),
+                Services: $('#Services option:selected').val(),
+            };
+
+            var stagesdata = [];
+            $('.table-body .Stage').each(function () {
+                var stage = {};
+                stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                stage["stageDescription"] = $(this).children().find('.StageDescription').val();
+                stage["StageStartdate"] = $(this).children().find('.StageStartDate').val();
+                stage["StageCompletionDate"] = $(this).children().find('.StageCompletionDate').val();
+                stage["PercentOfContractValue"] = parseInt($(this).children().find('.PercentOfContractValue').val());
+                stage["Amount"] = $(this).children().find('.Amount').val();
+                stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+                stage["Conditions"] = $(this).children().find('.Conditions').val();
+                stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
+                stage["ReasonsForSlippage"] = $(this).children().find('.ReasonForSlippage').val();
+                stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
+                stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade option:selected').val();
+                stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
+
+                stagesdata.push(stage);
+
+
+            });
+
+
+            var data = {
+                Contrct_Detail: Contract,
+                Stage_Detail: stagesdata
+            }
+
+
+            if (ContractId != "" && ContractNumber != "" && DateOfContractSigning != "" && Descriptions != "" && Category != "" && ContractValue != "" && FinalDeliveryDate != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/AONW/Contract",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response > 0) {
+                            window.location.reload();
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+            else {
+                if (ContractId == "") {
+                    //alert("Please enter Contract Id");
+                    $('#vldContractId').css({ "display": "block" });
+                }
+                else if (ContractNumber == "") {
+                    $('#vldContract_Number').css({ "display": "block" });
+                }
+                else if (DateOfContractSigning == "") {
+                    $('#vldDateOfContractSigning').css({ "display": "block" });
+                }
+                else if (Descriptions == "") {
+                    $('#vldDescriptions').css({ "display": "block" });
+                }
+                else if (Category == "") {
+                    $('#vldCategory').css({ "display": "block" });
+                }
+                else if (ContractValue == "") {
+                    $('#vldContractValue').css({ "display": "block" });
+                }
+                else if (FinalDeliveryDate == "") {
+                    $('#vldFinalDeliveryDate').css({ "display": "block" });
+                }
+                else {
+
+                }
+
+            }
+
+
+
+        });
+
+
+    });
+</script>

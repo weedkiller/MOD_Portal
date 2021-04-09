@@ -48,6 +48,7 @@
 
 <div class="containers">
     <div class="container-fluids">
+        @Html.AntiForgeryToken()
         <div class="card">
             <div class="card-header">
                 <h4>Processing  </h4>
@@ -61,7 +62,7 @@
                         <button class="btn btn-sm btn-success" type="button" id="Seach" title="Search">Search</button>
                         <button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button>
                     </p>
-                    
+
                 </div>
                 <div class="table-responsive">
 

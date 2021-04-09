@@ -137,6 +137,7 @@ namespace ACQ.Web.App.Controllers
 
         [Route("sendEscalationEmail")]
         [HandleError]
+        [ValidateAntiForgeryToken]
         public JsonResult sendEscalationEmail(List<ViewModel.EscalationReportData> model)
         {
             if(model!=null && model.Count()>0)
