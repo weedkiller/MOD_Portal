@@ -1590,6 +1590,10 @@ namespace ACQ.Web.App.Controllers
         #endregion
 
         #region Contract
+        [Route("Contract")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult Contract()
         {
 
@@ -1604,11 +1608,58 @@ namespace ACQ.Web.App.Controllers
             int i = 0;
             try
             {
+                Contracts _contracts = new Contracts();
+                ContractDetails contractDetails = new ContractDetails
+                {
+                    ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId),
+                    Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number),
+                    DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString())),
+                    Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions),
+                    Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category),
+                    EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.EffectiveDate.ToString())),
+                    ABGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.ABGDate.ToString())),
+                    PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGPercentage.ToString())),
+                    PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGDate.ToString())),
+                    Incoterms = sanitizer.Sanitize(cnt.Contrct_Detail.Incoterms),
+                    Warranty = sanitizer.Sanitize(cnt.Contrct_Detail.Warranty),
+                    ContractValue = sanitizer.Sanitize(cnt.Contrct_Detail.ContractValue),
+                    FEContent = sanitizer.Sanitize(cnt.Contrct_Detail.FEContent),
+                    TaxesAndDuties = sanitizer.Sanitize(cnt.Contrct_Detail.TaxesAndDuties),
+                    FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.FinalDeliveryDate.ToString())),
+                    GracePeriod = sanitizer.Sanitize(cnt.Contrct_Detail.GracePeriod),
+                };
+
+                _contracts.Contrct_Detail = contractDetails;
+
+                List<StageDetail> stages = new List<StageDetail>();
+                foreach(var item in cnt.Stage_Detail.ToList())
+                {
+                    StageDetail stageDetail = new StageDetail
+                    {
+                        StageNumber = Convert.ToInt32(sanitizer.Sanitize(item.StageNumber.ToString())),
+                        stageDescription = sanitizer.Sanitize(item.stageDescription),
+                        StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(item.StageStartdate.ToString())),
+                        StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(item.StageCompletionDate.ToString())),
+                        PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(item.PercentOfContractValue.ToString())),
+                        Amount = Convert.ToDecimal(sanitizer.Sanitize(item.Amount.ToString())),
+                        DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.DueDateOfPayment.ToString())),
+                        Conditions = sanitizer.Sanitize(item.Conditions),
+                        RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString())),
+                        ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage),
+                        ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString())),
+                        TotalPaymentMade = sanitizer.Sanitize(item.TotalPaymentMade),
+                        FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade),
+                    };
+                    stages.Add(stageDetail);
+                }
+
+                _contracts.Stage_Detail = stages;
+
 
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl);
-                    HttpResponseMessage postJob = await client.PostAsJsonAsync<Contracts>(WebAPIUrl + "AONW/SaveContract", cnt);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<Contracts>(WebAPIUrl + "AONW/SaveContract", _contracts);
                     bool postResult = postJob.IsSuccessStatusCode;
                     if (postResult == true)
                     {
