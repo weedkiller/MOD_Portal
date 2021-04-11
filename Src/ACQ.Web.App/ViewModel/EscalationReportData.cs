@@ -60,4 +60,12 @@ namespace ACQ.Web.App.ViewModel
         public string DraftMessage_L3 { get; set; }
         public string DraftMessage_L4 { get; set; }
     }
+
+    public class datesearch
+    {
+        public DateTime startdate { get; set; }
+        public DateTime EndDate { get; set; }
+        public List<EscalationReportData> data { get; set; }
+        public bool Status { get; set; }
+    }
 }

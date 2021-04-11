@@ -138,16 +138,16 @@ namespace ACQ.Web.App.Controllers
         [Route("sendEscalationEmail")]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public JsonResult sendEscalationEmail(List<ViewModel.EscalationReportData> model)
+        public JsonResult sendEscalationEmail(List<EscalationReportData> model)
         {
             if(model!=null && model.Count()>0)
             {
                 foreach (var item in model)
                 {
                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                    IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
+                    IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
                     listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                    ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE==item.MSG_TYPE).FirstOrDefault();
+                    EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE==item.MSG_TYPE).FirstOrDefault();
                     //string message = draftMsg.DraftMessage_L1;
                     //message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
                     if(!string.IsNullOrEmpty(lrepot.L1_Officer_Email) && lrepot.L1_Officer_Email!="N/A")
@@ -197,7 +197,30 @@ namespace ACQ.Web.App.Controllers
             return Json(new { Status = true, Message="success" }, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("searchescalationdata")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult searchescalationdata(datesearch model)
+        {
+            if(Session["Escdata"]!=null)
+            {
+                IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                var startdate = Convert.ToDateTime(sanitizer.Sanitize(model.startdate.ToString()));
+                var Enddate = Convert.ToDateTime(sanitizer.Sanitize(model.EndDate.ToString()));
+                var data = listdata.Where(x => x.date_of_alert >= startdate && x.date_of_alert <= Enddate).ToList();
+                if (data != null && data.Count() > 0)
+                {
+                    model.data = data;
+                    model.Status = true;
+                }
+                else model.Status = false;
 
+            }
+            else model.Status = false;
+
+            return Json(new { result= model}, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

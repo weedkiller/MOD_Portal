@@ -44,227 +44,249 @@
         display: flex;
         justify-content: center;
     }
+    .btn-search {
+        /* float: left; */
+        /* width: 20%; */
+        /* padding: 11px; */
+        background: #2196F3;
+        color: white;
+        /* font-size: 17px; */
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+    .btn-primary {
+        color: #fff;
+        background-color: #2196F3 !important;
+        border-color: #2196F3 !important;
+    }
 </style>
 
 <div class="containers">
     <div class="container-fluids">
-        @Html.AntiForgeryToken()
-        <div class="card">
-            <div class="card-header">
-                <h4>Processing  </h4>
-            </div>
-            <div class="card-body">
-                <div class="button-area">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
 
-                    <p style="margin: 5px;">From: <input type="text" id="FromDate" class="form-control form-control-sm"></p>
-                    <p style="margin: 5px;">To: <input type="text" id="ToDate" class="form-control form-control-sm"></p>
-                    <p style="margin: 1.8em;">
-                        <button class="btn btn-sm btn-success" type="button" id="Seach" title="Search">Search</button>
-                        <button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button>
-                    </p>
-
+            <div class="card">
+                <div class="card-header">
+                    <h4>Escalation Matrix Drafts  </h4>
                 </div>
-                <div class="table-responsive">
+                <div class="card-body">
+                    <div class="button-area">
+
+                        <p style="margin: 5px;">From: <input type="text" id="FromDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                        <p style="margin: 5px;">To: <input type="text" id="ToDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                        <p style="margin: 1.8em;margin-left: .2em;">
+                            <button class="btn btn-sm btn-search" type="button" id="Search" title="Search" disabled><i class="fa fa-search"></i> </button>
+                            <button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button>
+                        </p>
+
+                    </div>
+                    <div class="table-responsive">
 
 
-                    <table id="example" class="display nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /></th>
-                                <th>AON Id</th>
-                                <th>Lead Service</th>
-                                <th>Item Description</th>
-                                <th>Date of AAON</th>
-                                <th>Draft Message</th>
-                                <th>Date Of Alert</th>
-                                <th>Email Receivers</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Count() > 0)
-                            {
-                                foreach (var item in Model.ToList())
+                        <table id="example" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /></th>
+                                    <th>AON Id</th>
+                                    <th>Lead Service</th>
+                                    <th>Item Description</th>
+                                    <th>Date of AAON</th>
+                                    <th>Draft Message</th>
+                                    <th>Date Of Alert</th>
+                                    <th>Email Receivers</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count() > 0)
                                 {
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.MSG_TYPE" onchange="getselect();" />
-                                        </td>
-                                        <td>
-                                            @item.aon_id
-                                        </td>
-                                        <td>@item.Service_Lead_Service</td>
-                                        <td>
+                                    foreach (var item in Model.ToList())
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.MSG_TYPE" onchange="getselect();" />
+                                            </td>
+                                            <td>
+                                                @item.aon_id
+                                            </td>
+                                            <td>@item.Service_Lead_Service</td>
+                                            <td>
 
-                                            @item.item_description
+                                                @item.item_description
 
-                                        </td>
-                                        <td>
-                                            @item.dateofaccordAON
-                                        </td>
-                                        <td>
-                                            @if (!string.IsNullOrEmpty(item.msg))
-                                            {
-                                                <p>@item.msg</p>
-                                            }
-                                            else
-                                            {
-                                                <p>No draft available</p>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.date_of_alert != null)
-                                            {
-                                                <span>@item.date_of_alert.Value.ToString("MM/dd/yyyy")</span>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L1_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
-                                                    {<span>@item.L1_Officer_Phone</span>}
+                                            </td>
+                                            <td>
+                                                @item.dateofaccordAON
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.msg))
+                                                {
+                                                    <p>@item.msg</p>
+                                                }
                                                 else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
-                                                    {<span>@item.L1_Officer_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                {
+                                                    <p>No draft available</p>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.date_of_alert != null)
+                                                {
+                                                    <span>@item.date_of_alert.Value.ToString("MM/dd/yyyy")</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L1_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
+                                                        {<span>@item.L1_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
+                                                        {<span>@item.L1_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
 
 
 
-                                            @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L2_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
-                                                    {<span>@item.L2_Officer_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
-                                                    {<span>@item.L2_Officer_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L2_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
+                                                        {<span>@item.L2_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
+                                                        {<span>@item.L2_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L3_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
-                                                    {<span>@item.L3_Officer_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
-                                                    {<span>@item.L3_Officer_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L3_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
+                                                        {<span>@item.L3_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
+                                                        {<span>@item.L3_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L4_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
-                                                    {<span>@item.L4_Officer_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
-                                                    {<span>@item.L4_Officer_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L4_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
+                                                        {<span>@item.L4_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
+                                                        {<span>@item.L4_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L5_ADGAcq_Name Phone: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Phone))
-                                                    {<span>@item.L5_ADGAcq_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Email))
-                                                    {<span>@item.L5_ADGAcq_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L5_ADGAcq_Name Phone: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Phone))
+                                                        {<span>@item.L5_ADGAcq_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Email))
+                                                        {<span>@item.L5_ADGAcq_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrWhiteSpace(item.L6_JS_AM_Email) == false && item.L6_JS_AM_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L6_JS_AM_Name Phone: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Phone))
-                                                    {<span>@item.L6_JS_AM_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Email))
-                                                    {<span>@item.L6_JS_AM_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrWhiteSpace(item.L6_JS_AM_Email) == false && item.L6_JS_AM_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L6_JS_AM_Name Phone: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Phone))
+                                                        {<span>@item.L6_JS_AM_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Email))
+                                                        {<span>@item.L6_JS_AM_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrWhiteSpace(item.L7_FM_Email) == false && item.L7_FM_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L7_FM_Name Phone: @if (!string.IsNullOrEmpty(item.L7_FM_Phone))
-                                                    {<span>@item.L7_FM_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L7_FM_Email))
-                                                    {<span>@item.L7_FM_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrWhiteSpace(item.L7_FM_Email) == false && item.L7_FM_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L7_FM_Name Phone: @if (!string.IsNullOrEmpty(item.L7_FM_Phone))
+                                                        {<span>@item.L7_FM_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L7_FM_Email))
+                                                        {<span>@item.L7_FM_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrWhiteSpace(item.L8_DG_Acq_Email) == false && item.L8_DG_Acq_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L8_DG_Acq_Name Phone: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Phone))
-                                                    {<span>@item.L8_DG_Acq_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Email))
-                                                    {<span>@item.L8_DG_Acq_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
+                                                @if (string.IsNullOrWhiteSpace(item.L8_DG_Acq_Email) == false && item.L8_DG_Acq_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L8_DG_Acq_Name Phone: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Phone))
+                                                        {<span>@item.L8_DG_Acq_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Email))
+                                                        {<span>@item.L8_DG_Acq_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
-                                            @if (string.IsNullOrWhiteSpace(item.L9_AS_FA_Email) == false && item.L9_AS_FA_Email != "N/A")
-                                            {
-                                                <div class="cards">
-                                                    Name : @item.L9_AS_FA_Name Phone: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Phone))
-                                                    {<span>@item.L9_AS_FA_Phone</span>}
-                                                else
-                                                {<span>N/A</span>}
-                                                    Email: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Email))
-                                                    {<span>@item.L9_AS_FA_Email</span>}
-                                                else
-                                                { <span>N/A</span>}
-                                                </div>
-                                            }
-
-
+                                                @if (string.IsNullOrWhiteSpace(item.L9_AS_FA_Email) == false && item.L9_AS_FA_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L9_AS_FA_Name Phone: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Phone))
+                                                        {<span>@item.L9_AS_FA_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Email))
+                                                        {<span>@item.L9_AS_FA_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
 
 
-                                        </td>
 
 
-                                        <td><button type="button" class="btn btn-sm btn-primary Edit"><i class="fa fa-edit"></i> </button> </td>
-                                    </tr>
+                                            </td>
+
+
+                                            <td><button type="button" class="btn btn-sm btn-primary Edit"><i class="fa fa-edit"></i> </button> </td>
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+
+
 
 
     </div>
@@ -310,7 +332,13 @@
                 },
                 {
                     extend: 'print',
-                    text: 'Print'
+                    text: 'Print',
+                    autoPrint: true,
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
                 }
             ],
             pageLength: 25
@@ -319,7 +347,8 @@
         getselect();
 
         $(document).on('click', '#SendtoAll', function () {
-
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
             var data = [];
             $('tbody tr').each(function () {
@@ -332,6 +361,7 @@
             });
 
             $(btn).attr('disabled', true);
+            
 
             $.ajax({
                 beforeSend: function () {
@@ -339,8 +369,46 @@
                 },
                 type: "POST",
                 url: "/sendEscalationEmail",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.Status == true) {
+                        alert("Email has been send to the selected user");
+                        window.location.href = "/validationchecker";
+                    } else {
+                        alert("Something went wrong");
+                    }
+                },
+                failure: function (response) {
+                    deselectAll();
+                    alert("Please check your internet connection...");
+                },
+                error: function (response) {
+                    deselectAll();
+                    alert("Please check your internet connection...");
+                }
+            });
+        });
+
+        $('#Search').click(function () {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var data = {
+                "startdate": $('#FromDate').val(),
+                "EndDate": $('#ToDate').val()
+            };
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/searchescalationdata",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
@@ -391,6 +459,30 @@
                 $(this).children().find('.checkbox-select').attr('disabled', false);
             });
             getselect();
+        }
+    }
+
+    function deselectAll() {
+        if ($('#selectall').is(":checked")) {
+            $('tbody tr').each(function () {
+                $(this).children().find('.checkbox-select').attr('checked', false);
+                $(this).children().find('.checkbox-select').attr('disabled', false);
+            });
+            getselect();
+        }
+        
+    }
+    function validatedate() {
+        if ($('#FromDate').val() != "" && $('#ToDate').val() != "") {
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            if (Fromdate > ToDate) {
+                alert("Start date should lesser then end date!.");
+                $('#ToDate').val('');
+            }
+            else {
+                $('#Search').attr("disabled", false);
+            }
         }
     }
 </script>

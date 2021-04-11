@@ -72,7 +72,6 @@
     <Compile Include="FormMenu\RoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResendOTP\ResendOTPViewModel.cs" />
-    <Compile Include="User\EscalationReportData.cs" />
     <Compile Include="User\ForgetPasswordViewModel.cs" />
     <Compile Include="User\LoginViewModel.cs" />
     <Compile Include="User\resetpwdViewModel.cs" />
