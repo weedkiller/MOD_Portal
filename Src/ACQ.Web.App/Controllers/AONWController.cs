@@ -1601,9 +1601,10 @@ namespace ACQ.Web.App.Controllers
         }
 
 
+        [Route("SaveContract")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> Contract(Contracts cnt)
+        public async Task<JsonResult> SaveContract(Contracts cnt)
         {
             int i = 0;
             try
