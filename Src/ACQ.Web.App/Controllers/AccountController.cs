@@ -28,7 +28,7 @@ namespace ACQ.Web.App.Controllers
 
     public class AccountController : Controller
     {
-        
+
 
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
@@ -66,7 +66,7 @@ namespace ACQ.Web.App.Controllers
             //                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
             //                        if (model.First().Message == "Blocked")
             //                        {
-                                        
+
             //                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
             //                        }
             //                    }
@@ -142,7 +142,6 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         public ActionResult Login()
         {
-
 
             BruteForceAttackss.refreshcount = 0;
             return View();

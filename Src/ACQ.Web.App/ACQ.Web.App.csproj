@@ -222,6 +222,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AONWController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FormMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -232,12 +233,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URIHandler.cs" />
+    <Compile Include="ViewModel\Contracts.cs" />
     <Compile Include="ViewModel\EscalationReportData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\bootstrapv4.css" />
+    <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\light_bootstrapv4.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\datatable\css\buttons.dataTables.min.css" />
@@ -672,6 +675,7 @@
     <Content Include="assets\js\jbvalidator.min.js" />
     <Content Include="assets\js\jquery-3.6.0.min.js" />
     <Content Include="assets\js\jquery-ui-1.12.1.min.js" />
+    <Content Include="assets\js\jquery-ui.js" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />
@@ -1689,6 +1693,8 @@
     <Content Include="Views\Account\Captcha.cshtml" />
     <Content Include="Views\Account\ResetPasswordReturnMsg.cshtml" />
     <Content Include="Views\ProcessingEmail\validationcheck.cshtml" />
+    <Content Include="Views\AONW\Contract.cshtml" />
+    <Content Include="Views\Contract\ContractList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

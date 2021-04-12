@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
+using ACQ.Web.App.ViewModel;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -76,7 +77,7 @@ namespace ACQ.Web.App.Controllers
                         BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
                     }
                 }
-                else 
+                else
                 {
                     if (BruteForceAttackss.refreshcount > 20)
                     {
@@ -109,7 +110,7 @@ namespace ACQ.Web.App.Controllers
                         BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
                     }
                 }
-                
+
             }
         }
 
@@ -260,7 +261,7 @@ namespace ACQ.Web.App.Controllers
 
             Socmodel.SOCMailVIEW = listData;
             //return RedirectToAction("ViewSOCRegistration");
-            return Json("Success",JsonRequestBehavior.AllowGet);
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -862,14 +863,14 @@ namespace ACQ.Web.App.Controllers
                     // Session["item"] = Request.QueryString["item"].ToString();
                     //if(Request != null && string.IsNullOrEmpty(Request.QueryString["item"]))
                     //{
-                        ViewBag.item = Request.QueryString["item"].ToString();
-                        //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
-                        ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
-                        ViewBag.id = id;
-                   // }
+                    ViewBag.item = Request.QueryString["item"].ToString();
+                    //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
+                    ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
+                    ViewBag.id = id;
+                    // }
                 }
             }
-            catch(Exception EX)
+            catch (Exception EX)
             {
 
             }
@@ -913,7 +914,7 @@ namespace ACQ.Web.App.Controllers
                     throw ex;
                 }
             }
-          //  ViewBag.aonId = Session["item"].ToString();
+            //  ViewBag.aonId = Session["item"].ToString();
             // return View(model);
             return Json(Res, JsonRequestBehavior.AllowGet);
         }
@@ -971,7 +972,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult GenerateReport(string ID, string Version = null)
         {
-           Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
 
             SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
             using (var client = new HttpClient())
@@ -1260,6 +1261,7 @@ namespace ACQ.Web.App.Controllers
                     {
                         f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
                     });
+
                 }
             }
             return await Task.FromResult(Json(listData, JsonRequestBehavior.AllowGet));
@@ -1309,31 +1311,31 @@ namespace ACQ.Web.App.Controllers
         public async Task<ActionResult> CreateAgenda(MeetingAgenda _model)
         {
             ViewBag.AgendaItem1 = _model.AgendaItem1;
-            
-               int mid = Convert.ToInt32(_model.meeting_id);
-                try
-                {
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(WebAPIUrl + "AONW/CreateAgenda");
-                        HttpResponseMessage postJob = await client.PostAsJsonAsync<MeetingAgenda>(WebAPIUrl + "AONW/CreateAgenda", _model);
-                        bool postResult = postJob.IsSuccessStatusCode;
-                        if (postResult == true)
-                        {
-                            TempData["Msg"] = "Sucessfully Saved Record";
 
-                        }
-                        else
-                        {
-                            TempData["Msg"] = "Some error occured record not saved";
-                        }
+            int mid = Convert.ToInt32(_model.meeting_id);
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl + "AONW/CreateAgenda");
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<MeetingAgenda>(WebAPIUrl + "AONW/CreateAgenda", _model);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        TempData["Msg"] = "Sucessfully Saved Record";
+
+                    }
+                    else
+                    {
+                        TempData["Msg"] = "Some error occured record not saved";
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-           
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             ViewBag.dated = Session["mdate"].ToString();
             ViewBag.mtype = Session["mtype"].ToString();
             string id = Encryption.Encrypt(mid.ToString());
@@ -1349,15 +1351,15 @@ namespace ACQ.Web.App.Controllers
             ViewBag.mtype = mtype;
             ViewBag.dated = dated;
             MeetingAgenda meetingAgenda = new MeetingAgenda();
-            if(id=="0")
+            if (id == "0")
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(id);
             }
-            else 
+            else
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
             }
-           
+
             meetingAgenda.MeetingAgendaComment = new MeetingAgendaComment();
             meetingAgenda.MeetingAgendaCommentList = new List<MeetingAgendaComment>();
             meetingAgenda.MeetingAgendaComment.UserID = GetUserID();
@@ -1385,6 +1387,26 @@ namespace ACQ.Web.App.Controllers
             #endregion
 
             return View(meetingAgenda);
+        }
+
+        [HttpGet]
+        [Route("CheckTypeofAgendaExists")]
+        public ActionResult CheckTypeofAgendaExists(int id, int typeofAgenda)
+        {
+            //string results = "";
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(WebAPIUrl);
+            //    //HTTP GET
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+            //    HttpResponseMessage response = client.GetAsync("AONW/CheckTypeofAgendaExists?id="+id+ "&typeofAgenda="+typeofAgenda).Result;
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //         results = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result.ToString();
+            //    }
+            //}
+            //return results;
+            return View();
         }
         [Route("GetUserID")]
         [HandleError]
@@ -1428,6 +1450,7 @@ namespace ACQ.Web.App.Controllers
                 ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
                 ViewBag.dated = Session["mdate"].ToString();
                 ViewBag.mtype = Session["mtype"].ToString();
+                ViewBag.PageMode = "Edit";
                 return View("AddMeetingAgenda", model);
             }
             catch (Exception ex)
@@ -1443,51 +1466,51 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> UpdateMeetingAgenda(MeetingAgenda _model)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            try
             {
-                try
+                if (GetUserID() > 0)
                 {
-                    if (GetUserID() > 0)
+                    MeetingAgendaComment meetingCommentAgenda = new MeetingAgendaComment();
+                    meetingCommentAgenda = JsonConvert.DeserializeObject<MeetingAgendaComment>(sanitizer.Sanitize(_model.Comments));
+                    if (!string.IsNullOrEmpty(meetingCommentAgenda.ProposalComment) || !string.IsNullOrEmpty(meetingCommentAgenda.BackgroundComment) || !string.IsNullOrEmpty(meetingCommentAgenda.ApprovalSoughtComment)
+                        || !string.IsNullOrEmpty(meetingCommentAgenda.DecisionComment) || !string.IsNullOrEmpty(meetingCommentAgenda.DiscussionComment))
                     {
-                        MeetingAgendaComment meetingCommentAgenda = new MeetingAgendaComment();
-                        meetingCommentAgenda = JsonConvert.DeserializeObject<MeetingAgendaComment>(sanitizer.Sanitize(_model.Comments));
-                        if (!string.IsNullOrEmpty(meetingCommentAgenda.ProposalComment) || !string.IsNullOrEmpty(meetingCommentAgenda.BackgroundComment) || !string.IsNullOrEmpty(meetingCommentAgenda.ApprovalSoughtComment)
-                            || !string.IsNullOrEmpty(meetingCommentAgenda.DecisionComment) || !string.IsNullOrEmpty(meetingCommentAgenda.DiscussionComment))
-                        {
-                            _model.MeetingAgendaComment = new MeetingAgendaComment();
-                            _model.MeetingAgendaComment = meetingCommentAgenda;
-                        }
-                        else
-                        {
-                            _model.MeetingAgendaComment = new MeetingAgendaComment();
-                            meetingCommentAgenda.IsDelete = true;
-                            _model.MeetingAgendaComment = meetingCommentAgenda;
-                        }
+                        _model.MeetingAgendaComment = new MeetingAgendaComment();
+                        _model.MeetingAgendaComment = meetingCommentAgenda;
                     }
                     else
-                        _model.MeetingAgendaComment = new MeetingAgendaComment();
-                    using (var client = new HttpClient())
                     {
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        HttpResponseMessage postJob = await client.PostAsJsonAsync<MeetingAgenda>(WebAPIUrl + "AONW/UpdateMeetingAgenda", _model);
-                        bool postResult = postJob.IsSuccessStatusCode;
-                        if (postResult == true)
-                        {
-                            TempData["Msg"] = "Record Update Successfully";
-                        }
-                        else
-                        {
-                            TempData["Msg"] = "Record Not Update Successfully";
-                        }
+                        _model.MeetingAgendaComment = new MeetingAgendaComment();
+                        meetingCommentAgenda.IsDelete = true;
+                        _model.MeetingAgendaComment = meetingCommentAgenda;
                     }
                 }
-                catch (Exception ex)
+                else
+                    _model.MeetingAgendaComment = new MeetingAgendaComment();
+                using (var client = new HttpClient())
                 {
-                    throw ex;
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<MeetingAgenda>(WebAPIUrl + "AONW/UpdateMeetingAgenda", _model);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        TempData["Msg"] = "Record Update Successfully";
+                    }
+                    else
+                    {
+                        TempData["Msg"] = "Record Not Update Successfully";
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            // }
 
-          //  id = _model.meeting_id.Value;
+            //  id = _model.meeting_id.Value;
             ViewBag.dated = Session["mdate"].ToString();
             ViewBag.mtype = Session["mtype"].ToString();
             //int Id  = (Encryption.Encrypt(_model.meeting_id.Value));
@@ -1568,6 +1591,99 @@ namespace ACQ.Web.App.Controllers
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region Contract
+        [Route("Contract")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult Contract()
+        {
+
+            return View();
+        }
+
+
+        [Route("SaveContract")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> SaveContract(Contracts cnt)
+        {
+            int i = 0;
+            try
+            {
+                Contracts _contracts = new Contracts();
+                ContractDetails contractDetails = new ContractDetails
+                {
+                    ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId),
+                    Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number),
+                    DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString())),
+                    Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions),
+                    Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category),
+                    EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.EffectiveDate.ToString())),
+                    ABGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.ABGDate.ToString())),
+                    PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGPercentage.ToString())),
+                    PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGDate.ToString())),
+                    Incoterms = sanitizer.Sanitize(cnt.Contrct_Detail.Incoterms),
+                    Warranty = sanitizer.Sanitize(cnt.Contrct_Detail.Warranty),
+                    ContractValue = sanitizer.Sanitize(cnt.Contrct_Detail.ContractValue),
+                    FEContent = sanitizer.Sanitize(cnt.Contrct_Detail.FEContent),
+                    TaxesAndDuties = sanitizer.Sanitize(cnt.Contrct_Detail.TaxesAndDuties),
+                    FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.FinalDeliveryDate.ToString())),
+                    GracePeriod = sanitizer.Sanitize(cnt.Contrct_Detail.GracePeriod),
+                };
+
+                _contracts.Contrct_Detail = contractDetails;
+
+                List<StageDetail> stages = new List<StageDetail>();
+                foreach(var item in cnt.Stage_Detail.ToList())
+                {
+                    StageDetail stageDetail = new StageDetail
+                    {
+                        StageNumber = Convert.ToInt32(sanitizer.Sanitize(item.StageNumber.ToString())),
+                        stageDescription = sanitizer.Sanitize(item.stageDescription),
+                        StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(item.StageStartdate.ToString())),
+                        StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(item.StageCompletionDate.ToString())),
+                        PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(item.PercentOfContractValue.ToString())),
+                        Amount = Convert.ToDecimal(sanitizer.Sanitize(item.Amount.ToString())),
+                        DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.DueDateOfPayment.ToString())),
+                        Conditions = sanitizer.Sanitize(item.Conditions),
+                        RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString())),
+                        ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage),
+                        ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString())),
+                        TotalPaymentMade = sanitizer.Sanitize(item.TotalPaymentMade),
+                        FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade),
+                    };
+                    stages.Add(stageDetail);
+                }
+
+                _contracts.Stage_Detail = stages;
+
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<Contracts>(WebAPIUrl + "AONW/SaveContract", _contracts);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        //TempData["Msg"] = "Record Saved Successfully";
+                        i = 1;
+                    }
+                    else
+                    {
+                        //TempData["Msg"] = "Record Not Saved Successfully";
+                        i = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Json(i, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

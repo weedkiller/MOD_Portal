@@ -125,9 +125,11 @@
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="meetingagendatable">
                                             <thead>
-                                            <th>Type of Agenda </th>
-                                            <th>Agenda Item</th>
-                                            <th>Action</th>
+                                                <tr>
+                                                    <th>Type of Agenda </th>
+                                                    <th>Agenda Item</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                         </table>
                                     </div>
@@ -138,7 +140,7 @@
                                     <input type="hidden" name="meeting_id" id="meeting_id" value="@Model.meeting_id" />
                                     <input type="hidden" name="Pid" id="Pid" value="@Model.Pid" />
                                     <input type="hidden" name="Comments" id="Comments" value="@Model.Comments" />
-                                    <div class="row @hiddenClass">
+                                    <div class="row @hiddenClass" id="tpyagent">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label" for="recovery-email"> Type of Agenda <i class="text-danger">*</i></label>
@@ -205,7 +207,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="background">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -231,7 +233,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="proposal">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -257,7 +259,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="approval">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -284,7 +286,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="discussion">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -311,7 +313,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="decision">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -351,6 +353,7 @@
                                                     </select>
 
                                                 </div>
+
                                                 @if (Model.Pid > 0 && userID > 0)
                                                 {
                                                     <input type="hidden" name="IsActive" value="@Model.AgendaItem" />
@@ -443,6 +446,7 @@
             </div>
 
         </div>
+
     </div>
 </div>
 <script src="~/assets/js/CkEditor/ckeditor.js" nonce="r@nd0m"></script>
@@ -462,6 +466,11 @@
     var userID = '@userID';
 
     $(document).ready(function () {
+
+
+        if ('@ViewBag.MeetingStatus' == "Final") {
+
+            }
         SelectVersion();
         SetCommentObj();
         DisableFields();
@@ -488,7 +497,7 @@
             table.destroy();
             $.ajax({
                 type: "GET",
-                
+
                 url: "/AONW/BindMeetingAgenda?id=" + mid,
                 data: '{}',
                 contentType: "application/json; charset=utf-8",
@@ -501,7 +510,8 @@
                     alert(response.d);
                 }
             });
-            function OnSuccess(response) {
+        function OnSuccess(response) {
+
                 $("#meetingagendatable").DataTable(
                     {
                         data: response,
@@ -513,20 +523,32 @@
                                 "data": "Pid", "render": function (data) {
                                     var url = '/AONW/EditMeetingAgenda/?ID='+data;
                                     var meetIdObj = $.grep(response, function (element) { return element.Pid == data });
+                                    var status = meetIdObj[meetIdObj.length - 1].Version;
                                     var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id;
                                     var html = "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >";
                                     if (userID == '0')
                                         html += "&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
+                                    if (status == "Final" && '@ViewBag.PageMode' !="Edit") {
+                                        $("#tpyagent").hide();
+                                        $("#background").hide();
+                                        $("#proposal").hide();
+                                        $("#approval").hide();
+                                        $("#decision").hide();
+                                        $("#discussion").hide();
+
+                                    }
                                     return html;
                                 }
                             }
                         ],
-                    });
+                });
+
         };
         $('#meetAgenda').on('submit', function () {
             var proposal = CKEDITOR.instances['Proposal'].getData();
             var mySelection = $('#TypeofAgenda').val();
-            if (proposal == "") {
+
+            if (proposal == "" && mySelection =="AON Accord") {
                 $("#exampleModal .modal-body p").html('Please Fill Propsal Field First');
                 $("#exampleModal").modal('show');
                 //alert("Please Fill Propsal Field First");
@@ -539,7 +561,7 @@
             var discusion = CKEDITOR.instances['Discussion'].getData();
             $(discussionHdn).val(discusion);
             var back = CKEDITOR.instances['Background'].getData();
-            if(back == "") {
+            if (back == "" && mySelection == "AON Accord") {
                 $("#exampleModal .modal-body p").html('Please Fill Background Field First');
                 $("#exampleModal").modal('show');
                 return false;
@@ -547,7 +569,7 @@
             $(background).val(back);
             var approval = CKEDITOR.instances['Approval_sought'].getData();
 
-            if (approval == "") {
+            if (approval == "" && mySelection == "AON Accord") {
                 $("#exampleModal .modal-body p").html('Please Fill Approval Sought Field First');
                 $("#exampleModal").modal('show');
                 return false;
@@ -557,13 +579,26 @@
 
             var commentString = JSON.stringify(commentObj);
             $('#Comments').val(commentString);
+
+
         });
         //AocMasterAutoComplete();
     });
 
+    @*$("#drpTypeofAgenda").change(function () {
+
+        var typeofAgenda = $("#drpTypeofAgenda").val();
+        var meetingid = '@Model.meeting_id';
+        alert(typeofAgenda);
+        $.get("/AONW/CheckTypeofAgendaExists?id=" + meetingid + "&typeofAgenda =" + typeofAgenda, function (data, status) {
+            alert(data);
+        });
+
+    });*@
 
 
     function SelectVersion() {
+
         var mySelection = $('#TypeofAgenda').val();
         var drpTypeofAgenda = $('#drpTypeofAgenda');
         if (mySelection == "Others" || mySelection == "Previous Meeting") {
@@ -571,6 +606,10 @@
             $('div[id="Previous_Meeting"]').show();
             $('div[id ="TypeofAgenda"]').hide();
             $(drpTypeofAgenda).removeAttr('required');
+            $('div[id ="background"]').hide();
+            $('div[id ="proposal"]').hide();
+            $('div[id ="approval"]').hide();
+            $('div[id ="discussion"]').hide();
             $('textarea[name=Previous_Meeting]').attr('required', 'required');
         }
         if (mySelection == "") {

@@ -6,77 +6,323 @@
 }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/datatable/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
 <style>
     table.dataTable tbody th, table.dataTable tbody td {
         padding: 10px 18px !important;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: forestgreen;
+    }
+    .cards {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #f9f9f9;
+        background-clip: border-box;
+        border: 1px solid rgb(226 222 222 / 13%);
+        border-radius: .25rem;
+        font-size: 12px;
+    }
+
+    table.dataTable.nowrap th, table.dataTable.nowrap td {
+        white-space: normal !important;
+    }
+
+    table.dataTable.nowrap th {
+        font-size: 14px !important;
+    }
+
+    .button-area {
+        display: flex;
+        justify-content: center;
+    }
+    .btn-search {
+        /* float: left; */
+        /* width: 20%; */
+        /* padding: 11px; */
+        background: #2196F3;
+        color: white;
+        /* font-size: 17px; */
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+    .btn-primary {
+        color: #fff;
+        background-color: #2196F3 !important;
+        border-color: #2196F3 !important;
     }
 </style>
 
 <div class="containers">
     <div class="container-fluids">
-        <div class="card">
-            <div class="card-header">
-                <h4>Processing  </h4>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="example" class="display nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Sr No</th>
-                                <th>Stage Description</th>
-                                <th>AON Id</th>
-                                <th>Started On</th>
-                                <th>DAP Timeline</th>
-                                <th>Escalation Time (weeks)</th>
-                                <th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Count() > 0)
-                            {
-                                foreach (var item in Model.ToList())
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Escalation Matrix Drafts  </h4>
+                </div>
+                <div class="card-body">
+                    <div class="button-area">
+
+                        <p style="margin: 5px;">From: <input type="text" id="FromDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                        <p style="margin: 5px;">To: <input type="text" id="ToDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                        <p style="margin: 1.8em;margin-left: .2em;">
+                            <button class="btn btn-sm btn-search" type="button" id="Search" title="Search" disabled><i class="fa fa-search"></i> </button>
+                            <button class="btn btn-sm btn-primary" type="button" title="Refresh" onclick="window.location.reload();"><i class="fa fa-redo"></i> </button>
+                            <button class="btn btn-sm btn-primary" type="button" title="Send" id="SendtoAll">Send Email</button>
+                        </p>
+
+                    </div>
+                    <div class="table-responsive">
+
+
+                        <table id="example" class="display nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /></th>
+                                    <th>AON Id</th>
+                                    <th>Lead Service</th>
+                                    <th>Item Description</th>
+                                    <th>Date of AAON</th>
+                                    <th>Draft Message</th>
+                                    <th>Date Of Alert</th>
+                                    <th>Email Receivers</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mainbody">
+                                @if (Model != null && Model.Count() > 0)
                                 {
-                                    <tr>
-                                        <td>
-                                            @item.Pkey
-                                        </td>
-                                        <td>
-                                            @item.TaskDescription
-                                        </td>
-                                        <td>@item.aon_id</td>
-                                        <td>
-                                            @if (item.startDate != null)
-                                            {
-                                                <span>@item.startDate.Value.ToString("MM/dd/yyyy")</span>
-                                            }
-                                        </td>
-                                        <td>
-                                            @item.dap_timeline
-                                        </td>
-                                        <td>@item.EscalationTime</td>
-                                        <td>
-                                            <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.TaskSlno" notes="@item.EscalationTime" notdp="@item.dap_timeline" onchange="getselect();" />
-                                        </td>
-                                    </tr>
+                                    foreach (var item in Model.ToList())
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.MSG_TYPE" onchange="getselect();" />
+                                            </td>
+                                            <td>
+                                                @item.aon_id
+                                            </td>
+                                            <td>@item.Service_Lead_Service</td>
+                                            <td>
+
+                                                @item.item_description
+
+                                            </td>
+                                            <td>
+                                                @item.dateofaccordAON
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.msg))
+                                                {
+                                                    <p>@item.msg</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>No draft available</p>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.date_of_alert != null)
+                                                {
+                                                    <span>@item.date_of_alert.Value.ToString("MM/dd/yyyy")</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L1_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
+                                                        {<span>@item.L1_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
+                                                        {<span>@item.L1_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+
+
+
+                                                @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L2_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
+                                                        {<span>@item.L2_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
+                                                        {<span>@item.L2_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L3_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
+                                                        {<span>@item.L3_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
+                                                        {<span>@item.L3_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L4_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
+                                                        {<span>@item.L4_Officer_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
+                                                        {<span>@item.L4_Officer_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L5_ADGAcq_Name Phone: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Phone))
+                                                        {<span>@item.L5_ADGAcq_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Email))
+                                                        {<span>@item.L5_ADGAcq_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrWhiteSpace(item.L6_JS_AM_Email) == false && item.L6_JS_AM_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L6_JS_AM_Name Phone: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Phone))
+                                                        {<span>@item.L6_JS_AM_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Email))
+                                                        {<span>@item.L6_JS_AM_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrWhiteSpace(item.L7_FM_Email) == false && item.L7_FM_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L7_FM_Name Phone: @if (!string.IsNullOrEmpty(item.L7_FM_Phone))
+                                                        {<span>@item.L7_FM_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L7_FM_Email))
+                                                        {<span>@item.L7_FM_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrWhiteSpace(item.L8_DG_Acq_Email) == false && item.L8_DG_Acq_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L8_DG_Acq_Name Phone: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Phone))
+                                                        {<span>@item.L8_DG_Acq_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Email))
+                                                        {<span>@item.L8_DG_Acq_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+                                                @if (string.IsNullOrWhiteSpace(item.L9_AS_FA_Email) == false && item.L9_AS_FA_Email != "N/A")
+                                                {
+                                                    <div class="cards">
+                                                        Name : @item.L9_AS_FA_Name Phone: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Phone))
+                                                        {<span>@item.L9_AS_FA_Phone</span>}
+                                                    else
+                                                    {<span>N/A</span>}
+                                                        Email: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Email))
+                                                        {<span>@item.L9_AS_FA_Email</span>}
+                                                    else
+                                                    { <span>N/A</span>}
+                                                    </div>
+                                                }
+
+
+
+
+                                            </td>
+
+
+                                            <td><button type="button" class="btn btn-sm btn-primary Edit" noaon="@item.aon_id" notls="@item.MSG_TYPE"><i class="fa fa-edit"></i> </button> </td>
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Sr No</th>
-                                <th>Stage Description</th>
-                                <th>AON Id</th>
-                                <th>Started On</th>
-                                <th>DAP Timeline</th>
-                                <th>Escalation Time (weeks)</th>
-                                <th><button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button></th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+
+                        </table>
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit <i class="fa fa-pencil-alt"></i> </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <label for="Message">Message</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button">Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
 
 
     </div>
@@ -90,41 +336,66 @@
 <script src="~/assets/datatable/js/vfs_fonts.js" nonce="r@nd0m"></script>
 <script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/jquery-ui.js"></script>
 <script nonce="r@nd0m">
     jQuery(document).ready(function ($) {
-        //$('#example').DataTable({
-        //    dom: 'Bfrtip',
-        //    buttons: [
-        //        'copy', 'csv', 'excel', 'pdf', 'print'
-        //    ]
-        //});
+
+        $("#FromDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+
+        });
+
+        $("#ToDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+
 
         $('#example').DataTable({
             dom: 'Bfrtip',
             buttons: [
-                'excel', 'print'
+                {
+                    extend: 'excel',
+                    text: 'Download',
+                    exportOptions: {
+                        columns: [5, 7]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    autoPrint: true,
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }
             ],
-            pageLength: 25
+            pageLength: 50
         });
 
         getselect();
 
         $(document).on('click', '#SendtoAll', function () {
-
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
             var data = [];
             $('tbody tr').each(function () {
                 if ($(this).children().find('.checkbox-select').is(':checked')) {
                     var EscalationReportData = {};
                     EscalationReportData["aon_id"] = parseInt($(this).children().find('.checkbox-select').attr("noaon")),
-                        EscalationReportData["CaseTaskSlno"] = $(this).children().find('.checkbox-select').attr("notls");
-                    EscalationReportData["EscalationTime"] = Math.abs(parseInt($(this).children().find('.checkbox-select').attr("notes")));
-                    EscalationReportData["dap_timeline"] = $(this).children().find('.checkbox-select').attr("notdp");
+                        EscalationReportData["MSG_TYPE"] = $(this).children().find('.checkbox-select').attr("notls");
                     data.push(EscalationReportData);
                 }
             });
 
             $(btn).attr('disabled', true);
+
 
             $.ajax({
                 beforeSend: function () {
@@ -132,8 +403,8 @@
                 },
                 type: "POST",
                 url: "/sendEscalationEmail",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
@@ -153,6 +424,159 @@
                     alert("Please check your internet connection...");
                 }
             });
+        });
+
+        $('#Search').click(function () {
+            
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                    $(btn).attr('disabled', true);
+                },
+                type: "POST",
+                url: "/searchescalationdata",
+                data: { __RequestVerificationToken: token, startdate: $('#FromDate').val(), enddate: $('#ToDate').val() },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.result.Status == true) {
+                        var row = "";
+                        $.each(response.result.data, function (key, item) {
+                            row += '<tr>';
+                            row += '<td><input type="checkbox" class="checkbox checkbox-select" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" onchange="getselect();" /></td>';
+                            row += '<td>' + item.aon_id + '</td>';
+                            row += '<td>' + item.Service_Lead_Service + '</td>';
+                            row += '<td>' + item.item_description + '</td>';
+                            row += '<td>' + item.dateofaccordAON + '</td>';
+                            row += '<td>' + item.msg + '</td>';
+                            row += '<td>' + getFormattedDate(item.date_of_alert) + '</td>';
+                            var l1;
+                            var l2;
+                            var l3;
+                            var l4;
+                            var l5;
+                            var l6;
+                            var l7;
+                            var l8;
+                            var l9;
+                            
+                            row += '<td>';
+                            if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                row += l1;
+                            }
+                            if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                row += l2;
+                            }
+                            if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                row += l3;
+                            }
+                            if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                row += l4;
+                            }
+                            if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
+                                l5 = '<div class="cards"> Name : ' + item.L5_ADGAcq_Name + ' Phone: <span>' + item.L5_ADGAcq_Phone + '</span>Email: <span>' + item.L5_ADGAcq_Email + '</span></div>';
+                                row += l5;
+                            }
+                            if (item.L6_JS_AM_Email != "" && item.L6_JS_AM_Email != "N/A") {
+                                l6 = '<div class="cards"> Name : ' + item.L6_JS_AM_Name + ' Phone: <span>' + item.L6_JS_AM_Phone + '</span>Email: <span>' + item.L6_JS_AM_Email + '</span></div>';
+                                row += l6;
+                            }
+                            if (item.L7_FM_Email != "" && item.L7_FM_Email != "N/A") {
+                                l7 = '<div class="cards"> Name : ' + item.L7_FM_Name + ' Phone: <span>' + item.L7_FM_Phone + '</span>Email: <span>' + item.L7_FM_Email + '</span></div>';
+                                row += l7;
+                            }
+                            if (item.L8_DG_Acq_Email != "" && item.L8_DG_Acq_Email != "N/A") {
+                                l8 = '<div class="cards"> Name : ' + item.L8_DG_Acq_Name + ' Phone: <span>' + item.L8_DG_Acq_Phone + '</span>Email: <span>' + item.L8_DG_Acq_Email + '</span></div>';
+                                row += l8;
+                            }
+                            if (item.L9_AS_FA_Email != "" && item.L9_AS_FA_Email != "N/A") {
+                                l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
+                                row += l9;
+                            }
+                            
+                            row += '</td>';
+                            row += '<td><button type="button" class="btn btn-sm btn-primary Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </button> </td>';
+                            row += '</tr>';
+                        });
+                        $('#mainbody').empty();
+                        $('#mainbody').append(row);
+                        $('#FromDate').val('');
+                        $('#ToDate').val('');
+                     
+                       
+                    } else {
+                        alert("No data found between the selected duration");
+                    }
+                },
+                failure: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    deselectAll();
+                    alert("Please check your internet connection...");
+                },
+                error: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    deselectAll();
+                    alert("Please check your internet connection...");
+                }
+            });
+        });
+
+        $(document).on('click', '.Edit', function () {
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            var data = {};
+            data["aon_id"] = parseInt($(this).attr("noaon")),
+            data["MSG_TYPE"] = $(this).attr("notls");
+
+            $(btn).attr('disabled', true);
+
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/getdataforEdit",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.Status == true) {
+                        $('#Message').val(response.result.msg);
+                        $('#myModal').modal('show');
+                    } else {
+                        alert("Session has been expired, Please login again");
+                        window.location.reload();
+                    }
+                },
+                failure: function (response) {
+                    alert("Please check your internet connection...");
+                },
+                error: function (response) {
+                    alert("Please check your internet connection...");
+                }
+            });
+
+        });
+
+        $(document).on('click', '#submit', function () {
+            $('.preloader').show();
+            $('#myModal').modal('hide');
+            alert('Data has been updated successfully');
+            $('.preloader').show();
         });
     });
     function getselect() {
@@ -185,6 +609,45 @@
             });
             getselect();
         }
+    }
+
+    function deselectAll() {
+        if ($('#selectall').is(":checked")) {
+            $('tbody tr').each(function () {
+                $(this).children().find('.checkbox-select').attr('checked', false);
+                $(this).children().find('.checkbox-select').attr('disabled', false);
+            });
+            getselect();
+        }
+
+    }
+    function validatedate() {
+        if ($('#FromDate').val() != "" && $('#ToDate').val() != "") {
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            if (Fromdate > ToDate) {
+                alert("Start date should lesser then end date!.");
+                $('#ToDate').val('');
+            }
+            else {
+                $('#Search').attr("disabled", false);
+            }
+        }
+    }
+
+    function getFormattedDate(datestring) {
+
+        var dd = datestring.replace("/Date(", "").replace(")/","");
+        var ticks = parseInt(dd);
+        var date = new Date(ticks);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
     }
 </script>
 

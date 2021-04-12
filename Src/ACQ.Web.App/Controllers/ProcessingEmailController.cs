@@ -20,6 +20,7 @@ using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.App.ViewModel;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
+using System.Globalization;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -137,75 +138,128 @@ namespace ACQ.Web.App.Controllers
 
         [Route("sendEscalationEmail")]
         [HandleError]
-        public JsonResult sendEscalationEmail(List<ViewModel.EscalationReportData> model)
+        [ValidateAntiForgeryToken]
+        public JsonResult sendEscalationEmail(List<EscalationReportData> model)
         {
             if(model!=null && model.Count()>0)
             {
-                foreach(var item in model)
+                foreach (var item in model)
                 {
-                    using (var client = new HttpClient())
+                    string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                    IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                    listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                    EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE==item.MSG_TYPE).FirstOrDefault();
+                    //string message = draftMsg.DraftMessage_L1;
+                    //message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+                    if(!string.IsNullOrEmpty(lrepot.L1_Officer_Email) && lrepot.L1_Officer_Email!="N/A")
                     {
-                        client.DefaultRequestHeaders.Clear();
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationDraft?Tasksln="+item.CaseTaskSlno).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            EscalationDraftMessage draftMsg = response.Content.ReadAsAsync<EscalationDraftMessage>().Result;
+                        EmailHelper.sendEmailEscalation(lrepot.L1_Officer_Email, lrepot.msg, mailPath);
+                    }
 
-                            if(item.EscalationTime<(Convert.ToInt32(item.dap_timeline)-1))
-                            {
-                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
-                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
-                                string message = draftMsg.DraftMessage_L1;
-                                message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
+                    if (!string.IsNullOrEmpty(lrepot.L2_Officer_Email) && lrepot.L2_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L2_Officer_Email, lrepot.msg, mailPath);
+                    }
+                    if (!string.IsNullOrEmpty(lrepot.L3_Officer_Email) && lrepot.L3_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L3_Officer_Email, lrepot.msg, mailPath);
+                    }
+                    if (!string.IsNullOrEmpty(lrepot.L4_Officer_Email) && lrepot.L4_Officer_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L4_Officer_Email, lrepot.msg, mailPath);
+                    }
 
-                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level1, message, mailPath);
-                            }
-                            else if(item.EscalationTime == (Convert.ToInt32(item.dap_timeline) - 1) || item.EscalationTime == Convert.ToInt32(item.dap_timeline))
-                            {
-                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
-                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(lrepot.L5_ADGAcq_Email) && lrepot.L5_ADGAcq_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L5_ADGAcq_Email, lrepot.msg, mailPath);
+                    }
 
-                                //send message to L1.
-                                string L1message = draftMsg.DraftMessage_L1;
-                                L1message = L1message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
-                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level1, L1message, mailPath);
+                    if (!string.IsNullOrEmpty(lrepot.L6_JS_AM_Email) && lrepot.L6_JS_AM_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L6_JS_AM_Email, lrepot.msg, mailPath);
+                    }
 
-                                //send message to L2.
-                                string L2message = draftMsg.DraftMessage_L2;
-                                L2message = L2message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
-                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level2, L2message, mailPath);
+                    if (!string.IsNullOrEmpty(lrepot.L7_FM_Email) && lrepot.L7_FM_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L7_FM_Email, lrepot.msg, mailPath);
+                    }
 
+                    if (!string.IsNullOrEmpty(lrepot.L8_DG_Acq_Email) && lrepot.L8_DG_Acq_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L8_DG_Acq_Email, lrepot.msg, mailPath);
+                    }
 
-                            }
-                            else if(item.EscalationTime > Convert.ToInt32(item.dap_timeline))
-                            {
-                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
-                                IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
-                                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                                ViewModel.EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id).FirstOrDefault();
-                                string message = draftMsg.DraftMessage_L3;
-                                message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
-
-                                EmailHelper.sendEmailEscalation(lrepot.Responsible_Level3, message, mailPath);
-                            }
-                            
-
-                        }
+                    if (!string.IsNullOrEmpty(lrepot.L9_AS_FA_Email) && lrepot.L9_AS_FA_Email != "N/A")
+                    {
+                        EmailHelper.sendEmailEscalation(lrepot.L9_AS_FA_Email, lrepot.msg, mailPath);
                     }
                 }
             }
             return Json(new { Status = true, Message="success" }, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("searchescalationdata")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult searchescalationdata(string startdate,string enddate)
+        {
+            datesearch result = new datesearch();
+            if(Session["Escdata"]!=null)
+            {
+                try
+                {
+                    IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                    listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture); 
+                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        result.startdate = Convert.ToDateTime(startdate);
+                        result.enddate = Convert.ToDateTime(enddate);
+                        result.data = data;
+                        result.Status = true;
+                    }
+                    else
+                    {
+                        result.startdate = Convert.ToDateTime(startdate);
+                        result.enddate = Convert.ToDateTime(enddate);
+                        result.Status = false;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    result.Status = false;
+                    result.startdate = Convert.ToDateTime(startdate);
+                    result.enddate = Convert.ToDateTime(enddate);
+                }
+            }
+            else result.Status = false;
 
+            return Json(new { result= result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("getdataforEdit")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult getdataforEdit(EscalationReportData model)
+        {
+            EscalationReportData result = new EscalationReportData();
+            if (Session["Escdata"] != null)
+            {
+                IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                var aonid = Convert.ToInt32(sanitizer.Sanitize(model.aon_id.ToString()));
+                var msgtype = sanitizer.Sanitize(model.MSG_TYPE);
+                var data = listdata.Where(x => x.aon_id == aonid && x.MSG_TYPE == msgtype).FirstOrDefault();
+                result = data;
+            }
+            if(result!=null)
+            {
+                return Json(new {Status=true, result = result }, JsonRequestBehavior.AllowGet);
+            }
+            else return Json(new { Status = false, result = result }, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

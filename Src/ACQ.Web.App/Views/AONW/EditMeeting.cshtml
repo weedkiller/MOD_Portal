@@ -73,7 +73,7 @@
                                                     Html.RenderPartial("_MeetingParticipants", participantsList);
                                                 }
                                                 @*@Html.TextAreaFor(x => x.officers_participated, new { @class = "form-control", @placeholder = "Remarks", @id = "officers_participated", @name = "officers_participated" })
-                        <input type="hidden" name="officers_participated" value="@Html.Raw(Model.officers_participated)" required />*@
+                                                    <input type="hidden" name="officers_participated" value="@Html.Raw(Model.officers_participated)" required />*@
                                             </div>
                                         </div>
                                     </div>
@@ -87,18 +87,18 @@
                                         </div>
                                     </div>
                                     @*<div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label" for="status">Status</label>
-                                            <div class="form-floating">
+                                            <div class="form-group">
+                                                <label class="form-label" for="status">Status</label>
+                                                <div class="form-floating">
 
-                                                <select name="Status" id="status" class="form-select form-control">
-                                                    <option @if (Model.Status == "Draft") { @Html.Raw("selected") }>Draft</option>
-                                                    <option @if (Model.Status == "Approved") { @Html.Raw("selected") }>Approved</option>
-                                                    <option @if (Model.Status == "Final") { @Html.Raw("selected") }>Final</option>
-                                                </select>
+                                                    <select name="Status" id="status" class="form-select form-control">
+                                                        <option @if (Model.Status == "Draft") { @Html.Raw("selected") }>Draft</option>
+                                                        <option @if (Model.Status == "Approved") { @Html.Raw("selected") }>Approved</option>
+                                                        <option @if (Model.Status == "Final") { @Html.Raw("selected") }>Final</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
                                     <div class="col-md-12">
                                         <div class="float-md-right">
                                             <button class="btn btn-primary mb-3 mt-2" type="submit">Update Meetings</button>
