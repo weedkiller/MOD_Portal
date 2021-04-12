@@ -79,7 +79,8 @@
                         <p style="margin: 5px;">To: <input type="text" id="ToDate" onchange="validatedate();" class="form-control form-control-sm"></p>
                         <p style="margin: 1.8em;margin-left: .2em;">
                             <button class="btn btn-sm btn-search" type="button" id="Search" title="Search" disabled><i class="fa fa-search"></i> </button>
-                            <button class="btn btn-sm btn-primary" type="button" id="SendtoAll">Send Email</button>
+                            <button class="btn btn-sm btn-primary" type="button" title="Refresh" onclick="window.location.reload();"><i class="fa fa-redo"></i> </button>
+                            <button class="btn btn-sm btn-primary" type="button" title="Send" id="SendtoAll">Send Email</button>
                         </p>
 
                     </div>
@@ -100,7 +101,7 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="mainbody">
                                 @if (Model != null && Model.Count() > 0)
                                 {
                                     foreach (var item in Model.ToList())
@@ -273,7 +274,7 @@
                                             </td>
 
 
-                                            <td><button type="button" class="btn btn-sm btn-primary Edit"><i class="fa fa-edit"></i> </button> </td>
+                                            <td><button type="button" class="btn btn-sm btn-primary Edit" noaon="@item.aon_id" notls="@item.MSG_TYPE"><i class="fa fa-edit"></i> </button> </td>
                                         </tr>
                                     }
                                 }
@@ -306,19 +307,17 @@
 
         $("#FromDate").datepicker({
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+
         });
 
         $("#ToDate").datepicker({
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
         });
-        //$('#example').DataTable({
-        //    dom: 'Bfrtip',
-        //    buttons: [
-        //        'copy', 'csv', 'excel', 'pdf', 'print'
-        //    ]
-        //});
+
 
         $('#example').DataTable({
             dom: 'Bfrtip',
@@ -361,7 +360,7 @@
             });
 
             $(btn).attr('disabled', true);
-            
+
 
             $.ajax({
                 beforeSend: function () {
@@ -393,37 +392,105 @@
         });
 
         $('#Search').click(function () {
-
+            
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
-
-            var data = {
-                "startdate": $('#FromDate').val(),
-                "EndDate": $('#ToDate').val()
-            };
+            var btn = $(this);
+            
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
             $.ajax({
                 beforeSend: function () {
                     $('.preloader').show();
+                    $(btn).attr('disabled', true);
                 },
                 type: "POST",
                 url: "/searchescalationdata",
-                data: { __RequestVerificationToken: token, model: data },
+                data: { __RequestVerificationToken: token, startdate: $('#FromDate').val(), enddate: $('#ToDate').val() },
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
-                    if (response.Status == true) {
-                        alert("Email has been send to the selected user");
-                        window.location.href = "/validationchecker";
+                    if (response.result.Status == true) {
+                        var row = "";
+                        $.each(response.result.data, function (key, item) {
+                            row += '<tr>';
+                            row += '<td><input type="checkbox" class="checkbox checkbox-select" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" onchange="getselect();" /></td>';
+                            row += '<td>' + item.aon_id + '</td>';
+                            row += '<td>' + item.Service_Lead_Service + '</td>';
+                            row += '<td>' + item.item_description + '</td>';
+                            row += '<td>' + item.dateofaccordAON + '</td>';
+                            row += '<td>' + item.msg + '</td>';
+                            row += '<td>' + getFormattedDate(item.date_of_alert) + '</td>';
+                            var l1;
+                            var l2;
+                            var l3;
+                            var l4;
+                            var l5;
+                            var l6;
+                            var l7;
+                            var l8;
+                            var l9;
+                            
+                            row += '<td>';
+                            if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                row += l1;
+                            }
+                            if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                row += l2;
+                            }
+                            if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                row += l3;
+                            }
+                            if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                row += l4;
+                            }
+                            if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
+                                l5 = '<div class="cards"> Name : ' + item.L5_ADGAcq_Name + ' Phone: <span>' + item.L5_ADGAcq_Phone + '</span>Email: <span>' + item.L5_ADGAcq_Email + '</span></div>';
+                                row += l5;
+                            }
+                            if (item.L6_JS_AM_Email != "" && item.L6_JS_AM_Email != "N/A") {
+                                l6 = '<div class="cards"> Name : ' + item.L6_JS_AM_Name + ' Phone: <span>' + item.L6_JS_AM_Phone + '</span>Email: <span>' + item.L6_JS_AM_Email + '</span></div>';
+                                row += l6;
+                            }
+                            if (item.L7_FM_Email != "" && item.L7_FM_Email != "N/A") {
+                                l7 = '<div class="cards"> Name : ' + item.L7_FM_Name + ' Phone: <span>' + item.L7_FM_Phone + '</span>Email: <span>' + item.L7_FM_Email + '</span></div>';
+                                row += l7;
+                            }
+                            if (item.L8_DG_Acq_Email != "" && item.L8_DG_Acq_Email != "N/A") {
+                                l8 = '<div class="cards"> Name : ' + item.L8_DG_Acq_Name + ' Phone: <span>' + item.L8_DG_Acq_Phone + '</span>Email: <span>' + item.L8_DG_Acq_Email + '</span></div>';
+                                row += l8;
+                            }
+                            if (item.L9_AS_FA_Email != "" && item.L9_AS_FA_Email != "N/A") {
+                                l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
+                                row += l9;
+                            }
+                            
+                            row += '</td>';
+                            row += '<td><button type="button" class="btn btn-sm btn-primary Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </button> </td>';
+                            row += '</tr>';
+                        });
+                        $('#mainbody').empty();
+                        $('#mainbody').append(row);
+                        $('#FromDate').val('');
+                        $('#ToDate').val('');
+                     
+                       
                     } else {
-                        alert("Something went wrong");
+                        alert("No data found between the selected duration");
                     }
                 },
                 failure: function (response) {
+                    $('.preloader').fadeOut('slow');
                     deselectAll();
                     alert("Please check your internet connection...");
                 },
                 error: function (response) {
+                    $('.preloader').fadeOut('slow');
                     deselectAll();
                     alert("Please check your internet connection...");
                 }
@@ -470,7 +537,7 @@
             });
             getselect();
         }
-        
+
     }
     function validatedate() {
         if ($('#FromDate').val() != "" && $('#ToDate').val() != "") {
@@ -484,6 +551,21 @@
                 $('#Search').attr("disabled", false);
             }
         }
+    }
+
+    function getFormattedDate(datestring) {
+
+        var dd = datestring.replace("/Date(", "").replace(")/","");
+        var ticks = parseInt(dd);
+        var date = new Date(ticks);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
     }
 </script>
 

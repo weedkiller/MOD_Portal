@@ -20,6 +20,7 @@ using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.App.ViewModel;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
+using System.Globalization;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -200,26 +201,42 @@ namespace ACQ.Web.App.Controllers
         [Route("searchescalationdata")]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public JsonResult searchescalationdata(datesearch model)
+        public JsonResult searchescalationdata(string startdate,string enddate)
         {
+            datesearch result = new datesearch();
             if(Session["Escdata"]!=null)
             {
-                IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
-                listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                var startdate = Convert.ToDateTime(sanitizer.Sanitize(model.startdate.ToString()));
-                var Enddate = Convert.ToDateTime(sanitizer.Sanitize(model.EndDate.ToString()));
-                var data = listdata.Where(x => x.date_of_alert >= startdate && x.date_of_alert <= Enddate).ToList();
-                if (data != null && data.Count() > 0)
+                try
                 {
-                    model.data = data;
-                    model.Status = true;
+                    IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                    listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture); 
+                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        result.startdate = Convert.ToDateTime(startdate);
+                        result.enddate = Convert.ToDateTime(enddate);
+                        result.data = data;
+                        result.Status = true;
+                    }
+                    else
+                    {
+                        result.startdate = Convert.ToDateTime(startdate);
+                        result.enddate = Convert.ToDateTime(enddate);
+                        result.Status = false;
+                    }
                 }
-                else model.Status = false;
-
+                catch(Exception ex)
+                {
+                    result.Status = false;
+                    result.startdate = Convert.ToDateTime(startdate);
+                    result.enddate = Convert.ToDateTime(enddate);
+                }
             }
-            else model.Status = false;
+            else result.Status = false;
 
-            return Json(new { result= model}, JsonRequestBehavior.AllowGet);
+            return Json(new { result= result }, JsonRequestBehavior.AllowGet);
         }
 
     }
