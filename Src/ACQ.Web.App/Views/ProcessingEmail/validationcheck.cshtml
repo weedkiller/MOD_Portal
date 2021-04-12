@@ -274,7 +274,7 @@
                                             </td>
 
 
-                                            <td><button type="button" class="btn btn-sm btn-primary Edit" noaon="@item.aon_id" notls="@item.MSG_TYPE"><i class="fa fa-edit"></i> </button> </td>
+                                            <td><a class="Edit" style="cursor:pointer;" noaon="@item.aon_id" notls="@item.MSG_TYPE"><i class="fa fa-edit"></i> </a> </td>
                                         </tr>
                                     }
                                 }
@@ -293,24 +293,26 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit <i class="fa fa-pencil-alt"></i> </h4>
+                            <h6 class="modal-title">Edit <small><i class="fa fa-edit"></i></small> </h6>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <div class="row">
-                                <label for="Message">Message</label>
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message"></textarea>
+                            
+                                <div class="form-group row">
+                                    <label for="Message">Message</label>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message" rows="3"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button">Update</button>
+                                <div class="form-group row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button" disabled>Update</button>
+                                    </div>
                                 </div>
+                           
                             </div>
-                        </div>
 
                         <!-- Modal footer -->
                         <div class="modal-footer">
@@ -320,7 +322,9 @@
                     </div>
                 </div>
             </div>
-        }
+        
+            
+         }
 
 
 
@@ -427,11 +431,11 @@
         });
 
         $('#Search').click(function () {
-            
+
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
-            
+
             var Fromdate = new Date($('#FromDate').val());
             var ToDate = new Date($('#ToDate').val());
             $.ajax({
@@ -466,7 +470,7 @@
                             var l7;
                             var l8;
                             var l9;
-                            
+
                             row += '<td>';
                             if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
                                 l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
@@ -504,30 +508,30 @@
                                 l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
                                 row += l9;
                             }
-                            
+
                             row += '</td>';
-                            row += '<td><button type="button" class="btn btn-sm btn-primary Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </button> </td>';
+                            row += '<td><a style="cursor:pointer;" class="Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </a> </td>';
                             row += '</tr>';
                         });
                         $('#mainbody').empty();
                         $('#mainbody').append(row);
                         $('#FromDate').val('');
                         $('#ToDate').val('');
-                     
-                       
+
+
                     } else {
                         alert("No data found between the selected duration");
                     }
                 },
                 failure: function (response) {
                     $('.preloader').fadeOut('slow');
-                    deselectAll();
                     alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
                     $('.preloader').fadeOut('slow');
-                    deselectAll();
                     alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
                 }
             });
         });
@@ -554,31 +558,99 @@
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
+                    $(btn).attr('disabled', false);
                     if (response.Status == true) {
+
                         $('#Message').val(response.result.msg);
+                        $('#Message').attr('data-length', response.result.msg.length);
+                        $('#Message').attr('noaon', $(btn).attr("noaon"));
+                        $('#Message').attr('notls', $(btn).attr("notls"));
                         $('#myModal').modal('show');
                     } else {
                         alert("Session has been expired, Please login again");
-                        window.location.reload();
+                        window.location.href = "@Url.Action("Account","Login")";
                     }
                 },
                 failure: function (response) {
+
                     alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
+                    $(btn).attr('disabled', false);
                     alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
                 }
             });
 
         });
 
         $(document).on('click', '#submit', function () {
-            $('.preloader').show();
-            $('#myModal').modal('hide');
-            alert('Data has been updated successfully');
-            $('.preloader').show();
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            var data = {};
+            data["aon_id"] = parseInt($("#Message").attr("noaon")),
+            data["MSG_TYPE"] = $("#Message").attr("notls");
+            data["msg"] = $("#Message").val();
+
+            $(btn).attr('disabled', true);
+
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/UpdateEscalationMessage",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    $(btn).attr('disabled', false);
+                    if (response.Status == true) {
+                        alert(response.Message);
+                        $('#myModal').modal('hide');
+                        window.location.reload();
+                    } else {
+                        alert(response.Message);
+                        
+                    }
+                },
+                failure: function (response) {
+
+                    alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                },
+                error: function (response) {
+                    alert("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                }
+            });
+            
+
         });
+
+        $(document).on("keyup keydown input change keypress", "#Message", function () {
+            verifychange();
+        });
+
+
+
+
     });
+
+    function verifychange() {
+        var actlen = $("#Message").attr('data-length');
+        var elen = $("#Message").val().length;
+        if (elen != 0 && elen != actlen) {
+            $('#submit').attr('disabled', false);
+        }
+        else {
+            $('#submit').attr('disabled', true);
+        }
+    }
     function getselect() {
         var selected = 0;
         $('tbody tr').each(function () {

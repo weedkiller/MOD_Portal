@@ -70,14 +70,6 @@ E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreComp
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
@@ -94,3 +86,11 @@ D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreC
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

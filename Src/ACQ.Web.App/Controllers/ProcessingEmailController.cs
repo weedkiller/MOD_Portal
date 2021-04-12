@@ -215,23 +215,25 @@ namespace ACQ.Web.App.Controllers
                     var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
                     if (data != null && data.Count() > 0)
                     {
-                        result.startdate = Convert.ToDateTime(startdate);
-                        result.enddate = Convert.ToDateTime(enddate);
+                        result.startdate = Convert.ToDateTime(sdate);
+                        result.enddate = Convert.ToDateTime(edate);
                         result.data = data;
                         result.Status = true;
                     }
                     else
                     {
-                        result.startdate = Convert.ToDateTime(startdate);
-                        result.enddate = Convert.ToDateTime(enddate);
+                        result.startdate = Convert.ToDateTime(sdate);
+                        result.enddate = Convert.ToDateTime(edate);
                         result.Status = false;
                     }
                 }
                 catch(Exception ex)
                 {
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     result.Status = false;
-                    result.startdate = Convert.ToDateTime(startdate);
-                    result.enddate = Convert.ToDateTime(enddate);
+                    result.startdate = Convert.ToDateTime(sdate);
+                    result.enddate = Convert.ToDateTime(edate);
                 }
             }
             else result.Status = false;
@@ -259,6 +261,47 @@ namespace ACQ.Web.App.Controllers
                 return Json(new {Status=true, result = result }, JsonRequestBehavior.AllowGet);
             }
             else return Json(new { Status = false, result = result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("UpdateEscalationMessage")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> UpdateEscalationMessage(EscalationReportData model)
+        {
+            bool result = false;
+            try
+            {
+                model.aon_id = Convert.ToInt32(sanitizer.Sanitize(model.aon_id.ToString()));
+                model.MSG_TYPE = sanitizer.Sanitize(model.MSG_TYPE);
+                model.msg = sanitizer.Sanitize(model.msg);
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = await client.PostAsJsonAsync<EscalationReportData>(WebAPIUrl + "Escalation/UpdateEscalationDraft", model);
+                    
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        result = true;
+                    }
+                    else
+                    {
+
+                        result = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result = false;
+            }
+            
+              return  Json(new { Status = result, Message = result?"Updated successfully":"Update failed! server connection failed." }, JsonRequestBehavior.AllowGet);
+            
         }
 
     }

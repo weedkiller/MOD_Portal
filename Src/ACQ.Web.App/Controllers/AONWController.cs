@@ -252,7 +252,7 @@ namespace ACQ.Web.App.Controllers
                     foreach (var dummyList in listData)
                     {
                         string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMailAllMember.html"));
-                        EmailHelper.SendAllDetails(dummyList.Email,dummyList.item_desc,dummyList.service, mailPath);
+                      //  EmailHelper.SendAllDetails(dummyList.Email,dummyList.item_desc,dummyList.service, mailPath);
                         ViewBag.Message = "RegistrationSuccessful";
                     }
 
