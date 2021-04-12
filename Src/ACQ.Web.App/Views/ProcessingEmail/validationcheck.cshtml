@@ -19,6 +19,7 @@
     .green {
         color: forestgreen;
     }
+
     .cards {
         position: relative;
         display: block;
@@ -44,6 +45,7 @@
         display: flex;
         justify-content: center;
     }
+
     .btn-search {
         /* float: left; */
         /* width: 20%; */
@@ -55,6 +57,7 @@
         border-left: none;
         cursor: pointer;
     }
+
     .btn-primary {
         color: #fff;
         background-color: #2196F3 !important;
@@ -285,6 +288,41 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit <i class="fa fa-pencil-alt"></i> </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <label for="Message">Message</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button">Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         }
 
 
@@ -340,7 +378,7 @@
                     }
                 }
             ],
-            pageLength: 25
+            pageLength: 50
         });
 
         getselect();
@@ -392,11 +430,11 @@
         });
 
         $('#Search').click(function () {
-            
+
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
-            
+
             var Fromdate = new Date($('#FromDate').val());
             var ToDate = new Date($('#ToDate').val());
             $.ajax({
@@ -431,7 +469,7 @@
                             var l7;
                             var l8;
                             var l9;
-                            
+
                             row += '<td>';
                             if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
                                 l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
@@ -469,7 +507,7 @@
                                 l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
                                 row += l9;
                             }
-                            
+
                             row += '</td>';
                             row += '<td><button type="button" class="btn btn-sm btn-primary Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </button> </td>';
                             row += '</tr>';
@@ -478,8 +516,8 @@
                         $('#mainbody').append(row);
                         $('#FromDate').val('');
                         $('#ToDate').val('');
-                     
-                       
+
+
                     } else {
                         alert("No data found between the selected duration");
                     }
@@ -495,6 +533,53 @@
                     alert("Please check your internet connection...");
                 }
             });
+        });
+
+        $(document).on('click', '.Edit', function () {
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            var data = {};
+            data["aon_id"] = parseInt($(this).attr("noaon")),
+                data["MSG_TYPE"] = $(this).attr("notls");
+
+            $(btn).attr('disabled', true);
+
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/getdataforEdit",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.Status == true) {
+                        $('#Message').val(response.result.msg);
+                        $('#myModal').modal('show');
+                    } else {
+                        alert("Session has been expired, Please login again");
+                        window.location.reload();
+                    }
+                },
+                failure: function (response) {
+                    alert("Please check your internet connection...");
+                },
+                error: function (response) {
+                    alert("Please check your internet connection...");
+                }
+            });
+
+        });
+
+        $(document).on('click', '#submit', function () {
+            $('.preloader').show();
+            $('#myModal').modal('hide');
+            alert('Data has been updated successfully');
+            $('.preloader').show();
         });
     });
     function getselect() {
@@ -555,7 +640,7 @@
 
     function getFormattedDate(datestring) {
 
-        var dd = datestring.replace("/Date(", "").replace(")/","");
+        var dd = datestring.replace("/Date(", "").replace(")/", "");
         var ticks = parseInt(dd);
         var date = new Date(ticks);
         var year = date.getFullYear();
