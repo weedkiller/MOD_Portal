@@ -55,25 +55,6 @@ D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.cs
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Newtonsoft.Json.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Mvc.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Razor.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Razor.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
@@ -93,6 +74,7 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.cspr
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+<<<<<<< HEAD
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
@@ -112,3 +94,24 @@ E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.Vie
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+=======
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Newtonsoft.Json.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Mvc.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+>>>>>>> ad9be968af8a2ccd4e331fa7e7a283accedd2244

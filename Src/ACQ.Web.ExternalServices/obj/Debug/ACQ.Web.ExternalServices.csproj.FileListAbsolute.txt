@@ -148,22 +148,6 @@ E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.External
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Razor.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Razor.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Microsoft.Web.Infrastructure.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Deployment.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
-E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
@@ -180,6 +164,7 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.Externa
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+<<<<<<< HEAD
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
@@ -196,3 +181,21 @@ E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
 E:\shifaLI\mod\mod12april\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+=======
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Razor.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+>>>>>>> ad9be968af8a2ccd4e331fa7e7a283accedd2244

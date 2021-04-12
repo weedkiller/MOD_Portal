@@ -64,7 +64,7 @@ namespace ACQ.Web.App.ViewModel
     public class datesearch
     {
         public DateTime startdate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime enddate { get; set; }
         public List<EscalationReportData> data { get; set; }
         public bool Status { get; set; }
     }
