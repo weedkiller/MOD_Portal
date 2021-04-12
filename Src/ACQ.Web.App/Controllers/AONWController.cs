@@ -20,6 +20,7 @@ using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
 using ACQ.Web.App.ViewModel;
+using ACQ.Web.ViewModel.FormMenu;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -133,6 +134,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ViewSOCRegistration()
         {
+         
             string mSercive = "";
             if (Session["Department"].ToString() == "IDS")
             {
@@ -781,10 +783,13 @@ namespace ACQ.Web.App.Controllers
         [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
         [SessionExpire]
         [SessionExpireRefNo]
+        //[Authorize]
         public ActionResult ViewMeeting()
         {
+        
             try
             {
+              
                 SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
                 List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
                 int UserID = GetUserID();

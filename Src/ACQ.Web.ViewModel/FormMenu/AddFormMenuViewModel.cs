@@ -23,7 +23,7 @@ namespace ACQ.Web.ViewModel.FormMenu
 
         public List<roleViewModel> roleList { get; set; }
         public List<string> isChecked { get; set; }
-
+        public int? Userid { get; set; }
     }
     public class UserViewModel
     {

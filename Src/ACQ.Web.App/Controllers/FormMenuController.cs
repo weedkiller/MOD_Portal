@@ -305,50 +305,71 @@ namespace ACQ.Web.App.Controllers
             AddFormMenuViewModel model = new AddFormMenuViewModel();
             List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
             List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+            List<roleViewModel> listData2 = new List<roleViewModel>();
             using (HttpClient client1 = new HttpClient())
             {
+                var loginid = Session["UserID"].ToString();
                 client1.BaseAddress = new Uri(WebAPIUrl);
 
                 client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                 HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetFormMenuList").Result;
-
+                HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleById?UserID=" + loginid + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     try
                     {
+                       
+                        model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        listData2 = model.roleList;
                         model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
-                        foreach(var par in model.menuList)
-                       {
-                            
-                            if (par.MenuId == 0)
-                            {
-                                AddFormMenuViewModel mod = new AddFormMenuViewModel();
-                                mod.ID = par.ID;
-                                mod.From_menu = par.From_menu;
-                                mod.ActionName = par.ActionName;
-                                mod.Controller = par.Controller;
-                                mod.MenuId = par.MenuId;
-                                mod.IsActive = par.IsActive;
+                        model.roleList = listData2;
+                        foreach (var menu in model.roleList)
+                        {
 
-                                listData.Add(mod);
-                            
-                            }
-                            else if (par.MenuId != 0)
+                            foreach (var par in model.menuList)
                             {
-                                AddFormMenuViewModel mod1 = new AddFormMenuViewModel();
-                                mod1.ID = par.ID;
-                                mod1.From_menu = par.From_menu;
-                                mod1.ActionName = par.ActionName;
-                                mod1.Controller = par.Controller;
-                                mod1.MenuId = par.MenuId;
-                                mod1.IsActive = par.IsActive;
+                                if (menu.FormMenuID == par.ID)
+                                {
+                                    if (par.MenuId == 0)
+                                    {
+                                        AddFormMenuViewModel mod = new AddFormMenuViewModel();
+                                        mod.ID = par.ID;
+                                        mod.From_menu = par.From_menu;
+                                        mod.ActionName = par.ActionName;
+                                        mod.Controller = par.Controller;
+                                        mod.MenuId = par.MenuId;
+                                        mod.IsActive = par.IsActive;
+                                        mod.Userid = menu.UserID;
 
-                                listData1.Add(mod1);
-                                
+                                        listData.Add(mod);
+
+                                    }
+                                    else if (par.MenuId != 0)
+                                    {
+                                        AddFormMenuViewModel mod1 = new AddFormMenuViewModel();
+                                        mod1.ID = par.ID;
+                                        mod1.From_menu = par.From_menu;
+                                        mod1.ActionName = par.ActionName;
+                                        mod1.Controller = par.Controller;
+                                        mod1.MenuId = par.MenuId;
+                                        mod1.IsActive = par.IsActive;
+                                        mod1.Userid = menu.UserID;
+
+                                        listData1.Add(mod1);
+
+                                    }
+                                }
+
                             }
                         }
                         model.parentList = listData;
                         model.chidList = listData1;
+                        Session["parentList"] = listData;
+                        Session["chidList"] = listData1;
+                        List<AddFormMenuViewModel> PLT = (List<AddFormMenuViewModel>)Session["parentList"];
+                        List<AddFormMenuViewModel> CLT = (List<AddFormMenuViewModel>)Session["chidList"];
+                      
+                        
                     }
                     catch (Exception ex)
                     {
