@@ -185,6 +185,8 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -212,6 +214,8 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -238,17 +242,18 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
                     foreach (var dummyList in listData)
                     {
-                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                        EmailHelper.SendAllDetails(dummyList.Email, mailPath);
+                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMailAllMember.html"));
+                        EmailHelper.SendAllDetails(dummyList.Email,dummyList.item_desc,dummyList.service, mailPath);
                         ViewBag.Message = "RegistrationSuccessful";
                     }
-
 
                 }
             }

@@ -1570,7 +1570,7 @@
     <Content Include="Email\EventUsernamaandpassword.html" />
     <Content Include="Email\NodalUsernamaandpassword.html" />
     <Content Include="Email\BadgePassess.html" />
-    <Content Include="Email\SendLinkBadgeRegistration - Copy.html" />
+    <Content Include="Email\SendMailAllMember.html" />
     <Content Include="Email\DownloadBadge.html" />
     <Content Include="Email\SendMeetingMailToParticipants.html" />
     <Content Include="Email\SendBlockedMailFormat.html" />
