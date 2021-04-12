@@ -19,7 +19,6 @@
     .green {
         color: forestgreen;
     }
-
     .cards {
         position: relative;
         display: block;
@@ -45,7 +44,6 @@
         display: flex;
         justify-content: center;
     }
-
     .btn-search {
         /* float: left; */
         /* width: 20%; */
@@ -57,7 +55,6 @@
         border-left: none;
         cursor: pointer;
     }
-
     .btn-primary {
         color: #fff;
         background-color: #2196F3 !important;
@@ -430,11 +427,11 @@
         });
 
         $('#Search').click(function () {
-
+            
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
-
+            
             var Fromdate = new Date($('#FromDate').val());
             var ToDate = new Date($('#ToDate').val());
             $.ajax({
@@ -469,7 +466,7 @@
                             var l7;
                             var l8;
                             var l9;
-
+                            
                             row += '<td>';
                             if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
                                 l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
@@ -507,7 +504,7 @@
                                 l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
                                 row += l9;
                             }
-
+                            
                             row += '</td>';
                             row += '<td><button type="button" class="btn btn-sm btn-primary Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </button> </td>';
                             row += '</tr>';
@@ -516,8 +513,8 @@
                         $('#mainbody').append(row);
                         $('#FromDate').val('');
                         $('#ToDate').val('');
-
-
+                     
+                       
                     } else {
                         alert("No data found between the selected duration");
                     }
@@ -541,7 +538,7 @@
             var btn = $(this);
             var data = {};
             data["aon_id"] = parseInt($(this).attr("noaon")),
-                data["MSG_TYPE"] = $(this).attr("notls");
+            data["MSG_TYPE"] = $(this).attr("notls");
 
             $(btn).attr('disabled', true);
 
@@ -640,7 +637,7 @@
 
     function getFormattedDate(datestring) {
 
-        var dd = datestring.replace("/Date(", "").replace(")/", "");
+        var dd = datestring.replace("/Date(", "").replace(")/","");
         var ticks = parseInt(dd);
         var date = new Date(ticks);
         var year = date.getFullYear();

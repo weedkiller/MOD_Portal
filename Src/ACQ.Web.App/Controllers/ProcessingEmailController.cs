@@ -106,7 +106,7 @@ namespace ACQ.Web.App.Controllers
         }
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
-
+        
 
         // GET: validation Check
         [Route("validationchecker")]
@@ -141,17 +141,17 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult sendEscalationEmail(List<EscalationReportData> model)
         {
-            if (model != null && model.Count() > 0)
+            if(model!=null && model.Count()>0)
             {
                 foreach (var item in model)
                 {
                     string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
                     IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
                     listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                    EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE == item.MSG_TYPE).FirstOrDefault();
+                    EscalationReportData lrepot = listdata.Where(x => x.aon_id == item.aon_id && x.MSG_TYPE==item.MSG_TYPE).FirstOrDefault();
                     //string message = draftMsg.DraftMessage_L1;
                     //message = message.Replace("{date}", lrepot.Date_of_Accord_of_AoN.Value.AddDays(Convert.ToInt32(item.dap_timeline) * 7).ToString("MM/dd/yyyy"));
-                    if (!string.IsNullOrEmpty(lrepot.L1_Officer_Email) && lrepot.L1_Officer_Email != "N/A")
+                    if(!string.IsNullOrEmpty(lrepot.L1_Officer_Email) && lrepot.L1_Officer_Email!="N/A")
                     {
                         EmailHelper.sendEmailEscalation(lrepot.L1_Officer_Email, lrepot.msg, mailPath);
                     }
@@ -195,22 +195,22 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
             }
-            return Json(new { Status = true, Message = "success" }, JsonRequestBehavior.AllowGet);
+            return Json(new { Status = true, Message="success" }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("searchescalationdata")]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public JsonResult searchescalationdata(string startdate, string enddate)
+        public JsonResult searchescalationdata(string startdate,string enddate)
         {
             datesearch result = new datesearch();
-            if (Session["Escdata"] != null)
+            if(Session["Escdata"]!=null)
             {
                 try
                 {
                     IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
                     listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture); 
                     var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
                     if (data != null && data.Count() > 0)
@@ -227,7 +227,7 @@ namespace ACQ.Web.App.Controllers
                         result.Status = false;
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     result.Status = false;
                     result.startdate = Convert.ToDateTime(startdate);
@@ -236,7 +236,7 @@ namespace ACQ.Web.App.Controllers
             }
             else result.Status = false;
 
-            return Json(new { result = result }, JsonRequestBehavior.AllowGet);
+            return Json(new { result= result }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("getdataforEdit")]
@@ -254,9 +254,9 @@ namespace ACQ.Web.App.Controllers
                 var data = listdata.Where(x => x.aon_id == aonid && x.MSG_TYPE == msgtype).FirstOrDefault();
                 result = data;
             }
-            if (result != null)
+            if(result!=null)
             {
-                return Json(new { Status = true, result = result }, JsonRequestBehavior.AllowGet);
+                return Json(new {Status=true, result = result }, JsonRequestBehavior.AllowGet);
             }
             else return Json(new { Status = false, result = result }, JsonRequestBehavior.AllowGet);
         }
