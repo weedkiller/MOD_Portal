@@ -232,7 +232,7 @@ namespace ACQ.Web.App.Controllers
                 throw ex;
             }
             //return Json(Massege, JsonRequestBehavior.AllowGet);
-            return RedirectToAction("Contract");
+            return RedirectToAction("Contract","AONW");
         }
 
         [Route("SaveStageExcel")]
@@ -343,7 +343,7 @@ namespace ACQ.Web.App.Controllers
                 throw ex;
             }
             //return Json(Massege, JsonRequestBehavior.AllowGet);
-            return RedirectToAction("Contract");
+            return RedirectToAction("Contract", "AONW");
         }
 
 
@@ -356,41 +356,41 @@ namespace ACQ.Web.App.Controllers
 
             return View();
         }
-        [Route("ViewSOC")]
-        [HandleError]
-        [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
-        [SessionExpire]
-        [SessionExpireRefNo]
-        public ActionResult ViewSOCRegistration()
-        {
-            string mSercive = "";
-            if (Session["Department"].ToString() == "IDS")
-            {
-                mSercive = "Joint Staff";
-            }
-            else
-            {
-                mSercive = Session["Department"].ToString();
-            }
-            ContractDetails Socmodel = new ContractDetails();
-            List<ContractDetails> listData = new List<ContractDetails>();
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    listData = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
+        //[Route("ViewSOC")]
+        //[HandleError]
+        //[HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
+        //[SessionExpire]
+        //[SessionExpireRefNo]
+        //public ActionResult ViewSOCRegistration()
+        //{
+        //    string mSercive = "";
+        //    if (Session["Department"].ToString() == "IDS")
+        //    {
+        //        mSercive = "Joint Staff";
+        //    }
+        //    else
+        //    {
+        //        mSercive = Session["Department"].ToString();
+        //    }
+        //    ContractDetails Socmodel = new ContractDetails();
+        //    List<ContractDetails> listData = new List<ContractDetails>();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.DefaultRequestHeaders.Clear();
+        //        client.BaseAddress = new Uri(WebAPIUrl);
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+        //                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+        //        HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            listData = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
 
-                }
-            }
+        //        }
+        //    }
 
 
-            return View(Socmodel);
-        }
+        //    return View(Socmodel);
+        //}
     }
 }
