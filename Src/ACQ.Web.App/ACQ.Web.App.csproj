@@ -222,6 +222,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AONWController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FormMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1693,6 +1694,7 @@
     <Content Include="Views\Account\ResetPasswordReturnMsg.cshtml" />
     <Content Include="Views\ProcessingEmail\validationcheck.cshtml" />
     <Content Include="Views\AONW\Contract.cshtml" />
+    <Content Include="Views\Contract\ContractList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
