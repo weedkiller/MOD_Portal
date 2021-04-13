@@ -20,7 +20,6 @@ using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
 using ACQ.Web.App.ViewModel;
-using ACQ.Web.ViewModel.FormMenu;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -176,7 +175,22 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ViewSOCRegistration()
         {
+<<<<<<< HEAD
             if (Session["UserID"] != null)
+=======
+            string mSercive = "";
+            if (Session["Department"].ToString() == "IDS")
+            {
+                mSercive = "Joint Staff";
+            }
+            else
+            {
+                mSercive = Session["Department"].ToString();
+            }
+            SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
+            List<SAVESOCVIEWMODEL> listData = new List<SAVESOCVIEWMODEL>();
+            using (var client = new HttpClient())
+>>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
             {
                 AddFormMenuViewModel model = new AddFormMenuViewModel();
                 List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
@@ -269,9 +283,19 @@ namespace ACQ.Web.App.Controllers
 
             if (Session["UserID"] != null)
             {
+<<<<<<< HEAD
                 AddFormMenuViewModel model = new AddFormMenuViewModel();
                 List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
                 using (HttpClient client1 = new HttpClient())
+=======
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
+                if (response.IsSuccessStatusCode)
+>>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
                 {
 
                     var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
@@ -339,9 +363,19 @@ namespace ACQ.Web.App.Controllers
         {
             if (Session["UserID"] != null)
             {
+<<<<<<< HEAD
                 AddFormMenuViewModel model = new AddFormMenuViewModel();
                 List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
                 using (HttpClient client1 = new HttpClient())
+=======
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
+                if (response.IsSuccessStatusCode)
+>>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
                 {
 
                     var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
@@ -415,17 +449,18 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
                     foreach (var dummyList in listData)
                     {
-                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                        EmailHelper.SendAllDetails(dummyList.Email, mailPath);
+                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMailAllMember.html"));
+                      //  EmailHelper.SendAllDetails(dummyList.Email,dummyList.item_desc,dummyList.service, mailPath);
                         ViewBag.Message = "RegistrationSuccessful";
                     }
-
 
                 }
             }
@@ -1086,9 +1121,9 @@ namespace ACQ.Web.App.Controllers
         [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
         [SessionExpire]
         [SessionExpireRefNo]
-        //[Authorize]
         public ActionResult ViewMeeting()
         {
+<<<<<<< HEAD
             if(Session["UserID"]!=null)
             {
                 AddFormMenuViewModel model = new AddFormMenuViewModel();
@@ -1096,6 +1131,15 @@ namespace ACQ.Web.App.Controllers
                 List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
                 List<roleViewModel> listData2 = new List<roleViewModel>();
                 using (HttpClient client1 = new HttpClient())
+=======
+            try
+            {
+                SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
+                List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
+                int UserID = GetUserID();
+
+                using (var client = new HttpClient())
+>>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
                 {
                    
                     var  loginid = sanitizer.Sanitize(Session["UserID"].ToString());
