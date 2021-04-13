@@ -271,29 +271,35 @@ namespace ACQ.Web.App.Controllers
             bool result = false;
             try
             {
-                model.aon_id = Convert.ToInt32(sanitizer.Sanitize(model.aon_id.ToString()));
-                model.MSG_TYPE = sanitizer.Sanitize(model.MSG_TYPE);
-                model.msg = sanitizer.Sanitize(model.msg);
-                using (var client = new HttpClient())
+                if(Session["UserID"]!=null)
                 {
-                    client.DefaultRequestHeaders.Clear();
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = await client.PostAsJsonAsync<EscalationReportData>(WebAPIUrl + "Escalation/UpdateEscalationDraft", model);
-                    
-                    if (response.IsSuccessStatusCode)
+                    model.aon_id = Convert.ToInt32(sanitizer.Sanitize(model.aon_id.ToString()));
+                    model.MSG_TYPE = sanitizer.Sanitize(model.MSG_TYPE);
+                    model.msg = sanitizer.Sanitize(model.msg);
+                    var id = Session["UserID"].ToString();
+                    model.Modified_by = id;
+                    using (var client = new HttpClient())
                     {
+                        client.DefaultRequestHeaders.Clear();
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        HttpResponseMessage response = await client.PostAsJsonAsync<EscalationReportData>(WebAPIUrl + "Escalation/UpdateEscalationDraft", model);
 
-                        result = true;
-                    }
-                    else
-                    {
+                        if (response.IsSuccessStatusCode)
+                        {
 
-                        result = false;
+                            result = true;
+                        }
+                        else
+                        {
+
+                            result = false;
+                        }
                     }
                 }
+                
             }
             catch(Exception ex)
             {

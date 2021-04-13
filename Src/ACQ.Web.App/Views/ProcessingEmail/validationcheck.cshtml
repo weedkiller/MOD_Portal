@@ -19,6 +19,7 @@
     .green {
         color: forestgreen;
     }
+
     .cards {
         position: relative;
         display: block;
@@ -44,6 +45,7 @@
         display: flex;
         justify-content: center;
     }
+
     .btn-search {
         /* float: left; */
         /* width: 20%; */
@@ -55,6 +57,7 @@
         border-left: none;
         cursor: pointer;
     }
+
     .btn-primary {
         color: #fff;
         background-color: #2196F3 !important;
@@ -98,6 +101,7 @@
                                     <th>Draft Message</th>
                                     <th>Date Of Alert</th>
                                     <th>Email Receivers</th>
+                                    <th style="display:none;" class="smsreceivers">SMS Receivers</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -273,6 +277,34 @@
 
                                             </td>
 
+                                            <td style="display:none;" class="smsreceivers">
+                                                <div class="cards">
+                                                    @if (string.IsNullOrEmpty(item.L1_Officer_Phone) == false && item.L1_Officer_Phone != "N/A")
+                                                    {
+                                                    <span>@item.L1_Officer_Phone</span>
+
+                                                    }
+                                                    @if (string.IsNullOrEmpty(item.L2_Officer_Phone) == false && item.L2_Officer_Phone != "N/A")
+                                                    {
+                                                        <span>, @item.L2_Officer_Phone</span>
+                                                        <br />
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L3_Officer_Phone) == false && item.L3_Officer_Phone != "N/A")
+                                                    {
+                                                        <span>, @item.L3_Officer_Phone</span>
+                                                        <br />
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L4_Officer_Phone) == false && item.L4_Officer_Phone != "N/A")
+                                                    {
+
+                                                        <span>, @item.L4_Officer_Phone</span>
+                                                        <br />
+                                                    }
+                                                </div>
+                                            </td>
+
 
                                             <td><a class="Edit" style="cursor:pointer;" noaon="@item.aon_id" notls="@item.MSG_TYPE"><i class="fa fa-edit"></i> </a> </td>
                                         </tr>
@@ -299,20 +331,20 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            
-                                <div class="form-group row">
-                                    <label for="Message">Message</label>
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message" rows="3"></textarea>
-                                    </div>
+
+                            <div class="form-group row">
+                                <label for="Message">Message</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message" rows="3"></textarea>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button" disabled>Update</button>
-                                    </div>
-                                </div>
-                           
                             </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button" disabled>Update</button>
+                                </div>
+                            </div>
+
+                        </div>
 
                         <!-- Modal footer -->
                         <div class="modal-footer">
@@ -322,9 +354,9 @@
                     </div>
                 </div>
             </div>
-        
-            
-         }
+
+
+        }
 
 
 
@@ -343,7 +375,7 @@
 <script src="~/assets/js/jquery-ui.js"></script>
 <script nonce="r@nd0m">
     jQuery(document).ready(function ($) {
-
+        document.title = 'Escalation Matrix Report';  
         $("#FromDate").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -364,15 +396,22 @@
                 {
                     extend: 'excel',
                     text: 'Download',
+                    filename: 'Escalation Report',
+                    sheetName: 'Escalation_Report',
+                    header: false,
                     exportOptions: {
-                        columns: [5, 7]
+                        columns: [5, 8],
+                        trim: true
                     }
                 },
                 {
                     extend: 'print',
                     text: 'Print',
+                    filename: 'Escalation Report',
                     autoPrint: true,
+                    header: false,
                     exportOptions: {
+                        trim: true,
                         modifier: {
                             page: 'current'
                         }
@@ -510,6 +549,34 @@
                             }
 
                             row += '</td>';
+
+                            var p1;
+                            var p2;
+                            var p3;
+                            var p4;
+
+                            row += '<td style="display:none;" class="smsreceivers"><div class="cards">';
+                            if (item.L1_Officer_Phone != "" && item.L1_Officer_Phone != "N/A") {
+                                p1 = '<span>' + item.L1_Officer_Phone + '</span>';
+                                row += p1;
+                            }
+                            if (item.L2_Officer_Phone != "" && item.L2_Officer_Phone != "N/A") {
+                                p2 = '<span>,' + item.L2_Officer_Phone + '</span>';
+                                row += p2;
+                            }
+                            if (item.L3_Officer_Phone != "" && item.L3_Officer_Phone != "N/A") {
+                                p3 = '<span>,' + item.L3_Officer_Phone + '</span>';
+                                row += p3;
+                            }
+                            if (item.L4_Officer_Phone != "" && item.L4_Officer_Phone != "N/A") {
+                                p4 = '<span>,' + item.L4_Officer_Phone + '</span>';
+                                row += p4;
+                            }
+                            
+
+                            row += '</div></td>';
+
+
                             row += '<td><a style="cursor:pointer;" class="Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '"><i class="fa fa-edit"></i> </a> </td>';
                             row += '</tr>';
                         });
@@ -615,7 +682,7 @@
                         window.location.reload();
                     } else {
                         alert(response.Message);
-                        
+
                     }
                 },
                 failure: function (response) {
@@ -628,7 +695,7 @@
                     window.location.href = "@Url.Action("Account","Login")";
                 }
             });
-            
+
 
         });
 
