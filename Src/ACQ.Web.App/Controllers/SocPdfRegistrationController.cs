@@ -22,6 +22,7 @@ using GemBox.Document;
 using System.Linq;
 using ACQ.Web.ViewModel.User;
 using ACQ.Web.ExternalServices.Email;
+using ACQ.Web.ViewModel.FormMenu;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -192,7 +193,49 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult SoCPdfRegistration()
         {
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("SoCPdfRegistration");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                               
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
+            
             return View();
         }
 

@@ -123,7 +123,49 @@ namespace ACQ.Web.App.Controllers
         #region Index HomePage
         public ActionResult Index(SAVESOCVIEWMODEL _model)
         {
-            return View(_model);
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("Index");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                return View(_model);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
+            return View();
         }
         #endregion
         #region Main SOC Page All Code
@@ -134,42 +176,87 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ViewSOCRegistration()
         {
-         
-            string mSercive = "";
-            if (Session["Department"].ToString() == "IDS")
+            if (Session["UserID"] != null)
             {
-                mSercive = "Joint Staff";
-            }
-            else
-            {
-                mSercive = Session["Department"].ToString();
-            }
-            SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
-            List<SAVESOCVIEWMODEL> listData = new List<SAVESOCVIEWMODEL>();
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                List<roleViewModel> listData2 = new List<roleViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    listData = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("ViewSOCRegistration");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                string mSercive = "";
+                                if (Session["Department"].ToString() == "IDS")
+                                {
+                                    mSercive = "Joint Staff";
+                                }
+                                else
+                                {
+                                    mSercive = Session["Department"].ToString();
+                                }
+                                SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
+                                List<SAVESOCVIEWMODEL> listData5 = new List<SAVESOCVIEWMODEL>();
+                                using (var client = new HttpClient())
+                                {
+                                    client.DefaultRequestHeaders.Clear();
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                    HttpResponseMessage response1 = client.GetAsync("AONW/ViewSOCRegistration").Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        listData5 = response1.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
+
+                                    }
+                                }
+
+                                if (mSercive != "Acquisition Wing")
+                                {
+                                    Socmodel.SOCVIEW = listData5.Where(x => x.Service_Lead_Service == mSercive).ToList();
+                                }
+                                else
+                                {
+                                    Socmodel.SOCVIEW = listData5;
+                                }
+                                return View(Socmodel);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
+                // return View(model);
             }
 
-            if (mSercive != "Acquisition Wing")
-            {
-                Socmodel.SOCVIEW = listData.Where(x => x.Service_Lead_Service == mSercive).ToList();
-            }
-            else
-            {
-                Socmodel.SOCVIEW = listData;
-            }
-            return View(Socmodel);
+            return View();
+
         }
 
         [Route(" ViewSOCComment")]
@@ -180,24 +267,67 @@ namespace ACQ.Web.App.Controllers
         public ActionResult ViewSOCComment()
         {
 
-            SocCommentViewModel Socmodel = new SocCommentViewModel();
-            List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
-            var id = Session["UserID"].ToString();
-            using (var client = new HttpClient())
+            if (Session["UserID"] != null)
             {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("ViewSOCComment");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                SocCommentViewModel Socmodel = new SocCommentViewModel();
+                                List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
+                                var id = Session["UserID"].ToString();
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response1 = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        listData = response1.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
+
+                                    }
+                                }
+
+                                Socmodel.SOCVIEWComment = listData;
+                                return View(Socmodel);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
+                // return View(model);
             }
 
-            Socmodel.SOCVIEWComment = listData;
-            return View(Socmodel);
+            return View();
         }
 
         [Route("ViewSocSendMail")]
@@ -207,25 +337,68 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ViewSocSendMail(string ID)
         {
-            acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
-            List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
-            ID = Encryption.Decrypt(ID);
-            using (var client = new HttpClient())
+            if (Session["UserID"] != null)
             {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    Session["id"] = ID;
-                    listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("ViewSocSendMail");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
+                                List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
+                                ID = Encryption.Decrypt(ID);
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response1 = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        Session["id"] = ID;
+                                        listData = response1.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
+
+                                    }
+                                }
+
+                                Socmodel.SOCMailVIEW = listData;
+                                return View(Socmodel);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
+                // return View();
             }
 
-            Socmodel.SOCMailVIEW = listData;
-            return View(Socmodel);
+            return View();
         }
         [Route("SendMailToAll")]
         [HandleError]
@@ -233,6 +406,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult SendMailToAll()
         {
+         
             acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
             List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
             var id = Session["id"].ToString();
@@ -259,6 +433,7 @@ namespace ACQ.Web.App.Controllers
             Socmodel.SOCMailVIEW = listData;
             //return RedirectToAction("ViewSOCRegistration");
             return Json("Success", JsonRequestBehavior.AllowGet);
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -268,7 +443,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> WAonCreate(SAVESOCVIEWMODEL model, HttpPostedFileBase file)
         {
-
+            
             try
             {
                 if (Session["UserID"] != null)
@@ -410,113 +585,156 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ViewSocMaster(string ID, string mtype)
         {
-            try
+            if (Session["UserID"] != null)
             {
-                SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
-                using (var client = new HttpClient())
+                AddFormMenuViewModel model1 = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + Encryption.Decrypt(ID) + "").Result;
-                    if (response.IsSuccessStatusCode)
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("ViewSocMaster");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
                     {
-                        model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
-                        model.item_description = Encryption.Decrypt(model.item_description);
-                        ViewBag.item = Encryption.Encrypt(model.item_description);
-                        model.Quantity = Encryption.Decrypt(model.Quantity);
-                        model.Cost = Encryption.Decrypt(model.Cost);
-                        model.Categorisation = Encryption.Decrypt(model.Categorisation);
-                        model.Service_Lead_Service = Encryption.Decrypt(model.Service_Lead_Service);
-                        model.AoN_Accorded_By = Encryption.Decrypt(model.AoN_Accorded_By);
-                        model.SystemCase = Encryption.Decrypt(model.SystemCase);
-                        model.SoCCase = Encryption.Decrypt(model.SoCCase);
-                        model.IC_percentage = Encryption.Decrypt(model.IC_percentage);
-                        model.Essential_parameters = Encryption.Decrypt(model.Essential_parameters);
-                        model.EPP = Encryption.Decrypt(model.EPP);
-                        model.Trials_Required = Encryption.Decrypt(model.Trials_Required);
-                        model.Offset_applicable = Encryption.Decrypt(model.Offset_applicable);
-                        model.Option_clause_applicable = Encryption.Decrypt(model.Option_clause_applicable);
-                        model.Warrenty_applicable = Encryption.Decrypt(model.Warrenty_applicable);
-                        model.Warrenty_Remarks = Encryption.Decrypt(model.Warrenty_Remarks);
-                        model.Any_other_aspect = Encryption.Decrypt(model.Any_other_aspect);
-                        model.SocAName = Encryption.Decrypt(model.SocAName);
-                        model.SocADesignation = Encryption.Decrypt(model.SocADesignation);
-                        model.SocAApprovalRef = Encryption.Decrypt(model.SocAApprovalRef);
-                        model.SocAApprovalDate = Encryption.Decrypt(model.SocAApprovalDate);
-                        model.SocSDName = Encryption.Decrypt(model.SocSDName);
-                        model.SocSDDesignation = Encryption.Decrypt(model.SocSDDesignation);
-                        model.SocSDPhone = Encryption.Decrypt(model.SocSDPhone);
-                        model.SocSDDate = Encryption.Decrypt(model.SocSDDate);
-                    }
-
-                }
-
-
-                List<AttachmentViewModel> listData = new List<AttachmentViewModel>();
-                if (mtype != null)
-                {
-                    using (var client1 = new HttpClient())
-                    {
-                        client1.BaseAddress = new Uri(WebAPIUrl);
-                        //HTTP GET
-                        client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client1.GetAsync("AONW/GetAttachFile?ID=" + Encryption.Decrypt(ID) + "").Result;
-                        if (response.IsSuccessStatusCode)
+                        try
                         {
-                            listData = response.Content.ReadAsAsync<List<AttachmentViewModel>>().Result;
+                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model1.roleList.Count != 0)
+                            {
+                                try
+                                {
+                                    SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
+                                    using (var client = new HttpClient())
+                                    {
+                                        client.BaseAddress = new Uri(WebAPIUrl);
+                                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                              parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                        HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + Encryption.Decrypt(ID) + "").Result;
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+                                            model.item_description = Encryption.Decrypt(model.item_description);
+                                            ViewBag.item = Encryption.Encrypt(model.item_description);
+                                            model.Quantity = Encryption.Decrypt(model.Quantity);
+                                            model.Cost = Encryption.Decrypt(model.Cost);
+                                            model.Categorisation = Encryption.Decrypt(model.Categorisation);
+                                            model.Service_Lead_Service = Encryption.Decrypt(model.Service_Lead_Service);
+                                            model.AoN_Accorded_By = Encryption.Decrypt(model.AoN_Accorded_By);
+                                            model.SystemCase = Encryption.Decrypt(model.SystemCase);
+                                            model.SoCCase = Encryption.Decrypt(model.SoCCase);
+                                            model.IC_percentage = Encryption.Decrypt(model.IC_percentage);
+                                            model.Essential_parameters = Encryption.Decrypt(model.Essential_parameters);
+                                            model.EPP = Encryption.Decrypt(model.EPP);
+                                            model.Trials_Required = Encryption.Decrypt(model.Trials_Required);
+                                            model.Offset_applicable = Encryption.Decrypt(model.Offset_applicable);
+                                            model.Option_clause_applicable = Encryption.Decrypt(model.Option_clause_applicable);
+                                            model.Warrenty_applicable = Encryption.Decrypt(model.Warrenty_applicable);
+                                            model.Warrenty_Remarks = Encryption.Decrypt(model.Warrenty_Remarks);
+                                            model.Any_other_aspect = Encryption.Decrypt(model.Any_other_aspect);
+                                            model.SocAName = Encryption.Decrypt(model.SocAName);
+                                            model.SocADesignation = Encryption.Decrypt(model.SocADesignation);
+                                            model.SocAApprovalRef = Encryption.Decrypt(model.SocAApprovalRef);
+                                            model.SocAApprovalDate = Encryption.Decrypt(model.SocAApprovalDate);
+                                            model.SocSDName = Encryption.Decrypt(model.SocSDName);
+                                            model.SocSDDesignation = Encryption.Decrypt(model.SocSDDesignation);
+                                            model.SocSDPhone = Encryption.Decrypt(model.SocSDPhone);
+                                            model.SocSDDate = Encryption.Decrypt(model.SocSDDate);
+                                        }
+
+                                    }
+
+
+                                    List<AttachmentViewModel> listData = new List<AttachmentViewModel>();
+                                    if (mtype != null)
+                                    {
+                                        using (var client = new HttpClient())
+                                        {
+                                            client1.BaseAddress = new Uri(WebAPIUrl);
+                                            //HTTP GET
+                                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                            HttpResponseMessage response = client.GetAsync("AONW/GetAttachFile?ID=" + Encryption.Decrypt(ID) + "").Result;
+                                            if (response.IsSuccessStatusCode)
+                                            {
+                                                listData = response.Content.ReadAsAsync<List<AttachmentViewModel>>().Result;
+                                            }
+                                        }
+
+                                        ViewBag.UploadStatus = "Comment";
+                                    }
+                                    else
+                                    {
+                                        TempData["FileF"] = null;
+                                        if (TempData["FileA"] != null)
+                                        {
+                                            fileDetails = TempData["FileA"] as List<Efile.FileDetail>;
+                                        }
+
+                                        foreach (var m in fileDetails)
+                                        {
+                                            AttachmentViewModel fileDetail = new AttachmentViewModel()
+                                            {
+                                                AttachmentFileName = m.FileName,
+                                                Path = m.FilePath,
+                                                AttachmentID = Convert.ToInt16(m.Id),
+                                            };
+                                            listData.Add(fileDetail);
+                                        }
+
+                                        if (TempData["FileAA"] != null)
+                                        {
+                                            fileDetailsA = TempData["FileAA"] as List<Efile.FileDetail>;
+                                        }
+
+                                        foreach (var m in fileDetailsA)
+                                        {
+                                            AttachmentViewModel fileDetailA = new AttachmentViewModel()
+                                            {
+                                                AttachmentFileName = m.FileName,
+                                                Path = m.FilePath,
+                                                AttachmentID = Convert.ToInt16(m.Id),
+                                            };
+                                            listData.Add(fileDetailA);
+                                        }
+
+                                        TempData["FileF"] = listData;
+                                        ViewBag.UploadStatus = "Review";
+                                    }
+                                    model.FileDetail = listData;
+
+                                    return View(model);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
                         }
-                    }
-
-                    ViewBag.UploadStatus = "Comment";
-                }
-                else
-                {
-                    TempData["FileF"] = null;
-                    if (TempData["FileA"] != null)
-                    {
-                        fileDetails = TempData["FileA"] as List<Efile.FileDetail>;
-                    }
-
-                    foreach (var m in fileDetails)
-                    {
-                        AttachmentViewModel fileDetail = new AttachmentViewModel()
+                        catch (Exception ex)
                         {
-                            AttachmentFileName = m.FileName,
-                            Path = m.FilePath,
-                            AttachmentID = Convert.ToInt16(m.Id),
-                        };
-                        listData.Add(fileDetail);
-                    }
 
-                    if (TempData["FileAA"] != null)
+                        }
+
+                    }
+                    else
                     {
-                        fileDetailsA = TempData["FileAA"] as List<Efile.FileDetail>;
+                        return RedirectToAction("Login", "Account");
                     }
-
-                    foreach (var m in fileDetailsA)
-                    {
-                        AttachmentViewModel fileDetailA = new AttachmentViewModel()
-                        {
-                            AttachmentFileName = m.FileName,
-                            Path = m.FilePath,
-                            AttachmentID = Convert.ToInt16(m.Id),
-                        };
-                        listData.Add(fileDetailA);
-                    }
-
-                    TempData["FileF"] = listData;
-                    ViewBag.UploadStatus = "Review";
                 }
-                model.FileDetail = listData;
+                // return View();
+            }
 
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return View();
         }
         [Route("EditSocMaster")]
         [HandleError]
@@ -524,28 +742,71 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult EditSocMaster(int ID)
         {
-            try
+            if (Session["UserID"] != null)
             {
-                SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
-                using (var client = new HttpClient())
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    //HTTP GET
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + ID + "").Result;
-                    if (response.IsSuccessStatusCode)
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("EditSocMaster");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
                     {
-                        model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                try
+                                {
+                                    SAVESOCVIEWMODEL model1 = new SAVESOCVIEWMODEL();
+                                    using (var client = new HttpClient())
+                                    {
+                                        client.BaseAddress = new Uri(WebAPIUrl);
+                                        //HTTP GET
+                                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                        HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + ID + "").Result;
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            model1 = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+
+                                        }
+
+                                    }
+                                    return View(model1);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
 
                     }
-
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
-                return View(model);
+                // return View();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return View();
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -684,6 +945,48 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult SOCApproval()
         {
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("SOCApproval");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
             return View();
         }
 
@@ -786,34 +1089,78 @@ namespace ACQ.Web.App.Controllers
         //[Authorize]
         public ActionResult ViewMeeting()
         {
-        
-            try
+            if(Session["UserID"]!=null)
             {
-              
-                SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
-                List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
-                int UserID = GetUserID();
-
-                using (var client = new HttpClient())
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData = new List<AddFormMenuViewModel>();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                List<roleViewModel> listData2 = new List<roleViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    //HTTP GET
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/CreateMeetings?UserID=" + UserID).Result;
+                   
+                    var  loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("ViewMeeting");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName +  "").Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        listData = response.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
+                        try
+                        {
+                            model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if(model.roleList.Count!=0)
+                            {
+                                try
+                                {
+
+                                    SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
+                                    List<SechduleMeetingAgedaViewModel> listData3 = new List<SechduleMeetingAgedaViewModel>();
+                                    int UserID = GetUserID();
+
+                                    using (var client = new HttpClient())
+                                    {
+                                        client.BaseAddress = new Uri(WebAPIUrl);
+                                        //HTTP GET
+                                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                        HttpResponseMessage response1 = client.GetAsync("AONW/CreateMeetings?UserID=" + UserID).Result;
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            listData3 = response1.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
+                                        }
+                                    }
+
+                                    ViewBag.UserID = UserID;
+                                    Socmodel.ListofMeeting = listData3;
+                                    return View(Socmodel);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+                         
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
                     }
                 }
+                // return View(model);
+            }
+            return View();
 
-                ViewBag.UserID = UserID;
-                Socmodel.ListofMeeting = listData;
-                return View(Socmodel);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
         [Route("PrepareFinalMeeting")]
         [HandleError]
@@ -843,7 +1190,49 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult createMeeting()
         {
-            SetParticipantSession();
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("createMeeting");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                SetParticipantSession();
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
+           
             return View();
         }
 
@@ -853,28 +1242,71 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult AddSocCommit(string id)
         {
-            SocCommentViewModel model = new SocCommentViewModel();
-            try
+            if (Session["UserID"] != null)
             {
-                if (id != null)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
-                    model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
-                    // Session["item"] = Request.QueryString["item"].ToString();
-                    //if(Request != null && string.IsNullOrEmpty(Request.QueryString["item"]))
-                    //{
-                    ViewBag.item = Request.QueryString["item"].ToString();
-                    //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
-                    ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
-                    ViewBag.id = id;
-                    // }
-                }
-            }
-            catch (Exception EX)
-            {
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("AddSocCommit");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                SocCommentViewModel model1 = new SocCommentViewModel();
+                                try
+                                {
+                                    if (id != null)
+                                    {
+                                        Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
+                                        model1.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
+                                        // Session["item"] = Request.QueryString["item"].ToString();
+                                        //if(Request != null && string.IsNullOrEmpty(Request.QueryString["item"]))
+                                        //{
+                                        ViewBag.item = Request.QueryString["item"].ToString();
+                                        //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
+                                        ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
+                                        ViewBag.id = id;
+                                        // }
+                                    }
+                                }
+                                catch (Exception EX)
+                                {
+
+                                }
+                                return View(model1);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
             }
-            return View(model);
+
+            return View();
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
@@ -972,43 +1404,86 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult GenerateReport(string ID, string Version = null)
         {
-            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
-
-            SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
-            using (var client = new HttpClient())
+            if (Session["UserID"] != null)
             {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/EditMeeting?ID=" + mID + "").Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model1 = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    model = response.Content.ReadAsAsync<SechduleMeetingAgedaViewModel>().Result;
-                    model.meeting_id = mID.ToString();
 
-                }
-            }
-            MeetingAgenda Socmodel = new MeetingAgenda();
-            List<MeetingAgenda> listData = new List<MeetingAgenda>();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/BindMeetingAgenda?ID=" + mID + "&Version=" + Version).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    listData = response.Content.ReadAsAsync<List<MeetingAgenda>>().Result;
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("GenerateReport");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
 
-                    listData.ForEach(f =>
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
                     {
-                        f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
-                    });
-                    model.TrnListMeeting = new List<MeetingAgenda>();
-                    model.TrnListMeeting = listData;
+                        try
+                        {
+                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model1.roleList.Count != 0)
+                            {
+                                Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+
+                                SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response = client.GetAsync("AONW/EditMeeting?ID=" + mID + "").Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        model = response.Content.ReadAsAsync<SechduleMeetingAgedaViewModel>().Result;
+                                        model.meeting_id = mID.ToString();
+
+                                    }
+                                }
+                                MeetingAgenda Socmodel = new MeetingAgenda();
+                                List<MeetingAgenda> listData = new List<MeetingAgenda>();
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response = client.GetAsync("AONW/BindMeetingAgenda?ID=" + mID + "&Version=" + Version).Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        listData = response.Content.ReadAsAsync<List<MeetingAgenda>>().Result;
+
+                                        listData.ForEach(f =>
+                                        {
+                                            f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
+                                        });
+                                        model.TrnListMeeting = new List<MeetingAgenda>();
+                                        model.TrnListMeeting = listData;
+                                    }
+                                }
+                                return View(model);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
+                // return View();
             }
-            return View(model);
+
+            return View();
         }
         [Route("EmailToMeetingParticipants")]
         [HandleError]
@@ -1016,22 +1491,65 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult EmailToMeetingParticipants(string ID)
         {
-            List<MeetingParticipants> listData = new List<MeetingParticipants>();
-            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
-            using (var client = new HttpClient())
+            if (Session["UserID"] != null)
             {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetParticipantsDataForMail?ID=" + mID).Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    listData = response.Content.ReadAsAsync<List<MeetingParticipants>>().Result;
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("EmailToMeetingParticipants");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                List<MeetingParticipants> listData = new List<MeetingParticipants>();
+                                Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response = client.GetAsync("AONW/GetParticipantsDataForMail?ID=" + mID).Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        listData = response.Content.ReadAsAsync<List<MeetingParticipants>>().Result;
+
+                                    }
+                                }
+                                Session["participants"] = listData;
+                                return View(listData);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
+                // return View();
             }
-            Session["participants"] = listData;
-            return View(listData);
+            return View();
+
         }
         [Route("SendMailToParticiants")]
         [HandleError]
@@ -1039,15 +1557,58 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult SendMailToParticiants()
         {
-            List<MeetingParticipants> listData = new List<MeetingParticipants>();
-            listData = Session["participants"] as List<MeetingParticipants>;
-            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMeetingMailToParticipants.html"));
-            listData.ForEach(f =>
+            if (Session["UserID"] != null)
             {
-                EmailHelper.SendToParticipants(f.Email, mailPath);
-            });
-            ViewBag.Msgg = "Email Sent sucessfully";
-            return View("EmailToMeetingParticipants", listData);
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("SendMailToParticiants");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                List<MeetingParticipants> listData = new List<MeetingParticipants>();
+                                listData = Session["participants"] as List<MeetingParticipants>;
+                                string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMeetingMailToParticipants.html"));
+                                listData.ForEach(f =>
+                                {
+                                    EmailHelper.SendToParticipants(f.Email, mailPath);
+                                });
+                                ViewBag.Msgg = "Email Sent sucessfully";
+                                return View("EmailToMeetingParticipants", listData);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
+            return View();
+
         }
         [Route("SetParticipantSession")]
         [HandleError]
@@ -1076,38 +1637,82 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult EditMeeting(string ID)
         {
-            try
+            if (Session["UserID"] != null)
             {
-                Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
-                SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
-                using (var client = new HttpClient())
+                AddFormMenuViewModel model1 = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    //HTTP GET
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditMeeting?ID=" + mID + "").Result;
-                    if (response.IsSuccessStatusCode)
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("SoCPdfRegistration");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
                     {
-                        model = response.Content.ReadAsAsync<SechduleMeetingAgedaViewModel>().Result;
-                        model.meeting_id = mID.ToString();
+                        try
+                        {
+                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model1.roleList.Count != 0)
+                            {
+                                try
+                                {
+                                    Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+                                    SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
+                                    using (var client = new HttpClient())
+                                    {
+                                        client.BaseAddress = new Uri(WebAPIUrl);
+                                        //HTTP GET
+                                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                        HttpResponseMessage response = client.GetAsync("AONW/EditMeeting?ID=" + mID + "").Result;
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            model = response.Content.ReadAsAsync<SechduleMeetingAgedaViewModel>().Result;
+                                            model.meeting_id = mID.ToString();
+                                        }
+                                    }
+                                    SetParticipantSession();
+                                    var List = Session["participants"] as List<MeetingParticipants>;
+                                    List = List.Where(x => x.meeting_type == model.dac_dpb).ToList();
+                                    List.ForEach(f =>
+                                    {
+                                        if (model.Participants.Where(x => x.UserID == f.UserID).FirstOrDefault() != null)
+                                            f.IsSelected = true;
+                                    });
+                                    ViewBag.ParticipantsList = List;
+
+                                    return View(model);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
                     }
                 }
-                SetParticipantSession();
-                var List = Session["participants"] as List<MeetingParticipants>;
-                List = List.Where(x => x.meeting_type == model.dac_dpb).ToList();
-                List.ForEach(f =>
-                {
-                    if (model.Participants.Where(x => x.UserID == f.UserID).FirstOrDefault() != null)
-                        f.IsSelected = true;
-                });
-                ViewBag.ParticipantsList = List;
+                // return View();
+            }
 
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1348,45 +1953,88 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult AddMeetingAgenda(string id, string mtype, string dated)
         {
-            ViewBag.mtype = mtype;
-            ViewBag.dated = dated;
-            MeetingAgenda meetingAgenda = new MeetingAgenda();
-            if (id == "0")
+            if (Session["UserID"] != null)
             {
-                meetingAgenda.meeting_id = Convert.ToInt16(id);
-            }
-            else
-            {
-                meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
-            }
-
-            meetingAgenda.MeetingAgendaComment = new MeetingAgendaComment();
-            meetingAgenda.MeetingAgendaCommentList = new List<MeetingAgendaComment>();
-            meetingAgenda.MeetingAgendaComment.UserID = GetUserID();
-            #region Get Meeting Dropdown
-            List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = new List<SAVESOCVIEWMODEL>();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetTypeOfAgenda").Result;
-                if (response.IsSuccessStatusCode)
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    dropdownTypeofAgenda = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
-                }
-            }
-            dropdownTypeofAgenda.ForEach(f =>
-            {
-                f.item_description = string.Concat(f.Service_Lead_Service, "-", f.SoCCase, "-", f.UniqueID, "-", f.item_description);
-            });
-            Session["dropdownTypeofAgenda"] = dropdownTypeofAgenda;
-            Session["mdate"] = dated;
-            Session["mtype"] = mtype;
-            ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
-            #endregion
 
-            return View(meetingAgenda);
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("AddMeetingAgenda");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+                                ViewBag.mtype = mtype;
+                                ViewBag.dated = dated;
+                                MeetingAgenda meetingAgenda = new MeetingAgenda();
+                                if (id == "0")
+                                {
+                                    meetingAgenda.meeting_id = Convert.ToInt16(id);
+                                }
+                                else
+                                {
+                                    meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
+                                }
+
+                                meetingAgenda.MeetingAgendaComment = new MeetingAgendaComment();
+                                meetingAgenda.MeetingAgendaCommentList = new List<MeetingAgendaComment>();
+                                meetingAgenda.MeetingAgendaComment.UserID = GetUserID();
+                                #region Get Meeting Dropdown
+                                List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = new List<SAVESOCVIEWMODEL>();
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    //HTTP GET
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage response = client.GetAsync("AONW/GetTypeOfAgenda").Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        dropdownTypeofAgenda = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
+                                    }
+                                }
+                                dropdownTypeofAgenda.ForEach(f =>
+                                {
+                                    f.item_description = string.Concat(f.Service_Lead_Service, "-", f.SoCCase, "-", f.UniqueID, "-", f.item_description);
+                                });
+                                Session["dropdownTypeofAgenda"] = dropdownTypeofAgenda;
+                                Session["mdate"] = dated;
+                                Session["mtype"] = mtype;
+                                ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
+                                #endregion
+
+                                return View(meetingAgenda);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
+
+            return View();
         }
 
         [HttpGet]
@@ -1426,37 +2074,80 @@ namespace ACQ.Web.App.Controllers
         //[SessionExpireRefNo]
         public ActionResult EditMeetingAgenda(int ID)
         {
-            try
+            if (Session["UserID"] != null)
             {
-                MeetingAgenda model = new MeetingAgenda();
-                int UserID = GetUserID();
-
-                using (var client = new HttpClient())
+                AddFormMenuViewModel model1 = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    //HTTP GET
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditMeetingAgenda?ID=" + ID + "&UserID=" + UserID).Result;
-                    if (response.IsSuccessStatusCode)
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("EditMeetingAgenda");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
                     {
-                        model = response.Content.ReadAsAsync<MeetingAgenda>().Result;
-                        if (UserID > 0)
-                            model.Comments = JsonConvert.SerializeObject(model.MeetingAgendaComment);
-                        else
-                            model.Comments = JsonConvert.SerializeObject(model.MeetingAgendaCommentList);
+                        try
+                        {
+                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model1.roleList.Count != 0)
+                            {
+                                try
+                                {
+                                    MeetingAgenda model = new MeetingAgenda();
+                                    int UserID = GetUserID();
+
+                                    using (var client = new HttpClient())
+                                    {
+                                        client.BaseAddress = new Uri(WebAPIUrl);
+                                        //HTTP GET
+                                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                        HttpResponseMessage response = client.GetAsync("AONW/EditMeetingAgenda?ID=" + ID + "&UserID=" + UserID).Result;
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            model = response.Content.ReadAsAsync<MeetingAgenda>().Result;
+                                            if (UserID > 0)
+                                                model.Comments = JsonConvert.SerializeObject(model.MeetingAgendaComment);
+                                            else
+                                                model.Comments = JsonConvert.SerializeObject(model.MeetingAgendaCommentList);
+                                        }
+                                    }
+                                    List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = (List<SAVESOCVIEWMODEL>)Session["dropdownTypeofAgenda"];
+                                    ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
+                                    ViewBag.dated = Session["mdate"].ToString();
+                                    ViewBag.mtype = Session["mtype"].ToString();
+                                    ViewBag.PageMode = "Edit";
+                                    return View("AddMeetingAgenda", model);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
                     }
                 }
-                List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = (List<SAVESOCVIEWMODEL>)Session["dropdownTypeofAgenda"];
-                ViewBag.dropdownTypeofAgenda = dropdownTypeofAgenda;
-                ViewBag.dated = Session["mdate"].ToString();
-                ViewBag.mtype = Session["mtype"].ToString();
-                ViewBag.PageMode = "Edit";
-                return View("AddMeetingAgenda", model);
+                // return View();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1556,6 +2247,48 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult SocTimeline()
         {
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
+
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("SocTimeline");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
             return View();
         }
 
@@ -1601,7 +2334,48 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult Contract()
         {
+            if (Session["UserID"] != null)
+            {
+                AddFormMenuViewModel model = new AddFormMenuViewModel();
+                List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
+                using (HttpClient client1 = new HttpClient())
+                {
 
+                    var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+                    var formName = sanitizer.Sanitize("Contract");
+                    client1.BaseAddress = new Uri(WebAPIUrl);
+
+                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        try
+                        {
+                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            if (model.roleList.Count != 0)
+                            {
+
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                }
+                // return View();
+            }
             return View();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACQ.Web.ViewModel.FormMenu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -98,6 +99,7 @@ namespace ACQ.Web.App
                 // check  sessions here
                 if (HttpContext.Current.Session["UserName"] == null)
                 {
+                    //List<AddFormMenuViewModel> PLT = (List<AddFormMenuViewModel>)Session["parentList"];
                     filterContext.Result = new RedirectResult("~/login");
                     return;
                 }
