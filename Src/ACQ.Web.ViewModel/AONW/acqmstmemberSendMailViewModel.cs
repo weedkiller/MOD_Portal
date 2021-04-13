@@ -23,8 +23,6 @@ namespace ACQ.Web.ViewModel.AONW
         public Nullable<System.DateTime> till_date { get; set; }
         public string member_type { get; set; }
         public string designation { get; set; }
-        public string item_desc { get; set; }
-        public string service { get; set; }
         public string Email { get; set; }
 
         public virtual tbl_tbl_User tbl_tbl_User

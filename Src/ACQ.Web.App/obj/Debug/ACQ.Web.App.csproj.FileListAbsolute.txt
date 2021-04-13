@@ -124,6 +124,69 @@ E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\shifaLI\mod\mod_dashbord_05april\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
 E:\DPIT\PORTL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
@@ -199,156 +262,18 @@ E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
 E:\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
 D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
-D:\MOD\NewPortal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
-E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
@@ -424,78 +349,303 @@ E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.Cor
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\Latest MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
-D:\latest\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+E:\DPIT\MOD 12th April\MOD Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+E:\DPIT\MOD 12th April\MOD\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.App.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.exe.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csc.rsp
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.exe.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\csi.rsp
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Managed.Core.targets
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.AppContext.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Collections.Immutable.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Console.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Globalization.Calendars.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Http.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Net.Sockets.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Reflection.Metadata.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.ValueTuple.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XmlDocument.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.exe.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\vbc.rsp
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\roslyn\VBCSCompiler.exe.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.xml
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb

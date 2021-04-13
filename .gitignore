@@ -3,3 +3,7 @@
 .vs/MOD/config/applicationhost.config
 *.config
 *.user
+.vs/MOD/v15/Server/sqlite3/db.lock
+.vs/MOD/v15/.suo
+.vs/MOD/v15/Server/sqlite3/storage.ide
+.vs/MOD/v15/Server/sqlite3/storage.ide-wal

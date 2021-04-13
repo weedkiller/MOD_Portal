@@ -85,6 +85,8 @@
 
     $(document).ready(function () {
         $('#btnclose').click(function () {
+        @*var link = '@Url.Action("SendMailToAll", "AONW")';
+        window.location.href = link;*@
            $.get('@Url.Action("SendMailToAll", "AONW")', function (result) {
                // TODO: process the results of the server side call
                if (result != null) {

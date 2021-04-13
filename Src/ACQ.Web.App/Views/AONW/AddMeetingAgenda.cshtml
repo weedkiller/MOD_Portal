@@ -525,7 +525,14 @@
                                     var meetIdObj = $.grep(response, function (element) { return element.Pid == data });
                                     var status = meetIdObj[meetIdObj.length - 1].Version;
                                     var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id;
-                                    var html = "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >";
+                                    var html = "";
+                                    if ('@Session["SectionID"]' == 1 && '@Session["SectionID"]' == 12) {
+                                        html = "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Edit'></i></a >";
+                                    }
+                                    else {
+                                        html = "<a  id='a' href='" + url + "' class='btn btn-info btn-sm' style = 'margin-left:5px'> <i class='fa fa-edit' title='Add Comments'></i></a >";
+
+                                    }
                                     if (userID == '0')
                                         html += "&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
                                     if (status == "Final" && '@ViewBag.PageMode' !="Edit") {
@@ -685,6 +692,7 @@
         return false;
     }
     function AddComment() {
+        
         var commentArea = $(commentModal).find('#commentArea').val();
         var commentType = $(commentModal).find('#commentType').val();
         if (commentType == "proposal")
@@ -726,7 +734,9 @@
         else if (isViewComment == "True") {
            var comments = '@Html.Raw(Model.Comments)';
             commentList = JSON.parse(comments);
+
         }
+    
     }
     function OpenViewModal(commentType) {
 

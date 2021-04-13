@@ -20,6 +20,9 @@ using Ganss.XSS;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.User;
 using ACQ.Web.App.ViewModel;
+using static ACQ.Web.App.Controllers.SocPdfRegistrationController;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -31,6 +34,8 @@ namespace ACQ.Web.App.Controllers
         private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
         private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        private string baseUrl = ConfigurationManager.AppSettings["baseUrl"].ToString();
+        private string InitVector = @"qwertyui";
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
         List<AttachmentViewModel> fileDetailsF = new List<AttachmentViewModel>();
@@ -186,8 +191,6 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -215,8 +218,6 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + ID + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -243,18 +244,17 @@ namespace ACQ.Web.App.Controllers
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                 HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + id + "").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
                     foreach (var dummyList in listData)
                     {
-                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMailAllMember.html"));
-                      //  EmailHelper.SendAllDetails(dummyList.Email,dummyList.item_desc,dummyList.service, mailPath);
+                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
+                        EmailHelper.SendAllDetails(dummyList.Email, mailPath);
                         ViewBag.Message = "RegistrationSuccessful";
                     }
+
 
                 }
             }
@@ -520,6 +520,207 @@ namespace ACQ.Web.App.Controllers
             {
                 throw ex;
             }
+        }
+
+        public bool FileCheckformat(HttpPostedFileBase file, string mFileExtension)
+        {
+            int filesize = 1024;
+            string FileExtension = Path.GetExtension(file.FileName);
+            int count = file.FileName.Count(f => f == '.');
+            if (count > 1)
+            {
+                return false;
+            }
+
+            if (file.ContentLength > (filesize * 1024))
+            {
+                return false;
+            }
+
+            if (mFileExtension == ".doc")
+            {
+                if (file.ContentType != "application/msword" && file.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                {
+                    return false;
+                }
+
+                if (FileExtension == ".doc" || FileExtension == ".docx")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (mFileExtension == ".ppt")
+            {
+                if (file.ContentType != "application/vnd.ms-powerpoint" || file.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                {
+                    return false;
+                }
+                if (FileExtension == ".ppt" || FileExtension == ".pptx")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (file.ContentType != "application/pdf")
+                {
+                    return false;
+                }
+                if (FileExtension == ".pdf")
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+        private void EncryptFile(string inputFile, string outputFile)
+        {
+
+            try
+            {
+                string password = @"myKey123"; // Your Key Here
+                UnicodeEncoding UE = new UnicodeEncoding();
+                byte[] key = UE.GetBytes(password);
+
+                string cryptFile = outputFile;
+                FileStream fsCrypt = new FileStream(cryptFile, FileMode.Create);
+
+                RijndaelManaged RMCrypto = new RijndaelManaged();
+
+                CryptoStream cs = new CryptoStream(fsCrypt,
+                    RMCrypto.CreateEncryptor(key, key),
+                    CryptoStreamMode.Write);
+
+                FileStream fsIn = new FileStream(inputFile, FileMode.Open);
+
+                int data;
+                while ((data = fsIn.ReadByte()) != -1)
+                    cs.WriteByte((byte)data);
+
+                fsIn.Close();
+                cs.Close();
+                fsCrypt.Close();
+            }
+            catch(Exception e)
+            {
+                
+            }
+        }
+
+        private void  DecryptFile(string inputFile, string outputFile)
+        {
+
+            {
+                string password = @"myKey123"; // Your Key Here
+
+                UnicodeEncoding UE = new UnicodeEncoding();
+                byte[] key = UE.GetBytes(password);
+
+                FileStream fsCrypt = new FileStream(inputFile, FileMode.Open);
+
+                RijndaelManaged RMCrypto = new RijndaelManaged();
+
+                CryptoStream cs = new CryptoStream(fsCrypt,
+                    RMCrypto.CreateDecryptor(key, key),
+                    CryptoStreamMode.Read);
+
+                FileStream fsOut = new FileStream(outputFile, FileMode.Create);
+
+                int data;
+                while ((data = cs.ReadByte()) != -1)
+                    fsOut.WriteByte((byte)data);
+
+                fsOut.Close();
+                cs.Close();
+                fsCrypt.Close();
+            }
+        }
+
+        [Route("ViewApprovalDocs")]
+        [HttpGet]
+        public ActionResult ViewApprovalDocs(string ID)
+        {
+            int meeting_id = Convert.ToInt32(Encryption.Decrypt(ID));
+            string path = "";
+            string outputfile = "";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/ViewMOMApproval?meeting_id=" + meeting_id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    string result= response.Content.ReadAsStringAsync().Result;
+                    result = result.Substring(1);
+                    result = result.Replace('"', ' ');
+                    string filename = result.Substring(result.LastIndexOf(@"\"));
+                    filename = filename.Replace("\\", "");
+                    outputfile = baseUrl + "decry_" + filename;
+                    DecryptFile(result,outputfile);
+                }
+
+            }
+            return Redirect(outputfile);
+        }
+
+        [Route("UploadDocs")]
+        [HttpPost]
+        public ActionResult UploadDocs(FormCollection collection)
+        {
+            Random rand = new Random();
+            int userId = GetUserID();
+            string meeting_id = collection["meeting_id"];
+            HttpFileCollectionBase files = Request.Files;
+            string path = UploadfilePath;
+            string outputpath = "";
+            for (int i = 0; i < files.Count; i++)
+            {
+
+                HttpPostedFileBase file = files[i];
+                if (!FileCheckformat(file, ".pdf"))
+                {
+                    ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
+                    ViewBag.UploadStatus = "errormsg";
+                    return View();
+                }
+                outputpath = baseUrl+ "encry_"+file.FileName;
+                string inPath = baseUrl+file.FileName;
+                path += file.FileName;
+                file.SaveAs(Server.MapPath(path));
+                EncryptFile(inPath, outputpath);
+            }
+            
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/UpdateMOMApproval?ID=" + meeting_id + "&filepath="+outputpath+"&updatedby="+userId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    // model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+                    TempData["Msg"] = "MOM Uploaded Successfully..!!";
+                }
+
+            }
+            return RedirectToAction("UploadApprovalDocs");
         }
         [Route("EditSocMaster")]
         [HandleError]
@@ -1301,6 +1502,48 @@ namespace ACQ.Web.App.Controllers
 
             return RedirectToAction("ViewMeeting", "AONW");
         }
+        public ActionResult ViewMeetingComments(string Id)
+        {
+            int userID = GetUserID();
+
+            if (Convert.ToInt32(Session["SectionId"])==1 && Convert.ToInt32(Session["SectionId"])==12)
+            {
+                userID = 0;
+            }
+            dynamic listData = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetComments?ID="+Id+"&userID="+userID).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<tbl_trn_MeetingAgendaComments>>().Result;
+                }
+            }
+            ViewBag.CommentList = listData;
+            ViewBag.Meeting_id = Id;
+            return View();
+        }
+
+        public ActionResult SubmitMeetingComments(string meeting_id)
+        {
+            int userID = GetUserID();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/SubmitMeetingComments?ID="+meeting_id+"&userId="+userID).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //string results = response.Content.ReadAsAsync<string>().Result;
+                    
+                }
+            }
+            return View();
+        }
         int id = 0;
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1458,6 +1701,20 @@ namespace ACQ.Web.App.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("UploadApprovalDocs")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult UploadApprovalDocs(string ID,string mtype,string dated)
+        {
+            ViewBag.Meeting_id = ID;
+            ViewBag.mtype = mtype;
+            ViewBag.dated = dated;
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("UpdateMeetingAgenda")]

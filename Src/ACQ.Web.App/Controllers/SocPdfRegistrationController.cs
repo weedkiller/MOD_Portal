@@ -624,7 +624,6 @@ namespace ACQ.Web.App.Controllers
             string path = Server.MapPath(UploadfilePath);
             HttpFileCollectionBase files = Request.Files;
 
-
             for (int i = 0; i < files.Count; i++)
             {
 

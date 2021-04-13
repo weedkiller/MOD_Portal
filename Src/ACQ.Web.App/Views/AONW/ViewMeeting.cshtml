@@ -35,7 +35,11 @@
                                         <th>Meeting Date</th>
                                         <th>Remarks</th>
                                         <th>Action</th>
-                                        <th>MOM</th>
+                                        @if (Convert.ToInt32(Session["SectionID"]) != 1 && Convert.ToInt32(Session["SectionID"]) != 12)
+                                        {
+                                            <th>MOM</th>
+                                        }
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,40 +58,56 @@
                                                 {
                                                     if (item.Status == "Final")
                                                     {
-                                                        <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id}) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
-                                                        @*<a href=@Url.Action("EmailToMeetingParticipants", "AoNW", new { ID = @item.meeting_id }) type="button" class="btn btn-danger btn-sm" title="Send Email to participants"><i class="fa fa-envelope mr-1"></i></a>*@
-                                                        <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Update Final Agenda"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
+                                                        if (Convert.ToInt32(Session["SectionID"]) != 1 && Convert.ToInt32(Session["SectionID"]) != 12)
+                                                        {
+                                                            <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
+                                                            @*<a href=@Url.Action("EmailToMeetingParticipants", "AoNW", new { ID = @item.meeting_id }) type="button" class="btn btn-danger btn-sm" title="Send Email to participants"><i class="fa fa-envelope mr-1"></i></a>*@
+                                                            <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Update Final Agenda"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
+                                                            <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-primary btn-sm" title="View Comment On Meeting Agenda"><i class="fa fa-eye mr-1"></i></a>
+
+                                                        }
+
+
                                                     }
                                                     else
                                                     {
                                                         <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Add Comment On Meeting Agenda"><i class="fa fa-edit mr-1"></i></a>
-                                                        <a href="@Url.Action("LockMeetingComments", "AoNW", new { ID = @item.meeting_id })" type="submit" class="btn btn-info btn-sm" title="Lock Comment On Meeting Agenda"><i class="fa fa-lock mr-1"></i></a>
+                                                        @*<a href="@Url.Action("LockMeetingComments", "AoNW", new { ID = @item.meeting_id })" type="submit" class="btn btn-info btn-sm" title="Lock Comment On Meeting Agenda"><i class="fa fa-lock mr-1"></i></a>*@
+                                                        <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-primary btn-sm" title="View Comment On Meeting Agenda"><i class="fa fa-eye mr-1"></i></a>
                                                     }
                                                 }
                                                 else
                                                 {
                                                     @*if (item.Status == "Final")
-                                                        {
+            {
 
-                                                            <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Update Final Agenda"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
-                                                            <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id,Version="Draft" }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Draft Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
-                                                            <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id}) onclick="Print()" type="button" class="btn btn-info btn-sm" title="Print Final Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
-                                                        }
-                                                        else
-                                                        {*@
+                <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Update Final Agenda"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
+                <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id,Version="Draft" }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Draft Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
+                <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id}) onclick="Print()" type="button" class="btn btn-info btn-sm" title="Print Final Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
+            }
+            else
+            {*@
                                                     <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" onclick="return confirm('Are you sure you want to add agenda of this meeting?')" type="submit" class="btn btn-info btn-sm" title="Add Agenda"><i class="fa fa-plus-circle mr-1"></i></a><span>&nbsp;</span>
                                                     <a href="@Url.Action("EditMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to edit meeting?')" type="submit" class="btn btn-info btn-sm" title="Edit Meeting"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
                                                     <a href="@Url.Action("DeleteMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-danger btn-sm" title="Delete Meeting"><i class="fa fa-trash mr-1"></i></a><span>&nbsp;</span>
+                                                    <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-primary btn-sm" title="View Comment On Meeting Agenda"><i class="fa fa-eye mr-1"></i></a>
 
                                                     // }
                                                 }
                                             </td>
+                                            @if (Convert.ToInt32(Session["SectionID"]) != 1 && Convert.ToInt32(Session["SectionID"]) != 12)
+                                            {
                                             <td>
                                                 <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
                                                 <a href=@Url.Action("EmailToMeetingParticipants", "AoNW", new { ID = @item.meeting_id }) type="button" class="btn btn-danger btn-sm" title="Send Email to participants"><i class="fa fa-envelope mr-1"></i></a>
                                                 <a href=@Url.Action("PrepareFinalMeeting", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date }) onclick="return confirm('Are you sure you want to prepare final MOM of @item.dac_dpb meeting dated @date ?')" type="button" class="btn btn-info btn-sm" title="Prepare Final Meeting"><i class="fa fa-sticky-note mr-1"></i></a><span>&nbsp;</span>
+                                                <a href=@Url.Action("UploadApprovalDocs", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date }) onclick="return confirm('Are you sure you want to upload MOM approval')" type="button" class="btn btn-warning btn-sm" title="Upload MOM Approval"><i class="fa fa-file-upload mr-1"></i></a><span>&nbsp;</span>
+                                                <a href=@Url.Action("ViewApprovalDocs", "AoNW", new { ID = @item.meeting_id })  type="button" class="btn btn-primary btn-sm" title="View MOM Approval"><i class="fa fa-eye mr-1"></i></a><span>&nbsp;</span>
+
+
 
                                             </td>
+                                            }
                                         </tr>
                                     }
 

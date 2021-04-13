@@ -29,7 +29,7 @@ namespace ACQ.Web.App
             Exception ex = Server.GetLastError();
             Server.ClearError();
             //Response.Redirect(String.Format("~/Error"));
-            HttpContext.Current.Response.Redirect("~/Error", false);
+            HttpContext.Current.Response.Redirect("~/Error?error="+ex.Message, false);
 
         }
 

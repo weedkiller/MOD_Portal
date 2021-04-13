@@ -67,6 +67,7 @@
     <Compile Include="AONW\SechduleMeetingAgedaViewModel.cs" />
     <Compile Include="AONW\SocCommentViewModel.cs" />
     <Compile Include="AONW\tbl_tbl_User.cs" />
+    <Compile Include="AONW\tbl_trn_MeetingAgendaComments.cs" />
     <Compile Include="EFile\Efile.cs" />
     <Compile Include="FormMenu\AddFormMenuViewModel.cs" />
     <Compile Include="FormMenu\RoleViewModel.cs" />

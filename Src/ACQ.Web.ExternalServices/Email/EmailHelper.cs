@@ -110,27 +110,13 @@ namespace ACQ.Web.ExternalServices.Email
            //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
            .Replace("{subject}", InputModel.UserName).Replace("{otp}", emailOTP);
         }
+
         public static acqmstmemberSendMailViewModel SendAllDetails(string email, string mailPath)
         {
             acqmstmemberSendMailViewModel usOutputViewModel = new acqmstmemberSendMailViewModel();
             try
             {
                 string Body = EmailHelper.SendOTpPopulateBody(email, mailPath);
-                EmailHelper.SendEmail(email, Body);
-
-            }
-            catch (Exception)
-            {
-            }
-            return usOutputViewModel;
-        }
-
-        public static acqmstmemberSendMailViewModel SendAllMemberDetails(string email, string item_desc, string service, string mailPath)
-        {
-            acqmstmemberSendMailViewModel usOutputViewModel = new acqmstmemberSendMailViewModel();
-            try
-            {
-                string Body = EmailHelper.SendEmailPopulateBody(item_desc, service,mailPath);
                 EmailHelper.SendEmail(email, Body);
 
             }
@@ -158,11 +144,6 @@ namespace ACQ.Web.ExternalServices.Email
             return mailPath.Replace("{Name}", email)
            //.Replace("{Email}",InputModel.Comp_ContactEmail).Replace("{Phone}",InputModel.Comp_MobileNo)
            .Replace("{subject}", email).Replace("{otp}", email);
-        }
-
-        private static string SendEmailPopulateBody(string item_desc,string service, string mailPath)
-        {
-            return mailPath.Replace("{item_desc}", item_desc).Replace("{service}", service);
         }
 
     }
