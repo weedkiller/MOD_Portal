@@ -113,25 +113,51 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult validationcheck()
+        public ActionResult validationcheck(bool isAlertsent=false)
         {
-            IEnumerable<ViewModel.EscalationReportData> listdata = new List<ViewModel.EscalationReportData>();
-
-            using (var client = new HttpClient())
+            IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+            if(isAlertsent)
             {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationData").Result;
-                if (response.IsSuccessStatusCode)
+
+                using (var client = new HttpClient())
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<ViewModel.EscalationReportData>>().Result;
-                    Session["Escdata"] = null;
-                    Session["Escdata"] = listdata;
+                    client.DefaultRequestHeaders.Clear();
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Escalation/GetProactiveAletReport").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                        Session["previousAlert"] = null;
+                        Session["previousAlert"] = listdata;
+                    }
                 }
+                
+                
             }
+            else
+            {
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Escalation/GetEscalationData").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        listdata = response.Content.ReadAsAsync<IEnumerable<EscalationReportData>>().Result;
+                        Session["Escdata"] = null;
+                        Session["Escdata"] = listdata;
+                    }
+                }
+
+            }
+            ViewBag.isalertsent = isAlertsent;
 
             return View(listdata);
         }
@@ -239,6 +265,50 @@ namespace ACQ.Web.App.Controllers
             else result.Status = false;
 
             return Json(new { result= result }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Route("searchsentalert")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult searchsentalert(string startdate, string enddate)
+        {
+            datesearch result = new datesearch();
+            if (Session["previousAlert"] != null)
+            {
+                try
+                {
+                    IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
+                    listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["previousAlert"];
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        result.startdate = Convert.ToDateTime(sdate);
+                        result.enddate = Convert.ToDateTime(edate);
+                        result.data = data;
+                        result.Status = true;
+                    }
+                    else
+                    {
+                        result.startdate = Convert.ToDateTime(sdate);
+                        result.enddate = Convert.ToDateTime(edate);
+                        result.Status = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    result.Status = false;
+                    result.startdate = Convert.ToDateTime(sdate);
+                    result.enddate = Convert.ToDateTime(edate);
+                }
+            }
+            else result.Status = false;
+
+            return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("getdataforEdit")]

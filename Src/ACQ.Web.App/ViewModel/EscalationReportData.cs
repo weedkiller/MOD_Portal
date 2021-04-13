@@ -48,6 +48,8 @@ namespace ACQ.Web.App.ViewModel
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> AlertSentOn { get; set; }
+        public Nullable<bool> isAlertSent { get; set; }
 
     }
 
