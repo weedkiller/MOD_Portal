@@ -53,6 +53,7 @@ namespace ACQ.Web.App.ViewModel
         public string TotalPaymentMade { get; set; }
         public string FullorPartPaymentMade { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string ContractId { get; set; }
     }
 
     public class ImportExcel

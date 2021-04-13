@@ -353,44 +353,70 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ContractList()
         {
+            ContractDetails Socmodel = new ContractDetails();
+            List<ContractDetails> listData = new List<ContractDetails>();
+
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/ContractList").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ViewBag.ContractList = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
             return View();
         }
-        //[Route("ViewSOC")]
-        //[HandleError]
-        //[HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
-        //[SessionExpire]
-        //[SessionExpireRefNo]
-        //public ActionResult ViewSOCRegistration()
-        //{
-        //    string mSercive = "";
-        //    if (Session["Department"].ToString() == "IDS")
-        //    {
-        //        mSercive = "Joint Staff";
-        //    }
-        //    else
-        //    {
-        //        mSercive = Session["Department"].ToString();
-        //    }
-        //    ContractDetails Socmodel = new ContractDetails();
-        //    List<ContractDetails> listData = new List<ContractDetails>();
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.BaseAddress = new Uri(WebAPIUrl);
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-        //                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-        //        HttpResponseMessage response = client.GetAsync("AONW/ViewSOCRegistration").Result;
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            listData = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
 
-        //        }
-        //    }
+        [Route("ContractStageList")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult ContractAndStageList(string ConMasterId)
+        {
+            Contracts contract = new Contracts();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/ContractAndStageList?ConMasterId=" + ConMasterId + "").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //ViewBag.ContractStageList = response.Content.ReadAsAsync<Contracts>().Result;
+                        contract = response.Content.ReadAsAsync<Contracts>().Result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
-        //    return View(Socmodel);
-        //}
+            return View(contract);
+        }
+
     }
 }

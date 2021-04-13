@@ -1695,6 +1695,7 @@
     <Content Include="Views\ProcessingEmail\validationcheck.cshtml" />
     <Content Include="Views\AONW\Contract.cshtml" />
     <Content Include="Views\Contract\ContractList.cshtml" />
+    <Content Include="Views\Contract\ContractAndStageList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
