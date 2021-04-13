@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACQ.Web.ViewModel.FormMenu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -90,7 +91,28 @@ namespace ACQ.Web.App
             }
         }
 
+<<<<<<< HEAD
+        public class SessionUrlRefNo : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
+            {
+                HttpContext ctx = HttpContext.Current;
+                // check  sessions here
+                if (HttpContext.Current.Session["UserName"] == null)
+                {
+                    //List<AddFormMenuViewModel> PLT = (List<AddFormMenuViewModel>)Session["parentList"];
+                    filterContext.Result = new RedirectResult("~/login");
+                    return;
+                }
+         
+                base.OnActionExecuting(filterContext);
+            }
+        }
+
+
+=======
        
+>>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
 
 
     }
