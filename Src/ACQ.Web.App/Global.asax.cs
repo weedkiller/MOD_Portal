@@ -27,7 +27,7 @@ namespace ACQ.Web.App
         protected void Application_Error()
         {
             string ipaddress = Request.UserHostAddress;
-            Exception ex = Server.GetLastError();
+            Exception ex = Server.GetLastError();   
             Server.ClearError();
             //Response.Redirect(String.Format("~/Error"));
             HttpContext.Current.Response.Redirect("~/Error?error="+ex.Message, false);
@@ -90,8 +90,6 @@ namespace ACQ.Web.App
                 base.OnActionExecuting(filterContext);
             }
         }
-
-<<<<<<< HEAD
         public class SessionUrlRefNo : ActionFilterAttribute
         {
             public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -108,12 +106,5 @@ namespace ACQ.Web.App
                 base.OnActionExecuting(filterContext);
             }
         }
-
-
-=======
-       
->>>>>>> 021776b656087bef15790c272a94c3531d5fdfb6
-
-
     }
 }

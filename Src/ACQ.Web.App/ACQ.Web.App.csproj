@@ -1696,6 +1696,10 @@
     <Content Include="Views\AONW\ViewMeetingComments.cshtml" />
     <Content Include="Views\AONW\SubmitMeetingComments.cshtml" />
     <Content Include="Views\AONW\UploadApprovalDocs.cshtml" />
+    <Content Include="Views\AONW\ViewApprovalDocs.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,52 @@
+﻿@model ACQ.Web.ViewModel.AONW.SocCommentViewModel
+@{
+    ViewBag.Title = "ViewSOCComment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #meetingagendatable_length {
+        display: none;
+    }
+
+    #meetingagendatable_filter {
+        display: none;
+    }
+
+    #meetingagendatable_info {
+        display: none;
+    }
+
+    #meetingagendatable_paginate {
+        display: none;
+    }
+</style>
+<div class="row m-0">
+    <div class="col-md-12">
+            <h3 class="text-center">SoC Comment </h3>
+            <div class="bg-white p-3">
+                <div class="needs-validation p-2" novalidate="">
+                    <div class="clearfix mt-0"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label" for="Comments">Comment</label>
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="Comments" rows="3" value="@Model.Comments" name="Comments"></textarea>
+                                    <input type="hidden" name="Comments" value="@Html.Raw(Model.Comments)" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary float-right" type="button" onclick="window.location='/AONW/ViewSocMaster';">Back</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+    </div>
+</div>

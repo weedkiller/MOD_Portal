@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<style>
+    form {
+        width: 100%;
+    }
+</style>
+
+
+
+<div class="login_bg">
+
+    <section class="container d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
+        <div class="col-md-6">
+            <div class="cs-signin-form mt-5" style="min-height:458px !important; margin-bottom:0px!important;">
+                <div class="cs-signin-form-inner" style="background: white;">
+                    <div class="cs-view  p-4 show" id="signin-view">
+                        <h1 class="h2 p-4 text-center" style=" color: #3f80ea !important">The page you have requested is not found </h1>
+
+                        
+                        <div class="w-100 text-center">
+                            <a href="@Url.Action("Login","Account")" type="button" class="btn mt-2 btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+

@@ -19,5 +19,6 @@ namespace ACQ.Web.ViewModel.AONW
         public Nullable<int> Locked { get; set; }
         public string AgendaName { get; set; }
         public string MemberName { get; set; }
+        public string MemberDesg { get; set; }
     }
 }

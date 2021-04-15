@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Upload Approval MOM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upload Approval MOM @ViewBag.mtype</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <hr/>
+            <div>
+                @using (Html.BeginForm("UploadDocs","AONW",FormMethod.Post,new {@enctype="multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <input type="hidden" value="@ViewBag.Meeting_id" name="meeting_id" />
+                    <input class="form-control" type="file" name="pdfFile"/>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <span class="text-success">@TempData["Msg"]</span>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
