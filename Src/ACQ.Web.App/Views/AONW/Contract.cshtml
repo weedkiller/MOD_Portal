@@ -4,6 +4,7 @@
 }
 
 <link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
     .ui-datepicker {
         width: 18.8em !important;
@@ -403,6 +404,7 @@
 
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script nonce="r@nd0m">
     $(document).ready(function () {
 
@@ -619,19 +621,19 @@
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
                         if (response > 0) {
-                            alert("form has been saved");
+                            toastr.success("form has been saved");
                             window.location.reload();
                         }
                     },
                     failure: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     },
                     error: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     }
                 });
             }

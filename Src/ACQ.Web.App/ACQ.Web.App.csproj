@@ -246,6 +246,7 @@
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\light_bootstrapv4.css" />
     <Content Include="assets\css\style.css" />
+    <Content Include="assets\css\toastr.css" />
     <Content Include="assets\datatable\css\buttons.dataTables.min.css" />
     <Content Include="assets\datatable\css\jquery.dataTables.min.css" />
     <Content Include="assets\datatable\js\buttons.html5.min.js" />
@@ -680,6 +681,7 @@
     <Content Include="assets\js\jquery-ui-1.12.1.min.js" />
     <Content Include="assets\js\jquery-ui.js" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
+    <Content Include="assets\js\toastr.js" />
     <Content Include="assets\media\images\bg-pattern-light.svg" />
     <Content Include="assets\media\images\ddp_logo.png" />
     <Content Include="assets\media\images\ddp_logo_dark.png" />
@@ -1648,8 +1650,6 @@
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff2" />
     <None Include="bin\ACQ.Web.App.dll.config" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -1702,9 +1702,6 @@
     <Content Include="Views\AONW\SubmitMeetingComments.cshtml" />
     <Content Include="Views\AONW\UploadApprovalDocs.cshtml" />
     <Content Include="Views\AONW\ViewApprovalDocs.cshtml" />
-    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <Content Include="Views\Contract\ContractAndStageList.cshtml" />
     <Content Include="Views\Contract\ContractList.cshtml" />
     <Content Include="Views\AONW\ViewSocComments.cshtml" />
@@ -1719,6 +1716,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="excelfolder\" />
     <Folder Include="fonts\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadApprovedSOC\" />
     <Folder Include="UploadSOC\" />
   </ItemGroup>

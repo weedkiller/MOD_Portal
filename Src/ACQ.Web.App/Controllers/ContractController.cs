@@ -491,7 +491,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult ContractAndStageList(string ContractId, bool cont)
+        public ActionResult ContractAndStageList(string ContractId, bool cont=false)
         {
             Contracts contract = new Contracts();
             try
@@ -517,7 +517,7 @@ namespace ACQ.Web.App.Controllers
             catch (Exception ex)
             {
 
-                throw ex;
+                
             }
 
 
@@ -641,7 +641,7 @@ namespace ACQ.Web.App.Controllers
                         stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
                     }
                     stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
-                    if (item.TotalPaymentMade > 0)
+                    if (item.ExpendMadeTill31March > 0)
                     {
                         stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
                     }

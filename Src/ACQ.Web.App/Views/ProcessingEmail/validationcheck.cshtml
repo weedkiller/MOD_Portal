@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 
 @if (ViewBag.isalertsent != null && ViewBag.isalertsent == false)
 {
@@ -608,7 +609,8 @@ else
     <script src="~/assets/datatable/js/vfs_fonts.js" nonce="r@nd0m"></script>
 }
 
-<script src="~/assets/js/jquery-ui.js"></script>
+<script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 
 @if (ViewBag.isalertsent == true)
 {
@@ -726,17 +728,17 @@ else
 
 
                     } else {
-                        alert("No data found between the selected duration");
+                        toastr.error("No data found");
                     }
                 },
                 failure: function (response) {
                     $('.preloader').fadeOut('slow');
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
                     $('.preloader').fadeOut('slow');
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 }
             });
@@ -750,7 +752,8 @@ else
             var Fromdate = new Date($('#FromDate').val());
             var ToDate = new Date($('#ToDate').val());
             if (Fromdate > ToDate) {
-                alert("Start date should lesser then end date!.");
+                
+                toastr.error("Start date should lesser then end date!.");
                 $('#ToDate').val('');
             }
             else {
@@ -976,17 +979,17 @@ else if (ViewBag.isalertsent == false)
 
 
                     } else {
-                        alert("No data found between the selected duration");
+                        toastr.warning("No data found between the selected duration");
                     }
                 },
                 failure: function (response) {
                     $('.preloader').fadeOut('slow');
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
                     $('.preloader').fadeOut('slow');
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 }
             });
@@ -1026,18 +1029,17 @@ else if (ViewBag.isalertsent == false)
                         $('#Message').attr('notid', $(btn).attr("notid"));
                         $('#myModal').modal('show');
                     } else {
-                        alert("Session has been expired, Please login again");
+                        toastr.error("Session has been expired, Please login again");
                         window.location.href = "@Url.Action("Account","Login")";
                     }
                 },
                 failure: function (response) {
-
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
                     $(btn).attr('disabled', false);
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
                     window.location.href = "@Url.Action("Account","Login")";
                 }
             });
@@ -1070,21 +1072,23 @@ else if (ViewBag.isalertsent == false)
                     $('.preloader').fadeOut('slow');
                     $(btn).attr('disabled', false);
                     if (response.Status == true) {
-                        alert(response.Message);
+                        toastr.success(response.Message);
+                        
                         $('#myModal').modal('hide');
                         window.location.reload();
                     } else {
-                        alert(response.Message);
+                        toastr.error(response.Message);
 
                     }
                 },
                 failure: function (response) {
-
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
+                  
                     window.location.href = "@Url.Action("Account","Login")";
                 },
                 error: function (response) {
-                    alert("Please check your internet connection...");
+                    toastr.error("Please check your internet connection...");
+                    
                     window.location.href = "@Url.Action("Account","Login")";
                 }
             });
@@ -1158,7 +1162,7 @@ else if (ViewBag.isalertsent == false)
             var Fromdate = new Date($('#FromDate').val());
             var ToDate = new Date($('#ToDate').val());
             if (Fromdate > ToDate) {
-                alert("Start date should lesser then end date!.");
+                toastr.error("Start date should lesser then end date!.");
                 $('#ToDate').val('');
             }
             else {
