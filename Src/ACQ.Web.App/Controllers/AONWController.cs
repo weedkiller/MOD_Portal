@@ -677,7 +677,7 @@ namespace ACQ.Web.App.Controllers
                     filename = filename.Replace("\\", "");
                     outputfile = baseUrl + "decry_" + filename;
                     DecryptFile(result,outputfile);
-                    ViewBag.Url = outputfile;
+                    ViewBag.Url = "/excelfolder/decry_"+filename;
                     //Response.Write("<script>alert('Hello');document.location='" + outputfile + "'</script>");
                 }
 
@@ -1134,14 +1134,17 @@ namespace ACQ.Web.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveMeetings(SechduleMeetingAgedaViewModel model)
         {
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     List<MeetingParticipants> listData = new List<MeetingParticipants>();
+                if (Session["participants"] != null)
+                {
                     listData = Session["participants"] as List<MeetingParticipants>;
-
-                    listData = listData.Where(x => model.officers_participated.Contains(x.UserID.ToString()) && x.meeting_type == model.dac_dpb).ToList();
+                    if (model.officers_participated !=null)
+                    {
+                        listData = listData.Where(x => model.officers_participated.Contains(x.UserID.ToString()) && x.meeting_type == model.dac_dpb).ToList();
+                    }
+                }
 
                     model.Participants = new List<MeetingParticipants>();
                     model.Participants = listData;
@@ -1170,7 +1173,7 @@ namespace ACQ.Web.App.Controllers
                 {
                     throw ex;
                 }
-            }
+            
             return View("createMeeting");
         }
         [Route("GenerateReport")]
@@ -1810,7 +1813,8 @@ namespace ACQ.Web.App.Controllers
             }
             ViewBag.dated = Session["mdate"].ToString();
             ViewBag.mtype = Session["mtype"].ToString();
-            return RedirectToAction("AddMeetingAgenda", "AONW", new { id = meeting_id, ViewBag.mtype, ViewBag.dated });
+            string mtg_Id = Encryption.Encrypt(meeting_id.ToString());
+            return RedirectToAction("AddMeetingAgenda", "AONW", new { id = mtg_Id, ViewBag.mtype, ViewBag.dated });
         }
 
         [Route("SocTimeline")]
