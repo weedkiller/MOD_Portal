@@ -1,10 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "ViewApprovalDocs";
+    ViewBag.Title = "View Approved MOM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View Approval Docs</h2>
+<h2>View Approved MOM</h2>
 <div class="container">
-   <a href="@ViewBag.Url">Open File</a>
+@if (ViewBag.Url!=null)
+{
+<a target="_blank" href="@ViewBag.Url">Open File</a>
+}
+else
+{
+    <span>No Approved MOM Found..!!</span>
+}
 </div>
