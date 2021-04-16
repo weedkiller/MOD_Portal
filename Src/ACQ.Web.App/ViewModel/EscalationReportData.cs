@@ -9,6 +9,7 @@ namespace ACQ.Web.App.ViewModel
     {
         public int Id { get; set; }
         public string MSG_TYPE { get; set; }
+        public string TemplateId { get; set; }
         public Nullable<int> aon_id { get; set; }
         public string Service_Lead_Service { get; set; }
         public string item_description { get; set; }
@@ -48,6 +49,8 @@ namespace ACQ.Web.App.ViewModel
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> AlertSentOn { get; set; }
+        public Nullable<bool> isAlertSent { get; set; }
 
     }
 
@@ -64,8 +67,16 @@ namespace ACQ.Web.App.ViewModel
     public class datesearch
     {
         public DateTime startdate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime enddate { get; set; }
         public List<EscalationReportData> data { get; set; }
         public bool Status { get; set; }
+    }
+
+    public class ExportExcel
+    {
+        public string Phone { get; set; }
+        public string TemplateId { get; set; }
+        public string Message { get; set; }
+
     }
 }

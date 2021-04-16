@@ -1869,8 +1869,11 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult Contract()
         {
+
             return View();
         }
+
+
         [Route("SaveContract")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1880,47 +1883,116 @@ namespace ACQ.Web.App.Controllers
             try
             {
                 Contracts _contracts = new Contracts();
-                ContractDetails contractDetails = new ContractDetails
+                ContractDetails contractDetails = new ContractDetails();
+                contractDetails.ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId);
+                contractDetails.Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number);
+                if (cnt.Contrct_Detail.DateOfContractSigning != null)
                 {
-                    ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId),
-                    Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number),
-                    DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString())),
-                    Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions),
-                    Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category),
-                    EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.EffectiveDate.ToString())),
-                    ABGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.ABGDate.ToString())),
-                    PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGPercentage.ToString())),
-                    PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGDate.ToString())),
-                    Incoterms = sanitizer.Sanitize(cnt.Contrct_Detail.Incoterms),
-                    Warranty = sanitizer.Sanitize(cnt.Contrct_Detail.Warranty),
-                    ContractValue = sanitizer.Sanitize(cnt.Contrct_Detail.ContractValue),
-                    FEContent = sanitizer.Sanitize(cnt.Contrct_Detail.FEContent),
-                    TaxesAndDuties = sanitizer.Sanitize(cnt.Contrct_Detail.TaxesAndDuties),
-                    FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.FinalDeliveryDate.ToString())),
-                    GracePeriod = sanitizer.Sanitize(cnt.Contrct_Detail.GracePeriod),
-                };
+                    contractDetails.DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString()));
+                }
+                contractDetails.Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions);
+                contractDetails.Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category);
+
+                if (cnt.Contrct_Detail.EffectiveDate != null)
+                {
+                    contractDetails.EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.EffectiveDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.ABGDate != null)
+                {
+                    contractDetails.ABGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.ABGDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.PWBGPercentage != null)
+                {
+                    contractDetails.PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGPercentage.ToString()));
+                }
+                if (cnt.Contrct_Detail.PWBGDate != null)
+                {
+                    contractDetails.PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.Incoterms != null)
+                {
+                    contractDetails.Incoterms = sanitizer.Sanitize(cnt.Contrct_Detail.Incoterms);
+                }
+                if (cnt.Contrct_Detail.Warranty != null)
+                {
+                    contractDetails.Warranty = sanitizer.Sanitize(cnt.Contrct_Detail.Warranty);
+                }
+                if (cnt.Contrct_Detail.ContractValue != null)
+                {
+                    contractDetails.ContractValue = Convert.ToDecimal(sanitizer.Sanitize(cnt.Contrct_Detail.ContractValue.ToString()));
+                }
+                if (cnt.Contrct_Detail.FEContent != null)
+                {
+                    contractDetails.FEContent = sanitizer.Sanitize(cnt.Contrct_Detail.FEContent);
+                }
+                if (cnt.Contrct_Detail.TaxesAndDuties != null)
+                {
+                    contractDetails.TaxesAndDuties = sanitizer.Sanitize(cnt.Contrct_Detail.TaxesAndDuties);
+                }
+                if (cnt.Contrct_Detail.FinalDeliveryDate != null)
+                {
+                    contractDetails.FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.FinalDeliveryDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.GracePeriod != null)
+                {
+                    contractDetails.GracePeriod = sanitizer.Sanitize(cnt.Contrct_Detail.GracePeriod);
+                }
+
 
                 _contracts.Contrct_Detail = contractDetails;
 
                 List<StageDetail> stages = new List<StageDetail>();
-                foreach(var item in cnt.Stage_Detail.ToList())
+                foreach (var item in cnt.Stage_Detail.ToList())
                 {
-                    StageDetail stageDetail = new StageDetail
+                    StageDetail stageDetail = new StageDetail();
+
+                    stageDetail.ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId);
+                    stageDetail.StageNumber = Convert.ToInt32(sanitizer.Sanitize(item.StageNumber.ToString()));
+                    stageDetail.stageDescription = sanitizer.Sanitize(item.stageDescription);
+                    if (item.StageCompletionDate != null)
                     {
-                        StageNumber = Convert.ToInt32(sanitizer.Sanitize(item.StageNumber.ToString())),
-                        stageDescription = sanitizer.Sanitize(item.stageDescription),
-                        StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(item.StageStartdate.ToString())),
-                        StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(item.StageCompletionDate.ToString())),
-                        PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(item.PercentOfContractValue.ToString())),
-                        Amount = Convert.ToDecimal(sanitizer.Sanitize(item.Amount.ToString())),
-                        DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.DueDateOfPayment.ToString())),
-                        Conditions = sanitizer.Sanitize(item.Conditions),
-                        RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString())),
-                        ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage),
-                        ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString())),
-                        TotalPaymentMade = sanitizer.Sanitize(item.TotalPaymentMade),
-                        FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade),
-                    };
+                        stageDetail.StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(item.StageStartdate.ToString()));
+                    }
+                    if (item.StageCompletionDate != null)
+                    {
+                        stageDetail.StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(item.StageCompletionDate.ToString()));
+                    }
+                    if (item.PercentOfContractValue != null)
+                    {
+                        stageDetail.PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(item.PercentOfContractValue.ToString()));
+                    }
+                    if (item.Amount > 0)
+                    {
+                        stageDetail.Amount = Convert.ToDecimal(sanitizer.Sanitize(item.Amount.ToString()));
+                    }
+                    if (item.DueDateOfPayment != null)
+                    {
+                        stageDetail.DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.DueDateOfPayment.ToString()));
+                    }
+                    if (item.Conditions != null)
+                    {
+                        stageDetail.Conditions = sanitizer.Sanitize(item.Conditions);
+                    }
+                    if (item.RevisedDateOfpayment != null)
+                    {
+                        stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
+                    }
+                    if (item.ReasonsForSlippage != null)
+                    {
+                        stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
+                    }
+                    if (item.ActualDateOfPayment != null)
+                    {
+                        stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
+                    }
+
+                    stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
+                    stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
+                    if (item.ExpendMadeTill31March != null)
+                    {
+                        stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
+                    }
+
                     stages.Add(stageDetail);
                 }
 

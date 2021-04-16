@@ -4,7 +4,7 @@
 }
 
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="~/assets/datatable/css/buttons.dataTables.min.css" rel="stylesheet" />
+
 <style>
     table.dataTable tbody th, table.dataTable tbody td {
         padding: 10px 18px !important;
@@ -78,14 +78,17 @@
                                         <tr>
                                             <td>@item.ContractId</td>
                                             <td>@item.Contract_Number</td>
-                                            <td>@item.DateOfContractSigning</td>
+                                            <td>@item.DateOfContractSigning.ToString("dd/M/yyyy").Replace('-', '/')</td>
                                             <td>@item.Descriptions</td>
                                             <td>@item.Category</td>
                                             <td>@item.ContractValue</td>
-                                            <td>@item.FinalDeliveryDate</td>
+                                            <td>@item.FinalDeliveryDate.ToString("dd/M/yyyy").Replace('-', '/')</td>
 
-                                            <td><a href="/ContractStageList?ConMasterId=@item.Id"><i class="fa fa-eye" aria-hidden="true"></i></a> </td>
-                                            <td></td>
+                                            <td>
+                                                <a href="/ContractStageList?ContractId=@item.ContractId&cont=false"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a href="/ContractStageList?ContractId=@item.ContractId&cont=true"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            </td>
+
                                         </tr>
                                     }
                                 }
@@ -110,14 +113,14 @@
     </div>
 </div>
 
-<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 <script src="~/assets/datatable/js/jquery.dataTables.min.js" nonce="r@nd0m"></script>
-<script src="~/assets/datatable/js/dataTables.buttons.min.js" nonce="r@nd0m"></script>
+@*<script src="~/assets/datatable/js/dataTables.buttons.min.js" nonce="r@nd0m"></script>*@
 <script src="~/assets/datatable/js/jszip.min.js" nonce="r@nd0m"></script>
 @*<script src="~/assets/datatable/js/pdfmake.min.js"></script>*@
 <script src="~/assets/datatable/js/vfs_fonts.js" nonce="r@nd0m"></script>
-<script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
-<script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>
+@*<script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
+    <script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>*@
 
 <script>
     jQuery(document).ready(function ($) {

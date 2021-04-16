@@ -69,6 +69,9 @@
     <Reference Include="CaptchaMvc">
       <HintPath>D:\CurrentProject2020\ACQApplication\09MarchACQ\MOD_Portal\Src\ACQ.Web.App\bin\CaptchaMvc.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="GemBox.Document, Version=33.0.0.1155, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
       <HintPath>..\..\packages\GemBox.Document.33.0.1155\lib\net35\GemBox.Document.dll</HintPath>
     </Reference>
@@ -222,6 +225,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AONWController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FormMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -680,6 +684,7 @@
     <Content Include="assets\media\images\ddp_logo.png" />
     <Content Include="assets\media\images\ddp_logo_dark.png" />
     <Content Include="assets\media\images\loader.gif" />
+    <Content Include="assets\media\images\loader1.gif" />
     <Content Include="assets\previous js css\css\editor.css" />
     <Content Include="assets\previous js css\css\jquery.dataTables.css" />
     <Content Include="assets\previous js css\js\jquery.dataTables.min.js" />
@@ -1700,6 +1705,8 @@
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
+    <Content Include="Views\Contract\ContractAndStageList.cshtml" />
+    <Content Include="Views\Contract\ContractList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
