@@ -1707,6 +1707,7 @@
     <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <Content Include="Views\Contract\ContractAndStageList.cshtml" />
     <Content Include="Views\Contract\ContractList.cshtml" />
+    <Content Include="Views\AONW\ViewSocComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -726,3 +726,5 @@ E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\EPPlus.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\EPPlus.xml

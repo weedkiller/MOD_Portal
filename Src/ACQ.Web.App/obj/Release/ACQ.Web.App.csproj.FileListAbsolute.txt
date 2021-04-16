@@ -73,3 +73,5 @@ E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CoreCompileInpu
 E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.csproj.CopyComplete
 E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.dll
 E:\ACQ\MOD_Portal\Src\ACQ.Web.App\obj\Release\ACQ.Web.App.pdb
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\EPPlus.dll
+E:\ACQ\MOD_Portal\Src\ACQ.Web.App\bin\EPPlus.xml

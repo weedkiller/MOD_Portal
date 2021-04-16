@@ -176,7 +176,29 @@ namespace ACQ.Web.App.Controllers
             return View(Socmodel);
         }
 
-        [Route(" ViewSOCComment")]
+        [Route("ViewSocComments")]
+        [HandleError]
+        [HttpGet]
+        public ActionResult ViewSocComments(string ID)
+        {
+            List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
+            int userId = Convert.ToInt32(Session["UserID"]);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?socId="+ID+"&ID=" + userId + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
+                    ViewBag.ListData = listData;
+                }
+            }
+            return View();
+        }
+
+        [Route("ViewSOCComment")]
         [HandleError]
         [HandleError(ExceptionType = typeof(NullReferenceException), Master = "Account", View = "Error")]
         [SessionExpire]
@@ -1075,6 +1097,8 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
                     ViewBag.id = id;
                     // }
+
+                 
                 }
             }
             catch (Exception EX)
