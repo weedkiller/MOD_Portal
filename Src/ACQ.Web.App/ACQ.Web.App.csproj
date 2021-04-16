@@ -1650,8 +1650,6 @@
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff2" />
     <None Include="bin\ACQ.Web.App.dll.config" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -1704,9 +1702,6 @@
     <Content Include="Views\AONW\SubmitMeetingComments.cshtml" />
     <Content Include="Views\AONW\UploadApprovalDocs.cshtml" />
     <Content Include="Views\AONW\ViewApprovalDocs.cshtml" />
-    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
-    <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <Content Include="Views\Contract\ContractAndStageList.cshtml" />
     <Content Include="Views\Contract\ContractList.cshtml" />
     <None Include="Web.Debug.config">
@@ -1720,6 +1715,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="excelfolder\" />
     <Folder Include="fonts\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="UploadApprovedSOC\" />
     <Folder Include="UploadSOC\" />
   </ItemGroup>

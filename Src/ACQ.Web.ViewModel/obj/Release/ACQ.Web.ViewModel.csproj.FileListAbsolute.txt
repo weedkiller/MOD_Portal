@@ -17,3 +17,22 @@ E:\ACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.Cor
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.dll
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.pdb
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.dll.config
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\ACQ.Web.ViewModel.pdb
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.SqlServer.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Newtonsoft.Json.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.Mvc.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.Razor.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.Razor.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.xml
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Release\EntityFramework.SqlServer.xml
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.csproj.CopyComplete
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Release\ACQ.Web.ViewModel.pdb

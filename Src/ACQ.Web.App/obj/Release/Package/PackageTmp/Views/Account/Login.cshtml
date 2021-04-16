@@ -9,11 +9,18 @@
     form {
         width: 100%;
     }
+    .modal.show {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        align-items: flex-start;
+    }
 </style>
 
 
 <div class="login_bg">
-    @using (Html.BeginForm("login", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("login", "Account", FormMethod.Post, htmlAttributes: new { id = "Login", autocomplete = "off", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
     @ViewBag.bt
@@ -77,7 +84,7 @@
 <div id="myModal" class="modal fade" role="dialog">
     <div class="custom_modal">
         <div class="modal-dialog" style="width: 500px;">
-            @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, htmlAttributes: new { id = "verify", autocomplete = "off", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 @*<form role="form" action="VerifyOtp" controller="Account" method="post" onsubmit="return validateForm()">*@

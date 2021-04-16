@@ -4,31 +4,73 @@
 }
 
 <link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
     .ui-datepicker {
         width: 18.8em !important;
     }
+
     .btn-area {
         position: absolute;
         bottom: 18px;
     }
+
     .btn-delete {
         position: absolute;
         bottom: 18px;
         LEFT: 14%;
     }
+
+    .col-form-label {
+        justify-content: start;
+        display: flex;
+    }
+
+        .col-form-label span {
+            margin-left: 5px;
+        }
 </style>
 <div class="mt-3 container-fluid">
+    <div class="tabHead mb-1">
+        <div class="row">
+            <div class="col-md-6"><h3>Enter Contract Details</h3></div>
+
+        </div>
+    </div>
+    <div class="_sb">
+        @using (Html.BeginForm("SaveContractMasterExcel", "Contract", FormMethod.Post, new { id = "UploadExcel", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @*<input type="file" name="postedFile" />
+                <input type="submit" value="Import" />*@
+            <div class="card flex-fill w-100 p-3">
+
+                <div class="form-group row">
+
+
+                    <div class="col-md-4 col-sm-4 col-lg-4">
+                        <label for=" " class="col-form-label">Upload Excel Data</label>
+                        <div class="form-group m-0">
+                            <input type="file" name="file" id="file" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-lg-4">
+
+                        <input type="submit" id="uploadmaster" style="position:absolute;bottom:0;" class="btn btn-success" value="Upload" />
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
     @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
     {
         @Html.AntiForgeryToken()
 
-        <div class="tabHead mb-1">
-            <div class="row">
-                <div class="col-md-6"><h3>Enter Contract Details</h3></div>
 
-            </div>
-        </div>
 
         <div class="_sb">
 
@@ -72,7 +114,7 @@
                         <label for=" " class="col-form-label">Description<span style="color:red;">*</span><span id="vldDescriptions" style="color:red;display:none">Please enter Description</span></label>
                         <div class="form-group m-0">
 
-                            <textarea rows="3" name="Description" id="Descriptions" placeholder="Description" class="form-control"> </textarea>
+                            <textarea rows="3" name="Descriptions" id="Descriptions" placeholder="Description" class="form-control"> </textarea>
 
                         </div>
                     </div>
@@ -113,7 +155,7 @@
                     <div class="col-md-4 col-sm-4 col-lg-4">
                         <label for=" " class="col-form-label">PWBG %</label>
                         <div class="form-group m-0">
-                            <input type="text" name="PWBG" id="PWBGPercentage" placeholder="PWBG %" class="form-control" />
+                            <input type="text" name="PWBG" id="PWBGPercentage" placeholder="PWBG %" class="form-control AllowNumber" />
 
                         </div>
                     </div>
@@ -149,7 +191,7 @@
                     <div class="col-md-4 col-sm-4 col-lg-4">
                         <label for=" " class=" col-form-label">Contract Value<span style="color:red;">*</span><span id="vldContractValue" style="color:red;display:none">Please enter ContractValue</span></label>
                         <div class="form-group m-0">
-                            <input type="text" name="ContractValue" id="ContractValue" placeholder="Contract Value " class="form-control" />
+                            <input type="text" name="ContractValue" id="ContractValue" placeholder="Contract Value " class="form-control AllowDecimal" />
 
                         </div>
                     </div>
@@ -197,7 +239,9 @@
         </div>
 
         <div class="_sbd">
+            <div class="">
 
+            </div>
             <div class="card">
                 <div class="card-header">
                     <h3>Enter Stage/Milestone Details</h3>
@@ -208,9 +252,9 @@
                             <div class="row">
                                 <div class="col-sm-4">
 
-                                    <div class="form-group ">
-                                        <label>Stage Number <span style="color:red;">*</span></label>
-                                        <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />
+                                    <div class="form-group">
+                                        <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>
+                                        <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -234,20 +278,20 @@
                                 <div class="col-sm-4">
 
                                     <div class="form-group ">
-                                        <label>% Of Contract Value<span style="color:red;">*</span></label>
-                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />
+                                        <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>
+                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group ">
-                                        <label>Amount<span style="color:red;">*</span></label>
-                                        <input type="text" name="Amount" placeholder="Amount" class="form-control Amount" />
+                                        <label class="col-form-label">Amount<span style="color:red;">*</span></label>
+                                        <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" />
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <div class="form-group ">
-                                        <label>Due Date Of Payment<span style="color:red;">*</span></label>
+                                        <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>
                                         <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />
                                     </div>
                                 </div>
@@ -271,30 +315,38 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group ">
-                                        <label>Actual Date Of Payment<span style="color:red;">*</span></label>
+                                        <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>
                                         <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <div class="form-group ">
-                                        <label>Total Payment Made<span style="color:red;">*</span></label>
-                                        <select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">
-                                            <option value="Basic Stage Payment">Basic Stage Payment</option>
-                                            <option value="Taxes">Taxes</option>
-                                            <option value="Customs Duty">Customs Duty</option>
-                                            <option value="ERV Payment">ERV Payment</option>
-                                        </select>
+                                        <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>
+                                        <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" />
+                                        @*<select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">
+                                                <option value="Basic Stage Payment">Basic Stage Payment</option>
+                                                <option value="Taxes">Taxes</option>
+                                                <option value="Customs Duty">Customs Duty</option>
+                                                <option value="ERV Payment">ERV Payment</option>
+                                            </select>*@
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group ">
+                                        <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>
+                                        <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />
 
                                     </div>
                                 </div>
 
                                 <div class="col-sm-4">
                                     <div class="form-group ">
-                                        <label>Full or Part Payment Made<span style="color:red;">*</span></label>
+                                        <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>
                                         <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Full">Full</option>
+                                            <option value="Part">Part</option>
 
                                         </select>
                                     </div>
@@ -316,33 +368,66 @@
             <button type="button" id="btnSaveDetails" class="btn btn-sm btn-success" value="Save Details" style="float:right;">Save Details</button>
 
         </div>
-    }
 
+
+    }
+    <div class="_sb">
+        @using (Html.BeginForm("SaveStageExcel", "Contract", FormMethod.Post, new { id = "UploadExcel2", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="card flex-fill w-100 p-3">
+
+                <div class="form-group row">
+
+
+                    <div class="col-md-4 col-sm-4 col-lg-4">
+                        <label for=" " class="col-form-label">Upload Excel Data</label>
+                        <div class="form-group m-0">
+                            <input type="file" name="file" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-lg-4">
+
+                        <input type="submit" id="UploadStage" style="position:absolute;bottom:0;" class="btn btn-success" value="Upload" />
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
 
 </div>
 
 
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
-<script src="~/assets/js/jquery-ui.js"></script>
+<script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script nonce="r@nd0m">
     $(document).ready(function () {
-       
-            //$(".datepicker").datepicker({
-            //    changeMonth: true,
-            //    changeYear: true
-            //});
-       
+
+        $('#UploadExcel').submit(function () {
+            $('.preloader').show();
+        });
+
+        $('#UploadExcel2').submit(function () {
+            $('.preloader').show();
+        });
+
 
         $('body').on('focus', ".datepicker", function () {
             $(this).datepicker({
                 changeMonth: true,
-                changeYear: true
+                changeYear: true,
+                dateFormat: "dd/mm/yy"
             });
         });
 
         $(document).on("click", '.AddNewStage', function () {
 
-            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label>Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label>% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Total Payment Made<span style="color:red;">*</span></label>                                 <select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">                                     <option value="Basic Stage Payment">Basic Stage Payment</option>                                     <option value="Taxes">Taxes</option>                                     <option value="Customs Duty">Customs Duty</option>                                     <option value="ERV Payment">ERV Payment</option>                                 </select>                              </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label>Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                     <option value="Yes">Yes</option>                                     <option value="No">No</option>                                  </select>                             </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
+            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>                                  <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" />                              </div>                         </div>     <div class="col-sm-4">                                     <div class="form-group ">                                         <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>                                         <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />                                                                            </div>                                 </div>                      <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                    <option value="Full">Full</option>                                             <option value="Part">Part</option>                              </select>                             </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
 
         });
 
@@ -350,6 +435,112 @@
 
             $(this).parent().parent().parent().remove();
 
+        });
+
+        $(document).on('keydown keypress keyup paste input', '.AllowNumber', function () {
+            // allows 123. or .123 which are fine for entering on a MySQL decimal() or float() field
+            // if more than one dot is detected then erase (or slice) the string till we detect just one dot
+            // this is likely the case of a paste with the right click mouse button and then a paste (probably others too), the other situations are handled with keydown, keypress, keyup, etc
+
+            while (($(this).val().split(".").length - 1) > 1) {
+
+                $(this).val($(this).val().slice(0, -1));
+
+                if (($(this).val().split(".").length - 1) > 1) {
+                    continue;
+                } else {
+                    return false;
+                }
+
+            }
+
+            // replace any character that's not a digit or a dot
+
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+
+            // now cut the string with the allowed number for the integer and float parts
+            // integer part controlled with the int_num_allow variable
+            // float (or decimal) part controlled with the float_num_allow variable
+
+            var int_num_allow = 10;
+            var float_num_allow = 0;
+
+            var iof = $(this).val().indexOf(".");
+
+            if (iof != -1) {
+
+                // this case is a mouse paste (probably also other events) with more numbers before the dot than is allowed
+                // the number can't be "sanitized" because we can't "cut" the integer part, so we just empty the element and optionally change the placeholder attribute to something meaningful
+                if ($(this).val().substring(0, iof).length > int_num_allow) {
+                    $(this).val('');
+                    // you can remove the placeholder modification if you like
+                    $(this).attr('placeholder', 'invalid number');
+                }
+
+                // cut the decimal part
+
+                $(this).val($(this).val().substring(0, iof + float_num_allow + 1));
+
+            } else {
+
+                $(this).val($(this).val().substring(0, int_num_allow));
+
+            }
+
+            return true;
+        });
+
+        $(document).on('keydown keypress keyup paste input', '.AllowDecimal', function () {
+            // allows 123. or .123 which are fine for entering on a MySQL decimal() or float() field
+            // if more than one dot is detected then erase (or slice) the string till we detect just one dot
+            // this is likely the case of a paste with the right click mouse button and then a paste (probably others too), the other situations are handled with keydown, keypress, keyup, etc
+
+            while (($(this).val().split(".").length - 1) > 1) {
+
+                $(this).val($(this).val().slice(0, -1));
+
+                if (($(this).val().split(".").length - 1) > 1) {
+                    continue;
+                } else {
+                    return false;
+                }
+
+            }
+
+            // replace any character that's not a digit or a dot
+
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+
+            // now cut the string with the allowed number for the integer and float parts
+            // integer part controlled with the int_num_allow variable
+            // float (or decimal) part controlled with the float_num_allow variable
+
+            var int_num_allow = 10;
+            var float_num_allow = 2;
+
+            var iof = $(this).val().indexOf(".");
+
+            if (iof != -1) {
+
+                // this case is a mouse paste (probably also other events) with more numbers before the dot than is allowed
+                // the number can't be "sanitized" because we can't "cut" the integer part, so we just empty the element and optionally change the placeholder attribute to something meaningful
+                if ($(this).val().substring(0, iof).length > int_num_allow) {
+                    $(this).val('');
+                    // you can remove the placeholder modification if you like
+                    $(this).attr('placeholder', 'invalid number');
+                }
+
+                // cut the decimal part
+
+                $(this).val($(this).val().substring(0, iof + float_num_allow + 1));
+
+            } else {
+
+                $(this).val($(this).val().substring(0, int_num_allow));
+
+            }
+
+            return true;
         });
 
         $("#btnSaveDetails").click(function () {
@@ -402,8 +593,9 @@
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
                 stage["ReasonsForSlippage"] = $(this).children().find('.ReasonForSlippage').val();
                 stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
-                stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade option:selected').val();
+                stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
+                stage["ExpendMadeTill31March"] = $(this).children().find('.ExpendMadeTill31March').val();
 
                 stagesdata.push(stage);
             });
@@ -427,20 +619,21 @@
                     dataType: "json",
                     success: function (response) {
                         $('.preloader').hide();
+                        $(btn).attr("disabled", false);
                         if (response > 0) {
-                            alert("form has been saved");
+                            toastr.success("form has been saved");
                             window.location.reload();
                         }
                     },
                     failure: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     },
                     error: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     }
                 });
             }
