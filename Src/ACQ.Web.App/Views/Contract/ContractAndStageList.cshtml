@@ -5,6 +5,7 @@
 }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
     table.dataTable tbody th, table.dataTable tbody td {
         padding: 10px 18px !important;
@@ -480,6 +481,7 @@
 <script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 
 <script nonce="r@nd0m">
 
@@ -708,20 +710,24 @@
                     success: function (response) {
                         $('.preloader').hide();
 
-                        if (response =="Updated") {
-                            alert("form has been Updated");
+                        if (response == "Updated") {
+                            toastr.success("form has been Updated");
                             window.location.reload();
+                        }
+                        else {
+                            toastr.error("form has not been Updated");
                         }
                     },
                     failure: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
+                        
                     },
                     error: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     }
                 });
             }
