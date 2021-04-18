@@ -230,6 +230,7 @@
     <Compile Include="Controllers\FormMenuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProcessingEmailController.cs" />
+    <Compile Include="Controllers\RFPController.cs" />
     <Compile Include="Controllers\SocPdfRegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1705,6 +1706,7 @@
     <Content Include="Views\Contract\ContractAndStageList.cshtml" />
     <Content Include="Views\Contract\ContractList.cshtml" />
     <Content Include="Views\AONW\ViewSocComments.cshtml" />
+    <Content Include="Views\RFP\ViewRFP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
