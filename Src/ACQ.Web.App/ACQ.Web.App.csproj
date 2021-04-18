@@ -239,6 +239,7 @@
     <Compile Include="URIHandler.cs" />
     <Compile Include="ViewModel\Contracts.cs" />
     <Compile Include="ViewModel\EscalationReportData.cs" />
+    <Compile Include="ViewModel\ListRfpServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.css" />

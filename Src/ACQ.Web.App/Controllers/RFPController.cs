@@ -118,9 +118,67 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
+        [HttpGet]
         public ActionResult ViewRFP()
         {
+            IEnumerable<ListRfpServices> listdata = new List<ListRfpServices>();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listdata = response.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
+                }
+            }
+
+            ViewBag.services = listdata;
             return View();
+        }
+
+
+        [Route("GetRFPdata")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetRFPdata(int service=0)
+        {
+            ApiResponseRfp responseAPI = new ApiResponseRfp();
+            if(service>0)
+            {
+                try
+                {
+                    var aon = Convert.ToInt32(sanitizer.Sanitize(service.ToString()));
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Clear();
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        HttpResponseMessage response = client.GetAsync("RFP/GetRfpData?aonId="+aon).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            responseAPI = response.Content.ReadAsAsync<ApiResponseRfp>().Result;
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    responseAPI.Status = false;
+                    responseAPI.Message = "Service are temporarily unavailable.";
+                }
+            }
+            else
+            {
+                responseAPI.Status = false;
+                responseAPI.Message = "Incorrect input provided...";
+            }
+            return Json(responseAPI, JsonRequestBehavior.AllowGet);
         }
     }
 }
