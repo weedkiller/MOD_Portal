@@ -824,7 +824,7 @@
 
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
-            var allvalid = false;
+            var allvalid = true;
 
             var btn = $('#btnSaveDetails');
             $(btn).attr("disabled", true);
@@ -917,6 +917,7 @@
                 }
                 if ($(this).children().find('.TotalPaymentMade').val() != "") {
                     stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
+                  
                 }
                 else {
                     toastr.error("Enter Total Payment Made");
