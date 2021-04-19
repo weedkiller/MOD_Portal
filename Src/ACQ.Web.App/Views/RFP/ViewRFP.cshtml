@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "ViewRFP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .bg-primary {
+        background: #1c2f61 !important;
+    }
+
+    .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6 {
+        color: #fff !important;
+    }
+
+    #services {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #c7c8cc;
+        border-radius: 2px;
+    }
+</style>
+
+<div class="containers">
+    <div class="container-fluid">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card">
+                <div class="card-header">
+                    <h6>View RFP</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select Service</label>
+                            <div class="form-group">
+                                <select id="services" onchange="getdata();">
+                                    <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
+                                    {
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.Service_Lead_Service - @item.Categorisation - @item.item_description - AON - @item.aon_id</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="details">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/bootstrap.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
+<script>
+    $(document).ready(function () {
+        $('#services').change(function () {
+            if (parseInt($(this).val()) > 0) {
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                    $(btn).attr('disabled', true);
+                },
+                type: "POST",
+                    url: "/GetRFPdata",
+                    data: { __RequestVerificationToken: token, service: parseInt($(this).val())},
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.Status == true) {
+                        
+
+
+                    } else {
+                        toastr.info("No data found");
+                    }
+                },
+                failure: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    
+                },
+                error: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    
+                }
+            });
+            }
+
+        });
+    });
+
+
+</script>
+

@@ -5,6 +5,7 @@
 }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
     table.dataTable tbody th, table.dataTable tbody td {
         padding: 10px 18px !important;
@@ -308,90 +309,90 @@
                                                 <input type="hidden" class="StageId" value="@item.Id" />
                                                 <div class="form-group">
                                                     <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>
-                                                    <input type="text" name="StageNumber" placeholder="Stage Number" value="@item.StageNumber" class="form-control StageNumber default-disabled AllowNumber" disabled />
+                                                    <input type="text" name="StageNumber" placeholder="Stage Number" value="@item.StageNumber" class="form-control StageNumber  AllowNumber" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Stage Description</label>
-                                                    <input type="text" name="stageDescription" placeholder="Stage Description" value="@item.stageDescription" class="form-control StageDescription default-disabled" disabled />
+                                                    <input type="text" name="stageDescription" placeholder="Stage Description" value="@item.stageDescription" class="form-control StageDescription " disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Stage Start Date</label>
-                                                    <input type="text" name="StageStartdate" placeholder="Stage Start Date" value="@item.StageStartdate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageStartDate datepicker default-disabled" disabled />
+                                                    <input type="text" name="StageStartdate" placeholder="Stage Start Date" value="@item.StageStartdate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageStartDate datepicker " disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Stage Completion Date</label>
-                                                    <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" value="@item.StageCompletionDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageCompletionDate datepicker default-disabled" disabled />
+                                                    <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" value="@item.StageCompletionDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageCompletionDate datepicker " disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
 
                                                 <div class="form-group ">
                                                     <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>
-                                                    <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" value="@item.PercentOfContractValue" class="form-control PercentOfContractValue default-disabled AllowNumber" disabled />
+                                                    <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" value="@item.PercentOfContractValue" class="form-control PercentOfContractValue AllowNumber" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Amount<span style="color:red;">*</span></label>
-                                                    <input type="text" name="Amount" placeholder="Amount" value="@item.Amount" class="form-control Amount default-disabled AllowDecimal" disabled />
+                                                    <input type="text" name="Amount" placeholder="Amount" value="@item.Amount" class="form-control Amount AllowDecimal" disabled />
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Due Date Of Payment<span style="color:red;">*</span></label>
-                                                    <input type="text" name="DueDateOfPayment" value="@item.DueDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker default-disabled" disabled />
+                                                    <input type="text" name="DueDateOfPayment" value="@item.DueDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Conditions</label>
-                                                    <input type="text" name="Conditions" placeholder="Conditions" value="@item.Conditions" class="form-control Conditions default-disabled" disabled />
+                                                    <input type="text" name="Conditions" placeholder="Conditions" value="@item.Conditions" class="form-control Conditions" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Revised Date Of Payment</label>
-                                                    <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" value="@item.RevisedDateOfpayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control RevisedDateOfPayment datepicker default-disabled" disabled />
+                                                    <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" value="@item.RevisedDateOfpayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control RevisedDateOfPayment datepicker " disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label>Reason For Slippage</label>
-                                                    <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" value="@item.ReasonsForSlippage" class="form-control ReasonForSlippage default-disabled" disabled />
+                                                    <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" value="@item.ReasonsForSlippage" class="form-control ReasonForSlippage " disabled />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>
-                                                    <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" value="@item.ActualDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control ActualDateOfPayment datepicker default-disabled" disabled />
+                                                    <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" value="@item.ActualDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control ActualDateOfPayment datepicker" disabled />
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>
-                                                    <input type="text" name="TotalPaymentMade" value="@item.TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade default-disabled AllowDecimal" disabled />
+                                                    <input type="text" name="TotalPaymentMade" value="@item.TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade  AllowDecimal" disabled />
 
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>
-                                                    <input type="text" name="ExpendMadeTill31March" value="@item.ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />
+                                                    <input type="text" name="ExpendMadeTill31March" value="@item.ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" disabled />
 
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>
-                                                    <select class="form-select form-control FullorPartPaymentMade default-disabled" name="FullorPartPaymentMade default-disabled" disabled>
+                                                    <select class="form-select form-control FullorPartPaymentMade " name="FullorPartPaymentMade " disabled>
                                                         @if (item.FullorPartPaymentMade == "Full")
                                                         {
                                                             <option value="Full" selected>Full</option>
@@ -480,6 +481,7 @@
 <script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 
 <script nonce="r@nd0m">
 
@@ -522,7 +524,30 @@
             $('#cancel').css("display", "none");
             //$('#edit').attr("disabled", false);
         });
+        $(document).on("change", ".TotalPaymentMade", function () {
+            var actual = $(this).closest('.Stage').children().find('.Amount').val();
+            var current = $(this).val();
+            if (actual != "" && current != "") {
+                if (parseFloat(current) < parseFloat(actual)) {
+                    $(this).closest('.Stage').children().find('.FullorPartPaymentMade option').filter(function () {
+                        return ($(this).text() == 'Part'); 
+                    }).prop('selected', true);
+                }
+                else {
+                    $(this).closest('.Stage').children().find('.FullorPartPaymentMade option').filter(function () {
+                        return ($(this).text() == 'Full');
+                    }).prop('selected', true);
+                }
+            }
+            else {
+                toastr.error("Enter Amount or Total payment");
+            }
+            
+          
+           
+           
 
+        });
 
           $(document).on('keydown keypress keyup paste input', '.AllowNumber', function () {
             // allows 123. or .123 which are fine for entering on a MySQL decimal() or float() field
@@ -671,18 +696,50 @@
             $('.table-body .Stage').each(function () {
                 var stage = {};
                 stage["Id"] = parseInt($(this).children().find('.StageId').val());
-                stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                if ($(this).children().find('.StageNumber').val() != "") {
+                    stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                }
+                else {
+                    toastr.error("Enter Stage Number");
+                }
+
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
                 stage["StageStartdate"] = $(this).children().find('.StageStartDate').val();
                 stage["StageCompletionDate"] = $(this).children().find('.StageCompletionDate').val();
-                stage["PercentOfContractValue"] = parseInt($(this).children().find('.PercentOfContractValue').val());
-                stage["Amount"] = $(this).children().find('.Amount').val();
-                stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+                if ($(this).children().find('.PercentOfContractValue').val() != "") {
+                    stage["PercentOfContractValue"] = parseInt($(this).children().find('.PercentOfContractValue').val());
+                }
+                else {
+                    toastr.error("Enter Contrct value");
+                }
+                if ($(this).children().find('.Amount').val() != "") {
+                    stage["Amount"] = $(this).children().find('.Amount').val();
+                }
+                else {
+                    toastr.error("Enter Amount");
+                }
+                if ($(this).children().find('.DueDateOfPayment').val() != null) {
+                    stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+                }
+                else {
+                    toastr.error("Enter Due Date of Payment");
+                }
                 stage["Conditions"] = $(this).children().find('.Conditions').val();
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
                 stage["ReasonsForSlippage"] = $(this).children().find('.ReasonForSlippage').val();
-                stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
-                stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
+                if ($(this).children().find('.ActualDateOfPayment').val() != "") {
+                    stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
+                }
+                else {
+                    toastr.error("Enter Actual Date of Payment");
+                }
+                if ($(this).children().find('.TotalPaymentMade').val() != "") {
+                    stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
+                }
+                else {
+                    toastr.error("Enter Total Payment Made");
+
+                }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
                 stage["ExpendMadeTill31March"] = $(this).children().find('.ExpendMadeTill31March').val();
                 stagesdata.push(stage);
@@ -706,22 +763,27 @@
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
+                        debugger
                         $('.preloader').hide();
 
-                        if (response =="Updated") {
-                            alert("form has been Updated");
+                        if (response == "Updated") {
+                            toastr.success("form has been Updated");
                             window.location.reload();
+                        }
+                        else {
+                            toastr.error("form has not been Updated");
                         }
                     },
                     failure: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
+                        
                     },
                     error: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     }
                 });
             }

@@ -239,30 +239,34 @@ namespace ACQ.Web.App.Controllers
                 {
                     IEnumerable<EscalationReportData> listdata = new List<EscalationReportData>();
                     listdata = (IEnumerable<ViewModel.EscalationReportData>)Session["Escdata"];
-                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var start = startdate.Split('/');
+                    var end=enddate.Split('/');
+                    var sdate = new DateTime(Convert.ToInt32(start[2]), Convert.ToInt32(start[1]), Convert.ToInt32(start[0]), 0, 0, 0);
+                    var edate = new DateTime(Convert.ToInt32(end[2]), Convert.ToInt32(end[1]), Convert.ToInt32(end[0]), 0, 0, 0);
                     var data = listdata.Where(x => x.date_of_alert >= sdate && x.date_of_alert <= edate).ToList();
                     if (data != null && data.Count() > 0)
                     {
-                        result.startdate = Convert.ToDateTime(sdate);
-                        result.enddate = Convert.ToDateTime(edate);
+                        result.startdate = sdate;
+                        result.enddate = edate;
                         result.data = data;
                         result.Status = true;
                     }
                     else
                     {
-                        result.startdate = Convert.ToDateTime(sdate);
-                        result.enddate = Convert.ToDateTime(edate);
+                        result.startdate = sdate;
+                        result.enddate = edate;
                         result.Status = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    var sdate = DateTime.ParseExact(startdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    var edate = DateTime.ParseExact(enddate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    var start = startdate.Split('/');
+                    var end = enddate.Split('/');
+                    var sdate = new DateTime(Convert.ToInt32(start[2]), Convert.ToInt32(start[1]), Convert.ToInt32(start[0]), 0, 0, 0);
+                    var edate = new DateTime(Convert.ToInt32(end[2]), Convert.ToInt32(end[1]), Convert.ToInt32(end[0]), 0, 0, 0);
                     result.Status = false;
-                    result.startdate = Convert.ToDateTime(sdate);
-                    result.enddate = Convert.ToDateTime(edate);
+                    result.startdate = sdate;
+                    result.enddate = edate;
                 }
             }
             else result.Status = false;

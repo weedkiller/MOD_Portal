@@ -4,6 +4,7 @@
 }
 
 <link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
     .ui-datepicker {
         width: 18.8em !important;
@@ -30,12 +31,7 @@
         }
 </style>
 <div class="mt-3 container-fluid">
-    <div class="tabHead mb-1">
-        <div class="row">
-            <div class="col-md-6"><h3>Enter Contract Details</h3></div>
-
-        </div>
-    </div>
+    
     <div class="_sb">
         @using (Html.BeginForm("SaveContractMasterExcel", "Contract", FormMethod.Post, new { id = "UploadExcel", enctype = "multipart/form-data" }))
         {
@@ -43,12 +39,12 @@
             @*<input type="file" name="postedFile" />
                 <input type="submit" value="Import" />*@
             <div class="card flex-fill w-100 p-3">
-
+                <div class="card-header"><h5>Upload Contract Details</h5></div>
                 <div class="form-group row">
 
 
                     <div class="col-md-4 col-sm-4 col-lg-4">
-                        <label for=" " class="col-form-label">Upload Excel Data</label>
+                        <label for=" " class="col-form-label">Upload Contract Details</label>
                         <div class="form-group m-0">
                             <input type="file" name="file" id="file" />
                         </div>
@@ -65,6 +61,8 @@
 
     </div>
 
+    <h6 class="text-center"><p>Or</p></h6>
+
     @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
     {
         @Html.AntiForgeryToken()
@@ -74,7 +72,9 @@
         <div class="_sb">
 
             <div class="card flex-fill w-100 p-3">
-
+                <div class="card-header">
+                    <h5>Enter Contract Details</h5>
+                </div>
                 <div class="form-group row">
 
 
@@ -322,7 +322,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group ">
                                         <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>
-                                        <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" />
+                                        <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made (Numeric || ex 2000.40)" class="form-control TotalPaymentMade AllowDecimal" />
                                         @*<select name="TotalPaymentMade" class="form-select form-control TotalPaymentMade">
                                                 <option value="Basic Stage Payment">Basic Stage Payment</option>
                                                 <option value="Taxes">Taxes</option>
@@ -370,30 +370,34 @@
 
 
     }
+
+    <h6 class="text-center"><p>Or</p></h6>
     <div class="_sb">
         @using (Html.BeginForm("SaveStageExcel", "Contract", FormMethod.Post, new { id = "UploadExcel2", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
-            <div class="card flex-fill w-100 p-3">
-
-                <div class="form-group row">
-
-
-                    <div class="col-md-4 col-sm-4 col-lg-4">
-                        <label for=" " class="col-form-label">Upload Excel Data</label>
-                        <div class="form-group m-0">
-                            <input type="file" name="file" />
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-lg-4">
-
-                        <input type="submit" id="UploadStage" style="position:absolute;bottom:0;" class="btn btn-success" value="Upload" />
+        <div class="card flex-fill w-100 p-3">
+            <div class="card-header">
+                <h5>Upload Stages</h5>
+            </div>
+            <div class="form-group row">
 
 
+                <div class="col-md-4 col-sm-4 col-lg-4">
+                    <label for=" " class="col-form-label">Upload Stages</label>
+                    <div class="form-group m-0">
+                        <input type="file" name="file" />
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-4 col-lg-4">
+
+                    <input type="submit" id="UploadStage" style="position:absolute;bottom:0;" class="btn btn-success" value="Upload" />
+
+
+                </div>
             </div>
+        </div>
         }
 
     </div>
@@ -403,8 +407,31 @@
 
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script nonce="r@nd0m">
     $(document).ready(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        if ('@ViewBag.Uploadsuccess' != null && '@ViewBag.Uploadsuccess' != "") {
+            if ('@ViewBag.Uploadsuccess' == "True") {
+                toastr.success("Data has been uploaded successfully..");
+            }
+            else {
+                toastr.error("Something went wrong while uploading data from excel file.");
+            }
+        }
 
         $('#UploadExcel').submit(function () {
             $('.preloader').show();
@@ -423,9 +450,30 @@
             });
         });
 
+        $(document).on("change", ".TotalPaymentMade", function () {
+            var actual = $(this).closest('.Stage').children().find('.Amount').val();
+            var current = $(this).val();
+            if (actual != "" && current != "") {
+                if (parseFloat(current) < parseFloat(actual)) {
+                    $(this).closest('.Stage').children().find('.FullorPartPaymentMade option').filter(function () {
+                        return ($(this).text() == 'Part');
+                    }).prop('selected', true);
+                }
+                else {
+                    $(this).closest('.Stage').children().find('.FullorPartPaymentMade option').filter(function () {
+                        return ($(this).text() == 'Full');
+                    }).prop('selected', true);
+                }
+            }
+            else {
+                toastr.error("Enter Total payment Made");
+            }
+
+        });
+
         $(document).on("click", '.AddNewStage', function () {
 
-            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>                                  <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" />                              </div>                         </div>     <div class="col-sm-4">                                     <div class="form-group ">                                         <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>                                         <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />                                                                            </div>                                 </div>                      <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                    <option value="Full">Full</option>                                             <option value="Part">Part</option>                              </select>                             </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
+            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>                                  <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made (Numeric || ex 2000.40)" class="form-control TotalPaymentMade AllowDecimal" />                              </div>                         </div>     <div class="col-sm-4">                                     <div class="form-group ">                                         <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>                                         <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />                                                                            </div>                                 </div>                      <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                    <option value="Full">Full</option>                                             <option value="Part">Part</option>                              </select>                             </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
 
         });
 
@@ -580,18 +628,50 @@
             var stagesdata = [];
             $('.table-body .Stage').each(function () {
                 var stage = {};
-                stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                if ($(this).children().find('.StageNumber').val() != "") {
+                    stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                }
+                else {
+                    toastr.error("Enter Stage Number");
+                }
+
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
                 stage["StageStartdate"] = $(this).children().find('.StageStartDate').val();
                 stage["StageCompletionDate"] = $(this).children().find('.StageCompletionDate').val();
-                stage["PercentOfContractValue"] = parseInt($(this).children().find('.PercentOfContractValue').val());
-                stage["Amount"] = $(this).children().find('.Amount').val();
-                stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+                if ($(this).children().find('.PercentOfContractValue').val() != "") {
+                    stage["PercentOfContractValue"] = parseInt($(this).children().find('.PercentOfContractValue').val());
+                }
+                else {
+                    toastr.error("Enter Contrct value");
+                }
+                if ($(this).children().find('.Amount').val() != "") {
+                    stage["Amount"] = $(this).children().find('.Amount').val();
+                }
+                else {
+                    toastr.error("Enter Amount");
+                }
+                if ($(this).children().find('.DueDateOfPayment').val() != null) {
+                    stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+                }
+                else {
+                    toastr.error("Enter Due Date of Payment");
+                }
                 stage["Conditions"] = $(this).children().find('.Conditions').val();
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
                 stage["ReasonsForSlippage"] = $(this).children().find('.ReasonForSlippage').val();
-                stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
-                stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
+                if ($(this).children().find('.ActualDateOfPayment').val() != "") {
+                    stage["ActualDateOfPayment"] = $(this).children().find('.ActualDateOfPayment').val();
+                }
+                else {
+                    toastr.error("Enter Actual Date of Payment");
+                }
+                if ($(this).children().find('.TotalPaymentMade').val() !="") {
+                    stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
+                }
+                else {
+                    toastr.error("Enter Total Payment Made");
+
+                }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
                 stage["ExpendMadeTill31March"] = $(this).children().find('.ExpendMadeTill31March').val();
 
@@ -619,23 +699,24 @@
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
                         if (response > 0) {
-                            alert("form has been saved");
+                            toastr.success("form has been saved");
                             window.location.reload();
                         }
                     },
                     failure: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     },
                     error: function (response) {
                         $('.preloader').hide();
                         $(btn).attr("disabled", false);
-                        alert(response.responseText);
+                        toastr.error(response.responseText);
                     }
                 });
             }
             else {
+                $(btn).attr("disabled", false);
                 if (ContractId == "") {
                     //alert("Please enter Contract Id");
                     $('#vldContractId').css({ "display": "block" });

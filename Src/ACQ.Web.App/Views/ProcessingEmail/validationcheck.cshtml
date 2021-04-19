@@ -643,8 +643,7 @@ else
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var btn = $(this);
 
-            var Fromdate = new Date($('#FromDate').val());
-            var ToDate = new Date($('#ToDate').val());
+            
             $.ajax({
                 beforeSend: function () {
                     $('.preloader').show();
