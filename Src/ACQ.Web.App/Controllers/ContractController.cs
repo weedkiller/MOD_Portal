@@ -271,10 +271,11 @@ namespace ACQ.Web.App.Controllers
                     {
 
                         Massege = "Success";
+                        TempData["Uploadsuccess"] = true;
                     }
                     else
                     {
-
+                        TempData["Uploadsuccess"] = false;
                         Massege = "Failed";
                     }
                 }
@@ -434,10 +435,11 @@ namespace ACQ.Web.App.Controllers
                     {
 
                         Massege = "Success";
+                        TempData["Uploadsuccess"] = true;
                     }
                     else
                     {
-
+                        TempData["Uploadsuccess"] = false;
                         Massege = "Failed";
                     }
                 }

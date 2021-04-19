@@ -1893,6 +1893,20 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult Contract()
         {
+            if(TempData["Uploadsuccess"]!=null)
+            {
+                bool upload =(bool)TempData["Uploadsuccess"];
+                if(upload)
+                {
+                    ViewBag.Uploadsuccess = "True";
+                }
+                else
+                {
+                    ViewBag.Uploadsuccess = "False";
+
+                }
+                
+            }
 
             return View();
         }

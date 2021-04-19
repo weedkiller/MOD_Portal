@@ -72,13 +72,13 @@
                                             </ul>
                                         </li>
                                         @*@if (Session["DepartmentID"].ToString() == "1")
-                                            {
-                                                <li class="sidebar-item">
-                                                    <a href="https://192.168.122.1:45462/home/Index?id=@Session["encpram"]" target="_blank" role="button" class="sidebar-link collapsed" aria-expanded="false">
-                                                        <span class="align-middle"> <i class="fas fa-tachometer-alt sidebar_icon"></i>Dashboard</span>
-                                                    </a>
-                                                </li>
-                                            }*@
+        {
+            <li class="sidebar-item">
+                <a href="https://192.168.122.1:45462/home/Index?id=@Session["encpram"]" target="_blank" role="button" class="sidebar-link collapsed" aria-expanded="false">
+                    <span class="align-middle"> <i class="fas fa-tachometer-alt sidebar_icon"></i>Dashboard</span>
+                </a>
+            </li>
+        }*@
                                         <li class="sidebar-item active">
                                             <a href="#pages" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                                                 <svg xmlns="#" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
@@ -123,14 +123,14 @@
                                             <li class="sidebar-item active">
                                                 <a href="#Contracts" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                                                    <span class="align-middle">Contracts</span>
+                                                    <span class="align-middle">Contract mgmt</span>
                                                 </a>
                                                 <ul id="Contracts" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
                                                     <li class="sidebar-item" id="Uploadcontract">
-                                                        <a class="sidebar-link" href="@Url.Action("Contract","AoNW")"><span><i class="fas fa-layer-group"></i>  Add/Upload Contract</span></a>
+                                                        <a class="sidebar-link" href="@Url.Action("Contract", "AoNW")"><span><i class="fas fa-layer-group"></i>  Add/Upload Contract</span></a>
                                                     </li>
                                                     <li class="sidebar-item" id="Viewcontract">
-                                                        <a class="sidebar-link" href="@Url.Action("ContractList","Contract")"><span><i class="fas fa-layer-group"></i>  View Contract</span></a>
+                                                        <a class="sidebar-link" href="@Url.Action("ContractList", "Contract")"><span><i class="fas fa-layer-group"></i>  View Contract</span></a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -138,6 +138,24 @@
                                             <li class="sidebar-item active">
                                                 <a href="/validationchecker" class="sidebar-link">Proactive Alerts</a>
                                             </li>
+                                        }
+
+                                        @if (Convert.ToInt32(Session["SectionID"]) >=2 && Convert.ToInt32(Session["SectionID"]) <= 6)
+                                        {
+                                            <li class="sidebar-item active">
+                                                <a href="#RFP" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                                    <span class="align-middle">RFP mgmt</span>
+                                                </a>
+                                                <ul id="RFP" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
+                                                    <li class="sidebar-item" id="ViewRFP">
+                                                        <a class="sidebar-link" href="@Url.Action("ViewRFP","RFP")"><span><i class="fas fa-layer-group"></i>  View RFP</span></a>
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </li>
+
+                                            
                                         }
 
 

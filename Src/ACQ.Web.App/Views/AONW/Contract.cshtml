@@ -410,6 +410,28 @@
 <script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script nonce="r@nd0m">
     $(document).ready(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        if ('@ViewBag.Uploadsuccess' != null && '@ViewBag.Uploadsuccess' != "") {
+            if ('@ViewBag.Uploadsuccess' == "True") {
+                toastr.success("Data has been uploaded successfully..");
+            }
+            else {
+                toastr.error("Something went wrong while uploading data from excel file.");
+            }
+        }
 
         $('#UploadExcel').submit(function () {
             $('.preloader').show();
@@ -612,7 +634,7 @@
                 else {
                     toastr.error("Enter Stage Number");
                 }
-               
+
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
                 stage["StageStartdate"] = $(this).children().find('.StageStartDate').val();
                 stage["StageCompletionDate"] = $(this).children().find('.StageCompletionDate').val();
@@ -648,7 +670,7 @@
                 }
                 else {
                     toastr.error("Enter Total Payment Made");
-                  
+
                 }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
                 stage["ExpendMadeTill31March"] = $(this).children().find('.ExpendMadeTill31March').val();
