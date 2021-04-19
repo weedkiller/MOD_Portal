@@ -415,10 +415,10 @@
             "debug": false,
             "positionClass": "toast-top-right",
             "onclick": null,
-            "showDuration": "5000",
-            "hideDuration": "1000",
+            "showDuration": "10000",
+            "hideDuration": "5000",
             "timeOut": "5000",
-            "extendedTimeOut": "1000",
+            "extendedTimeOut": "5000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
@@ -630,9 +630,12 @@
                 var stage = {};
                 if ($(this).children().find('.StageNumber').val() != "") {
                     stage["StageNumber"] = parseInt($(this).children().find('.StageNumber').val());
+                   
                 }
                 else {
                     toastr.error("Enter Stage Number");
+                    $(btn).attr("disabled", false);
+                    return false;
                 }
 
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
@@ -643,18 +646,25 @@
                 }
                 else {
                     toastr.error("Enter Contrct value");
+                    $(btn).attr("disabled", false);
+                    return false;
                 }
                 if ($(this).children().find('.Amount').val() != "") {
                     stage["Amount"] = $(this).children().find('.Amount').val();
                 }
                 else {
                     toastr.error("Enter Amount");
+                    $(btn).attr("disabled", false);
+                    return false;
                 }
                 if ($(this).children().find('.DueDateOfPayment').val() != null) {
                     stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
+
                 }
                 else {
                     toastr.error("Enter Due Date of Payment");
+                    $(btn).attr("disabled", false);
+                    return false;
                 }
                 stage["Conditions"] = $(this).children().find('.Conditions').val();
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
@@ -664,12 +674,16 @@
                 }
                 else {
                     toastr.error("Enter Actual Date of Payment");
+                    $(btn).attr("disabled", false);
+                    return false;
                 }
                 if ($(this).children().find('.TotalPaymentMade').val() !="") {
                     stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
                 }
                 else {
                     toastr.error("Enter Total Payment Made");
+                    $(btn).attr("disabled", false);
+                    return false;
 
                 }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
