@@ -94,14 +94,6 @@ E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInpu
 E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
@@ -110,3 +102,11 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCom
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

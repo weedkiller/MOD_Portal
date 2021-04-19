@@ -1910,12 +1910,25 @@ namespace ACQ.Web.App.Controllers
                 ContractDetails contractDetails = new ContractDetails();
                 contractDetails.ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId);
                 contractDetails.Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number);
+                if (cnt.Contrct_Detail.Services != null)
+                {
+                    contractDetails.Services = sanitizer.Sanitize(cnt.Contrct_Detail.Services.ToString());
+                }
                 if (cnt.Contrct_Detail.DateOfContractSigning != null)
                 {
                     contractDetails.DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString()));
                 }
-                contractDetails.Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions);
-                contractDetails.Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category);
+                if(cnt.Contrct_Detail.Descriptions != null)
+                {
+                    contractDetails.Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions);
+                }
+
+                if (cnt.Contrct_Detail.Category != null)
+                {
+                    contractDetails.Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category);
+                }
+
+                
 
                 if (cnt.Contrct_Detail.EffectiveDate != null)
                 {

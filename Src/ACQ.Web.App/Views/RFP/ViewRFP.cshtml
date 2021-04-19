@@ -43,7 +43,7 @@
                                     {
                                         foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
                                         {
-                                            <option value="@item.aon_id">@item.Service_Lead_Service</option>
+                                            <option value="@item.aon_id">@item.Service_Lead_Service - @item.Categorisation - @item.item_description - AON - @item.aon_id</option>
 
                                         }
                                     }
@@ -52,6 +52,14 @@
                             </div>
 
 
+                        </div>
+                    </div>
+
+                    <div class="details">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                            </div>
                         </div>
                     </div>
                 </div>
