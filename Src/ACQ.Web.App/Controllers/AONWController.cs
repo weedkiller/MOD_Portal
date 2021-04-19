@@ -1098,7 +1098,22 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.id = id;
                     // }
 
-                 
+                    List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
+                    int userId = Convert.ToInt32(Session["UserID"]);
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        //HTTP GET
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?socId=" + id + "&ID=" + userId + "&isLocked=false").Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
+                            ViewBag.ListData = listData;
+                        }
+                    }
+                   
+
                 }
             }
             catch (Exception EX)
@@ -1742,9 +1757,33 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult UploadApprovalDocs(string ID,string mtype,string dated)
         {
+            string Version = null;
             ViewBag.Meeting_id = ID;
             ViewBag.mtype = mtype;
             ViewBag.dated = dated;
+            int mID = Convert.ToInt32(Encryption.Decrypt(ID));
+            SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
+            MeetingAgenda Socmodel = new MeetingAgenda();
+            List<MeetingAgenda> listData = new List<MeetingAgenda>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/BindMeetingAgenda?ID=" + mID + "&Version=" + Version).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<MeetingAgenda>>().Result;
+
+                    listData.ForEach(f =>
+                    {
+                        f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
+                    });
+                    model.TrnListMeeting = new List<MeetingAgenda>();
+                    model.TrnListMeeting = listData;
+                    ViewBag.MeetingAgendaList = listData;
+                }
+            }
             return View();
         }
 

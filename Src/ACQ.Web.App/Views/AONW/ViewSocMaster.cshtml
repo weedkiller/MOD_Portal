@@ -223,7 +223,7 @@
                                                 <th scope="row">@count</th>
                                                 <td class="text-wrap">@SOC.AttachmentFileName</td>
                                                 @*<td><a href='/SocPdfRegistration/ViewfileandDoc?path=@SOC.Path' target='_blank'>
-                                                <span class='glyphicon glyphicon-remove red'><i class='fas fa-eye'></i></span></a></td>*@
+                                                    <span class='glyphicon glyphicon-remove red'><i class='fas fa-eye'></i></span></a></td>*@
 
                                             </tr>
                                             count++;
@@ -248,12 +248,12 @@
         <div class="col-md-12 clearfix" id="divReview">
 
             <button class="btn btn-info float-right mr-2" id="submit" type="button">Submit</button>
-            <a href="@Url.Action("ViewSOCRegistration","AONW")" type="button" class="btn btn-danger float-right mr-2">Cancel</a>
+            <a href="@Url.Action("ViewSOCRegistration", "AONW")" type="button" class="btn btn-danger float-right mr-2">Cancel</a>
         </div>
-
-        <a href="@Url.Action("ViewSocComments","AONW",new { id=Request.QueryString["ID"]})"  class="btn btn-danger">View Comments</a>
-
-
+        @if (Convert.ToInt32(Session["SectionID"]) == 1 || Convert.ToInt32(Session["SectionID"]) == 12)
+        {
+            <a href="@Url.Action("ViewSocComments", "AONW", new { id = Request.QueryString["ID"] })" class="btn btn-danger">View Comments</a>
+        }
         @if (Convert.ToInt32(Session["SectionID"]) != 1 && Convert.ToInt32(Session["SectionID"]) != 12)
         {
             <div class="col-md-12 clearfix d-none" id="divComment">
@@ -393,9 +393,9 @@
                 <div class="modal-footer">
 
                     @*<div id="submit">
-                        <a href="@Url.Action("UpdateSocMaster","AONW",new { ID = Model.aon_id })" type="button" class="btn btn-primary">Yes</a>
-                        <a href="@Url.Action("ViewSOCRegistration","AONW",new { ID = Model.aon_id })" type="button" class="btn btn-primary">No</a>
-                    </div>*@
+                            <a href="@Url.Action("UpdateSocMaster","AONW",new { ID = Model.aon_id })" type="button" class="btn btn-primary">Yes</a>
+                            <a href="@Url.Action("ViewSOCRegistration","AONW",new { ID = Model.aon_id })" type="button" class="btn btn-primary">No</a>
+                        </div>*@
                 </div>
             </div>
         </div>

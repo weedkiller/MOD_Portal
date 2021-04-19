@@ -54,6 +54,7 @@ namespace ACQ.Web.ViewModel.AONW
         public string Previous_Meeting { get; set; }
         public string AgendaItem1 { get; set; }
         public string IsActive { get; set; }
+        public string AONNumber { get; set; }
         public Nullable<System.DateTime> RecInsTime { get; set; }
         public List<AONDescription> AonDescriptionddl { get; set; }
         public string Version { get; set; }

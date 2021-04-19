@@ -509,7 +509,8 @@
                 error: function (response) {
                     alert(response.d);
                 }
-            });
+        });
+       
         function OnSuccess(response) {
 
                 $("#meetingagendatable").DataTable(
@@ -534,7 +535,8 @@
 
                                     }
                                     if (userID == '0')
-                                        html += "&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' style = 'margin-left:5px'> <i class='fa fa-trash' title='Delete'></i></a >";
+
+                                    html += "&nbsp;<a  id='a' href='" + url1 + "' class='btn btn-danger btn-sm' onclick='return showConfirm()'  style = 'margin-left:5px'><i class='fa fa-trash' title='Delete'></i></a >";
                                     if (status == "Final" && '@ViewBag.PageMode' !="Edit") {
                                         $("#tpyagent").hide();
                                         $("#background").hide();
@@ -603,7 +605,9 @@
 
     });*@
 
-
+    function showConfirm() {
+        return confirm("Are you sure you want to delete meeting agenda?");
+    }
     function SelectVersion() {
 
         var mySelection = $('#TypeofAgenda').val();
