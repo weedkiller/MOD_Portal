@@ -1944,7 +1944,10 @@ namespace ACQ.Web.App.Controllers
                     ViewBag.Uploadsuccess = "False";
 
                 }
-                
+
+                TempData["Uploadsuccess"] = null;
+
+
             }
 
             return View();

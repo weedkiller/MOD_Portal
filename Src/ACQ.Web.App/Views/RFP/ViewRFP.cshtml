@@ -37,8 +37,26 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <label for="items">Select Service</label>
                             <div class="form-group">
-                                <select id="services" >
+                                <select id="services">
                                     <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
+                                    {
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.Service_Lead_Service - @item.Categorisation - @item.item_description - AON - @item.aon_id</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select SOC</label>
+                            <div class="form-group">
+                                <select id="SOC">
                                     @if (ViewBag.services != null)
                                     {
                                         foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
@@ -114,6 +132,7 @@
                         $('#detaildata').append(row);
 
                     } else {
+                        $('#detaildata').empty();
                         toastr.info("No data found");
                     }
                 },

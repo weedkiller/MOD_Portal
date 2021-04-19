@@ -643,9 +643,9 @@
             "positionClass": "toast-top-right",
             "onclick": null,
             "showDuration": "10000",
-            "hideDuration": "5000",
-            "timeOut": "5000",
-            "extendedTimeOut": "5000",
+            "hideDuration": "10000",
+            "timeOut": "10000",
+            "extendedTimeOut": "10000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
@@ -820,10 +820,11 @@
             return true;
         });
 
-        $("#btnSaveDetails").click(function () {
+        $("#btnSaveDetails").click(function (e) {
 
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var allvalid = false;
 
             var btn = $('#btnSaveDetails');
             $(btn).attr("disabled", true);
@@ -866,8 +867,10 @@
                 }
                 else {
                     toastr.error("Enter Stage Number");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
+                    
                 }
 
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
@@ -878,24 +881,27 @@
                 }
                 else {
                     toastr.error("Enter Contrct value");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
                 }
                 if ($(this).children().find('.Amount').val() != "") {
                     stage["Amount"] = $(this).children().find('.Amount').val();
                 }
                 else {
                     toastr.error("Enter Amount");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
                 }
-                if ($(this).children().find('.DueDateOfPayment').val() != null) {
+                if ($(this).children().find('.DueDateOfPayment').val() != "") {
                     stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
                 }
                 else {
                     toastr.error("Enter Due Date of Payment");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
                 }
                 stage["Conditions"] = $(this).children().find('.Conditions').val();
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
@@ -905,16 +911,18 @@
                 }
                 else {
                     toastr.error("Enter Actual Date of Payment");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
                 }
                 if ($(this).children().find('.TotalPaymentMade').val() != "") {
                     stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
                 }
                 else {
                     toastr.error("Enter Total Payment Made");
-                    return false;
+                    allvalid = false;
                     $(btn).attr("disabled", false);
+                    e.stopImmediatePropagation();
 
                 }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
@@ -929,7 +937,7 @@
             }
 
 
-            if (ContractId != "" && ContractNumber != "" && DateOfContractSigning != "" && Descriptions != "" && Category != "" && ContractValue != "" && FinalDeliveryDate != "") {
+            if (ContractId != "" && ContractNumber != "" && DateOfContractSigning != "" && Descriptions != "" && Category != "" && ContractValue != "" && FinalDeliveryDate != "" && allvalid == true) {
                 $.ajax({
                     beforeSend: function () {
                         $('.preloader').show();
@@ -969,27 +977,42 @@
                 if (ContractId == "") {
                     //alert("Please enter Contract Id");
                     $('#vldContractId').css({ "display": "block" });
+                    toastr.error("Enter Contrct Id");
+                    return false;
                 }
                 else if (ContractNumber == "") {
                     $('#vldContract_Number').css({ "display": "block" });
+                    toastr.error("Enter Contrct Number");
+                    return false;
                 }
                 else if (DateOfContractSigning == "") {
                     $('#vldDateOfContractSigning').css({ "display": "block" });
+                    toastr.error("Enter Date of Contract Signing");
+                    return false;
                 }
                 else if (Descriptions == "") {
                     $('#vldDescriptions').css({ "display": "block" });
+                    toastr.error("Enter Contract Description");
+                    return false;
                 }
                 else if (Category == "") {
                     $('#vldCategory').css({ "display": "block" });
+                    toastr.error("Enter Contract Category");
+                    return false;
                 }
                 else if (ContractValue == "") {
                     $('#vldContractValue').css({ "display": "block" });
+                    toastr.error("Enter Contract value");
+                    return false;
                 }
                 else if (FinalDeliveryDate == "") {
                     $('#vldFinalDeliveryDate').css({ "display": "block" });
+                    toastr.error("Enter Contract Final delivery date");
+                    return false;
                 }
                 else {
-
+                    toastr.error("Please check and fill all the mandatory fields marked with * ");
+                    return false;
                 }
 
             }
