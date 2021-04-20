@@ -5,7 +5,7 @@
 }
 
 <link href="~/assets/css/toastr.css" rel="stylesheet" />
-<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+
 <style>
     .bg-primary {
         background: #1c2f61 !important;
@@ -37,8 +37,26 @@
                         <div class="col-sm-4 col-md-4 col-lg-4">
                             <label for="items">Select Service</label>
                             <div class="form-group">
-                                <select id="services" onchange="getdata();">
+                                <select id="services">
                                     <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
+                                    {
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.Service_Lead_Service - @item.Categorisation - @item.item_description - AON - @item.aon_id</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select SOC</label>
+                            <div class="form-group">
+                                <select id="SOC">
                                     @if (ViewBag.services != null)
                                     {
                                         foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.ListRfpServices>)
@@ -57,8 +75,8 @@
 
                     <div class="details">
                         <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-
+                            <div class="col-sm-12 col-md-12 col-lg-12" id="detaildata">
+                                
                             </div>
                         </div>
                     </div>
@@ -73,10 +91,24 @@
 
 
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
-<script src="~/assets/js/bootstrap.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script>
     $(document).ready(function () {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
         $('#services').change(function () {
             if (parseInt($(this).val()) > 0) {
                 var form = $('#__AjaxAntiForgeryForm');
@@ -85,7 +117,6 @@
                 $.ajax({
                 beforeSend: function () {
                     $('.preloader').show();
-                    $(btn).attr('disabled', true);
                 },
                 type: "POST",
                     url: "/GetRFPdata",
@@ -95,10 +126,13 @@
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
                     if (response.Status == true) {
-                        
 
+                        var row = '<table class="table"><thead><tr><th>Item description</th><th>Service</th><th>Categorisation</th><th>File</th></tr></thead>';
+                        row += '<tbody><tr><td id="item">' + response.data.item_description + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="Category">' + response.data.Categorisation + '</td><td id="File">' + response.data.attachment.AttachmentFileName + '</td></tr></tbody></table >';
+                        $('#detaildata').append(row);
 
                     } else {
+                        $('#detaildata').empty();
                         toastr.info("No data found");
                     }
                 },
