@@ -637,7 +637,6 @@
                     toastr.error("Enter Stage Number");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
                 }
 
                 stage["stageDescription"] = $(this).children().find('.StageDescription').val();
@@ -651,7 +650,6 @@
                     toastr.error("Enter Contrct value");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
                 }
                 if ($(this).children().find('.Amount').val() != "") {
                     stage["Amount"] = $(this).children().find('.Amount').val();
@@ -661,7 +659,6 @@
                     toastr.error("Enter Amount");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
                 }
                 if ($(this).children().find('.DueDateOfPayment').val() != "") {
                     stage["DueDateOfPayment"] = $(this).children().find('.DueDateOfPayment').val();
@@ -671,7 +668,6 @@
                     toastr.error("Enter Due Date of Payment");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
                 }
                 stage["Conditions"] = $(this).children().find('.Conditions').val();
                 stage["RevisedDateOfpayment"] = $(this).children().find('.RevisedDateOfPayment').val();
@@ -684,7 +680,6 @@
                     toastr.error("Enter Actual Date of Payment");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
                 }
                 if ($(this).children().find('.TotalPaymentMade').val() !="") {
                     stage["TotalPaymentMade"] = $(this).children().find('.TotalPaymentMade').val();
@@ -694,7 +689,6 @@
                     toastr.error("Enter Total Payment Made");
                     allvalid = false;
                     $(btn).attr("disabled", false);
-                    e.stopImmediatePropagation();
 
                 }
                 stage["FullorPartPaymentMade"] = $(this).children().find('.FullorPartPaymentMade option:selected').val();
@@ -743,29 +737,43 @@
             else {
                 $(btn).attr("disabled", false);
                 if (ContractId == "") {
-                    //alert("Please enter Contract Id");
                     $('#vldContractId').css({ "display": "block" });
+                    toastr.error("Enter Contrct Id");
+                    return false;
                 }
                 else if (ContractNumber == "") {
                     $('#vldContract_Number').css({ "display": "block" });
+                    toastr.error("Enter Contrct Number");
+                    return false;
                 }
                 else if (DateOfContractSigning == "") {
                     $('#vldDateOfContractSigning').css({ "display": "block" });
+                    toastr.error("Enter Date of Contract Signing");
+                    return false;
                 }
                 else if (Descriptions == "") {
                     $('#vldDescriptions').css({ "display": "block" });
+                    toastr.error("Enter Contract Description");
+                    return false;
                 }
                 else if (Category == "") {
                     $('#vldCategory').css({ "display": "block" });
+                    toastr.error("Enter Contract Category");
+                    return false;
                 }
                 else if (ContractValue == "") {
                     $('#vldContractValue').css({ "display": "block" });
+                    toastr.error("Enter Contract value");
+                    return false;
                 }
                 else if (FinalDeliveryDate == "") {
                     $('#vldFinalDeliveryDate').css({ "display": "block" });
+                    toastr.error("Enter Contract Final delivery date");
+                    return false;
                 }
                 else {
-
+                    toastr.error("Please check and fill all the mandatory fields marked with * ");
+                    return false;
                 }
 
             }

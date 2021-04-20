@@ -169,3 +169,22 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.cspr
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Newtonsoft.Json.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Mvc.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Razor.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Razor.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
+D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
