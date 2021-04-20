@@ -26,12 +26,16 @@
                         <td>
                             @if (!String.IsNullOrEmpty(item.AONNumber))
                             {
-                                item.AONNumber
+                            <span>@ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.AONNumber)</span>
                             }
                             else
                             {
                                 <form method="post" action="@Url.Action("GenerateAONNumber","AONW")">
-
+                                    <input type="hidden" name="Pid" value="@item.Pid" />
+                                    <input type="hidden" name="TypeofAgenda" value="@item.TypeofAgenda" />
+                                    <input type="hidden" name="meeting_id" value="@Request.QueryString["ID"]" />
+                                    <input type="hidden" name="agenda_description" value="@item.TypeofAgendaDescription" />
+                                    <button type="submit" class="btn btn-primary">Generate AoN Number</button>
                                 </form>
                             }
 

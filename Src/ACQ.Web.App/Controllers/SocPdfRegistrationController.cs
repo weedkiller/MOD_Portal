@@ -154,10 +154,10 @@ namespace ACQ.Web.App.Controllers
             }
             else if (mFileExtension == ".ppt")
             {
-                if (file.ContentType != "application/vnd.ms-powerpoint" || file.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
-                {
-                    return false;
-                }
+                //if (file.ContentType != "application/vnd.ms-powerpoint" || file.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                //{
+                //    return false;
+                //}
                 if (FileExtension == ".ppt" || FileExtension == ".pptx")
                 {
                     return true;
@@ -314,7 +314,11 @@ namespace ACQ.Web.App.Controllers
                                     ViewBag.UploadStatus = "Unique Reference no";
                                     return View();
                                 }
-
+                                if(contentControlText[4].Length !=4)
+                                {
+                                    ViewBag.UploadStatus = "Unique Reference No must be 4 digit";
+                                    return View();
+                                }
 
                                 if (contentControlText[70].ToString() == "Click here to enter text.")
                                 {
@@ -457,7 +461,7 @@ namespace ACQ.Web.App.Controllers
                                     System.Web.HttpPostedFileBase fileChairman = Request.Files[2];
                                     if (fileChairman.ContentLength > 0)
                                     {
-                                        if (!FileCheckformat(fileChairman, ".ppt"))
+                                        if (!FileCheckformat(fileChairman, ".pdf"))
                                         {
                                             ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                                             ViewBag.UploadStatus = "errormsg";
@@ -604,11 +608,28 @@ namespace ACQ.Web.App.Controllers
                 ViewBag.UploadStatus = "Can not be empty";
 
             }
-
             return View();
-
         }
+        [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult UploadOtherSOC(FormCollection collection)
+        {
+    
+            var file = Request.Files[0];
+            if(!FileCheckformat(file, ".doc"))
+            {
+                ViewBag.Message = "Please Upload Doc File";
+            }
+            else
+            {
+                string path = baseUrl + file.FileName;
+                file.SaveAs(Server.MapPath(path));
 
+            }
+            return RedirectToAction("SocView");
+        }
 
 
         [HttpPost]

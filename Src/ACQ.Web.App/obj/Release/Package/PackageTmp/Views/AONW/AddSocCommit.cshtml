@@ -72,6 +72,23 @@
                             }
                         </div>
 
+                        <table class="table">
+                            <tr>
+                                <th>Comment</th>
+                                <th>Updated On</th>
+                            </tr>
+                            @foreach (var item in ViewBag.ListData)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Comments
+                                    </td>
+                                    <td>
+                                        @item.Created_on
+                                    </td>
+                                </tr>
+                            }
+                        </table>
                     </div>
                 </div>
             </div>

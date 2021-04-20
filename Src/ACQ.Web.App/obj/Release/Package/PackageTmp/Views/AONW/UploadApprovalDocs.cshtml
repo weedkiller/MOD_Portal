@@ -4,6 +4,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="meetingagendatable">
+                <thead>
+                    <tr>
+                        <th>Type of Agenda </th>
+                        <th>Agenda Item</th>
+                        <th>AON Accord</th>
+                        <th>AON Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in ViewBag.MeetingAgendaList)
+                    {
+                    <tr>
+                        <td>@item.AgendaItem</td>
+                        <td>@item.TypeofAgendaDescription</td>
+                        <td>@item.IsActive</td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(item.AONNumber))
+                            {
+                                <span>@item.AONNumber</span>
+                            }
+                            else
+                            {
+                                <form method="post" action="@Url.Action("GenerateAONNumber","AONW")">
+
+                                </form>
+                            }
+
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
 <h2>Upload Approved MoM @ViewBag.mtype Dated : @Request.QueryString["dated"]</h2>
 <div class="container">
     <div class="row">

@@ -20,6 +20,7 @@ namespace ACQ.Web.ViewModel.AONW
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public string Remarks { get; set; }
         public string Meeting_Number { get; set; }
+        public string Meeting_Year { get; set; }
         public string Status { get; set; }
         [AllowHtml]
         public string officers_participated { get; set; }

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AONW\acqmstmemberSendMailViewModel.cs" />
+    <Compile Include="AONW\acq_soc_master.cs" />
     <Compile Include="AONW\AttachmentViewModel.cs" />
     <Compile Include="AONW\Class1.cs" />
     <Compile Include="AONW\SAVESOCVIEWMODEL.cs" />
