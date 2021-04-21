@@ -85,36 +85,36 @@ namespace ACQ.Web.App.Controllers
                 }
                 else
                 {
-                    //if (BruteForceAttackss.refreshcount > 20)
-                    //{
-                    //    if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                    //    {
-                    //        IEnumerable<LoginViewModel> model = null;
-                    //        using (var client2 = new HttpClient())
-                    //        {
-                    //            client2.DefaultRequestHeaders.Clear();
-                    //            client2.BaseAddress = new Uri(WebAPIUrl);
-                    //            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    //            client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                    //                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    //            HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                    //            if (response.IsSuccessStatusCode)
-                    //            {
-                    //                LoginViewModel model1 = new LoginViewModel();
-                    //                model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                    //                if (model.First().Message == "Blocked")
-                    //                {
-                    //                    System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
 
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    //}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
                 }
 
             }
@@ -146,7 +146,7 @@ namespace ACQ.Web.App.Controllers
             }
             else
             {
-                mSercive = Session["Department"].ToString();
+                mSercive = sanitizer.Sanitize(Session["Department"].ToString()); 
             }
             SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
             List<SAVESOCVIEWMODEL> listData = new List<SAVESOCVIEWMODEL>();
@@ -207,7 +207,7 @@ namespace ACQ.Web.App.Controllers
 
             SocCommentViewModel Socmodel = new SocCommentViewModel();
             List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
-            var id = Session["UserID"].ToString();
+            var id = sanitizer.Sanitize(Session["UserID"].ToString());
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
@@ -263,7 +263,7 @@ namespace ACQ.Web.App.Controllers
          
             acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
             List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
-            var id = Session["id"].ToString();
+            var id = sanitizer.Sanitize(Session["id"].ToString()); 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);

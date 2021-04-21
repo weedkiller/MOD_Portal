@@ -188,3 +188,22 @@ D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewMo
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll.config
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\ACQ.Web.ViewModel.pdb
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Newtonsoft.Json.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Mvc.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Razor.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.Razor.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
+E:\shifali\mod\mod21april\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.pdb
