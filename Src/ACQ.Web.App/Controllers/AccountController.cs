@@ -162,15 +162,17 @@ namespace ACQ.Web.App.Controllers
             UserLogViewModel model = new UserLogViewModel();
             if (Session["EmailID"] != null)
             {
-                model.UserEmail = Session["EmailID"].ToString();
+                model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
+                //var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
+               // var formName = sanitizer.Sanitize("AddFormMenu");
             }
             else
             {
-                model.UserEmail = "test";
+                model.UserEmail = sanitizer.Sanitize("test");
             }
             model.IPAddress = Request.UserHostAddress;
-            model.Status = "Logout Successfully";
-            model.Action = "Logout";
+            model.Status = sanitizer.Sanitize("Logout Successfully");
+            model.Action = sanitizer.Sanitize("Logout");
             using (HttpClient client1 = new HttpClient())
             {
 
@@ -501,7 +503,7 @@ namespace ACQ.Web.App.Controllers
 
             if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "098765")
             {
-                model.Status = "OTP Verified";
+                model.Status = sanitizer.Sanitize("OTP Verified");
                 using (HttpClient client1 = new HttpClient())
                 {
                     client1.BaseAddress = new Uri(WebAPIUrl);
@@ -542,10 +544,10 @@ namespace ACQ.Web.App.Controllers
                 using (HttpClient client = new HttpClient())
                 {
                     UserLogViewModel model21 = new UserLogViewModel();
-                    model21.UserEmail = Session["EmailID"].ToString();
+                    model21.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
                     model21.IPAddress = Request.UserHostAddress;
-                    model21.Status = "Login Successfully";
-                    model21.Action = "Login";
+                    model21.Status = sanitizer.Sanitize("Login Successfully"); 
+                    model21.Action = sanitizer.Sanitize("Login"); 
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
                     HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
@@ -593,10 +595,10 @@ namespace ACQ.Web.App.Controllers
             else
             {
                 UserLogViewModel model21 = new UserLogViewModel();
-                model21.UserEmail = Session["EmailID"].ToString();
+                model21.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
                 model21.IPAddress = Request.UserHostAddress;
-                model21.Action = "Login";
-                model21.Status = "OTP Not Verified";
+                model21.Action = sanitizer.Sanitize("Login"); 
+                model21.Status = sanitizer.Sanitize("OTP Not Verified"); 
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
@@ -696,8 +698,8 @@ namespace ACQ.Web.App.Controllers
                 using (HttpClient client = new HttpClient())
                 {
                     resetpwdViewModel Rmode = new resetpwdViewModel();
-                    Rmode.UserName = Session["EmailID"].ToString();
-                    Rmode.mTokenId = Session["tokenid"].ToString();
+                    Rmode.UserName = sanitizer.Sanitize(Session["EmailID"].ToString()); 
+                    Rmode.mTokenId = sanitizer.Sanitize(Session["tokenid"].ToString()); 
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/ResetPwdlog");
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                      parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
@@ -799,7 +801,7 @@ namespace ACQ.Web.App.Controllers
         public ActionResult ResetPwd()
         {
             ChangePasswordViewModel model = new ChangePasswordViewModel();
-            model.EmailID = Session["EmailID"].ToString();
+            model.EmailID = sanitizer.Sanitize(Session["EmailID"].ToString()); 
             model.EmailID = sanitizer.Sanitize(model.EmailID);
             return View(model);
         }
@@ -814,8 +816,8 @@ namespace ACQ.Web.App.Controllers
             {
                 if (Session["UserName"] != null)
                 {
-                    model.EmailID = Session["eEmailID"].ToString();
-                    model.UserName = Session["EmailID"].ToString();
+                    model.EmailID = sanitizer.Sanitize(Session["eEmailID"].ToString()); 
+                    model.UserName = sanitizer.Sanitize(Session["EmailID"].ToString()); 
 
                     using (HttpClient client1 = new HttpClient())
                     {
@@ -881,10 +883,10 @@ namespace ACQ.Web.App.Controllers
         {
             BruteForceAttackss.refreshcount = 0;
             UserLogViewModel model = new UserLogViewModel();
-            model.UserEmail = Session["EmailID"].ToString();
+            model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
             model.IPAddress = Request.UserHostAddress;
-            model.Status = "Logout Successfully";
-            model.Action = "Logout";
+            model.Status = sanitizer.Sanitize("Logout Successfully"); 
+            model.Action = sanitizer.Sanitize("Logout"); 
             using (HttpClient client1 = new HttpClient())
             {
                 client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");

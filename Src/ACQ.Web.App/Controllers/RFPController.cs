@@ -121,7 +121,8 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult ViewRFP()
         {
-            IEnumerable<ListRfpServices> listdata = new List<ListRfpServices>();
+            IEnumerable<Service> listdata = new List<Service>();
+            IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -132,11 +133,228 @@ namespace ACQ.Web.App.Controllers
                 HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
+                    listdata = response.Content.ReadAsAsync<IEnumerable<Service>>().Result;
+                }
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response1 = client.GetAsync("RFP/GetSOCData").Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    SOCData = response1.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
                 }
             }
 
             ViewBag.services = listdata;
+            if(SOCData!=null && SOCData.Count()>0 && Session["SectionID"]!=null)
+            {
+                if(Convert.ToInt32(Session["SectionID"])==14)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
+                    if(data!=null && data.Count()>0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+                    
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 11)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "army").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 15)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "navy").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 16)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "icg").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 17)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "ids").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+            }
+            
+            return View();
+        }
+
+        [Route("RFPComments")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult RFPComments()
+        {
+            IEnumerable<Service> listdata = new List<Service>();
+            IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
+            IEnumerable<UserViewModel> Users = new List<UserViewModel>();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listdata = response.Content.ReadAsAsync<IEnumerable<Service>>().Result;
+                }
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response1 = client.GetAsync("RFP/GetSOCData").Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    SOCData = response1.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
+                }
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response2 = client.GetAsync("RFP/GetAllUser").Result;
+                if (response2.IsSuccessStatusCode)
+                {
+                    Users = response2.Content.ReadAsAsync<IEnumerable<UserViewModel>>().Result;
+                }
+            }
+
+            if(Users!=null && Users.Count()>0)
+            {
+                ViewBag.users = Users;
+            }
+
+            ViewBag.services = listdata;
+            if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
+            {
+                if (Convert.ToInt32(Session["SectionID"]) == 14)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 11)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "army").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 15)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "navy").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 16)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "icg").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+                else if (Convert.ToInt32(Session["SectionID"]) == 17)
+                {
+                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "ids").ToList();
+                    if (data != null && data.Count() > 0)
+                    {
+                        ViewBag.SOC = data;
+                    }
+
+                }
+            }
+            return View();
+        }
+        [Route("CollegiateMeetings")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult CollegiateMeetings()
+        {
+            return View();
+        }
+        [Route("RODApproval")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult RODApproval()
+        {
+            return View();
+        }
+        [Route("FinalRFPUpload")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult FinalRFPUpload()
+        {
+            return View();
+        }
+        [Route("IssueOfRFP")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult IssueOfRFP()
+        {
+            return View();
+        }
+        [Route("ViewUploadedRFP")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HttpGet]
+        public ActionResult ViewUploadedRFP()
+        {
             return View();
         }
 
@@ -159,7 +377,7 @@ namespace ACQ.Web.App.Controllers
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                                  parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client.GetAsync("RFP/GetRfpData?aonId="+aon).Result;
+                        HttpResponseMessage response = client.GetAsync("RFP/GetSOCFilterData?aonId=" + aon).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             responseAPI = response.Content.ReadAsAsync<ApiResponseRfp>().Result;
@@ -179,6 +397,17 @@ namespace ACQ.Web.App.Controllers
                 responseAPI.Message = "Incorrect input provided...";
             }
             return Json(responseAPI, JsonRequestBehavior.AllowGet);
+        }
+
+        [Route("viewfile")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public FileResult viewfile(string filename)
+        {
+            string ReportURL = Server.MapPath("~/UploadSOC/"+filename);
+            byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
+            return File(FileBytes, "application/pdf");
         }
     }
 }

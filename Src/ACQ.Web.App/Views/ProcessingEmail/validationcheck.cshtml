@@ -141,7 +141,7 @@
                                         <th>Item Description</th>
                                         <th>Date of AAON</th>
                                         <th>Draft Message</th>
-                                        <th>Date Of Alert</th>
+                                        <th>Date Of Alert (MM/dd/yyyy)</th>
                                         <th>Email Receivers</th>
                                         <th>Action</th>
                                     </tr>
@@ -191,8 +191,9 @@
                                                     @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
                                                     {
                                                         <div class="cards">
-                                                            Name : @item.L1_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
-                                                            {<span>@item.L1_Officer_Phone</span>}
+                                                            Name : @item.L1_Officer_Name (@item.L1_Designation)
+                                                            Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
+                                                            {<span>@item.L1_Officer_Phone </span>}
                                                         else
                                                         {<span>N/A</span>}
                                                             Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
@@ -207,44 +208,47 @@
 
                                                     @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
                                                     {
-                                                        <div class="cards">
-                                                            Name : @item.L2_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
-                                                            {<span>@item.L2_Officer_Phone</span>}
-                                                        else
-                                                        {<span>N/A</span>}
-                                                            Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
-                                                            {<span>@item.L2_Officer_Email</span>}
-                                                        else
-                                                        { <span>N/A</span>}
-                                                        </div>
+                                                <div class="cards">
+                                                    Name : @item.L2_Officer_Name ((@item.L2_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
+                                                    {<span>@item.L2_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
+                                                    {<span>@item.L2_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
                                                     }
 
                                                     @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
                                                     {
-                                                        <div class="cards">
-                                                            Name : @item.L3_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
-                                                            {<span>@item.L3_Officer_Phone</span>}
-                                                        else
-                                                        {<span>N/A</span>}
-                                                            Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
-                                                            {<span>@item.L3_Officer_Email</span>}
-                                                        else
-                                                        { <span>N/A</span>}
-                                                        </div>
+                                                <div class="cards">
+                                                    Name : @item.L3_Officer_Name ((@item.L3_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
+                                                    {<span>@item.L3_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
+                                                    {<span>@item.L3_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
                                                     }
 
                                                     @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
                                                     {
-                                                        <div class="cards">
-                                                            Name : @item.L4_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
-                                                            {<span>@item.L4_Officer_Phone</span>}
-                                                        else
-                                                        {<span>N/A</span>}
-                                                            Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
-                                                            {<span>@item.L4_Officer_Email</span>}
-                                                        else
-                                                        { <span>N/A</span>}
-                                                        </div>
+                                                <div class="cards">
+                                                    Name : @item.L4_Officer_Name ((@item.L4_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
+                                                    {<span>@item.L4_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
+                                                    {<span>@item.L4_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
                                                     }
 
                                                     @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
@@ -322,7 +326,7 @@
 
                                                 </td>
 
-                                                <td><a class="Edit" style="cursor:pointer;" noaon="@item.aon_id" notls="@item.MSG_TYPE" notid="@item.Id"><i class="fa fa-edit"></i> </a> </td>
+                                                <td><a class="btn btn-sm btn-success Edit" style="cursor:pointer;" noaon="@item.aon_id" notls="@item.MSG_TYPE" notid="@item.Id"> Edit</a> </td>
                                             </tr>
                                             i++;
                                         }
@@ -356,7 +360,7 @@
                                         <th>Item Description</th>
                                         <th>Date of AAON</th>
                                         <th>Draft Message</th>
-                                        <th>Alert Sent ON</th>
+                                        <th>Alert Sent ON (MM/dd/yyyy)</th>
                                         <th>Email Receivers</th>
                                     </tr>
                                 </thead>
@@ -680,19 +684,19 @@ else
 
                             row += '<td>';
                             if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
-                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' (' + item.L1_Designation + ') ' +' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
                                 row += l1;
                             }
                             if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
-                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' (' + item.L2_Designation + ') ' +' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
                                 row += l2;
                             }
                             if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
-                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' (' + item.L3_Designation + ') ' +' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
                                 row += l3;
                             }
                             if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
-                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' (' + item.L4_Designation + ') ' +' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
                                 row += l4;
                             }
                             if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
@@ -928,19 +932,19 @@ else if (ViewBag.isalertsent == false)
 
                             row += '<td>';
                             if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
-                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' (' + item.L1_Designation +') '+' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
                                 row += l1;
                             }
                             if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
-                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' (' + item.L2_Designation + ') ' +' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
                                 row += l2;
                             }
                             if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
-                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' (' + item.L3_Designation +') '+' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
                                 row += l3;
                             }
                             if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
-                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' (' + item.L4_Designation + ') ' +' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
                                 row += l4;
                             }
                             if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
@@ -967,7 +971,7 @@ else if (ViewBag.isalertsent == false)
                             row += '</td>';
 
 
-                            row += '<td><a style="cursor:pointer;" class="Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" notid="' + item.Id+'"><i class="fa fa-edit"></i> </a> </td>';
+                            row += '<td><a style="cursor:pointer;" class="btn btn-sm btn-success Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" notid="' + item.Id+'">Edit</a> </td>';
                             row += '</tr>';
                             i++;
                         });
