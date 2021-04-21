@@ -161,7 +161,6 @@ namespace ACQ.Web.App.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
-
                 }
             }
 
@@ -750,6 +749,79 @@ namespace ACQ.Web.App.Controllers
             }
             return RedirectToAction("UploadApprovalDocs");
         }
+        [Route("SearchFilter")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult SearchFilter(string type)
+        {
+            try
+            {
+                SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
+                List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
+                int UserID = GetUserID();
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/CreateMeetings?type="+type+"&UserID=" + UserID).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        listData = response.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
+                        ViewBag.PrintStatusList = PrintStatusList;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
+                        ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
+                    }
+                }
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
+                        ViewBag.MOMApproval = MOMApproval;
+                    }
+                }
+
+                ViewBag.UserID = UserID;
+                Socmodel.ListofMeeting = listData;
+                return View("ViewMeeting", Socmodel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+        }
+
         [Route("EditSocMaster")]
         [HandleError]
         [SessionExpire]
@@ -1035,6 +1107,44 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
 
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
+                        ViewBag.PrintStatusList = PrintStatusList;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
+                        ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
+                    }
+                }
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
+                        ViewBag.MOMApproval = MOMApproval;
+                    }
+                }
+
                 ViewBag.UserID = UserID;
                 Socmodel.ListofMeeting = listData;
                 return View(Socmodel);
@@ -1214,6 +1324,27 @@ namespace ACQ.Web.App.Controllers
             
             return View("createMeeting");
         }
+        [Route("UpdatePrintTrials")]
+        [HandleError]
+        [SessionExpire]
+        public string UpdatePrintTrials(string ID)
+        {
+            int mID = Convert.ToInt32(Encryption.Decrypt(ID));
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/UpdatePrintTrials?meetingId=" + mID + "&userId="+Session["UserID"]).Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+            }
+            return "";
+        }
+
         [Route("GenerateReport")]
         [HandleError]
         [SessionExpire]

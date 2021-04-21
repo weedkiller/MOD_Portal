@@ -58,6 +58,7 @@ namespace ACQ.Web.ViewModel.AONW
         public string SocSDPhone { get; set; }
         public string SocSDDate { get; set; }
         private string _ErrorMsg { get; set; }
+        public string Status { get; set; }
         public string ErrorMsg
         {
             get { return _ErrorMsg; }
