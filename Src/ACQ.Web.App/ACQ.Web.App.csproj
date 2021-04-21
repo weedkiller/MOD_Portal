@@ -1708,6 +1708,14 @@
     <Content Include="Views\Contract\ContractList.cshtml" />
     <Content Include="Views\AONW\ViewSocComments.cshtml" />
     <Content Include="Views\RFP\ViewRFP.cshtml" />
+    <Content Include="UploadApprovedSOC\sample.pdf" />
+    <Content Include="UploadSOC\sample.pdf" />
+    <Content Include="Views\RFP\ViewUploadedRFP.cshtml" />
+    <Content Include="Views\RFP\IssueOfRFP.cshtml" />
+    <Content Include="Views\RFP\FinalRFPUpload.cshtml" />
+    <Content Include="Views\RFP\RODApproval.cshtml" />
+    <Content Include="Views\RFP\CollegiateMeetings.cshtml" />
+    <Content Include="Views\RFP\RFPComments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1720,8 +1728,6 @@
     <Folder Include="excelfolder\" />
     <Folder Include="fonts\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="UploadApprovedSOC\" />
-    <Folder Include="UploadSOC\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
