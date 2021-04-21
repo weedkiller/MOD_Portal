@@ -113,6 +113,9 @@
 <script nonce="r@nd0m">
 
     function printHtml() {
+        $.get('@Url.Action("UpdatePrintTrials","AONW",new { ID=Request.QueryString["ID"]})', function (data,status) {
+         
+        });
         var contents = $(".portlet-body").html();
         let printWindow = window.open('', 'PRINT', 'height=800,width=1200');
         printWindow.document.write('<html><head><title></title></head>');

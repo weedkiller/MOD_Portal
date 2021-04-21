@@ -85,36 +85,36 @@ namespace ACQ.Web.App.Controllers
                 }
                 else
                 {
-                    //if (BruteForceAttackss.refreshcount > 20)
-                    //{
-                    //    if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                    //    {
-                    //        IEnumerable<LoginViewModel> model = null;
-                    //        using (var client2 = new HttpClient())
-                    //        {
-                    //            client2.DefaultRequestHeaders.Clear();
-                    //            client2.BaseAddress = new Uri(WebAPIUrl);
-                    //            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    //            client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                    //                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    //            HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                    //            if (response.IsSuccessStatusCode)
-                    //            {
-                    //                LoginViewModel model1 = new LoginViewModel();
-                    //                model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                    //                if (model.First().Message == "Blocked")
-                    //                {
-                    //                    System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                    if (BruteForceAttackss.refreshcount > 20)
+                    {
+                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                        {
+                            IEnumerable<LoginViewModel> model = null;
+                            using (var client2 = new HttpClient())
+                            {
+                                client2.DefaultRequestHeaders.Clear();
+                                client2.BaseAddress = new Uri(WebAPIUrl);
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    LoginViewModel model1 = new LoginViewModel();
+                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                    if (model.First().Message == "Blocked")
+                                    {
+                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
 
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    //}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                    }
                 }
 
             }
@@ -146,7 +146,7 @@ namespace ACQ.Web.App.Controllers
             }
             else
             {
-                mSercive = Session["Department"].ToString();
+                mSercive = sanitizer.Sanitize(Session["Department"].ToString()); 
             }
             SAVESOCVIEWMODEL Socmodel = new SAVESOCVIEWMODEL();
             List<SAVESOCVIEWMODEL> listData = new List<SAVESOCVIEWMODEL>();
@@ -161,7 +161,6 @@ namespace ACQ.Web.App.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
-
                 }
             }
 
@@ -208,7 +207,7 @@ namespace ACQ.Web.App.Controllers
 
             SocCommentViewModel Socmodel = new SocCommentViewModel();
             List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
-            var id = Session["UserID"].ToString();
+            var id = sanitizer.Sanitize(Session["UserID"].ToString());
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
@@ -264,7 +263,7 @@ namespace ACQ.Web.App.Controllers
          
             acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
             List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
-            var id = Session["id"].ToString();
+            var id = sanitizer.Sanitize(Session["id"].ToString()); 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
@@ -750,6 +749,79 @@ namespace ACQ.Web.App.Controllers
             }
             return RedirectToAction("UploadApprovalDocs");
         }
+        [Route("SearchFilter")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult SearchFilter(string type)
+        {
+            try
+            {
+                SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
+                List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
+                int UserID = GetUserID();
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/CreateMeetings?type="+type+"&UserID=" + UserID).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        listData = response.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
+                        ViewBag.PrintStatusList = PrintStatusList;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
+                        ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
+                    }
+                }
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
+                        ViewBag.MOMApproval = MOMApproval;
+                    }
+                }
+
+                ViewBag.UserID = UserID;
+                Socmodel.ListofMeeting = listData;
+                return View("ViewMeeting", Socmodel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+        }
+
         [Route("EditSocMaster")]
         [HandleError]
         [SessionExpire]
@@ -1035,6 +1107,44 @@ namespace ACQ.Web.App.Controllers
                     }
                 }
 
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
+                        ViewBag.PrintStatusList = PrintStatusList;
+                    }
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
+                        ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
+                    }
+                }
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
+                        ViewBag.MOMApproval = MOMApproval;
+                    }
+                }
+
                 ViewBag.UserID = UserID;
                 Socmodel.ListofMeeting = listData;
                 return View(Socmodel);
@@ -1214,6 +1324,27 @@ namespace ACQ.Web.App.Controllers
             
             return View("createMeeting");
         }
+        [Route("UpdatePrintTrials")]
+        [HandleError]
+        [SessionExpire]
+        public string UpdatePrintTrials(string ID)
+        {
+            int mID = Convert.ToInt32(Encryption.Decrypt(ID));
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/UpdatePrintTrials?meetingId=" + mID + "&userId="+Session["UserID"]).Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+            }
+            return "";
+        }
+
         [Route("GenerateReport")]
         [HandleError]
         [SessionExpire]
