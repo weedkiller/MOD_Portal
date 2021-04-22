@@ -1,5 +1,11 @@
 ﻿
 @{
+    ViewBag.Title = "RFPComments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
     ViewBag.Title = "ViewRFP";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -45,7 +51,7 @@
             @Html.AntiForgeryToken()
             <div class="card">
                 <div class="card-header">
-                    <h6>View RFP</h6>
+                    <h6>View Comments</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -114,14 +120,14 @@
                         </div>
                     </div>
 
-                    <div class="details">
+                    @*<div class="details">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12" id="detaildata">
 
                             </div>
                         </div>
-                    </div>
-                    <div class="actionrow" style="display:none;">
+                    </div>*@
+                    @*<div class="actionrow" style="display:none;">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
                                 <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View</a>
@@ -134,10 +140,8 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
-
-                
 
             </div>
         }
@@ -166,84 +170,69 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
+        //$('#SOC').change(function () {
+        //    if (parseInt($(this).val()) > 0) {
+        //        var form = $('#__AjaxAntiForgeryForm');
+        //        var token = $('input[name="__RequestVerificationToken"]', form).val();
 
-        $('#sendrfp').click(function () {
-            toastr.error('No action performed');
-        });
-        $('#SOC').change(function () {
-            if (parseInt($(this).val()) > 0) {
-                var form = $('#__AjaxAntiForgeryForm');
-                var token = $('input[name="__RequestVerificationToken"]', form).val();
+        //        $.ajax({
+        //            beforeSend: function () {
+        //                $('.preloader').show();
+        //            },
+        //            type: "POST",
+        //            url: "/GetRFPdata",
+        //            data: { __RequestVerificationToken: token, service: parseInt($(this).val()) },
+        //            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                if (response.Status == true) {
+        //                    $('#detaildata').empty();
+        //                    var row = '<table class="table"><thead><tr><th>SOC Name</th><th>Categorisation</th><th>Service</th><th>SOC Date</th></tr></thead>';
+        //                    row += '<tbody><tr><td id="socname">' + response.data.SOCAname + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td></tr></tbody></table >';
+        //                    $('#detaildata').append(row);
 
-                $.ajax({
-                    beforeSend: function () {
-                        $('.preloader').show();
-                    },
-                    type: "POST",
-                    url: "/GetRFPdata",
-                    data: { __RequestVerificationToken: token, service: parseInt($(this).val()) },
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        if (response.Status == true) {
-                            toastr.success("Data found..");
-                            $('#detaildata').empty();
-                            var row = '<table class="table"><thead><tr><th>SOC Name</th><th>Categorisation</th><th>Service</th><th>SOC Date</th></tr></thead>';
-                            row += '<tbody><tr><td id="socname">' + response.data.SOCAname + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td></tr></tbody></table >';
-                            $('#detaildata').append(row);
+        //                    $('#viewrfp').attr("s-path", response.data.attachment.Path);
+        //                    $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.Path);
+        //                    $('#sendrfp').attr("s-path", response.data.attachment.Path);
+        //                    $('.actionrow').show();
 
-                            $('#viewrfp').attr("s-path", response.data.attachment.Path);
-                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
-                            $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
-                            $('#sendrfp').attr("s-id", response.data.attachment.Id);
-                            $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
-                            if (response.data.attachment.IsSent == true) {
-                                $('#sendrfp').attr('disabled', true);
-                                $('.uploadbtn').css('display', 'block');
-                            }
-                            else {
-                                $('#sendrfp').attr('disabled', false);
-                                $('.uploadbtn').css('display', 'none');
-                            }
-                            $('.actionrow').show();
+        //                } else {
+        //                    $('#detaildata').empty();
+        //                    toastr.info("No data found");
+        //                }
+        //            },
+        //            failure: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                toastr.error("Please check your internet connection...");
 
-                        } else {
-                            $('#detaildata').empty();
-                            toastr.info("No data found");
-                        }
-                    },
-                    failure: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        toastr.error("Please check your internet connection...");
+        //            },
+        //            error: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                toastr.error("Please check your internet connection...");
 
-                    },
-                    error: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        toastr.error("Please check your internet connection...");
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        $('.actionrow').hide();
+        //        $('#detaildata').empty();
+        //    }
 
-                    }
-                });
-            }
-            else {
-                $('.actionrow').hide();
-                $('#detaildata').empty();
-            }
+        //});
 
-        });
+        //$('#viewrfp').click(function () {
+        //    var file = $(this).attr("s-path");
+        //    if (file != null && file != undefined) {
 
-        $('#viewrfp').click(function () {
-            var file = $(this).attr("s-path");
-            if (file != null && file != undefined) {
+        //        window.open("/UploadSOC/" + file, 'Draft RFP', "resizable=yes,scrollbars=yes,status=yes", 465, 255,"_blank");
 
-                window.open("/UploadSOC/" + file, 'Draft RFP', "resizable=yes,scrollbars=yes,status=yes", 465, 255, "_blank");
+        //    }
+        //    else {
+        //        toastr.error("Path not found.");
+        //    }
 
-            }
-            else {
-                toastr.error("Path not found.");
-            }
-
-        });
+        //});
     });
     function getFormattedDate(datestring) {
 
@@ -261,4 +250,6 @@
     }
 
 </script>
+
+
 
