@@ -725,7 +725,8 @@ namespace ACQ.Web.App.Controllers
                 {
                     ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                     ViewBag.UploadStatus = "errormsg";
-                    return View();
+                    TempData["Msg"] = "Please upload only.pdf file and File size Should Be UpTo 1 MB";
+                    return RedirectToAction("ViewMeeting");
                 }
                 outputpath = baseUrl+ "encry_"+file.FileName;
                 string inPath = baseUrl+file.FileName;
@@ -747,7 +748,7 @@ namespace ACQ.Web.App.Controllers
                 }
 
             }
-            return RedirectToAction("UploadApprovalDocs");
+            return RedirectToAction("ViewMeeting");
         }
         [Route("SearchFilter")]
         [HandleError]
