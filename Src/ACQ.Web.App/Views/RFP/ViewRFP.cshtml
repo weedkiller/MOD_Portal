@@ -137,57 +137,7 @@
                     </div>
                 </div>
 
-                <div class="modal" id="myModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h6>Users List </h6>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-                            <!-- Modal body -->
-                            <div class="modal-body">
-
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>select</th>
-                                                <th>Name</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (ViewBag.users != null)
-                                            {
-                                                foreach (var item in ViewBag.users as List<ACQ.Web.App.ViewModel.UserViewModel>)
-                                                {
-                                                    <tr>
-                                                        <th><input type="checkbox" /></th>
-                                                        <th>@item.UserName</th>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-
-                                    @if (ViewBag.users != null)
-                                    {
-                                        <button type="button" id="submit" class="btn btn-sm btn-success">Send</button>
-                                    }
-                                </div>
-
-                            </div>
-
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         }
@@ -218,7 +168,7 @@
         };
 
         $('#sendrfp').click(function () {
-            $('#myModal').modal('show');
+            toastr.error('No action performed');
         });
         $('#SOC').change(function () {
             if (parseInt($(this).val()) > 0) {
@@ -237,14 +187,25 @@
                     success: function (response) {
                         $('.preloader').fadeOut('slow');
                         if (response.Status == true) {
+                            toastr.success("Data found..");
                             $('#detaildata').empty();
                             var row = '<table class="table"><thead><tr><th>SOC Name</th><th>Categorisation</th><th>Service</th><th>SOC Date</th></tr></thead>';
                             row += '<tbody><tr><td id="socname">' + response.data.SOCAname + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td></tr></tbody></table >';
                             $('#detaildata').append(row);
 
                             $('#viewrfp').attr("s-path", response.data.attachment.Path);
-                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.Path);
-                            $('#sendrfp').attr("s-path", response.data.attachment.Path);
+                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-id", response.data.attachment.Id);
+                            $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
+                            if (response.data.attachment.IsSent == true) {
+                                $('#sendrfp').attr('disabled', true);
+                                $('.uploadbtn').css('display', 'block');
+                            }
+                            else {
+                                $('#sendrfp').attr('disabled', false);
+                                $('.uploadbtn').css('display', 'none');
+                            }
                             $('.actionrow').show();
 
                         } else {

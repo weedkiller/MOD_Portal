@@ -57,10 +57,24 @@ namespace ACQ.Web.App.ViewModel
 
     public class AttachmentData
     {
-        public long AttachmentID { get; set; }
-        public string AttachmentFileName { get; set; }
-        public string Path { get; set; }
-        public Nullable<System.DateTime> RecDate { get; set; }
+        public int Id { get; set; }
+        public int aon_id { get; set; }
+        public string UploadedDraftRFP { get; set; }
+        public bool IsSent { get; set; }
+        public Nullable<System.DateTime> Sentdate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+    }
+
+    public class sharedRFP
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int Share_RFP { get; set; }
+        public string UploadedComment { get; set; }
+        public Nullable<System.DateTime> CommentedDate { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<System.DateTime> shareddate { get; set; }
     }
 
     public class ApiResponseRfp

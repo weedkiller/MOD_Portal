@@ -56,6 +56,7 @@ namespace ACQ.Web.App.ViewModel
         public string ContractId { get; set; }
         public Nullable<decimal> ExpendMadeTill31March { get; set; }
         public string PaymentId { get; set; }
+        public Nullable<decimal> DuePayment { get; set; }
     }
     public class ImportExcel
     {

@@ -675,6 +675,80 @@ namespace ACQ.Web.App.Controllers
             }
             return Json(Msg, JsonRequestBehavior.AllowGet);
         }
+        [Route("ContractReport")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult ContractReport()
+        {
+            
+             return View();
+        }
+      
+        public ActionResult GetContractBaseOnServices(string Service="")
+        {
+            string msg = "";
+            StageDetail contract = new StageDetail();
+          
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/GetContractBaseOnServices?Service=" + Service + "").Result;
 
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        //ViewBag.ContractList = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
+                        contract = response.Content.ReadAsAsync<StageDetail>().Result;
+
+                    }
+                }
+               
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return PartialView("_ContractMasterPartial", contract);
+        }
+
+        public async Task<PartialViewResult> GetStageSumPayment(string ContractId = "")
+        {
+            string msg = "";
+            Contracts contract = new Contracts();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/GetSumOfStagePayment?ContractId=" + ContractId + "").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        ViewBag.SumOfStage = response.Content.ReadAsAsync<List<StageDetail>>().Result;
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return PartialView("_ContractStagePartial", ViewBag.SumOfStage);
+        }
     }
 }
