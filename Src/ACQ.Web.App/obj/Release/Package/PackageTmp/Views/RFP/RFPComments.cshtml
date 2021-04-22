@@ -1,0 +1,255 @@
+﻿
+@{
+    ViewBag.Title = "RFPComments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "ViewRFP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
+
+<style>
+    .bg-primary {
+        background: #1c2f61 !important;
+    }
+
+    .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6 {
+        color: #fff !important;
+    }
+
+    .selectot {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #c7c8cc;
+        border-radius: 2px;
+    }
+
+    .file-select {
+        display: inline-block;
+        background-color: #1c2f61;
+        color: white;
+        padding: .25rem .5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-bottom {
+        margin: 0 10px 10px 0px;
+    }
+</style>
+
+<div class="containers">
+    <div class="container-fluid">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card">
+                <div class="card-header">
+                    <h6>View Comments</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select Service</label>
+                            <div class="form-group">
+                                <select id="services" class="selectot" disabled>
+                                    <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
+                                    {
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.Service>)
+                                        {
+                                            if (Convert.ToInt32(Session["SectionID"]) == 11 && item.SectionId == 1)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 14 && item.SectionId == 2)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 15 && item.SectionId == 3)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 16 && item.SectionId == 8)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 17 && item.SectionId == 6)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.SectionId">@item.Services</option>
+                                            }
+
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select SOC</label>
+                            <div class="form-group">
+                                <select id="SOC" class="selectot">
+                                    <option value="0">Select SOC</option>
+                                    @if (ViewBag.SOC != null)
+                                    {
+
+                                        foreach (var item in ViewBag.SOC as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.aon_id - @item.SOCCase</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    @*<div class="details">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12" id="detaildata">
+
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="actionrow" style="display:none;">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View</a>
+                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
+                                <a href="javascript:void(0)" id="sendrfp" class="btn btn-sm btn-info btn-bottom">Send</a>
+                                <div class="uploadbtn">
+                                    <input type="file" id="uploadrfp" hidden />
+                                    <label for="upload" class="file-select">Upload New RFP</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
+<script>
+    $(document).ready(function () {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        //$('#SOC').change(function () {
+        //    if (parseInt($(this).val()) > 0) {
+        //        var form = $('#__AjaxAntiForgeryForm');
+        //        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        //        $.ajax({
+        //            beforeSend: function () {
+        //                $('.preloader').show();
+        //            },
+        //            type: "POST",
+        //            url: "/GetRFPdata",
+        //            data: { __RequestVerificationToken: token, service: parseInt($(this).val()) },
+        //            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                if (response.Status == true) {
+        //                    $('#detaildata').empty();
+        //                    var row = '<table class="table"><thead><tr><th>SOC Name</th><th>Categorisation</th><th>Service</th><th>SOC Date</th></tr></thead>';
+        //                    row += '<tbody><tr><td id="socname">' + response.data.SOCAname + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td></tr></tbody></table >';
+        //                    $('#detaildata').append(row);
+
+        //                    $('#viewrfp').attr("s-path", response.data.attachment.Path);
+        //                    $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.Path);
+        //                    $('#sendrfp').attr("s-path", response.data.attachment.Path);
+        //                    $('.actionrow').show();
+
+        //                } else {
+        //                    $('#detaildata').empty();
+        //                    toastr.info("No data found");
+        //                }
+        //            },
+        //            failure: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                toastr.error("Please check your internet connection...");
+
+        //            },
+        //            error: function (response) {
+        //                $('.preloader').fadeOut('slow');
+        //                toastr.error("Please check your internet connection...");
+
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        $('.actionrow').hide();
+        //        $('#detaildata').empty();
+        //    }
+
+        //});
+
+        //$('#viewrfp').click(function () {
+        //    var file = $(this).attr("s-path");
+        //    if (file != null && file != undefined) {
+
+        //        window.open("/UploadSOC/" + file, 'Draft RFP', "resizable=yes,scrollbars=yes,status=yes", 465, 255,"_blank");
+
+        //    }
+        //    else {
+        //        toastr.error("Path not found.");
+        //    }
+
+        //});
+    });
+    function getFormattedDate(datestring) {
+
+        var dd = datestring.replace("/Date(", "").replace(")/", "");
+        var ticks = parseInt(dd);
+        var date = new Date(ticks);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
+    }
+
+</script>
+
+
+
