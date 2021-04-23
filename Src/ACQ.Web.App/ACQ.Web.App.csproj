@@ -1709,8 +1709,9 @@
     <Content Include="Views\AONW\ViewSocComments.cshtml" />
     <Content Include="Views\RFP\ViewRFP.cshtml" />
     <Content Include="Views\Contract\ContractReport.cshtml" />
-    <Content Include="Views\Shared\_ContractStagePartial.cshtml" />
     <Content Include="Views\Shared\_ContractMasterPartial.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnFinancialYear.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnContractID.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
