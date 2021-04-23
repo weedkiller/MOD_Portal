@@ -1,29 +1,31 @@
-﻿using ACQ.Web.ViewModel.AONW;
+﻿using ACQ.Web.App.ViewModel;
+using ACQ.Web.ExternalServices.Email;
+using ACQ.Web.ExternalServices.SecurityAudit;
+using ACQ.Web.ViewModel.AONW;
 using ACQ.Web.ViewModel.EFile;
+using ACQ.Web.ViewModel.User;
+using Ganss.XSS;
+using Newtonsoft.Json;
+using SignLib;
+using SignLib.Certificates;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using ACQ.Web.ExternalServices.SecurityAudit;
-using ACQ.Web.ExternalServices.Email;
-using Newtonsoft.Json;
-using Ganss.XSS;
+using System.Xml;
+using System.Xml.Linq;
 using static ACQ.Web.App.MvcApplication;
-using ACQ.Web.ViewModel.User;
-using ACQ.Web.App.ViewModel;
-using static ACQ.Web.App.Controllers.SocPdfRegistrationController;
-using System.Text;
-using System.Security.Cryptography;
-using ACQ.Web.ViewModel.FormMenu;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -725,7 +727,8 @@ namespace ACQ.Web.App.Controllers
                 {
                     ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
                     ViewBag.UploadStatus = "errormsg";
-                    return View();
+                    TempData["Msg"] = "Please upload only.pdf file and File size Should Be UpTo 1 MB";
+                    return RedirectToAction("ViewMeeting");
                 }
                 outputpath = baseUrl+ "encry_"+file.FileName;
                 string inPath = baseUrl+file.FileName;
@@ -747,7 +750,7 @@ namespace ACQ.Web.App.Controllers
                 }
 
             }
-            return RedirectToAction("UploadApprovalDocs");
+            return RedirectToAction("ViewMeeting");
         }
         [Route("SearchFilter")]
         [HandleError]
@@ -1246,6 +1249,9 @@ namespace ACQ.Web.App.Controllers
                     model.IsActive = "Y";
                     model.SocCommentID = 0;
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
+
+                    string[] mData = dscsign(model.Comments);
+
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");
@@ -1255,6 +1261,7 @@ namespace ACQ.Web.App.Controllers
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
+
                             Res = "Success";
                             ViewBag.Msg = "Record Saved Successfully";
                         }
@@ -1273,6 +1280,123 @@ namespace ACQ.Web.App.Controllers
             //  ViewBag.aonId = Session["item"].ToString();
             // return View(model);
             return Json(Res, JsonRequestBehavior.AllowGet);
+        }
+
+        public string[] dscsign(string mData)
+        {
+            string[] dscData = null;
+            string requestUristring = string.Format("https://127.0.0.1:55103/dsc/getCertList");
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+            string responseString = respStreamReader.ReadToEnd();
+            string str = responseString.ToString();
+            string mxStr = str;
+
+
+            XElement xmlResponse;
+            xmlResponse = XElement.Parse(str); //Complete response file in product
+
+            string signature = xmlResponse.LastNode.PreviousNode.ToString(); //Signature
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(signature);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
+
+
+            Newtonsoft.Json.Linq.JObject oListjs1 = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(jsonText);
+            string responses = Convert.ToString(Convert.ToString(oListjs1));
+            Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(responses);
+
+            string serialno = myDeserializedClass.CertificateDetail.SerialNumber;
+            string mSubject = myDeserializedClass.CertificateDetail.IssuedTo;
+            XmlSignature cs = new XmlSignature(serialno);
+            cs.DigitalSignatureCertificate =
+
+            //Load the signature certificate from Microsoft Certificate Store
+            cs.DigitalSignatureCertificate = DigitalCertificate.LoadCertificate(false, "",
+            "Select the certificate", "");
+            cs.IncludeKeyInfo = true;
+            cs.IncludeSignatureCertificate = true;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<?xml version='1.0' encoding='UTF-8'?>");
+
+
+            sb.AppendLine("<value>" + mData + "</value>");
+            string revocationxml = sb.ToString();
+            XmlDocument doc1 = new XmlDocument();
+            doc1.LoadXml(revocationxml);
+            doc1.Save(@UploadfilePath + "test.xml");
+
+
+
+            //apply the digital signature
+            cs.ApplyDigitalSignature(UploadfilePath + "test.xml", UploadfilePath + "test[signed].xml");
+
+            XmlSignature cv = new XmlSignature(serialno);
+            //for SHA-256 signatures, use XmlSignatureSha256 class
+            Console.WriteLine("Signatures: " + cv.GetNumberOfSignatures(UploadfilePath + "test[signed].xml"));
+            ///verify the first signature
+            Console.WriteLine("Status: " + cv.VerifyDigitalSignature(UploadfilePath + "test[signed].xml"));
+            X509CertificateGenerator cert = new X509CertificateGenerator(serialno);
+            //set the certificate Subject
+            cert.Subject = mSubject;
+            Console.WriteLine(UploadfilePath + serialno + "cert.pfx", cert.GenerateCertificate("password", false));
+
+            XmlDocument doc2 = new XmlDocument();
+            doc2.Load(UploadfilePath + "test[signed].xml");
+            string xml = doc2.OuterXml;
+            string jsonTextnew = JsonConvert.SerializeXmlNode(doc2);
+            dscData[0] = mSubject;
+            return dscData;
+        }
+        public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
+        public class RevocationRequest
+        {
+            public string SerialNumber { get; set; }
+            public string CdpPoint { get; set; }
+            public string CertLevel { get; set; }
+        }
+
+        public class Revocation
+        {
+            public List<RevocationRequest> RevocationRequest { get; set; }
+        }
+
+        public class CertificateDetail
+        {
+            [JsonProperty("@cdpPoint")]
+            public string CdpPoint { get; set; }
+
+            [JsonProperty("@certType")]
+            public string CertType { get; set; }
+
+            [JsonProperty("@hasChain")]
+            public string HasChain { get; set; }
+
+            [JsonProperty("@issuedBy")]
+            public string IssuedBy { get; set; }
+
+            [JsonProperty("@issuedTo")]
+            public string IssuedTo { get; set; }
+
+            [JsonProperty("@notAfter")]
+            public string NotAfter { get; set; }
+
+            [JsonProperty("@serialNumber")]
+            public string SerialNumber { get; set; }
+            public Revocation Revocation { get; set; }
+        }
+
+        public class Root
+        {
+            public CertificateDetail CertificateDetail { get; set; }
         }
 
         [HttpPost]

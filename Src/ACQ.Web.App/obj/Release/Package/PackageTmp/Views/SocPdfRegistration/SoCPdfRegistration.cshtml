@@ -22,7 +22,38 @@
     </div>
 
     <div class="">
-        <form method="post" htmlAttributes: new { autocomplete="off" , enctype="multipart/form-data" }>
+
+        <form id="OtherSOC" action="@Url.Action("UploadOtherSOC","AONW")" enctype="multipart/form-data">
+            <label for=" " class="col-sm-3 col-form-label">SoC Type</label>
+            <div class="col-sm-9">
+                <div class="form-group m-0">
+                    <select id="SoC_OtherType" class="form-select form-control" name="SoC_OtherType">
+                        <option value="AoN Accord">AoN Accord</option>
+                        <option selected value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for=" " class="col-sm-3 col-form-label">File Name</label>
+            <div class="col-sm-9">
+                <div class="form-group m-0">
+                    <input type="text" name="Other_Name" class="form-control" />
+                </div>
+            </div>
+
+            <label for=" " class="col-sm-3 col-form-label">Upload File</label>
+            <div class="col-sm-9">
+                <div class="form-group m-0">
+                    <input type="file" name="uploadFile" class="form-control" />
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <br />
+                <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+        </form>
+
+        <form id="aon_SOC" method="post" htmlAttributes: new { autocomplete="off" , enctype="multipart/form-data" }>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary()
             <div class="card flex-fill w-100 p-3">
@@ -98,8 +129,8 @@
                                             File Name(s)
                                         </td>
                                         @*<td>
-                                            Action
-                                        </td>*@
+                                                Action
+                                            </td>*@
                                     </tr>
                                 </table>
                             </div>
@@ -160,6 +191,31 @@
 <script nonce="r@nd0m">
 
     $(document).ready(function () {
+        $("#OtherSOC").hide();
+        $("#SoC_Type").change(function () {
+            var type = $("#SoC_Type").val();
+            if (type == "Other") {
+                $("#OtherSOC").show();
+                $("#aon_SOC").hide();
+            }
+            else {
+                $("#OtherSOC").hide();
+                $("#aon_SOC").show();
+            }
+        });
+        $("#SoC_OtherType").change(function () {
+            var type = $("#SoC_OtherType").val();
+            if (type == "Other") {
+                $("#OtherSOC").show();
+                $("#aon_SOC").hide();
+            }
+            else {
+                $("#OtherSOC").hide();
+                $("#aon_SOC").show();
+            }
+        });
+
+
         var formdata = new FormData(); //FormData object
         $("#SOC_Files3").on("change", function () {
             var ValidFileExtension = ['pdf', 'PDF'];
@@ -250,6 +306,18 @@
         if ('@ViewBag.UploadStatus' === "Estimated cost") {
 
             $('#lblmsg').html('Estimated cost should not be blank');
+            $('#myModal').modal({
+
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+
+
+        }
+        if ('@ViewBag.UploadStatus' === "Unique Reference No must be 4 digit") {
+
+            $('#lblmsg').html('Unique Reference Number must be 4 digit');
             $('#myModal').modal({
 
                 display: 'show',

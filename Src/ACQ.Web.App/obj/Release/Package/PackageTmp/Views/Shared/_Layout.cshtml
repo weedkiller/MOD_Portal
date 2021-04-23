@@ -113,7 +113,7 @@
                                             </a>
                                             <ul id="mom" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
                                                 <li class="sidebar-item" id="view_meet">
-                                                    <a class="sidebar-link" href="@Url.Action("ViewMeeting","AoNW")"><span><i class="fas fa-layer-group"></i>  View Meeting</span></a>
+                                                    <a class="sidebar-link" href="@Url.Action("ViewMeeting","AoNW")"><span><i class="fas fa-layer-group"></i>Manage Meeting</span></a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -123,7 +123,7 @@
                                             <li class="sidebar-item active">
                                                 <a href="#Contracts" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                                                    <span class="align-middle">Contract mgmt</span>
+                                                    <span class="align-middle">Payment Mgmt.</span>
                                                 </a>
                                                 <ul id="Contracts" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
                                                     <li class="sidebar-item" id="Uploadcontract">
@@ -131,6 +131,9 @@
                                                     </li>
                                                     <li class="sidebar-item" id="Viewcontract">
                                                         <a class="sidebar-link" href="@Url.Action("ContractList", "Contract")"><span><i class="fas fa-layer-group"></i>  View Contract</span></a>
+                                                    </li>
+                                                    <li class="sidebar-item" id="Viewcontract">
+                                                        <a class="sidebar-link" href="@Url.Action("ContractReport", "Contract")"><span><i class="fas fa-layer-group"></i>Contract Report</span></a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -140,7 +143,7 @@
                                             </li>
                                         }
 
-                                        @if (Convert.ToInt32(Session["SectionID"]) >=2 && Convert.ToInt32(Session["SectionID"]) <= 6)
+                                        @if (Convert.ToInt32(Session["SectionID"]) == 11 || Convert.ToInt32(Session["SectionID"]) == 14 || Convert.ToInt32(Session["SectionID"]) == 15 || Convert.ToInt32(Session["SectionID"]) == 16 || Convert.ToInt32(Session["SectionID"]) == 17)
                                         {
                                             <li class="sidebar-item active">
                                                 <a href="#RFP" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
@@ -149,13 +152,41 @@
                                                 </a>
                                                 <ul id="RFP" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
                                                     <li class="sidebar-item" id="ViewRFP">
-                                                        <a class="sidebar-link" href="@Url.Action("ViewRFP","RFP")"><span><i class="fas fa-layer-group"></i>  View RFP</span></a>
+                                                        <a class="sidebar-link" href="@Url.Action("ViewRFP","RFP")"><span><i class="fas fa-layer-group"></i>  Draft RFP Cir.</span></a>
                                                     </li>
-                                                    
+                                                    <li class="sidebar-item" id="Comments">
+                                                        <a class="sidebar-link" href="@Url.Action("RFPComments","RFP")"><span><i class="fas fa-layer-group"></i>  View Comments</span></a>
+                                                    </li>
+                                                    <li class="sidebar-item" id="meetings">
+                                                        <a class="sidebar-link" href="@Url.Action("CollegiateMeetings","RFP")"><span><i class="fas fa-layer-group"></i>  Collegiate Meetings</span></a>
+                                                    </li>
+                                                    <li class="sidebar-item" id="Comments">
+                                                        <a class="sidebar-link" href="@Url.Action("RODApproval","RFP")"><span><i class="fas fa-layer-group"></i>  ROD Approval</span></a>
+                                                    </li>
+                                                    <li class="sidebar-item" id="Comments">
+                                                        <a class="sidebar-link" href="@Url.Action("FinalRFPUpload","RFP")"><span><i class="fas fa-layer-group"></i>  Final RFP Upload and Approval</span></a>
+                                                    </li>
+                                                    <li class="sidebar-item" id="Comments">
+                                                        <a class="sidebar-link" href="@Url.Action("IssueOfRFP","RFP")"><span><i class="fas fa-layer-group"></i>  Issue Of RFP</span></a>
+                                                    </li>
                                                 </ul>
                                             </li>
+                                        }
 
-                                            
+                                        @if (Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10 || Convert.ToInt32(Session["SectionID"]) == 12)
+                                        {
+                                            <li class="sidebar-item active">
+                                                <a href="#RFP" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout align-middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                                                    <span class="align-middle">RFP mgmt</span>
+                                                </a>
+                                                <ul id="RFP" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
+                                                    <li class="sidebar-item" id="ViewUploadedRFP">
+                                                        <a class="sidebar-link" href="@Url.Action("ViewUploadedRFP","RFP")"><span><i class="fas fa-layer-group"></i>  View Uploaded RFP</span></a>
+                                                    </li>
+                                                   
+                                                </ul>
+                                            </li>
                                         }
 
 

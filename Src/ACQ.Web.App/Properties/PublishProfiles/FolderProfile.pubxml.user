@@ -1418,28 +1418,28 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>04/19/2021 15:05:15</publishTime>
+      <publishTime>04/22/2021 11:18:31</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>04/19/2021 15:05:15</publishTime>
+      <publishTime>04/22/2021 11:18:31</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.dll">
-      <publishTime>04/19/2021 15:05:11</publishTime>
+      <publishTime>04/22/2021 11:18:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.pdb">
-      <publishTime>04/19/2021 15:05:11</publishTime>
+      <publishTime>04/22/2021 11:18:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>04/19/2021 14:13:43</publishTime>
+      <publishTime>04/22/2021 10:35:55</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>04/15/2021 09:12:07</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>04/19/2021 14:13:43</publishTime>
+      <publishTime>04/22/2021 10:35:55</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4445,10 +4445,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Views/AONW/Contract.cshtml">
-      <publishTime>04/19/2021 14:11:56</publishTime>
+      <publishTime>04/20/2021 17:22:16</publishTime>
     </File>
     <File Include="Views/AONW/createMeeting.cshtml">
-      <publishTime>04/16/2021 11:31:25</publishTime>
+      <publishTime>04/19/2021 15:34:16</publishTime>
     </File>
     <File Include="Views/AONW/EditMeeting.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4463,7 +4463,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/16/2021 10:52:30</publishTime>
     </File>
     <File Include="Views/AONW/GenerateReport.cshtml">
-      <publishTime>04/19/2021 14:32:28</publishTime>
+      <publishTime>04/21/2021 11:17:00</publishTime>
     </File>
     <File Include="Views/AONW/Index.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4478,13 +4478,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Views/AONW/UploadApprovalDocs.cshtml">
-      <publishTime>04/19/2021 14:53:48</publishTime>
+      <publishTime>04/20/2021 09:59:26</publishTime>
     </File>
     <File Include="Views/AONW/ViewApprovalDocs.cshtml">
       <publishTime>04/16/2021 17:05:53</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeeting.cshtml">
-      <publishTime>04/16/2021 17:22:36</publishTime>
+      <publishTime>04/22/2021 11:09:04</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeetingComments.cshtml">
       <publishTime>04/15/2021 10:19:08</publishTime>
@@ -4496,10 +4496,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/16/2021 15:58:20</publishTime>
     </File>
     <File Include="Views/AONW/ViewSocMaster.cshtml">
-      <publishTime>04/19/2021 12:45:45</publishTime>
+      <publishTime>04/20/2021 11:02:00</publishTime>
     </File>
     <File Include="Views/AONW/ViewSOCRegistration.cshtml">
-      <publishTime>04/15/2021 09:12:04</publishTime>
+      <publishTime>04/21/2021 13:15:54</publishTime>
     </File>
     <File Include="Views/AONW/ViewSocSendMail.cshtml">
       <publishTime>04/19/2021 11:44:25</publishTime>
@@ -4508,10 +4508,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Views/Contract/ContractAndStageList.cshtml">
-      <publishTime>04/19/2021 14:11:56</publishTime>
+      <publishTime>04/20/2021 17:22:16</publishTime>
     </File>
     <File Include="Views/Contract/ContractList.cshtml">
       <publishTime>04/16/2021 14:41:07</publishTime>
+    </File>
+    <File Include="Views/Contract/ContractReport.cshtml">
+      <publishTime>04/22/2021 10:26:42</publishTime>
     </File>
     <File Include="Views/Error/NotFound.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4541,13 +4544,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Views/ProcessingEmail/validationcheck.cshtml">
-      <publishTime>04/19/2021 14:11:56</publishTime>
+      <publishTime>04/22/2021 10:26:42</publishTime>
     </File>
     <File Include="Views/RFP/ViewRFP.cshtml">
-      <publishTime>04/19/2021 14:11:56</publishTime>
+      <publishTime>04/22/2021 10:26:42</publishTime>
+    </File>
+    <File Include="Views/Shared/_ContractMasterPartial.cshtml">
+      <publishTime>04/22/2021 10:26:42</publishTime>
+    </File>
+    <File Include="Views/Shared/_ContractStagePartial.cshtml">
+      <publishTime>04/22/2021 10:26:42</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/19/2021 14:11:56</publishTime>
+      <publishTime>04/22/2021 10:26:42</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4556,7 +4565,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/16/2021 14:41:07</publishTime>
     </File>
     <File Include="Views/SocPdfRegistration/SoCPdfRegistration.cshtml">
-      <publishTime>04/15/2021 09:12:04</publishTime>
+      <publishTime>04/20/2021 11:47:40</publishTime>
     </File>
     <File Include="Views/SocPdfRegistration/ViewfileandDoc.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
