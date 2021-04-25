@@ -1,3 +1,4 @@
+
 ﻿@model ACQ.Web.ViewModel.AONW.SechduleMeetingAgedaViewModel
 @{
     ViewBag.Title = "ViewMeeting";
@@ -12,9 +13,9 @@
                 <div class="col-md-12">
                     <div id="legend" class="col-md-12">
                         <ul>
-                            <li><button class="btn btn-primary"></button> Action to be taken.</li>
-                            <li><button class="btn btn-warning"></button> Action Completed(View Only).</li>
-                            <li><button class="btn btn-default" style="background-color:gray"></button> Action Completed(No View).</li>
+                            <li style='display:inline-block;vertical-align:top'><button class="btn btn-primary"></button> Action to be taken.</li>
+                            <li style='display:inline-block;vertical-align:top'><button class="btn btn-warning"></button> Action Completed(View Only).</li>
+                            <li style='display:inline-block;vertical-align:top'><button class="btn btn-default" style="background-color:gray"></button> Action Completed(No View).</li>
                         </ul>
                     </div>
 
@@ -67,7 +68,43 @@
                                                 @*<input type="hidden" id="id" value="@m.meeting_id" />*@
                                                 @{
                                                     string date = item.meeting_date.HasValue ? item.meeting_date.Value.ToString("dd/MM/yyyy") : "";
+                                                    string classname = "";
+                                                    bool isDraftPrepared = false;
+                                                    foreach (var p in ViewBag.PrintStatusList)
+                                                    {
+                                                        classname = "btn btn-primary";
+                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                        if (mID == p.meetingid.ToString())
+                                                        {
+                                                            classname = "btn btn-warning";
+                                                            isDraftPrepared = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    bool isEmailActionDone = false;
+                                                    foreach (var m in ViewBag.MeetingPartcipantsList)
+                                                    {
+                                                        isEmailActionDone = false;
+                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                        if (mID == m.MeetingID.ToString())
+                                                        {
+                                                            isEmailActionDone = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    bool isMomApprovalActionDone = false;
+                                                    foreach (var m in ViewBag.MOMApproval)
+                                                    {
+                                                        isMomApprovalActionDone = false;
+                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                        if (mID == m.meeting_Id.ToString())
+                                                        {
+                                                            isMomApprovalActionDone = true;
+                                                            break;
+                                                        }
+                                                    }
                                                 }
+
                                                 @if (UserID > 0)
                                                 {
                                                     if (item.Status == "Final")
@@ -92,57 +129,28 @@
                                                 }
                                                 else
                                                 {
-                                                    @*if (item.Status == "Final")
-            {
+                                                    if (isEmailActionDone || isDraftPrepared || item.Status!="Final")
+                                                    {
+                                                        <a onclick="return confirm('Are you sure you want to add agenda of this meeting?')" type="submit" class="btn btn-default disabled btn-sm" title="Add Agenda / Minutes"><i class="fa fa-plus-circle mr-1"></i></a><span>&nbsp;</span>
+                                                        <a onclick="return confirm('Are you sure you want to edit meeting?')" type="submit" class="btn btn-default disabled btn-sm" title="Edit Meeting"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
+                                                        <a onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-default disabled btn-sm" title="Delete Meeting"><i class="fa fa-trash mr-1"></i></a><span>&nbsp;</span>
 
-                <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Update Final Agenda"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
-                <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id,Version="Draft" }) onclick="Print()" type="button" class="btn btn-danger btn-sm" title="Print Draft Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
-                <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id}) onclick="Print()" type="button" class="btn btn-info btn-sm" title="Print Final Meeting with Agenda"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
-            }
-            else
-            {*@
-                                                    <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" onclick="return confirm('Are you sure you want to add agenda of this meeting?')" type="submit" class="btn btn-primary btn-sm" title="Add Agenda / Minutes"><i class="fa fa-plus-circle mr-1"></i></a><span>&nbsp;</span>
-                                                    <a href="@Url.Action("EditMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to edit meeting?')" type="submit" class="btn btn-primary btn-sm" title="Edit Meeting"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
-                                                    <a href="@Url.Action("DeleteMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-primary btn-sm" title="Delete Meeting"><i class="fa fa-trash mr-1"></i></a><span>&nbsp;</span>
 
-                                                    // }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" onclick="return confirm('Are you sure you want to add agenda of this meeting?')" type="submit" class="btn btn-primary btn-sm" title="Add Agenda / Minutes"><i class="fa fa-plus-circle mr-1"></i></a><span>&nbsp;</span>
+                                                        <a href="@Url.Action("EditMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to edit meeting?')" type="submit" class="btn btn-primary btn-sm" title="Edit Meeting"><i class="fa fa-edit mr-1"></i></a><span>&nbsp;</span>
+                                                        <a href="@Url.Action("DeleteMeeting", "AoNW", new { ID = @item.meeting_id })" onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-primary btn-sm" title="Delete Meeting"><i class="fa fa-trash mr-1"></i></a><span>&nbsp;</span>
+
+                                                    }
+
+
                                                 }
                                             </td>
                                             @if (Convert.ToInt32(Session["SectionID"]) != 1 && Convert.ToInt32(Session["SectionID"]) != 12)
                                             {
-                                                string classname = "";
-                                                foreach (var p in ViewBag.PrintStatusList)
-                                                {
-                                                    classname = "btn btn-primary";
-                                                    string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                    if (mID == p.meetingid.ToString())
-                                                    {
-                                                        classname = "btn btn-warning";
-                                                        break;
-                                                    }
-                                                }
-                                                bool isEmailActionDone = false;
-                                                foreach (var m in ViewBag.MeetingPartcipantsList)
-                                                {
-                                                    isEmailActionDone = false;
-                                                    string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                    if (mID == m.MeetingID.ToString())
-                                                    {
-                                                        isEmailActionDone = true;
-                                                        break;
-                                                    }
-                                                }
-                                                bool isMomApprovalActionDone = false;
-                                                foreach (var m in ViewBag.MOMApproval)
-                                                {
-                                                    isMomApprovalActionDone = false;
-                                                    string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                    if (mID == m.meeting_Id.ToString())
-                                                    {
-                                                        isMomApprovalActionDone = true;
-                                                        break;
-                                                    }
-                                                }
+                                               
                                             <td>
                                                 <a href=@Url.Action("GenerateReport", "AoNW", new { ID = @item.meeting_id }) onclick="Print()" type="button" class="@classname btn-sm" title="Print Draft MoM"><i class="fa fa-print mr-1"></i></a><span>&nbsp;</span>
                                                 @if (isEmailActionDone)

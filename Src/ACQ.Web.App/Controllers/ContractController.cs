@@ -672,8 +672,9 @@ namespace ACQ.Web.App.Controllers
         public ActionResult GetContractBaseOnServices(string Service="")
         {
             string msg = "";
-            StageDetail contract = new StageDetail();
-          
+            ContractPaymentSum model = new ContractPaymentSum();
+
+            ViewBag.Service = Service;
             try
             {
                 using (var client = new HttpClient())
@@ -689,7 +690,7 @@ namespace ACQ.Web.App.Controllers
                     {
 
                         //ViewBag.ContractList = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
-                        contract = response.Content.ReadAsAsync<StageDetail>().Result;
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
 
                     }
                 }
@@ -700,13 +701,19 @@ namespace ACQ.Web.App.Controllers
 
 
             }
-            return PartialView("_ContractMasterPartial", contract);
+            return PartialView("_ContractMasterPartial", model);
         }
 
-        public async Task<PartialViewResult> GetStageSumPayment(string ContractId = "")
+        [Route("GetContractBaseOnFinancialYear")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult GetContractBaseOnFinancialYear(string Service = "", string FinancialYear="")
         {
-            string msg = "";
-            Contracts contract = new Contracts();
+            ContractPaymentSum model = new ContractPaymentSum();
+            ViewBag.Service = Service;
+            ViewBag.FinancialYear = FinancialYear;
+
             try
             {
                 using (var client = new HttpClient())
@@ -716,12 +723,11 @@ namespace ACQ.Web.App.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = client.GetAsync("Contract/GetSumOfStagePayment?ContractId=" + ContractId + "").Result;
-
+                    HttpResponseMessage response = client.GetAsync("Contract/GetContractBaseOnFinancialYear?Service=" + Service + "&FinancialYear=" + FinancialYear + "").Result;
+                  
                     if (response.IsSuccessStatusCode)
                     {
-
-                        ViewBag.SumOfStage = response.Content.ReadAsAsync<List<StageDetail>>().Result;
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
 
                     }
                 }
@@ -732,7 +738,44 @@ namespace ACQ.Web.App.Controllers
 
 
             }
-            return PartialView("_ContractStagePartial", ViewBag.SumOfStage);
+            return View(model);
+        }
+
+        [Route("GetContractBaseOnContractID")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult GetContractBaseOnContractID(string Service = "", string ContractId = "")
+        {
+            ContractPaymentSum model = new ContractPaymentSum();
+            ViewBag.Service = Service;
+            ViewBag.ContractId = ContractId;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/GetContractBaseOnContractID?Service=" + Service + "&ContractId=" + ContractId + "").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return View(model);
         }
     }
 }

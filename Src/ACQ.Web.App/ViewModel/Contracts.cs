@@ -82,4 +82,18 @@ namespace ACQ.Web.App.ViewModel
                 return ValidationResult.Success;
         }
     }
+    public class ContractPaymentSum
+    {
+        public ContractPayment AllSum { get; set; }
+        public List<ContractPayment> FinancialYear { get; set; }
+    }
+    public class ContractPayment
+    {
+        public string ContractId { get; set; }
+        public string FinancialYear { get; set; }
+        public string Service { get; set; }
+        public decimal? ProjectPayment { get; set; }
+        public decimal? ActualPayment { get; set; }
+        public decimal? BalacePayment { get; set; }
+    }
 }
