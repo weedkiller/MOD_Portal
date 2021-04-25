@@ -867,9 +867,6 @@ E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Extensions.Primitives.
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.Net.Http.Headers.dll
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\System.Text.Encodings.Web.dll
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ExternalServices.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\EPPlus.xml
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Abstractions.xml
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Http.Features.xml
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\Microsoft.AspNetCore.Routing.Abstractions.xml
@@ -882,3 +879,6 @@ E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyCom
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\iTextSharp-4.1.6.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.pdb
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\bin\ACQ.Web.ViewModel.dll.config

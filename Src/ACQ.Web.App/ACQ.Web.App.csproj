@@ -702,7 +702,6 @@
     <Content Include="bin\ACQ.Web.App.dll" />
     <Content Include="bin\ACQ.Web.App.pdb" />
     <Content Include="bin\ACQ.Web.Core.dll" />
-    <Content Include="bin\ACQ.Web.ViewModel.dll" />
     <Content Include="bin\AngleSharp.Css.dll" />
     <Content Include="bin\AngleSharp.dll" />
     <Content Include="bin\Antlr3.Runtime.dll" />

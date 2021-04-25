@@ -1,0 +1,1194 @@
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.EscalationReportData>
+
+@{
+    ViewBag.Title = "validationcheck";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
+
+@if (ViewBag.isalertsent != null && ViewBag.isalertsent == false)
+{
+    <link href="~/assets/datatable/css/buttons.dataTables.min.css" rel="stylesheet" />
+}
+
+<link href="~/assets/css/jquery-ui.css" rel="stylesheet" />
+<style>
+    table.dataTable tbody th, table.dataTable tbody td {
+        padding: 10px 18px !important;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: forestgreen;
+    }
+
+    .cards {
+        position: relative;
+        display: block;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #f9f9f9;
+        background-clip: border-box;
+        border: 1px solid rgb(226 222 222 / 13%);
+        border-radius: .25rem;
+        font-size: 12px;
+    }
+
+    table.dataTable.nowrap th, table.dataTable.nowrap td {
+        white-space: normal !important;
+    }
+
+    table.dataTable.nowrap th {
+        font-size: 14px !important;
+    }
+
+    .button-area {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-search {
+        /* float: left; */
+        /* width: 20%; */
+        /* padding: 11px; */
+        background: #2196F3;
+        color: white;
+        /* font-size: 17px; */
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #2196F3 !important;
+        border-color: #2196F3 !important;
+    }
+
+    .alert-label {
+        padding: 5px;
+        /* position: inherit; */
+        margin-top: -10px;
+    }
+</style>
+
+<div class="containers">
+    <div class="container-fluids">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Proactive Alerts for Aquisition process  </h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <div class="justify-content-start d-flex">
+                                @if (ViewBag.isalertsent != null && ViewBag.isalertsent == false)
+                                {
+                                    <input type="radio" class="alert" name="alert" value="Active Alert" onclick="window.location.href='/validationchecker'" checked>
+                                    <label for="alert" class="alert-label">Active Alert</label>
+                                    <input type="radio" class="alert" name="alert" value="Sent Alert" onclick="window.location.href='/validationchecker?isAlertsent=true'">
+                                    <label for="alert" class="alert-label">Sent Alert</label>
+                                }
+                                else if (ViewBag.isalertsent != null && ViewBag.isalertsent == true)
+                                {
+                                    <input type="radio" class="alert" name="alert" value="Active Alert" onclick="window.location.href='/validationchecker'">
+                                    <label for="alert" class="alert-label">Active Alert</label>
+                                    <input type="radio" class="alert" name="alert" value="Sent Alert" onclick="window.location.href='/validationchecker?isAlertsent=true'" checked>
+                                    <label for="alert" class="alert-label">Sent Alert</label>
+                                }
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    @if (ViewBag.isalertsent != null && ViewBag.isalertsent == false)
+                    {
+
+                        <div class="button-area">
+
+                            <p style="margin: 5px;">From: <input type="text" id="FromDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                            <p style="margin: 5px;">To: <input type="text" id="ToDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                            <p style="margin: 1.8em;margin-left: .2em;">
+                                <button class="btn btn-sm btn-search" type="button" id="Search" title="Search" disabled><i class="fa fa-search"></i> </button>
+                                <button class="btn btn-sm btn-primary" type="button" title="Refresh" onclick="window.location.reload();"><i class="fa fa-redo"></i> </button>
+                                @*<button class="btn btn-sm btn-primary" type="button" title="Send" id="SendtoAll">Send Email</button>*@
+                            </p>
+
+                        </div>
+                        <div class="table-responsive">
+
+
+                            <table id="example" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        @*<th><input type="checkbox" class="checkbox" id="selectall" onchange="selectAll();" /></th>*@
+                                        <th>S.NO</th>
+                                        <th>AON Id</th>
+                                        <th>Lead Service</th>
+                                        <th>Item Description</th>
+                                        <th>Date of AAON</th>
+                                        <th>Draft Message</th>
+                                        <th>Date Of Alert (MM/dd/yyyy)</th>
+                                        <th>Email Receivers</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mainbody">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        var i = 1;
+                                        foreach (var item in Model.ToList())
+                                        {
+                                            <tr>
+                                                @*<td>
+                                                        <input type="checkbox" class="checkbox checkbox-select" noaon="@item.aon_id" notls="@item.MSG_TYPE" onchange="getselect();" />
+                                                    </td>*@
+                                                <td>
+                                                    @i
+                                                </td>
+                                                <td>
+                                                    @item.aon_id
+                                                </td>
+                                                <td>@item.Service_Lead_Service</td>
+                                                <td>
+
+                                                    @item.item_description
+
+                                                </td>
+                                                <td>
+                                                    @item.dateofaccordAON
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.msg))
+                                                    {
+                                                        <p>@item.msg</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>No draft available</p>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (item.date_of_alert != null)
+                                                    {
+                                                        <span>@item.date_of_alert.Value.ToString("MM/dd/yyyy")</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L1_Officer_Name (@item.L1_Designation)
+                                                            Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
+                                                            {<span>@item.L1_Officer_Phone </span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
+                                                            {<span>@item.L1_Officer_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+
+
+
+                                                    @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
+                                                    {
+                                                <div class="cards">
+                                                    Name : @item.L2_Officer_Name ((@item.L2_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
+                                                    {<span>@item.L2_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
+                                                    {<span>@item.L2_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
+                                                    {
+                                                <div class="cards">
+                                                    Name : @item.L3_Officer_Name ((@item.L3_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
+                                                    {<span>@item.L3_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
+                                                    {<span>@item.L3_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
+                                                    {
+                                                <div class="cards">
+                                                    Name : @item.L4_Officer_Name ((@item.L4_Designation))
+                                                    Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
+                                                    {<span>@item.L4_Officer_Phone</span>}
+                                                else
+                                                {<span>N/A</span>}
+                                                    Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
+                                                    {<span>@item.L4_Officer_Email</span>}
+                                                else
+                                                { <span>N/A</span>}
+                                                </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L5_ADGAcq_Name Phone: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Phone))
+                                                            {<span>@item.L5_ADGAcq_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Email))
+                                                            {<span>@item.L5_ADGAcq_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L6_JS_AM_Email) == false && item.L6_JS_AM_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L6_JS_AM_Name Phone: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Phone))
+                                                            {<span>@item.L6_JS_AM_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Email))
+                                                            {<span>@item.L6_JS_AM_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L7_FM_Email) == false && item.L7_FM_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L7_FM_Name Phone: @if (!string.IsNullOrEmpty(item.L7_FM_Phone))
+                                                            {<span>@item.L7_FM_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L7_FM_Email))
+                                                            {<span>@item.L7_FM_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L8_DG_Acq_Email) == false && item.L8_DG_Acq_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L8_DG_Acq_Name Phone: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Phone))
+                                                            {<span>@item.L8_DG_Acq_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Email))
+                                                            {<span>@item.L8_DG_Acq_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L9_AS_FA_Email) == false && item.L9_AS_FA_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L9_AS_FA_Name Phone: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Phone))
+                                                            {<span>@item.L9_AS_FA_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Email))
+                                                            {<span>@item.L9_AS_FA_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+
+
+
+                                                </td>
+
+                                                <td><a class="btn btn-sm btn-success Edit" style="cursor:pointer;" noaon="@item.aon_id" notls="@item.MSG_TYPE" notid="@item.Id"> Edit</a> </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    }
+                    else if (ViewBag.isalertsent != null && ViewBag.isalertsent == true)
+                    {
+                        <div class="button-area">
+
+                            <p style="margin: 5px;">From: <input type="text" id="FromDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                            <p style="margin: 5px;">To: <input type="text" id="ToDate" onchange="validatedate();" class="form-control form-control-sm"></p>
+                            <p style="margin: 1.8em;margin-left: .2em;">
+                                <button class="btn btn-sm btn-search" type="button" id="Search" title="Search" disabled><i class="fa fa-search"></i> </button>
+                            </p>
+
+                        </div>
+                        <div class="table-responsive">
+
+                            <table id="example" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.NO</th>
+                                        <th>AON Id</th>
+                                        <th>Lead Service</th>
+                                        <th>Item Description</th>
+                                        <th>Date of AAON</th>
+                                        <th>Draft Message</th>
+                                        <th>Alert Sent ON (MM/dd/yyyy)</th>
+                                        <th>Email Receivers</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mainbody">
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        var j = 1;
+                                        foreach (var item in Model.ToList())
+                                        {
+                                            <tr>
+                                                <td>@j</td>
+                                                <td>
+                                                    @item.aon_id
+                                                </td>
+                                                <td>@item.Service_Lead_Service</td>
+                                                <td>
+
+                                                    @item.item_description
+
+                                                </td>
+                                                <td>
+                                                    @item.dateofaccordAON
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.msg))
+                                                    {
+                                                        <p>@item.msg</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>No draft available</p>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (item.AlertSentOn != null)
+                                                    {
+                                                        <span>@item.AlertSentOn.Value.ToString("MM/dd/yyyy")</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(item.L1_Officer_Email) == false && item.L1_Officer_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L1_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L1_Officer_Phone))
+                                                            {<span>@item.L1_Officer_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L1_Officer_Email))
+                                                            {<span>@item.L1_Officer_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+
+
+
+                                                    @if (string.IsNullOrEmpty(item.L2_Officer_Email) == false && item.L2_Officer_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L2_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L2_Officer_Phone))
+                                                            {<span>@item.L2_Officer_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L2_Officer_Email))
+                                                            {<span>@item.L2_Officer_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L3_Officer_Email) == false && item.L3_Officer_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L3_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L3_Officer_Phone))
+                                                            {<span>@item.L3_Officer_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L3_Officer_Email))
+                                                            {<span>@item.L3_Officer_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrEmpty(item.L4_Officer_Email) == false && item.L4_Officer_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L4_Officer_Name Phone: @if (!string.IsNullOrEmpty(item.L4_Officer_Phone))
+                                                            {<span>@item.L4_Officer_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L4_Officer_Email))
+                                                            {<span>@item.L4_Officer_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L5_ADGAcq_Email) == false && item.L5_ADGAcq_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L5_ADGAcq_Name Phone: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Phone))
+                                                            {<span>@item.L5_ADGAcq_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L5_ADGAcq_Email))
+                                                            {<span>@item.L5_ADGAcq_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L6_JS_AM_Email) == false && item.L6_JS_AM_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L6_JS_AM_Name Phone: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Phone))
+                                                            {<span>@item.L6_JS_AM_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L6_JS_AM_Email))
+                                                            {<span>@item.L6_JS_AM_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L7_FM_Email) == false && item.L7_FM_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L7_FM_Name Phone: @if (!string.IsNullOrEmpty(item.L7_FM_Phone))
+                                                            {<span>@item.L7_FM_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L7_FM_Email))
+                                                            {<span>@item.L7_FM_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L8_DG_Acq_Email) == false && item.L8_DG_Acq_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L8_DG_Acq_Name Phone: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Phone))
+                                                            {<span>@item.L8_DG_Acq_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L8_DG_Acq_Email))
+                                                            {<span>@item.L8_DG_Acq_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+                                                    @if (string.IsNullOrWhiteSpace(item.L9_AS_FA_Email) == false && item.L9_AS_FA_Email != "N/A")
+                                                    {
+                                                        <div class="cards">
+                                                            Name : @item.L9_AS_FA_Name Phone: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Phone))
+                                                            {<span>@item.L9_AS_FA_Phone</span>}
+                                                        else
+                                                        {<span>N/A</span>}
+                                                            Email: @if (!string.IsNullOrEmpty(item.L9_AS_FA_Email))
+                                                            {<span>@item.L9_AS_FA_Email</span>}
+                                                        else
+                                                        { <span>N/A</span>}
+                                                        </div>
+                                                    }
+
+
+
+
+                                                </td>
+
+
+                                            </tr>
+                                            j++;
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h6 class="modal-title">Edit <small><i class="fa fa-edit"></i></small> </h6>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+
+                            <div class="form-group row">
+                                <label for="Message">Message</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <textarea id="Message" class="form-control" placeholder="Escalation Message" title="Escalation Message" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button" disabled>Update</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+
+
+    </div>
+</div>
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/datatable/js/jquery.dataTables.min.js" nonce="r@nd0m"></script>
+@if (ViewBag.isalertsent != null && ViewBag.isalertsent == false)
+{
+    <script src="~/assets/datatable/js/dataTables.buttons.min.js" nonce="r@nd0m"></script>
+    <script src="~/assets/datatable/js/jszip.min.js" nonce="r@nd0m"></script>
+    @*<script src="~/assets/datatable/js/pdfmake.min.js"></script>*@
+    <script src="~/assets/datatable/js/vfs_fonts.js" nonce="r@nd0m"></script>
+    <script src="~/assets/datatable/js/buttons.html5.min.js" nonce="r@nd0m"></script>
+    <script src="~/assets/datatable/js/buttons.print.min.js" nonce="r@nd0m"></script>
+}
+else
+{
+    <script src="~/assets/datatable/js/jszip.min.js" nonce="r@nd0m"></script>
+    @*<script src="~/assets/datatable/js/pdfmake.min.js"></script>*@
+    <script src="~/assets/datatable/js/vfs_fonts.js" nonce="r@nd0m"></script>
+}
+
+<script src="~/assets/js/jquery-ui.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
+
+@if (ViewBag.isalertsent == true)
+{
+    <script nonce="r@nd0m">
+    jQuery(document).ready(function ($) {
+        document.title = 'Proactive alert Report';
+        $("#FromDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+
+        });
+
+        $("#ToDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+
+
+
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 50
+        });
+
+        $('#Search').click(function () {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+
+            
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                    $(btn).attr('disabled', true);
+                },
+                type: "POST",
+                url: "/searchsentalert",
+                data: { __RequestVerificationToken: token, startdate: $('#FromDate').val(), enddate: $('#ToDate').val() },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.result.Status == true) {
+                        var row = "";
+                        var i = 1;
+                        $.each(response.result.data, function (key, item) {
+                            row += '<tr>';
+                            row += '<td>' + i + '</td>';
+                            row += '<td>' + item.aon_id + '</td>';
+                            row += '<td>' + item.Service_Lead_Service + '</td>';
+                            row += '<td>' + item.item_description + '</td>';
+                            row += '<td>' + item.dateofaccordAON + '</td>';
+                            row += '<td>' + item.msg + '</td>';
+                            row += '<td>' + getFormattedDate(item.AlertSentOn) + '</td>';
+                            var l1;
+                            var l2;
+                            var l3;
+                            var l4;
+                            var l5;
+                            var l6;
+                            var l7;
+                            var l8;
+                            var l9;
+
+                            row += '<td>';
+                            if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' (' + item.L1_Designation + ') ' +' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                row += l1;
+                            }
+                            if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' (' + item.L2_Designation + ') ' +' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                row += l2;
+                            }
+                            if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' (' + item.L3_Designation + ') ' +' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                row += l3;
+                            }
+                            if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' (' + item.L4_Designation + ') ' +' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                row += l4;
+                            }
+                            if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
+                                l5 = '<div class="cards"> Name : ' + item.L5_ADGAcq_Name + ' Phone: <span>' + item.L5_ADGAcq_Phone + '</span>Email: <span>' + item.L5_ADGAcq_Email + '</span></div>';
+                                row += l5;
+                            }
+                            if (item.L6_JS_AM_Email != "" && item.L6_JS_AM_Email != "N/A") {
+                                l6 = '<div class="cards"> Name : ' + item.L6_JS_AM_Name + ' Phone: <span>' + item.L6_JS_AM_Phone + '</span>Email: <span>' + item.L6_JS_AM_Email + '</span></div>';
+                                row += l6;
+                            }
+                            if (item.L7_FM_Email != "" && item.L7_FM_Email != "N/A") {
+                                l7 = '<div class="cards"> Name : ' + item.L7_FM_Name + ' Phone: <span>' + item.L7_FM_Phone + '</span>Email: <span>' + item.L7_FM_Email + '</span></div>';
+                                row += l7;
+                            }
+                            if (item.L8_DG_Acq_Email != "" && item.L8_DG_Acq_Email != "N/A") {
+                                l8 = '<div class="cards"> Name : ' + item.L8_DG_Acq_Name + ' Phone: <span>' + item.L8_DG_Acq_Phone + '</span>Email: <span>' + item.L8_DG_Acq_Email + '</span></div>';
+                                row += l8;
+                            }
+                            if (item.L9_AS_FA_Email != "" && item.L9_AS_FA_Email != "N/A") {
+                                l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
+                                row += l9;
+                            }
+
+                            row += '</td>';
+                            row += '</tr>';
+                            i++;
+                        });
+                        $('#mainbody').empty();
+                        $('#mainbody').append(row);
+                        $('#FromDate').val('');
+                        $('#ToDate').val('');
+
+
+                    } else {
+                        toastr.error("No data found");
+                    }
+                },
+                failure: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                },
+                error: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                }
+            });
+        });
+
+    });
+
+
+    function validatedate() {
+        if ($('#FromDate').val() != "" && $('#ToDate').val() != "") {
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            if (Fromdate > ToDate) {
+                
+                toastr.error("Start date should lesser then end date!.");
+                $('#ToDate').val('');
+            }
+            else {
+                $('#Search').attr("disabled", false);
+            }
+        }
+    }
+
+    function getFormattedDate(datestring) {
+
+        var dd = datestring.replace("/Date(", "").replace(")/","");
+        var ticks = parseInt(dd);
+        var date = new Date(ticks);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
+    }
+    </script>
+}
+else if (ViewBag.isalertsent == false)
+{
+    <script nonce="r@nd0m">
+    jQuery(document).ready(function ($) {
+        document.title = 'Proactive alert Report';
+        $("#FromDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+
+        });
+
+        $("#ToDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy'
+        });
+
+
+
+        $('#example').DataTable({
+        dom: 'Bfrtip',
+            buttons: [
+                {
+                    text: 'Download',
+                    action: function (e, dt, node, config) {
+                        window.open("/ExportToExcel", "_blank");
+                    }
+                },
+            //    {
+            //extend: 'excel',
+            //        text: 'Download',
+            //        filename: 'Escalation Report',
+            //        sheetName: 'Escalation_Report',
+            //        header: false,
+            //        exportOptions: {
+            //    columns: [5,8,9,10,11],
+            //            trim: true
+            //        }
+            //},
+                {
+            extend: 'print',
+                    text: 'Print',
+                    filename: 'Proactive Alert Report',
+                    autoPrint: true,
+                    header: false,
+                    exportOptions: {
+                trim: true,
+                        modifier: {
+                    page: 'current'
+                        }
+                }
+                },
+
+            ],
+            pageLength: 50
+        });
+
+        //getselect();
+
+        //$(document).on('click', '#SendtoAll', function () {
+        //    var form = $('#__AjaxAntiForgeryForm');
+        //    var token = $('input[name="__RequestVerificationToken"]', form).val();
+        //    var btn = $(this);
+        //    var data = [];
+        //    $('tbody tr').each(function () {
+        //        if ($(this).children().find('.checkbox-select').is(':checked')) {
+        //            var EscalationReportData = {};
+        //            EscalationReportData["aon_id"] = parseInt($(this).children().find('.checkbox-select').attr("noaon")),
+        //                EscalationReportData["MSG_TYPE"] = $(this).children().find('.checkbox-select').attr("notls");
+        //            data.push(EscalationReportData);
+        //        }
+        //    });
+
+        //    $(btn).attr('disabled', true);
+
+
+        //    $.ajax({
+        //        beforeSend: function () {
+        //            $('.preloader').show();
+        //        },
+        //        type: "POST",
+        //        url: "/sendEscalationEmail",
+        //        data: { __RequestVerificationToken: token, model: data },
+        //        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            $('.preloader').fadeOut('slow');
+        //            if (response.Status == true) {
+        //                alert("Email has been send to the selected user");
+        //                window.location.href = "/validationchecker";
+        //            } else {
+        //                alert("Something went wrong");
+        //            }
+        //        },
+        //        failure: function (response) {
+        //            deselectAll();
+        //            alert("Please check your internet connection...");
+        //        },
+        //        error: function (response) {
+        //            deselectAll();
+        //            alert("Please check your internet connection...");
+        //        }
+        //    });
+        //});
+
+        $('#Search').click(function () {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                    $(btn).attr('disabled', true);
+                },
+                type: "POST",
+                url: "/searchescalationdata",
+                data: { __RequestVerificationToken: token, startdate: $('#FromDate').val(), enddate: $('#ToDate').val() },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response.result.Status == true) {
+                        var row = "";
+                        var i = 1;
+                        $.each(response.result.data, function (key, item) {
+                            row += '<tr>';
+                            row += '<td>' + i + '</td>';
+                            //row += '<td><input type="checkbox" class="checkbox checkbox-select" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" onchange="getselect();" /></td>';
+                            row += '<td>' + item.aon_id + '</td>';
+                            row += '<td>' + item.Service_Lead_Service + '</td>';
+                            row += '<td>' + item.item_description + '</td>';
+                            row += '<td>' + item.dateofaccordAON + '</td>';
+                            row += '<td>' + item.msg + '</td>';
+                            row += '<td>' + getFormattedDate(item.date_of_alert) + '</td>';
+                            var l1;
+                            var l2;
+                            var l3;
+                            var l4;
+                            var l5;
+                            var l6;
+                            var l7;
+                            var l8;
+                            var l9;
+
+                            row += '<td>';
+                            if (item.L1_Officer_Email != "" && item.L1_Officer_Email != "N/A") {
+                                l1 = '<div class="cards"> Name : ' + item.L1_Officer_Name + ' (' + item.L1_Designation +') '+' Phone: <span>' + item.L1_Officer_Phone + '</span>Email: <span>' + item.L1_Officer_Email + '</span></div>';
+                                row += l1;
+                            }
+                            if (item.L2_Officer_Email != "" && item.L2_Officer_Email != "N/A") {
+                                l2 = '<div class="cards"> Name : ' + item.L2_Officer_Name + ' (' + item.L2_Designation + ') ' +' Phone: <span>' + item.L2_Officer_Phone + '</span>Email: <span>' + item.L2_Officer_Email + '</span></div>';
+                                row += l2;
+                            }
+                            if (item.L3_Officer_Email != "" && item.L3_Officer_Email != "N/A") {
+                                l3 = '<div class="cards"> Name : ' + item.L3_Officer_Name + ' (' + item.L3_Designation +') '+' Phone: <span>' + item.L3_Officer_Phone + '</span>Email: <span>' + item.L3_Officer_Email + '</span></div>';
+                                row += l3;
+                            }
+                            if (item.L4_Officer_Email != "" && item.L4_Officer_Email != "N/A") {
+                                l4 = '<div class="cards"> Name : ' + item.L4_Officer_Name + ' (' + item.L4_Designation + ') ' +' Phone: <span>' + item.L4_Officer_Phone + '</span>Email: <span>' + item.L4_Officer_Email + '</span></div>';
+                                row += l4;
+                            }
+                            if (item.L5_ADGAcq_Email != "" && item.L5_ADGAcq_Email != "N/A") {
+                                l5 = '<div class="cards"> Name : ' + item.L5_ADGAcq_Name + ' Phone: <span>' + item.L5_ADGAcq_Phone + '</span>Email: <span>' + item.L5_ADGAcq_Email + '</span></div>';
+                                row += l5;
+                            }
+                            if (item.L6_JS_AM_Email != "" && item.L6_JS_AM_Email != "N/A") {
+                                l6 = '<div class="cards"> Name : ' + item.L6_JS_AM_Name + ' Phone: <span>' + item.L6_JS_AM_Phone + '</span>Email: <span>' + item.L6_JS_AM_Email + '</span></div>';
+                                row += l6;
+                            }
+                            if (item.L7_FM_Email != "" && item.L7_FM_Email != "N/A") {
+                                l7 = '<div class="cards"> Name : ' + item.L7_FM_Name + ' Phone: <span>' + item.L7_FM_Phone + '</span>Email: <span>' + item.L7_FM_Email + '</span></div>';
+                                row += l7;
+                            }
+                            if (item.L8_DG_Acq_Email != "" && item.L8_DG_Acq_Email != "N/A") {
+                                l8 = '<div class="cards"> Name : ' + item.L8_DG_Acq_Name + ' Phone: <span>' + item.L8_DG_Acq_Phone + '</span>Email: <span>' + item.L8_DG_Acq_Email + '</span></div>';
+                                row += l8;
+                            }
+                            if (item.L9_AS_FA_Email != "" && item.L9_AS_FA_Email != "N/A") {
+                                l9 = '<div class="cards"> Name : ' + item.L9_AS_FA_Name + ' Phone: <span>' + item.L9_AS_FA_Phone + '</span>Email: <span>' + item.L9_AS_FA_Email + '</span></div>';
+                                row += l9;
+                            }
+
+                            row += '</td>';
+
+
+                            row += '<td><a style="cursor:pointer;" class="btn btn-sm btn-success Edit" noaon="' + item.aon_id + '" notls="' + item.MSG_TYPE + '" notid="' + item.Id+'">Edit</a> </td>';
+                            row += '</tr>';
+                            i++;
+                        });
+                        $('#mainbody').empty();
+                        $('#mainbody').append(row);
+                        $('#FromDate').val('');
+                        $('#ToDate').val('');
+
+
+                    } else {
+                        toastr.warning("No data found between the selected duration");
+                    }
+                },
+                failure: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                },
+                error: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                }
+            });
+        });
+
+        $(document).on('click', '.Edit', function () {
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            var data = {};
+            data["aon_id"] = parseInt($(this).attr("noaon"));
+                data["MSG_TYPE"] = $(this).attr("notls");
+            data["Id"] = parseInt($(this).attr("notid"));
+
+
+            $(btn).attr('disabled', true);
+
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/getdataforEdit",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    $(btn).attr('disabled', false);
+                    if (response.Status == true) {
+
+                        $('#Message').val(response.result.msg);
+                        $('#Message').attr('data-length', response.result.msg.length);
+                        $('#Message').attr('noaon', $(btn).attr("noaon"));
+                        $('#Message').attr('notls', $(btn).attr("notls"));
+                        $('#Message').attr('notid', $(btn).attr("notid"));
+                        $('#myModal').modal('show');
+                    } else {
+                        toastr.error("Session has been expired, Please login again");
+                        window.location.href = "@Url.Action("Account","Login")";
+                    }
+                },
+                failure: function (response) {
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                },
+                error: function (response) {
+                    $(btn).attr('disabled', false);
+                    toastr.error("Please check your internet connection...");
+                    window.location.href = "@Url.Action("Account","Login")";
+                }
+            });
+
+        });
+
+        $(document).on('click', '#submit', function () {
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var btn = $(this);
+            var data = {};
+            data["aon_id"] = parseInt($("#Message").attr("noaon")),
+            data["MSG_TYPE"] = $("#Message").attr("notls");
+            data["msg"] = $("#Message").val();
+            data["Id"] = parseInt($("#Message").attr("notid"));
+
+            $(btn).attr('disabled', true);
+
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/UpdateEscalationMessage",
+                data: { __RequestVerificationToken: token, model: data },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    $(btn).attr('disabled', false);
+                    if (response.Status == true) {
+                        toastr.success(response.Message);
+                        
+                        $('#myModal').modal('hide');
+                        window.location.reload();
+                    } else {
+                        toastr.error(response.Message);
+
+                    }
+                },
+                failure: function (response) {
+                    toastr.error("Please check your internet connection...");
+                  
+                    window.location.href = "@Url.Action("Account","Login")";
+                },
+                error: function (response) {
+                    toastr.error("Please check your internet connection...");
+                    
+                    window.location.href = "@Url.Action("Account","Login")";
+                }
+            });
+
+
+        });
+
+        $(document).on("keyup keydown input change keypress", "#Message", function () {
+            verifychange();
+        });
+
+
+
+
+    });
+
+    function verifychange() {
+        var actlen = $("#Message").attr('data-length');
+        var elen = $("#Message").val().length;
+        if (elen != 0 && elen != actlen) {
+            $('#submit').attr('disabled', false);
+        }
+        else {
+            $('#submit').attr('disabled', true);
+        }
+    }
+    //function getselect() {
+    //    var selected = 0;
+    //    $('tbody tr').each(function () {
+    //        if ($(this).children().find('.checkbox-select').is(':checked')) {
+    //            selected += 1;
+    //        }
+    //    });
+
+    //    if (selected > 0) {
+    //        $('#SendtoAll').attr('disabled', false);
+    //    }
+    //    else {
+    //        $('#SendtoAll').attr('disabled', true);
+    //    }
+    //}
+    //function selectAll() {
+    //    if ($('#selectall').is(":checked")) {
+    //        $('tbody tr').each(function () {
+    //            $(this).children().find('.checkbox-select').attr('checked', true);
+    //            $(this).children().find('.checkbox-select').attr('disabled', true);
+    //        });
+    //        getselect();
+    //    }
+    //    else {
+    //        $('tbody tr').each(function () {
+    //            $(this).children().find('.checkbox-select').attr('checked', false);
+    //            $(this).children().find('.checkbox-select').attr('disabled', false);
+    //        });
+    //        getselect();
+    //    }
+    //}
+
+    //function deselectAll() {
+    //    if ($('#selectall').is(":checked")) {
+    //        $('tbody tr').each(function () {
+    //            $(this).children().find('.checkbox-select').attr('checked', false);
+    //            $(this).children().find('.checkbox-select').attr('disabled', false);
+    //        });
+    //        getselect();
+    //    }
+
+    //}
+    function validatedate() {
+        if ($('#FromDate').val() != "" && $('#ToDate').val() != "") {
+            var Fromdate = new Date($('#FromDate').val());
+            var ToDate = new Date($('#ToDate').val());
+            if (Fromdate > ToDate) {
+                toastr.error("Start date should lesser then end date!.");
+                $('#ToDate').val('');
+            }
+            else {
+                $('#Search').attr("disabled", false);
+            }
+        }
+    }
+
+    function getFormattedDate(datestring) {
+
+        var dd = datestring.replace("/Date(", "").replace(")/","");
+        var ticks = parseInt(dd);
+        var date = new Date(ticks);
+        var year = date.getFullYear();
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        return month + '/' + day + '/' + year;
+    }
+    </script>
+}
+
+

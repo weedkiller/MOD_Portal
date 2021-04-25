@@ -1418,10 +1418,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>04/22/2021 10:22:46</publishTime>
+      <publishTime>04/22/2021 11:21:55</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>04/22/2021 10:22:46</publishTime>
+      <publishTime>04/22/2021 11:21:55</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
@@ -1433,13 +1433,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/22/2021 10:22:43</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>04/21/2021 23:19:33</publishTime>
+      <publishTime>04/22/2021 10:53:18</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>04/21/2021 22:22:25</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>04/21/2021 23:19:33</publishTime>
+      <publishTime>04/22/2021 10:53:18</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
@@ -1449,6 +1449,15 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
+    </File>
+    <File Include="bin/App_Browsers.dll">
+      <publishTime>04/22/2021 11:22:31</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>04/22/2021 11:22:30</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>04/22/2021 11:22:30</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
@@ -1995,6 +2004,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>04/21/2021 22:21:57</publishTime>
+    </File>
+    <File Include="bin/__browserCapabilitiesCompiler.compiled">
+      <publishTime>04/22/2021 11:22:31</publishTime>
     </File>
     <File Include="Blox2.ttf">
       <publishTime>04/21/2021 22:21:51</publishTime>
@@ -4435,6 +4447,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="libman.json">
       <publishTime>04/21/2021 22:21:59</publishTime>
     </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>04/22/2021 11:22:10</publishTime>
+    </File>
     <File Include="UploadApprovedSOC/sample.pdf">
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
@@ -4517,7 +4532,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeeting.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/22/2021 10:49:20</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeetingComments.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4545,6 +4560,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Contract/ContractList.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
+    </File>
+    <File Include="Views/Contract/ContractReport.cshtml">
+      <publishTime>04/22/2021 10:49:20</publishTime>
     </File>
     <File Include="Views/Error/NotFound.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4592,13 +4610,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/RFP/ViewRFP.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/22/2021 10:49:20</publishTime>
     </File>
     <File Include="Views/RFP/ViewUploadedRFP.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
+    <File Include="Views/Shared/_ContractMasterPartial.cshtml">
+      <publishTime>04/22/2021 10:49:20</publishTime>
+    </File>
+    <File Include="Views/Shared/_ContractStagePartial.cshtml">
+      <publishTime>04/22/2021 10:49:20</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/22/2021 10:49:20</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4619,7 +4643,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/22/2021 10:22:49</publishTime>
+      <publishTime>04/22/2021 11:21:58</publishTime>
     </File>
   </ItemGroup>
 </Project>
