@@ -30,81 +30,64 @@ namespace ACQ.Web.App.Controllers
     {
         public SocPdfRegistrationController()
         {
-            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            if (BruteForceAttackss.bcontroller != "")
             {
-                BruteForceAttackss.date = System.DateTime.Now;
-                BruteForceAttackss.refreshcount = 1;
-            }
-            else
-            {
-                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
-                if (tt.TotalSeconds <= 30)
+                if (BruteForceAttackss.bcontroller == "SocPdf")
                 {
-                    if (BruteForceAttackss.refreshcount > 20)
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
                     {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                        
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-                                    }
-                                }
-                            }
-                        }
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
                     }
                     else
                     {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                IEnumerable<LoginViewModel> model = null;
+                                using (var client2 = new HttpClient())
+                                {
+                                    client2.DefaultRequestHeaders.Clear();
+                                    client2.BaseAddress = new Uri(WebAPIUrl);
+                                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        LoginViewModel model1 = new LoginViewModel();
+                                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                        if (model.First().Message == "Blocked")
+                                        {
+                                            BruteForceAttackss.refreshcount = 0;
+                                            BruteForceAttackss.date = null;
+                                            BruteForceAttackss.bcontroller = "";
+                                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
                     }
+
                 }
                 else
                 {
-                    if (BruteForceAttackss.refreshcount > 20)
-                    {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                      
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    }
+                    BruteForceAttackss.refreshcount = 0;
+                    BruteForceAttackss.date = null;
+                    BruteForceAttackss.bcontroller = "SocPdf";
                 }
-
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "SocPdf";
             }
         }
         // GET: SocPdfRegistration
@@ -122,6 +105,7 @@ namespace ACQ.Web.App.Controllers
 
         public bool FileCheckformat(HttpPostedFileBase file, string mFileExtension)
         {
+
             filesize = 1024;
             string FileExtension = Path.GetExtension(file.FileName);
             int count = file.FileName.Count(f => f == '.');
@@ -134,56 +118,91 @@ namespace ACQ.Web.App.Controllers
             {
                 return false;
             }
+            string contenttype = String.Empty;
+            Stream checkStream = file.InputStream;
+            BinaryReader chkBinary = new BinaryReader(checkStream);
+            Byte[] chkbytes = chkBinary.ReadBytes(0x10);
 
-            if (mFileExtension == ".doc")
+            string data_as_hex = BitConverter.ToString(chkbytes);
+            string magicCheck = data_as_hex.Substring(0, 11);
+
+            //Set the contenttype based on File Extension
+            switch (magicCheck)
             {
-                if (file.ContentType != "application/msword" && file.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                {
-                    return false;
-                }
-
-                if (FileExtension == ".doc" || FileExtension == ".docx")
-                {
-                    return true;
-
-                }
-                else
-                {
-                    return false;
-                }
+                case "FF-D8-FF-E1":
+                    contenttype = "image/jpg";
+                    break;
+                case "FF-D8-FF-E0":
+                    contenttype = "image/jpeg";
+                    break;
+                case "25-50-44-46":
+                    contenttype = "text/pdf";
+                    break;
+                case "D0-CF-11-E0":
+                    contenttype = "text/doc";
+                    break;
+                case "50-4B-03-04":
+                    contenttype = "text/docx";
+                    break;
+                
             }
-            else if (mFileExtension == ".ppt")
+            if (contenttype != String.Empty)
             {
-                //if (file.ContentType != "application/vnd.ms-powerpoint" || file.ContentType != "application/vnd.openxmlformats-officedocument.presentationml.presentation")
-                //{
-                //    return false;
-                //}
-                if (FileExtension == ".ppt" || FileExtension == ".pptx")
+                Byte[] bytes = chkBinary.ReadBytes((Int32)checkStream.Length);
+                if (mFileExtension == ".doc")
                 {
-                    return true;
+                    if (file.ContentType != "application/msword" && file.ContentType != "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    {
+                        return false;
+                    }
 
+                    if (FileExtension == ".doc" || FileExtension == ".docx")
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if (mFileExtension == ".ppt")
+                {
+
+                    if (FileExtension == ".ppt" || FileExtension == ".pptx")
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return false;
+                    if (file.ContentType != "application/pdf")
+                    {
+                        return false;
+                    }
+                    if (FileExtension == ".pdf")
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             else
             {
-                if (file.ContentType != "application/pdf")
-                {
-                    return false;
-                }
-                if (FileExtension == ".pdf")
-                {
-                    return true;
-
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
+
+            
+
 
         }
 
@@ -212,7 +231,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> SoCPdfRegistration(HttpPostedFileBase file, string SoC_Type)
         {
-            
+
             dynamic expando = new ExpandoObject();
             var marksModel = expando as IDictionary<string, object>;
             string filepath = "";
@@ -239,37 +258,17 @@ namespace ACQ.Web.App.Controllers
                             return View();
                         }
 
-                        //filepath = UploadfilePath + filename;
-                        var FileDataContent = Request.Files[0];
-                        var stream = FileDataContent.InputStream;
-                        var fileName = Path.GetFileName(FileDataContent.FileName);
-                        var UploadPath = Server.MapPath("~/excelfolder/");
-                        Directory.CreateDirectory(UploadPath);
-                        string path = Path.Combine(UploadPath, fileName);
-                        try
-                        {
-                            if (System.IO.File.Exists(path))
-                                System.IO.File.Delete(path);
-                            using (var fileStream = System.IO.File.Create(path))
-                            {
-                                stream.CopyTo(fileStream);
-                            }
-
-                        }
-                        catch (IOException ex)
-                        {
-                            // handle  
-                        }
+                        ViewBag.UploadStatus = "";
+                        filepath = UploadfilePath + filename;
+                        fileSoC.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
+                        fullpath = Server.MapPath(UploadfilePath) + filename;
 
                         using (var client = new HttpClient())
                         {
 
                             Application word1 = new Application();
-                            object readOnly = false;
-                            object isVisible = true;
-                            object missing = System.Reflection.Missing.Value;
-                            Document doc = word1.Documents.Open(path, ref missing, ref readOnly, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref isVisible);
 
+                            Document doc = word1.Documents.Open(fullpath);
 
                             List<string> contentControlText = new List<string>();
 
@@ -314,7 +313,7 @@ namespace ACQ.Web.App.Controllers
                                     ViewBag.UploadStatus = "Unique Reference no";
                                     return View();
                                 }
-                                if(contentControlText[4].Length !=4)
+                                if (contentControlText[4].Length != 4)
                                 {
                                     ViewBag.UploadStatus = "Unique Reference No must be 4 digit";
                                     return View();
@@ -616,9 +615,9 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult UploadOtherSOC(FormCollection collection)
         {
-    
+
             var file = Request.Files[0];
-            if(!FileCheckformat(file, ".doc"))
+            if (!FileCheckformat(file, ".doc"))
             {
                 ViewBag.Message = "Please Upload Doc File";
             }

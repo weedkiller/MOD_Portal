@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "View Meeting Comments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Meeting Comments</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Agenda</th>
+            <th>UserName</th>
+            <th>Designation</th>
+            <th>Background Comment</th>
+            <th>Proposal Comment</th>
+            <th>Approval Comment</th>
+            <th>Discussion Comment</th>
+            <th>Decision Comment</th>
+            <th>Submission Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.CommentList)
+        {
+        <tr>
+            <td>@item.AgendaName</td>
+            <td>@item.MemberName</td>
+            <td>@item.MemberDesg</td>
+            <td>@item.BackgroundComment</td>
+            <td>@item.ProposalComment</td>
+            <td>@item.ApprovalSoughtComment</td>
+            <td>@item.DiscussionComment</td>
+            <td>@item.DecisionComment</td>
+            <td>
+                @if (item.Locked == 1)
+                {
+                    <span>Submitted</span>
+                }
+                else
+                {
+                    <span>Not Submitted</span>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+@using (Html.BeginForm("SubmitMeetingComments", "AONW", FormMethod.Post))
+{
+    if (Convert.ToInt32(Session["SectionId"]) != 1 && Convert.ToInt32(Session["SectionId"]) == 12)
+    {
+        <input type="hidden" value="@ViewBag.Meeting_id" name="meeting_id" />
+        <button class="btn btn-primary" onclick="return confirm('Are you sure you want to submit all comments.')" type="submit">Submit Comments</button>
+    }
+}

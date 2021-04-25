@@ -24,15 +24,15 @@ namespace ACQ.Web.App
             MvcHandler.DisableMvcResponseHeader = true;
         }
 
-        protected void Application_Error()
-        {
-            string ipaddress = Request.UserHostAddress;
-            Exception ex = Server.GetLastError();   
-            Server.ClearError();
-            //Response.Redirect(String.Format("~/Error"));
-            HttpContext.Current.Response.Redirect("~/Error?error="+ex.Message, false);
+        //protected void Application_Error()
+        //{
+        //    string ipaddress = Request.UserHostAddress;
+        //    Exception ex = Server.GetLastError();   
+        //    Server.ClearError();
+        //    //Response.Redirect(String.Format("~/Error"));
+        //    HttpContext.Current.Response.Redirect("~/Error?error="+ex.Message, false);
 
-        }
+        //}
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {

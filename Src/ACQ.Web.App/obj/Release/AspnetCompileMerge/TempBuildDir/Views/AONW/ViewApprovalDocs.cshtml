@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "View Approved MOM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Approved MoM</h2>
+<div class="container">
+    @if (ViewBag.Url != null)
+    {
+        <ul class="watermark">
+            <li style="left: 176px; top: 91px;">Approved MOM</li>
+            <li style="left: 190px; top: 409px;">Approved MOM</li>
+            <li style=" left: 1075px; top: 600px; top: 600px; ">Approved MOM</li>
+        </ul>
+        <iframe src="@ViewBag.Url" style="width:700px;height:700px;"></iframe>
+        @*<a target="_blank" href="@ViewBag.Url">Open File</a>*@
+    }
+    else
+    {
+        <span>No Approved MOM Found..!!</span>
+    }
+</div>

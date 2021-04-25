@@ -27,6 +27,7 @@ using System.Xml;
 using System.Xml.Linq;
 using static ACQ.Web.App.MvcApplication;
 
+
 namespace ACQ.Web.App.Controllers
 {
     //[Authorize]
@@ -45,81 +46,61 @@ namespace ACQ.Web.App.Controllers
 
         public AONWController()
         {
-            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            if(BruteForceAttackss.bcontroller!= "")
             {
-                BruteForceAttackss.date = System.DateTime.Now;
-                BruteForceAttackss.refreshcount = 1;
+                if(BruteForceAttackss.bcontroller == "AONW")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                IEnumerable<LoginViewModel> model = null;
+                                using (var client2 = new HttpClient())
+                                {
+                                    client2.DefaultRequestHeaders.Clear();
+                                    client2.BaseAddress = new Uri(WebAPIUrl);
+                                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        LoginViewModel model1 = new LoginViewModel();
+                                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                        if (model.First().Message == "Blocked")
+                                        {
+                                            BruteForceAttackss.refreshcount = 0;
+                                            BruteForceAttackss.date = null;
+                                            BruteForceAttackss.bcontroller = "";
+                                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+                    
+                      
+                }
             }
             else
             {
-                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
-                if (tt.TotalSeconds <= 30)
-                {
-                    if (BruteForceAttackss.refreshcount > 20)
-                    {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    }
-                }
-                else
-                {
-                    if (BruteForceAttackss.refreshcount > 20)
-                    {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    }
-                }
-
+                BruteForceAttackss.bcontroller = "AONW";
             }
+            
         }
 
         // GET: AONW
@@ -1202,14 +1183,20 @@ namespace ACQ.Web.App.Controllers
                 {
                     Int16 mID = Convert.ToInt16(Encryption.Decrypt(id));
                     model.SoCId = Convert.ToInt32(sanitizer.Sanitize(mID.ToString()));
-                    // Session["item"] = Request.QueryString["item"].ToString();
-                    //if(Request != null && string.IsNullOrEmpty(Request.QueryString["item"]))
-                    //{
-                    ViewBag.item = Request.QueryString["item"].ToString();
-                    //  ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
-                    ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
-                    ViewBag.id = id;
-                    // }
+
+                    if (Request.QueryString["item"] != null)
+                    {
+                        ViewBag.item = Request.QueryString["item"].ToString();
+                        ViewBag.aonId = Encryption.Decrypt(Request.QueryString["item"].ToString());
+                        ViewBag.id = id;
+                        Session["item"] = Request.QueryString["item"].ToString();
+                    }
+                    else
+                    {
+                        ViewBag.item = Session["item"].ToString();
+                        ViewBag.aonId = Encryption.Decrypt(Session["item"].ToString());
+                        ViewBag.id = id;
+                    }
 
                     List<SocCommentViewModel> listData = new List<SocCommentViewModel>();
                     int userId = Convert.ToInt32(Session["UserID"]);
@@ -1218,7 +1205,7 @@ namespace ACQ.Web.App.Controllers
                         client.BaseAddress = new Uri(WebAPIUrl);
                         //HTTP GET
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?socId=" + id + "&ID=" + userId + "&isLocked=false").Result;
+                        HttpResponseMessage response = client.GetAsync("AONW/GetCommentt?socId=" + mID + "&ID=" + userId).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             listData = response.Content.ReadAsAsync<List<SocCommentViewModel>>().Result;
@@ -1251,7 +1238,10 @@ namespace ACQ.Web.App.Controllers
                     model.UserID = Convert.ToInt16(Session["UserID"].ToString());
 
                     string[] mData = dscsign(model.Comments);
-
+                    model.DataValue = mData[0];
+                    model.SignValue = mData[1];
+                    model.IssuedTo = mData[2];
+                    model.Path = mData[3];
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");
@@ -1277,14 +1267,15 @@ namespace ACQ.Web.App.Controllers
                     throw ex;
                 }
             }
-            //  ViewBag.aonId = Session["item"].ToString();
-            // return View(model);
+
+            //ViewBag.aonId = Session["item"].ToString();
+            //return View(model);
             return Json(Res, JsonRequestBehavior.AllowGet);
         }
 
         public string[] dscsign(string mData)
         {
-            string[] dscData = null;
+            String[] dscData = new String[4];
             string requestUristring = string.Format("https://127.0.0.1:55103/dsc/getCertList");
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
@@ -1327,30 +1318,148 @@ namespace ACQ.Web.App.Controllers
             string revocationxml = sb.ToString();
             XmlDocument doc1 = new XmlDocument();
             doc1.LoadXml(revocationxml);
-            doc1.Save(@UploadfilePath + "test.xml");
+            doc1.Save(baseUrl + serialno + "test.xml");
 
 
 
             //apply the digital signature
-            cs.ApplyDigitalSignature(UploadfilePath + "test.xml", UploadfilePath + "test[signed].xml");
+            cs.ApplyDigitalSignature(baseUrl + serialno + "test.xml", baseUrl + serialno + "test[signed].xml");
 
             XmlSignature cv = new XmlSignature(serialno);
             //for SHA-256 signatures, use XmlSignatureSha256 class
-            Console.WriteLine("Signatures: " + cv.GetNumberOfSignatures(UploadfilePath + "test[signed].xml"));
+            Console.WriteLine("Signatures: " + cv.GetNumberOfSignatures(baseUrl + serialno + "test[signed].xml"));
             ///verify the first signature
-            Console.WriteLine("Status: " + cv.VerifyDigitalSignature(UploadfilePath + "test[signed].xml"));
-            X509CertificateGenerator cert = new X509CertificateGenerator(serialno);
-            //set the certificate Subject
-            cert.Subject = mSubject;
-            Console.WriteLine(UploadfilePath + serialno + "cert.pfx", cert.GenerateCertificate("password", false));
-
+            Console.WriteLine("Status: " + cv.VerifyDigitalSignature(baseUrl + serialno + "test[signed].xml"));
+            
             XmlDocument doc2 = new XmlDocument();
-            doc2.Load(UploadfilePath + "test[signed].xml");
+            doc2.Load(baseUrl + serialno + "test[signed].xml");
             string xml = doc2.OuterXml;
             string jsonTextnew = JsonConvert.SerializeXmlNode(doc2);
-            dscData[0] = mSubject;
+            Newtonsoft.Json.Linq.JObject oListjs2 = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(jsonTextnew);
+            string responsesNEW = Convert.ToString(Convert.ToString(oListjs2));
+
+            RootNEW mySignature = JsonConvert.DeserializeObject<RootNEW>(responsesNEW);
+            string DigestValue = mySignature.value.Signature.SignedInfo.Reference.DigestValue;
+            string SignatureValue = mySignature.value.Signature.SignatureValue;
+            string X509Certificate = mySignature.value.Signature.KeyInfo.X509Data.X509Certificate;
+            string crtfile = serialno + DateTime.Now.ToString("HHmmss");
+            FileStream fs1 = new FileStream(baseUrl + crtfile + ".txt", FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(fs1);
+            writer.Write(X509Certificate);
+            writer.Close();
+
+            string myfile = baseUrl + crtfile + ".txt";
+            FileInfo f = new FileInfo(myfile);
+            f.MoveTo(Path.ChangeExtension(myfile, ".crt"));
+            
+            dscData[0] = X509Certificate;
+            dscData[1] = DigestValue;
+            dscData[2] = SignatureValue;
+            dscData[3] = crtfile + ".crt";
             return dscData;
         }
+
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
+        public class Xml
+        {
+            [JsonProperty("@version")]
+            public string Version { get; set; }
+
+            [JsonProperty("@encoding")]
+            public string Encoding { get; set; }
+        }
+
+        public class CanonicalizationMethod
+        {
+            [JsonProperty("@Algorithm")]
+            public string Algorithm { get; set; }
+        }
+
+        public class SignatureMethod
+        {
+            [JsonProperty("@Algorithm")]
+            public string Algorithm { get; set; }
+        }
+
+        public class Transform
+        {
+            [JsonProperty("@Algorithm")]
+            public string Algorithm { get; set; }
+        }
+
+        public class Transforms
+        {
+            public List<Transform> Transform { get; set; }
+        }
+
+        public class DigestMethod
+        {
+            [JsonProperty("@Algorithm")]
+            public string Algorithm { get; set; }
+        }
+
+        public class Reference
+        {
+            [JsonProperty("@URI")]
+            public string URI { get; set; }
+            public Transforms Transforms { get; set; }
+            public DigestMethod DigestMethod { get; set; }
+            public string DigestValue { get; set; }
+        }
+
+        public class SignedInfo
+        {
+            public CanonicalizationMethod CanonicalizationMethod { get; set; }
+            public SignatureMethod SignatureMethod { get; set; }
+            public Reference Reference { get; set; }
+        }
+
+        public class RSAKeyValue
+        {
+            public string Modulus { get; set; }
+            public string Exponent { get; set; }
+        }
+
+        public class KeyValue
+        {
+            public RSAKeyValue RSAKeyValue { get; set; }
+        }
+
+        public class X509Data
+        {
+            public string X509Certificate { get; set; }
+        }
+
+        public class KeyInfo
+        {
+            public KeyValue KeyValue { get; set; }
+            public X509Data X509Data { get; set; }
+        }
+
+        public class Signature
+        {
+            [JsonProperty("@xmlns")]
+            public string Xmlns { get; set; }
+            public SignedInfo SignedInfo { get; set; }
+            public string SignatureValue { get; set; }
+            public KeyInfo KeyInfo { get; set; }
+        }
+
+        public class Value
+        {
+            [JsonProperty("#text")]
+            public string Text { get; set; }
+            public Signature Signature { get; set; }
+        }
+
+        public class RootNEW
+        {
+            [JsonProperty("?xml")]
+            public Xml Xml { get; set; }
+            public Value value { get; set; }
+        }
+
+
         public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
         {
             return true;

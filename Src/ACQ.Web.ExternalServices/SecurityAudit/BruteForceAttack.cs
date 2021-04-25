@@ -9,6 +9,12 @@ namespace ACQ.Web.ExternalServices.SecurityAudit
     public static class BruteForceAttackss
     {
         public static int refreshcount { get; set; } = 0;
+        public static string bcontroller { get; set; } = "";
         public static  DateTime ? date { get; set; }
+
+
+
     }
+
+    
 }

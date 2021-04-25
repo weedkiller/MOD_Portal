@@ -1,11 +1,9 @@
 //using MOD.Models;
-using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +13,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -37,81 +34,7 @@ namespace ACQ.Web.App.Controllers
 
         public AccountController()
         {
-            //if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
-            //{
-            //    BruteForceAttackss.date = System.DateTime.Now;
-            //    BruteForceAttackss.refreshcount = 1;
-            //}
-            //else
-            //{
-            //    TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
-            //    if (tt.TotalSeconds <= 30)
-            //    {
-            //        if (BruteForceAttackss.refreshcount > 20)
-            //        {
-            //            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-            //            {
-            //                IEnumerable<LoginViewModel> model = null;
-            //                using (var client2 = new HttpClient())
-            //                {
-            //                    client2.DefaultRequestHeaders.Clear();
-            //                    client2.BaseAddress = new Uri(WebAPIUrl);
-            //                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-            //                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-            //                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-            //                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-            //                    if (response.IsSuccessStatusCode)
-            //                    {
-            //                        LoginViewModel model1 = new LoginViewModel();
-            //                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-            //                        if (model.First().Message == "Blocked")
-            //                        {
-
-            //                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (BruteForceAttackss.refreshcount > 20)
-            //        {
-            //            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-            //            {
-            //                IEnumerable<LoginViewModel> model = null;
-            //                using (var client2 = new HttpClient())
-            //                {
-            //                    client2.DefaultRequestHeaders.Clear();
-            //                    client2.BaseAddress = new Uri(WebAPIUrl);
-            //                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-            //                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-            //                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-            //                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-            //                    if (response.IsSuccessStatusCode)
-            //                    {
-            //                        LoginViewModel model1 = new LoginViewModel();
-            //                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-            //                        if (model.First().Message == "Blocked")
-            //                        {
-            //                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-            //        }
-            //    }
-
-            //}
+            
         }
 
 
@@ -140,10 +63,13 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("login")]
         [HandleError]
+        
         public ActionResult Login()
         {
 
             BruteForceAttackss.refreshcount = 0;
+            BruteForceAttackss.date = null;
+            BruteForceAttackss.bcontroller = "";
             return View();
 
 
@@ -158,13 +84,12 @@ namespace ACQ.Web.App.Controllers
         [Route("Error")]
         public async Task<ActionResult> Error()
         {
-            BruteForceAttackss.refreshcount = 0;
+            
             UserLogViewModel model = new UserLogViewModel();
             if (Session["EmailID"] != null)
             {
                 model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
-                //var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
-               // var formName = sanitizer.Sanitize("AddFormMenu");
+              
             }
             else
             {
@@ -200,6 +125,10 @@ namespace ACQ.Web.App.Controllers
                 Response.Cookies["AuthToken"].Value = string.Empty;
                 Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
             }
+
+            BruteForceAttackss.refreshcount = 0;
+            BruteForceAttackss.date = null;
+            BruteForceAttackss.bcontroller = "";
 
             return View();
         }
@@ -669,9 +598,6 @@ namespace ACQ.Web.App.Controllers
             }
             else
             {
-
-                //string email = Cryptography.DecryptData(emailid);
-                //string token = Cryptography.DecryptData(tokenid);
                 Session["EmailID"] = emailid;
                 Session["tokenid"] = tokenid;
                 return RedirectToAction("ChangePassword");
@@ -881,7 +807,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
-            BruteForceAttackss.refreshcount = 0;
+           
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
             model.IPAddress = Request.UserHostAddress;
