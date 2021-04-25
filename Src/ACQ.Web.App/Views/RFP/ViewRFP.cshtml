@@ -126,7 +126,7 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
                                 <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View</a>
                                 <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
-                                <a href="javascript:void(0)" id="sendrfp" class="btn btn-sm btn-info btn-bottom">Send</a>
+                                <button id="sendrfp" class="btn btn-sm btn-info btn-bottom">Send</button>
                                 <div class="uploadbtn">
                                     <input type="file" id="uploadrfp" hidden />
                                     <label for="upload" class="file-select">Upload New RFP</label>
@@ -187,23 +187,46 @@
                     success: function (response) {
                         $('.preloader').fadeOut('slow');
                         if (response.Status == true) {
-                            toastr.success("Data found..");
+                            
                             $('#detaildata').empty();
-                            var row = '<table class="table"><thead><tr><th>SOC Name</th><th>Categorisation</th><th>Service</th><th>SOC Date</th></tr></thead>';
-                            row += '<tbody><tr><td id="socname">' + response.data.SOCAname + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td></tr></tbody></table >';
+                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th></tr></thead>';
+                            var v = '<select id="vendor">';
+                            v += '<option value="0" selected>Select Vendor</option>';
+
+                            $.each(response.vendors, function (key, item) {
+                                if (item.Id == response.data.attachment.VendorType) {
+                                    v += '<option value="' + item.Id + '" selected>' + item.VendorType + '</option>';
+                                }
+                                else {
+                                    v += '<option value="' + item.Id + '">' + item.VendorType + '</option>';
+                                }
+                            });
+                            v += '</select>';
+                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>'+ v +'</td></tr></tbody></table >';
                             $('#detaildata').append(row);
 
-                            $('#viewrfp').attr("s-path", response.data.attachment.Path);
+                            $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
                             $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
                             $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
                             $('#sendrfp').attr("s-id", response.data.attachment.Id);
                             $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
-                            if (response.data.attachment.IsSent == true) {
-                                $('#sendrfp').attr('disabled', true);
+                            if (response.data.attachment.VendorType == 0) {
+                                toastr.info("Vendor has not been selected. Please select a vendor to send..");
+                                $('#sendrfp').attr("disabled", true);
+                                $('.uploadbtn').css('display', 'none');
+                                $('#vendor').focus();
+                            }
+                            else if (response.data.attachment.IsSent == false) {
+                                $('#vendor').attr("disabled", true);
+                                $('#sendrfp').attr("disabled", false);
+                                $('.uploadbtn').css('display', 'none');
+                            }
+                            else if (response.data.attachment.IsSent == true) {
+                                $('#vendor').attr("disabled", true);
+                                $('#sendrfp').attr("disabled", true);
                                 $('.uploadbtn').css('display', 'block');
                             }
                             else {
-                                $('#sendrfp').attr('disabled', false);
                                 $('.uploadbtn').css('display', 'none');
                             }
                             $('.actionrow').show();
@@ -243,6 +266,87 @@
                 toastr.error("Path not found.");
             }
 
+        });
+        $(document).on("change", "#vendor", function () {
+            var vend = $(this).val();
+            if (parseInt(vend) > 0) {
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.ajax({
+                    beforeSend: function () {
+                        $('.preloader').show();
+                    },
+                    type: "POST",
+                    url: "/GetRFPdata",
+                    data: { __RequestVerificationToken: token, key: parseInt(vend), Updateval: parseInt($('#sendrfp').attr("s-id")) },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        if (response.Status == true) {
+
+                            $('#detaildata').empty();
+                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th></tr></thead>';
+                            var v = '<select id="vendor">';
+                            v += '<option value="0" selected>Select Vendor</option>';
+
+                            $.each(response.vendors, function (key, item) {
+                                if (item.Id == response.data.attachment.VendorType) {
+                                    v += '<option value="' + item.Id + '" selected>' + item.VendorType + '</option>';
+                                }
+                                else {
+                                    v += '<option value="' + item.Id + '">' + item.VendorType + '</option>';
+                                }
+                            });
+                            v += '</select>';
+                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>' + v + '</td></tr></tbody></table >';
+                            $('#detaildata').append(row);
+
+                            $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
+                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-id", response.data.attachment.Id);
+                            $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
+                            if (response.data.attachment.VendorType == 0) {
+                                toastr.info("Vendor has not been selected. Please select a vendor to send..");
+                                $('#sendrfp').attr("disabled", true);
+                                $('.uploadbtn').css('display', 'none');
+                                $('#vendor').focus();
+                            }
+                            else if (response.data.attachment.IsSent == false) {
+                                $('#sendrfp').attr("disabled", false);
+                                $('.uploadbtn').css('display', 'none');
+                            }
+                            else if (response.data.attachment.IsSent == true) {
+                                $('#sendrfp').attr("disabled", true);
+                                $('.uploadbtn').css('display', 'block');
+                            }
+                            else {
+                                $('.uploadbtn').css('display', 'none');
+                            }
+                            $('.actionrow').show();
+
+                        } else {
+                            $('#detaildata').empty();
+                            toastr.info("No data found");
+                        }
+                    },
+                    failure: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        toastr.error("Please check your internet connection...");
+
+                    },
+                    error: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        toastr.error("Please check your internet connection...");
+
+                    }
+                });
+            }
+            else {
+                toastr.error("Please select vendor type..");
+            }
         });
     });
     function getFormattedDate(datestring) {

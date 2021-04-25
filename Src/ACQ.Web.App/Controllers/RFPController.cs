@@ -383,6 +383,28 @@ namespace ACQ.Web.App.Controllers
             return Json(responseAPI, JsonRequestBehavior.AllowGet);
         }
 
+        //[Route("Updatevendor")]
+        //[HandleError]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult UpdatevendorType(int key=0,int Updateval=0)
+        //{
+        //    if (key != 0 && Updateval != 0)
+        //    {
+        //        try
+        //        {
+
+        //        }
+        //        catch(Exception ex)
+        //        {
+
+        //        }
+
+        //    }
+        //    else return Json(false, JsonRequestBehavior.AllowGet);
+
+        //}
+
+
         [Route("viewfile")]
         [HandleError]
         [SessionExpire]
