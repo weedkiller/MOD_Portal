@@ -96,4 +96,5 @@ namespace ACQ.Web.App.ViewModel
         public decimal? ActualPayment { get; set; }
         public decimal? BalacePayment { get; set; }
     }
+   
 }

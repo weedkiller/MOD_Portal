@@ -2272,6 +2272,14 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult Contract()
         {
+            if(TempData["File"]!=null)
+            {
+                ViewBag.File = TempData["File"].ToString();
+            }
+            if (TempData["FileStage"]!=null)
+            {
+                ViewBag.FileStage = TempData["FileStage"].ToString();
+            }
             if(TempData["Uploadsuccess"]!=null)
             {
                 bool upload =(bool)TempData["Uploadsuccess"];
@@ -2451,7 +2459,9 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                i = 0;
+                ViewBag.Message = ex.Message.ToString();
+                return Json(i, JsonRequestBehavior.AllowGet);
             }
             return Json(i, JsonRequestBehavior.AllowGet);
         }
