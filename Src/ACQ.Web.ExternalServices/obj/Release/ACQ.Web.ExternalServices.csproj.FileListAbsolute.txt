@@ -30,19 +30,3 @@ E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
 E:\Uttam Sir MOD\PORTAL\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ExternalServices.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ExternalServices.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Mvc.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Razor.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Razor.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\Microsoft.Web.Infrastructure.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.WebPages.Deployment.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\ACQ.Web.ViewModel.dll.config
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb

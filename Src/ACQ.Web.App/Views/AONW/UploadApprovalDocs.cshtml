@@ -17,31 +17,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var item in ViewBag.MeetingAgendaList)
+                    @foreach (var item in ViewBag.MeetingAgendaList)
                     {
-                    <tr>
-                        <td>@item.AgendaItem</td>
-                        <td>@item.TypeofAgendaDescription</td>
-                        <td>@item.IsActive</td>
-                        <td>
-                            @if (!String.IsNullOrEmpty(item.AONNumber))
-                            {
-                            <span>@ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.AONNumber)</span>
-                            }
-                            else
-                            {
-                                <form method="post" action="@Url.Action("GenerateAONNumber","AONW")">
-                                    <input type="hidden" name="Pid" value="@item.Pid" />
-                                    <input type="hidden" name="TypeofAgenda" value="@item.TypeofAgenda" />
-                                    <input type="hidden" name="meeting_id" value="@Request.QueryString["ID"]" />
-                                    <input type="hidden" name="agenda_description" value="@item.TypeofAgendaDescription" />
-                                    <button type="submit" class="btn btn-primary">Generate AoN Number</button>
-                                </form>
-                            }
+                        <tr>
+                            <td>@item.AgendaItem</td>
+                            <td>@item.TypeofAgendaDescription</td>
+                            <td>@item.IsActive</td>
+                            <td>
+                                @if (!String.IsNullOrEmpty(item.AONNumber))
+                                {
+                                    <span>@ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.AONNumber)</span>
+                                }
+                                else
+                                {
+
+                                    string TypeofAgenda = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Encrypt(item.TypeofAgenda.ToString());
+
+                                    <a href="@Url.Action("UpdateSOC","AONW",new { ID=TypeofAgenda})" class="pull-left"><button type="button" class="btn btn-primary">Update Soc</button></a>
+
+                                    <form style="float:left;margin-left:20px;" method="post" action="@Url.Action("GenerateAONNumber","AONW")">
+                                        <input type="hidden" name="Pid" value="@item.Pid" />
+                                        <input type="hidden" name="TypeofAgenda" value="@item.TypeofAgenda" />
+                                        <input type="hidden" name="meeting_id" value="@Request.QueryString["ID"]" />
+                                        <input type="hidden" name="agenda_description" value="@item.TypeofAgendaDescription" />
+                                        <button type="submit" class="btn btn-info">Generate AoNNumber</button>
+                                    </form>
+                                }
 
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -50,18 +55,18 @@
     </div>
 </div>
 
-<h2>Upload Approved MoM @ViewBag.mtype Dated : @Request.QueryString["dated"]</h2>
+<h2>Upload Approved MoM @ViewBag.mtype Dated : @ViewBag.dated</h2>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-          <hr/>
+            <hr />
             <div>
-                @using (Html.BeginForm("UploadDocs","AONW",FormMethod.Post,new {@enctype="multipart/form-data" }))
+                @using (Html.BeginForm("UploadDocs", "AONW", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken();
                     <input type="hidden" value="@ViewBag.Meeting_id" name="meeting_id" />
-                    <input class="form-control" type="file" name="pdfFile"/>
-                    <br/>
+                    <input class="form-control" type="file" name="pdfFile" />
+                    <br />
                     <button type="submit" class="btn btn-primary">Upload</button>
                     <span class="text-success">@TempData["Msg"]</span>
                 }

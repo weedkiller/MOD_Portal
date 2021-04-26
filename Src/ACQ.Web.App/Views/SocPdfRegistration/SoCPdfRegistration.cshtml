@@ -24,6 +24,7 @@
     <div class="">
 
         <form id="OtherSOC" action="@Url.Action("UploadOtherSOC","AONW")" enctype="multipart/form-data">
+            @Html.AntiForgeryToken();
             <label for=" " class="col-sm-3 col-form-label">SoC Type</label>
             <div class="col-sm-9">
                 <div class="form-group m-0">

@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ACQ.Web.App</RootNamespace>
     <AssemblyName>ACQ.Web.App</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -78,9 +78,6 @@
     <Reference Include="HtmlSanitizer, Version=5.0.0.0, Culture=neutral, PublicKeyToken=61c49a1a9e79cc28, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlSanitizer.5.0.376\lib\net46\HtmlSanitizer.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>D:\CurrentProject2020\IndigenisationAPI-master\SRC\Indigenisation.Web.API\lib\itextsharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
@@ -114,10 +111,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
-    <Reference Include="SignLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=ffdaa12fb4cf4a55, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\CurrentProject2020\DigitalSign\DigitalSign\DigitalSign\lib\SignLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -702,17 +695,15 @@
     <Content Include="bin\ACQ.Web.App.dll" />
     <Content Include="bin\ACQ.Web.App.pdb" />
     <Content Include="bin\ACQ.Web.Core.dll" />
-    <Content Include="bin\ACQ.Web.ViewModel.dll" />
+    <Content Include="bin\ACQ.Web.ExternalServices.dll" />
+    <Content Include="bin\ACQ.Web.ExternalServices.pdb" />
     <Content Include="bin\AngleSharp.Css.dll" />
     <Content Include="bin\AngleSharp.dll" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\BouncyCastle.Crypto.dll" />
     <Content Include="bin\CaptchaMvc.dll" />
-    <Content Include="bin\EPPlus.dll" />
     <Content Include="bin\GemBox.Document.dll" />
     <Content Include="bin\HtmlSanitizer.dll" />
-    <Content Include="bin\itextsharp.dll" />
-    <Content Include="bin\Microsoft.AspNetCore.Mvc.Abstractions.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.Graph.Core.dll" />
     <Content Include="bin\Microsoft.Office.Interop.Word.dll" />
@@ -720,7 +711,6 @@
     <Content Include="bin\Microsoft.Win32.Primitives.dll" />
     <Content Include="bin\netstandard.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\SignLib.dll" />
     <Content Include="bin\System.AppContext.dll" />
     <Content Include="bin\System.Buffers.dll" />
     <Content Include="bin\System.Collections.Concurrent.dll" />
@@ -1601,7 +1591,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="libman.json" />
-    <Content Include="lib\iTextSharp-4.1.6.dll" />
     <Content Include="lib\Microsoft.Office.Interop.Word.dll" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -1661,11 +1650,8 @@
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.ttf" />
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff" />
     <Content Include="assets\fontawesome-5.15.3\webfonts\fa-solid-900.woff2" />
-    <Content Include="ExcelFile\ContractMaster.xlsx" />
-    <Content Include="ExcelFile\StageDetails.xlsx" />
+    <None Include="bin\ACQ.Web.App.dll.config" />
     <None Include="packages.config" />
-    <Content Include="lib\SignLib.dll" />
-    <Content Include="lib\SignLib.xml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -1725,6 +1711,7 @@
     <Content Include="Views\Contract\ContractReport.cshtml" />
     <Content Include="Views\Shared\_ContractStagePartial.cshtml" />
     <Content Include="Views\Shared\_ContractMasterPartial.cshtml" />
+    <Content Include="Views\AONW\UpdateSOC.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

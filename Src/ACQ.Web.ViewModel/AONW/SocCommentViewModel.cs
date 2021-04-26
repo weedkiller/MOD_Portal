@@ -18,8 +18,6 @@ namespace ACQ.Web.ViewModel.AONW
         public Nullable<System.DateTime> Created_on { get; set; }
         public Nullable<int> Deleted_by { get; set; }
         public Nullable<System.DateTime> Deleted_on { get; set; }
-        public string DataValue { get; set; }
-        public string SignValue { get; set; }
-        public string IssuedTo { get; set; }
+        
     }
 }
