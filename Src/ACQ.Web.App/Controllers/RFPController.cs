@@ -197,7 +197,6 @@ namespace ACQ.Web.App.Controllers
         {
             IEnumerable<Service> listdata = new List<Service>();
             IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
-            IEnumerable<UserViewModel> Users = new List<UserViewModel>();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -226,24 +225,8 @@ namespace ACQ.Web.App.Controllers
                 }
             }
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response2 = client.GetAsync("RFP/GetAllUser").Result;
-                if (response2.IsSuccessStatusCode)
-                {
-                    Users = response2.Content.ReadAsAsync<IEnumerable<UserViewModel>>().Result;
-                }
-            }
+            
 
-            if(Users!=null && Users.Count()>0)
-            {
-                ViewBag.users = Users;
-            }
 
             ViewBag.services = listdata;
             if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
@@ -339,7 +322,22 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult ViewUploadedRFP()
         {
-            return View();
+            IEnumerable<sharedRFP> sharedRFP = new List<sharedRFP>();
+            var id = Session["UserID"].ToString();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                HttpResponseMessage response = client.GetAsync("RFP/Getsharedrfp?UserId="+ id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    sharedRFP = response.Content.ReadAsAsync<IEnumerable<sharedRFP>>().Result;
+                }
+            }
+            return View(sharedRFP);
         }
 
 
@@ -383,26 +381,98 @@ namespace ACQ.Web.App.Controllers
             return Json(responseAPI, JsonRequestBehavior.AllowGet);
         }
 
-        //[Route("Updatevendor")]
-        //[HandleError]
-        //[ValidateAntiForgeryToken]
-        //public JsonResult UpdatevendorType(int key=0,int Updateval=0)
-        //{
-        //    if (key != 0 && Updateval != 0)
-        //    {
-        //        try
-        //        {
+        [Route("Updatevendor")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> UpdatevendorType(int VendorType = 0, int Id = 0)
+        {
+            if (VendorType != 0 && Id != 0)
+            { bool Updatestatus = false;
+                try
+                {
+                    AttachmentData model = new AttachmentData();
+                    model.Id= Convert.ToInt32(sanitizer.Sanitize(Id.ToString()));
+                    model.VendorType = Convert.ToInt32(sanitizer.Sanitize(VendorType.ToString()));
 
-        //        }
-        //        catch(Exception ex)
-        //        {
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Clear();
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        HttpResponseMessage response =await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/UpdateVendorType", model);
+                        bool postResult = response.IsSuccessStatusCode;
+                        if(postResult)
+                        {
+                            Updatestatus = true;
+                        }
+                    }
 
-        //        }
+                }
+                catch (Exception ex)
+                {
+                    Updatestatus = false;
+                }
+                return Json(Updatestatus, JsonRequestBehavior.AllowGet);
+            }
+            else return Json(false, JsonRequestBehavior.AllowGet);
 
-        //    }
-        //    else return Json(false, JsonRequestBehavior.AllowGet);
+        }
 
-        //}
+
+        [Route("sharedraftrfp")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> sharedraftrfp(int Id = 0)
+        {
+            IEnumerable<UserViewModel> Users = new List<UserViewModel>();
+            bool sent = false;
+            if (Id != 0)
+            {
+                try
+                {
+                    AttachmentData model = new AttachmentData();
+                    model.Id = Convert.ToInt32(sanitizer.Sanitize(Id.ToString()));
+
+                    using (var client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Clear();
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                        HttpResponseMessage response = await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/SendDraftRFP", model);
+                      
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Users= response.Content.ReadAsAsync<IEnumerable<UserViewModel>>().Result;
+                        }
+                    }
+
+                    if(Users!=null && Users.Count()>0)
+                    {
+                        foreach(var item in Users)
+                        {
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
+                            string Messge = "Draft RFP uploaded. Please login to your account to download and provide comments.";
+                            EmailHelper.sendEmailEscalation(item.UserEmail, Messge, mailPath);
+                        }
+                    }
+                    sent = true;
+                }
+                catch (Exception ex)
+                {
+                    sent = false;
+                }
+                return Json(sent, JsonRequestBehavior.AllowGet);
+            }
+            else return Json(false, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
 
 
         [Route("viewfile")]

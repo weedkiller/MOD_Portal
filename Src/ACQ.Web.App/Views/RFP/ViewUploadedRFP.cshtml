@@ -1,8 +1,107 @@
-﻿
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.sharedRFP>
 @{
     ViewBag.Title = "ViewUploadedRFP";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
+<style>
+    .bg-primary {
+        background: #1c2f61 !important;
+    }
 
-<h2>No data available</h2>
+    .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6 {
+        color: #fff !important;
+    }
+
+    .selectot {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #c7c8cc;
+        border-radius: 2px;
+    }
+
+    .file-select {
+        display: inline-block;
+        background-color: #1c2f61;
+        color: white;
+        padding: .25rem .5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-bottom {
+        margin: 0 10px 10px 0px;
+    }
+</style>
+
+<div class="containers">
+    <div class="container-fluids">
+        <div class="card">
+            <div class="card-header">
+                View Uploaded draft RFP
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    SR. NO
+                                </th>
+                                <th>
+                                    SOC Id
+                                </th>
+                                <th>Service</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model!=null && Model.Count()>0)
+                            {
+                                var sn = 1;
+                                foreach(var item in Model)
+                                {
+                            <tr>
+                                <td>
+                                    @sn
+                                </td>
+                                <td>
+                                    @item.SOCID
+                                </td>
+                                <td>@item.Service</td>
+                                <td class="justify-content-start d-flex">
+                                    <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
+                                    <div class="uploadbtn">
+                                        <input type="file" id="uploadrfp" hidden />
+                                        <label for="upload" class="file-select">Upload New RFP</label>
+                                    </div>
+                                </td>
+                            </tr>
+                                    sn++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/datatable/js/jquery.dataTables.min.js" nonce="r@nd0m"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 50
+        });
+    });
+</script>
+
 

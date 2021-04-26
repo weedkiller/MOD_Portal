@@ -168,7 +168,40 @@
         };
 
         $('#sendrfp').click(function () {
-            toastr.error('No action performed');
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                type: "POST",
+                url: "/sharedraftrfp",
+                data: { __RequestVerificationToken: token, Id: parseInt($(this).attr("s-id")) },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    if (response == true) {
+                        toastr.success("Sent successfully..");
+                        $('#sendrfp').attr("disabled", true);
+
+                    } else {
+
+                        toastr.error("Failed to send..");
+                    }
+                },
+                failure: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+
+                },
+                error: function (response) {
+                    $('.preloader').fadeOut('slow');
+                    toastr.error("Please check your internet connection...");
+
+                }
+            });
         });
         $('#SOC').change(function () {
             if (parseInt($(this).val()) > 0) {
@@ -278,58 +311,20 @@
                         $('.preloader').show();
                     },
                     type: "POST",
-                    url: "/GetRFPdata",
-                    data: { __RequestVerificationToken: token, key: parseInt(vend), Updateval: parseInt($('#sendrfp').attr("s-id")) },
+                    url: "/Updatevendor",
+                    data: { __RequestVerificationToken: token, VendorType: parseInt(vend), Id: parseInt($('#sendrfp').attr("s-id")) },
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
                         $('.preloader').fadeOut('slow');
-                        if (response.Status == true) {
-
-                            $('#detaildata').empty();
-                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th></tr></thead>';
-                            var v = '<select id="vendor">';
-                            v += '<option value="0" selected>Select Vendor</option>';
-
-                            $.each(response.vendors, function (key, item) {
-                                if (item.Id == response.data.attachment.VendorType) {
-                                    v += '<option value="' + item.Id + '" selected>' + item.VendorType + '</option>';
-                                }
-                                else {
-                                    v += '<option value="' + item.Id + '">' + item.VendorType + '</option>';
-                                }
-                            });
-                            v += '</select>';
-                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>' + v + '</td></tr></tbody></table >';
-                            $('#detaildata').append(row);
-
-                            $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
-                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
-                            $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
-                            $('#sendrfp').attr("s-id", response.data.attachment.Id);
-                            $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
-                            if (response.data.attachment.VendorType == 0) {
-                                toastr.info("Vendor has not been selected. Please select a vendor to send..");
-                                $('#sendrfp').attr("disabled", true);
-                                $('.uploadbtn').css('display', 'none');
-                                $('#vendor').focus();
-                            }
-                            else if (response.data.attachment.IsSent == false) {
-                                $('#sendrfp').attr("disabled", false);
-                                $('.uploadbtn').css('display', 'none');
-                            }
-                            else if (response.data.attachment.IsSent == true) {
-                                $('#sendrfp').attr("disabled", true);
-                                $('.uploadbtn').css('display', 'block');
-                            }
-                            else {
-                                $('.uploadbtn').css('display', 'none');
-                            }
-                            $('.actionrow').show();
+                        if (response == true) {
+                            toastr.success("Vendor type has been selected...");
+                            $('#sendrfp').attr("disabled", false);
+                            $('#vendor').attr("disabled", true);
 
                         } else {
-                            $('#detaildata').empty();
-                            toastr.info("No data found");
+
+                            toastr.error("Failed to update vendor type..");
                         }
                     },
                     failure: function (response) {
