@@ -807,3 +807,8 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompi
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csprojAssemblyReference.cache
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll.config
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.csproj.CoreCompileInputs.cache
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.App\obj\Debug\ACQ.Web.App.pdb
