@@ -27,7 +27,6 @@ using System.Xml;
 using System.Xml.Linq;
 using static ACQ.Web.App.MvcApplication;
 
-
 namespace ACQ.Web.App.Controllers
 {
     //[Authorize]
@@ -217,7 +216,7 @@ namespace ACQ.Web.App.Controllers
         {
             acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
             List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
-            ID = Encryption.Decrypt(ID);
+            ID = Encryption.Decrypt(sanitizer.Sanitize(ID));
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
@@ -662,7 +661,8 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult ViewApprovalDocs(string ID)
         {
-            int meeting_id = Convert.ToInt32(Encryption.Decrypt(ID));
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
+            int meeting_id = Convert.ToInt32(Encryption.Decrypt(sanitizer .Sanitize(ID)));
             string path = "";
             string outputfile = "";
             using (var client = new HttpClient())
@@ -692,46 +692,59 @@ namespace ACQ.Web.App.Controllers
 
         [Route("UploadDocs")]
         [HttpPost]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadDocs(FormCollection collection)
         {
-            Random rand = new Random();
-            int userId = GetUserID();
-            string meeting_id = collection["meeting_id"];
-            HttpFileCollectionBase files = Request.Files;
-            string path = UploadfilePath;
-            string outputpath = "";
-            for (int i = 0; i < files.Count; i++)
+            try
             {
+                Random rand = new Random();
+                int userId = GetUserID();
+                string meeting_id = collection["meeting_id"];
+                HttpFileCollectionBase files = Request.Files;
+                string path = UploadfilePath;
+                string outputpath = "";
+                for (int i = 0; i < files.Count; i++)
+                {
 
-                HttpPostedFileBase file = files[i];
-                if (!FileCheckformat(file, ".pdf"))
-                {
-                    ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
-                    ViewBag.UploadStatus = "errormsg";
-                    TempData["Msg"] = "Please upload only.pdf file and File size Should Be UpTo 1 MB";
-                    return RedirectToAction("ViewMeeting");
-                }
-                outputpath = baseUrl+ "encry_"+file.FileName;
-                string inPath = baseUrl+file.FileName;
-                path += file.FileName;
-                file.SaveAs(Server.MapPath(path));
-                EncryptFile(inPath, outputpath);
-            }
-            
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/UpdateMOMApproval?ID=" + meeting_id + "&filepath="+outputpath+"&updatedby="+userId).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    // model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
-                    TempData["Msg"] = "MOM Uploaded Successfully..!!";
+                    HttpPostedFileBase file = files[i];
+                    if (!FileCheckformat(file, ".pdf"))
+                    {
+                        ViewBag.UploadStatusmsg = "Please upload only .pdf file and File size Should Be UpTo 1 MB";
+                        ViewBag.UploadStatus = "errormsg";
+                        TempData["Msg"] = "Please upload only.pdf file and File size Should Be UpTo 1 MB";
+                        return RedirectToAction("ViewMeeting");
+                    }
+                    outputpath = baseUrl + "encry_" + file.FileName;
+                    string inPath = baseUrl + file.FileName;
+                    path += file.FileName;
+                    file.SaveAs(Server.MapPath(path));
+                    EncryptFile(inPath, outputpath);
+                    FileInfo fi = new FileInfo(Server.MapPath(inPath));
+                    fi.Delete();
                 }
 
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/UpdateMOMApproval?ID=" + meeting_id + "&filepath=" + outputpath + "&updatedby=" + userId).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+                        TempData["Msg"] = "MOM Uploaded Successfully..!!";
+                    }
+
+                }
+                return RedirectToAction("ViewMeeting");
             }
-            return RedirectToAction("ViewMeeting");
+            catch(Exception e)
+            {
+                throw e;
+            }
+          
         }
         [Route("SearchFilter")]
         [HandleError]
@@ -741,12 +754,14 @@ namespace ACQ.Web.App.Controllers
         {
             try
             {
+                HtmlSanitizer sanitizer = new HtmlSanitizer();
                 SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
                 List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
                 int UserID = GetUserID();
-
+                type = sanitizer.Sanitize(type);
                 using (var client = new HttpClient())
                 {
+                    
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
@@ -1145,9 +1160,10 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult PrepareFinalMeeting(string id, string mtype, string dated)
         {
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
             using (var client = new HttpClient())
             {
-                Int16 mmID = Convert.ToInt16(Encryption.Decrypt(id));
+                Int16 mmID = Convert.ToInt16(Encryption.Decrypt(sanitizer.Sanitize(id)));
                 client.BaseAddress = new Uri(WebAPIUrl);
                 //HTTP GET
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
@@ -1242,6 +1258,7 @@ namespace ACQ.Web.App.Controllers
                     model.SignValue = mData[1];
                     model.IssuedTo = mData[2];
                     model.Path = mData[3];
+
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri(WebAPIUrl + "AONW/AddSocCommit");
@@ -1251,7 +1268,6 @@ namespace ACQ.Web.App.Controllers
                         bool postResult = postJob.IsSuccessStatusCode;
                         if (postResult == true)
                         {
-
                             Res = "Success";
                             ViewBag.Msg = "Record Saved Successfully";
                         }
@@ -1272,6 +1288,7 @@ namespace ACQ.Web.App.Controllers
             //return View(model);
             return Json(Res, JsonRequestBehavior.AllowGet);
         }
+
 
         public string[] dscsign(string mData)
         {
@@ -1584,7 +1601,8 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult GenerateReport(string ID, string Version = null)
         {
-            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
+            Int16 mID = Convert.ToInt16(Encryption.Decrypt(sanitizer.Sanitize(ID)));
 
             SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
             using (var client = new HttpClient())
@@ -1628,8 +1646,9 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult EmailToMeetingParticipants(string ID)
         {
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
             List<MeetingParticipants> listData = new List<MeetingParticipants>();
-            Int16 mID = Convert.ToInt16(Encryption.Decrypt(ID));
+            Int16 mID = Convert.ToInt16(Encryption.Decrypt(sanitizer.Sanitize(ID)));
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(WebAPIUrl);
@@ -1996,31 +2015,44 @@ namespace ACQ.Web.App.Controllers
 
             return RedirectToAction("ViewMeeting", "AONW");
         }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HandleError]
         public ActionResult ViewMeetingComments(string Id)
         {
-            int userID = GetUserID();
+            try
+            {
+                HtmlSanitizer sanitizer = new HtmlSanitizer();
+                int userID = GetUserID();
 
-            if (Convert.ToInt32(Session["SectionId"])==1 && Convert.ToInt32(Session["SectionId"])==12)
-            {
-                userID = 0;
-            }
-            dynamic listData = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/GetComments?ID="+Id+"&userID="+userID).Result;
-                if (response.IsSuccessStatusCode)
+                if (Convert.ToInt32(Session["SectionId"]) == 1 && Convert.ToInt32(Session["SectionId"]) == 12)
                 {
-                    listData = response.Content.ReadAsAsync<List<tbl_trn_MeetingAgendaComments>>().Result;
+                    userID = 0;
                 }
+                dynamic listData = null;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetComments?ID=" + sanitizer.Sanitize(Id) + "&userID=" + userID).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        listData = response.Content.ReadAsAsync<List<tbl_trn_MeetingAgendaComments>>().Result;
+                    }
+                }
+                ViewBag.CommentList = listData;
+                ViewBag.Meeting_id = Id;
+                return View();
             }
-            ViewBag.CommentList = listData;
-            ViewBag.Meeting_id = Id;
-            return View();
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
+        [SessionExpire]
+        [HandleError]
         public ActionResult SubmitMeetingComments(string meeting_id)
         {
             int userID = GetUserID();
@@ -2086,8 +2118,9 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult AddMeetingAgenda(string id, string mtype, string dated)
         {
-            ViewBag.mtype = mtype;
-            ViewBag.dated = dated;
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
+            ViewBag.mtype = sanitizer.Sanitize(mtype);
+            ViewBag.dated = sanitizer.Sanitize(dated);
             MeetingAgenda meetingAgenda = new MeetingAgenda();
             if (id == "0")
             {
@@ -2166,6 +2199,7 @@ namespace ACQ.Web.App.Controllers
         {
             try
             {
+                HtmlSanitizer sanitizer = new HtmlSanitizer();
                 MeetingAgenda model = new MeetingAgenda();
                 int UserID = GetUserID();
 
@@ -2174,7 +2208,7 @@ namespace ACQ.Web.App.Controllers
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/EditMeetingAgenda?ID=" + ID + "&UserID=" + UserID).Result;
+                    HttpResponseMessage response = client.GetAsync("AONW/EditMeetingAgenda?ID=" + sanitizer.Sanitize(ID.ToString()) + "&UserID=" + UserID).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         model = response.Content.ReadAsAsync<MeetingAgenda>().Result;
@@ -2204,36 +2238,44 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult UploadApprovalDocs(string ID,string mtype,string dated)
         {
-            string Version = null;
-            ViewBag.Meeting_id = ID;
-            ViewBag.mtype = mtype;
-            ViewBag.dated = dated;
-            int mID = Convert.ToInt32(Encryption.Decrypt(ID));
-            SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
-            MeetingAgenda Socmodel = new MeetingAgenda();
-            List<MeetingAgenda> listData = new List<MeetingAgenda>();
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(WebAPIUrl);
-                //HTTP GET
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                HttpResponseMessage response = client.GetAsync("AONW/BindMeetingAgenda?ID=" + mID + "&Version=" + Version).Result;
-                if (response.IsSuccessStatusCode)
+                HtmlSanitizer sanitizer = new HtmlSanitizer();
+                string Version = null;
+                ViewBag.Meeting_id = sanitizer.Sanitize(ID);
+                ViewBag.mtype = Encryption.Decrypt(sanitizer.Sanitize(mtype));
+                ViewBag.dated = Encryption.Decrypt(sanitizer.Sanitize(dated));
+                int mID = Convert.ToInt32(Encryption.Decrypt(ID));
+                SechduleMeetingAgedaViewModel model = new SechduleMeetingAgedaViewModel();
+                MeetingAgenda Socmodel = new MeetingAgenda();
+                List<MeetingAgenda> listData = new List<MeetingAgenda>();
+                using (var client = new HttpClient())
                 {
-                    listData = response.Content.ReadAsAsync<List<MeetingAgenda>>().Result;
-
-                    listData.ForEach(f =>
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/BindMeetingAgenda?ID=" + mID + "&Version=" + Version).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
-                    });
-                    model.TrnListMeeting = new List<MeetingAgenda>();
-                    model.TrnListMeeting = listData;
-                    ViewBag.MeetingAgendaList = listData;
-                    
-                   
+                        listData = response.Content.ReadAsAsync<List<MeetingAgenda>>().Result;
+
+                        listData.ForEach(f =>
+                        {
+                            f.MeetingAgendaDateString = f.MeetingAgendaDate.HasValue ? f.MeetingAgendaDate.Value.ToString("dd/MM/yyyy") : "";
+                        });
+                        model.TrnListMeeting = new List<MeetingAgenda>();
+                        model.TrnListMeeting = listData;
+                        ViewBag.MeetingAgendaList = listData;
+
+
+                    }
                 }
+                return View();
             }
-            return View();
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpPost]
@@ -2342,6 +2384,108 @@ namespace ACQ.Web.App.Controllers
 
 
         #endregion
+
+        #region UpdateSOC
+        [Route("UpdateSOC")]
+        [HttpGet]
+        [SessionExpire]
+        [HandleError]
+        public ActionResult UpdateSOC(string ID)
+        {
+            HtmlSanitizer sanitizer = new HtmlSanitizer();
+            try
+            {
+                ID = Encryption.Decrypt(sanitizer.Sanitize(ID));
+                SAVESOCVIEWMODEL model = new SAVESOCVIEWMODEL();
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/EditSocMaster?ID=" + ID + "").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        model = response.Content.ReadAsAsync<SAVESOCVIEWMODEL>().Result;
+                        model.item_description = Encryption.Decrypt(model.item_description);
+                        ViewBag.item = Encryption.Encrypt(model.item_description);
+                        model.Quantity = Encryption.Decrypt(model.Quantity);
+                        model.Cost = Encryption.Decrypt(model.Cost);
+                        model.Categorisation = Encryption.Decrypt(model.Categorisation);
+                        model.Service_Lead_Service = Encryption.Decrypt(model.Service_Lead_Service);
+                        model.AoN_Accorded_By = Encryption.Decrypt(model.AoN_Accorded_By);
+                        model.SystemCase = Encryption.Decrypt(model.SystemCase);
+                        model.SoCCase = Encryption.Decrypt(model.SoCCase);
+                        model.IC_percentage = Encryption.Decrypt(model.IC_percentage);
+                        model.Essential_parameters = Encryption.Decrypt(model.Essential_parameters);
+                        model.EPP = Encryption.Decrypt(model.EPP);
+                        model.Trials_Required = Encryption.Decrypt(model.Trials_Required);
+                        model.Offset_applicable = Encryption.Decrypt(model.Offset_applicable);
+                        model.Option_clause_applicable = Encryption.Decrypt(model.Option_clause_applicable);
+                        model.Warrenty_applicable = Encryption.Decrypt(model.Warrenty_applicable);
+                        model.Warrenty_Remarks = Encryption.Decrypt(model.Warrenty_Remarks);
+                        model.Any_other_aspect = Encryption.Decrypt(model.Any_other_aspect);
+                        model.SocAName = Encryption.Decrypt(model.SocAName);
+                        model.SocADesignation = Encryption.Decrypt(model.SocADesignation);
+                        model.SocAApprovalRef = Encryption.Decrypt(model.SocAApprovalRef);
+                        model.SocAApprovalDate = Encryption.Decrypt(model.SocAApprovalDate);
+                        model.SocSDName = Encryption.Decrypt(model.SocSDName);
+                        model.SocSDDesignation = Encryption.Decrypt(model.SocSDDesignation);
+                        model.SocSDPhone = Encryption.Decrypt(model.SocSDPhone);
+                        model.SocSDDate = Encryption.Decrypt(model.SocSDDate);
+                    }
+                    return View(model);
+
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpPost]
+        [Route("UpdateSOC")]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateSOC(SAVESOCVIEWMODEL model)
+        {
+            try
+            {
+                HtmlSanitizer sentizer = new HtmlSanitizer();
+                model.item_description = Encryption.Encrypt(sentizer.Sanitize(model.item_description));
+                model.Service_Lead_Service = Encryption.Encrypt(sentizer.Sanitize(model.Service_Lead_Service));
+                model.SoCCase = Encryption.Encrypt(sentizer.Sanitize(model.SoCCase));
+                model.Quantity = Encryption.Encrypt(sentizer.Sanitize(model.Quantity));
+                model.Cost = Encryption.Encrypt(sentizer.Sanitize(model.Cost));
+                model.Tax_Duties = Encryption.Encrypt(sentizer.Sanitize(model.Tax_Duties));
+                model.IC_percentage = Encryption.Encrypt(sentizer.Sanitize(model.IC_percentage));
+                model.Essential_parameters = Encryption.Encrypt(sentizer.Sanitize(model.Essential_parameters));
+                model.Any_other_aspect = Encryption.Encrypt(sentizer.Sanitize(model.Any_other_aspect));
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(WebAPIUrl);
+                HttpResponseMessage postJob = await client.PostAsJsonAsync<SAVESOCVIEWMODEL>(WebAPIUrl + "AONW/UpdateSOC", model);
+                bool postResult = postJob.IsSuccessStatusCode;
+                if (postResult == true)
+                {
+                    //TempData["Msg"] = "Record Saved Successfully";
+                }
+                else
+                {
+                    //TempData["Msg"] = "Record Not Saved Successfully";
+
+                }
+                ViewBag.Msg = "Updated Successfully";
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            return View(model);
+        }
+        #endregion
         #region TimeLineCode
         [Route("BindDDlSoCMByID")]
         [HandleError]
@@ -2381,6 +2525,14 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult Contract()
         {
+            if(TempData["File"]!=null)
+            {
+                ViewBag.File = TempData["File"].ToString();
+            }
+            if (TempData["FileStage"]!=null)
+            {
+                ViewBag.FileStage = TempData["FileStage"].ToString();
+            }
             if(TempData["Uploadsuccess"]!=null)
             {
                 bool upload =(bool)TempData["Uploadsuccess"];
@@ -2560,7 +2712,9 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                i = 0;
+                ViewBag.Message = ex.Message.ToString();
+                return Json(i, JsonRequestBehavior.AllowGet);
             }
             return Json(i, JsonRequestBehavior.AllowGet);
         }

@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>E:\MOD_Portal_Publish</_PublishTargetUrl>
+    <History>True|2021-04-25T11:21:32.9821778Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Browsers/qt.browser">
@@ -1418,28 +1419,28 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>04/22/2021 11:21:55</publishTime>
+      <publishTime>04/25/2021 16:50:34</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>04/22/2021 11:21:55</publishTime>
+      <publishTime>04/25/2021 16:50:34</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.dll">
-      <publishTime>04/22/2021 10:22:43</publishTime>
+      <publishTime>04/25/2021 16:50:31</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.pdb">
-      <publishTime>04/22/2021 10:22:43</publishTime>
+      <publishTime>04/25/2021 16:50:31</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>04/22/2021 10:53:18</publishTime>
+      <publishTime>04/25/2021 16:32:06</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>04/21/2021 22:22:25</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>04/22/2021 10:53:18</publishTime>
+      <publishTime>04/25/2021 16:32:06</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
@@ -1451,13 +1452,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:54</publishTime>
     </File>
     <File Include="bin/App_Browsers.dll">
-      <publishTime>04/22/2021 11:22:31</publishTime>
+      <publishTime>04/25/2021 16:50:52</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/22/2021 11:22:30</publishTime>
+      <publishTime>04/25/2021 16:50:51</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/22/2021 11:22:30</publishTime>
+      <publishTime>04/25/2021 16:50:50</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>04/21/2021 22:21:54</publishTime>
@@ -2006,7 +2007,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:57</publishTime>
     </File>
     <File Include="bin/__browserCapabilitiesCompiler.compiled">
-      <publishTime>04/22/2021 11:22:31</publishTime>
+      <publishTime>04/25/2021 16:50:52</publishTime>
     </File>
     <File Include="Blox2.ttf">
       <publishTime>04/21/2021 22:21:51</publishTime>
@@ -4448,7 +4449,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:59</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/22/2021 11:22:10</publishTime>
+      <publishTime>04/25/2021 16:50:39</publishTime>
     </File>
     <File Include="UploadApprovedSOC/sample.pdf">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4487,7 +4488,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/AONW/AddSocCommit.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/23/2021 13:45:27</publishTime>
     </File>
     <File Include="Views/AONW/BulkUpload.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4532,7 +4533,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeeting.cshtml">
-      <publishTime>04/22/2021 10:49:20</publishTime>
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeetingComments.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4556,13 +4557,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/Contract/ContractAndStageList.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/Contract/ContractList.cshtml">
-      <publishTime>04/21/2021 22:21:52</publishTime>
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/Contract/ContractReport.cshtml">
       <publishTime>04/22/2021 10:49:20</publishTime>
+    </File>
+    <File Include="Views/Contract/GetContractBaseOnContractID.cshtml">
+      <publishTime>04/25/2021 16:27:24</publishTime>
+    </File>
+    <File Include="Views/Contract/GetContractBaseOnFinancialYear.cshtml">
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/Error/NotFound.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4616,13 +4623,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Views/Shared/_ContractMasterPartial.cshtml">
-      <publishTime>04/22/2021 10:49:20</publishTime>
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/Shared/_ContractStagePartial.cshtml">
       <publishTime>04/22/2021 10:49:20</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/22/2021 10:49:20</publishTime>
+      <publishTime>04/25/2021 16:27:24</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>04/21/2021 22:21:52</publishTime>
@@ -4643,7 +4650,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2021 22:21:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/22/2021 11:21:58</publishTime>
+      <publishTime>04/25/2021 16:50:36</publishTime>
     </File>
   </ItemGroup>
 </Project>

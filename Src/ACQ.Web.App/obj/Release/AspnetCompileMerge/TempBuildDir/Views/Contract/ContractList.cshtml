@@ -75,21 +75,34 @@
                                     foreach (var item in ViewBag.ContractList)
                                     {
 
-                                        <tr>
-                                            <td>@item.ContractId</td>
-                                            <td>@item.Contract_Number</td>
-                                            <td>@item.DateOfContractSigning.ToString("dd/M/yyyy").Replace('-', '/')</td>
-                                            <td>@item.Descriptions</td>
-                                            <td>@item.Category</td>
-                                            <td>@item.ContractValue</td>
-                                            <td>@item.FinalDeliveryDate.ToString("dd/M/yyyy").Replace('-', '/')</td>
+                                <tr>
+                                    <td>@item.ContractId</td>
+                                    <td>@item.Contract_Number</td>
+                                    @if (item.DateOfContractSigning != null)
+                                    {
+                                        <td>@item.DateOfContractSigning.ToString("dd/M/yyyy").Replace('-', '/')</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>@item.Descriptions</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.ContractValue</td>
+                                    @if (item.FinalDeliveryDate != null)
+                                    {
+                                        <td>@item.FinalDeliveryDate.ToString("dd/M/yyyy").Replace('-', '/')</td>
+                                    }
+                                    else
+                                    {
+                                        <td> </td>
+                                    }
+                                        <td>
+                                            <a href="/ContractStageList?ContractId=@item.ContractId&cont=false"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="/ContractStageList?ContractId=@item.ContractId&cont=true"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        </td>
 
-                                            <td>
-                                                <a href="/ContractStageList?ContractId=@item.ContractId&cont=false"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                <a href="/ContractStageList?ContractId=@item.ContractId&cont=true"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                            </td>
-
-                                        </tr>
+                                    </tr>
                                     }
                                 }
 

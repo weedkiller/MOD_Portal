@@ -32,12 +32,7 @@ namespace ACQ.Web.App.Controllers
         private static string DashboardUrl = ConfigurationManager.AppSettings["DashboardUrl"].ToString();
         // GET: Account
 
-        public AccountController()
-        {
-            
-        }
-
-
+       
 
         [Route("imagelogo")]
         public ActionResult imagelogo()
