@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Upload Approved MoM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="meetingagendatable">
+                <thead>
+                    <tr>
+                        <th>Type of Agenda </th>
+                        <th>Agenda Item</th>
+                        <th>AON Accord</th>
+                        <th>AON Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in ViewBag.MeetingAgendaList)
+                    {
+                    <tr>
+                        <td>@item.AgendaItem</td>
+                        <td>@item.TypeofAgendaDescription</td>
+                        <td>@item.IsActive</td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(item.AONNumber))
+                            {
+                            <span>@ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.AONNumber)</span>
+                            }
+                            else
+                            {
+                                <form method="post" action="@Url.Action("GenerateAONNumber","AONW")">
+                                    <input type="hidden" name="Pid" value="@item.Pid" />
+                                    <input type="hidden" name="TypeofAgenda" value="@item.TypeofAgenda" />
+                                    <input type="hidden" name="meeting_id" value="@Request.QueryString["ID"]" />
+                                    <input type="hidden" name="agenda_description" value="@item.TypeofAgendaDescription" />
+                                    <button type="submit" class="btn btn-primary">Generate AoN Number</button>
+                                </form>
+                            }
+
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<h2>Upload Approved MoM @ViewBag.mtype Dated : @Request.QueryString["dated"]</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <hr/>
+            <div>
+                @using (Html.BeginForm("UploadDocs","AONW",FormMethod.Post,new {@enctype="multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <input type="hidden" value="@ViewBag.Meeting_id" name="meeting_id" />
+                    <input class="form-control" type="file" name="pdfFile"/>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <span class="text-success">@TempData["Msg"]</span>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

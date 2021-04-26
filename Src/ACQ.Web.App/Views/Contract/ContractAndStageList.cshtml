@@ -144,14 +144,14 @@
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <label for=" " class="col-form-label">Contract Id <span style="color: red;">*</span> <span id="vldContractId" style="color:red;display:none">Please enter Contract Id</span></label>
                             <div class="form-group m-0">
-                                <input type="text" name="ContractId" id="ContractId" placeholder="Contract Id" class="form-control default-disabled" value="@contract.ContractId" disabled />
+                                <input type="text" name="ContractId" id="ContractId" placeholder="Contract Id" class="form-control default-disabled" value="@contract.ContractId" disabled autocomplete="off"/>
 
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <label for=" " class="col-form-label">Contract Number<span style="color:red;">*</span><span id="vldContract_Number" style="color:red;display:none">Please enter Contract Number</span></label>
                             <div class="form-group m-0">
-                                <input type="text" name="Contract_Number" id="Contract_Number" placeholder="Contract Number" class="form-control default-disabled" value="@contract.Contract_Number" disabled />
+                                <input type="text" name="Contract_Number" id="Contract_Number" placeholder="Contract Number" class="form-control default-disabled" value="@contract.Contract_Number" disabled autocomplete="off"/>
 
                             </div>
                         </div>
@@ -174,27 +174,36 @@
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <label for=" " class="col-form-label">Category<span style="color:red;">*</span><span id="vldCategory" style="color:red;display:none">Please enter Category</span></label>
                             <div class="form-group m-0">
-                                <input type="text" name="Category" id="Category" placeholder="Category" class="form-control default-disabled" value="@contract.Category" disabled />
+                                <input type="text" name="Category" id="Category" placeholder="Category" class="form-control default-disabled" value="@contract.Category" disabled autocomplete="off"/>
 
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <div class="form-group m-0">
                                 <label for=" " class="col-form-label">Date Of Contract Signing <span style="color:red;">*</span><span id="vldDateOfContractSigning" style="color:red;display:none">Please enter Date Of Contract Signing</span></label>
-                                <input type="text" name="DateOfContractSigning" id="DateOfContractSigning" value="@contract.DateOfContractSigning.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Date Of Contract Signing" class="form-control datepicker default-disabled" disabled />
+                                @if (contract.DateOfContractSigning != null)
+                                {
+                                    <input type="text" name="DateOfContractSigning" id="DateOfContractSigning" value="@contract.DateOfContractSigning.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Date Of Contract Signing" class="form-control datepicker default-disabled" disabled autocomplete="off" />
+
+                                }
+                                else
+                                {
+                                    <input type="text" name="DateOfContractSigning" id="DateOfContractSigning"  placeholder="Date Of Contract Signing" class="form-control datepicker default-disabled" disabled autocomplete="off" />
+
+                                }
 
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <label for=" " class="col-form-label">Effective Date/TO Date</label>
                             <div class="form-group m-0">
-                                @if (@contract.EffectiveDate != null)
+                                @if (contract.EffectiveDate != null)
                                 {
-                                    <input type="text" name="EffectiveDate" id="EffectiveDate" value="@contract.EffectiveDate.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Effective Date/TO Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="EffectiveDate" id="EffectiveDate" value="@contract.EffectiveDate.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Effective Date/TO Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="EffectiveDate" id="EffectiveDate" placeholder="Effective Date/TO Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="EffectiveDate" id="EffectiveDate" placeholder="Effective Date/TO Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -208,11 +217,11 @@
                             <div class="form-group m-0">
                                 @if (contract.ABGDate != null)
                                 {
-                                    <input type="text" name="ABGDate" id="ABGDate" placeholder="ABG Date/LC Opening Date" value="@contract.ABGDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="ABGDate" id="ABGDate" placeholder="ABG Date/LC Opening Date" value="@contract.ABGDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="ABGDate" id="ABGDate" placeholder="ABG Date/LC Opening Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="ABGDate" id="ABGDate" placeholder="ABG Date/LC Opening Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -223,11 +232,11 @@
                             <div class="form-group m-0">
                                 @if (@contract.PWBGPercentage != null)
                                 {
-                                    <input type="text" name="PWBG" id="PWBGPercentage" value="@contract.PWBGPercentage" placeholder="PWBG %" class="form-control default-disabled AllowNumber" disabled />
+                                    <input type="text" name="PWBG" id="PWBGPercentage" value="@contract.PWBGPercentage" placeholder="PWBG %" class="form-control default-disabled AllowNumber" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="PWBG" id="PWBGPercentage" placeholder="PWBG %" class="form-control default-disabled AllowNumber" disabled />
+                                    <input type="text" name="PWBG" id="PWBGPercentage" placeholder="PWBG %" class="form-control default-disabled AllowNumber" disabled autocomplete="off"/>
                                 }
 
 
@@ -238,11 +247,11 @@
                             <div class="form-group m-0">
                                 @if (@contract.PWBGDate != null)
                                 {
-                                    <input type="text" name="PWBGDate" id="PWBGDate" value="@contract.PWBGDate.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="PWBG Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="PWBGDate" id="PWBGDate" value="@contract.PWBGDate.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="PWBG Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="PWBGDate" id="PWBGDate" placeholder="PWBG Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="PWBGDate" id="PWBGDate" placeholder="PWBG Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -260,11 +269,11 @@
                             <div class="form-group m-0">
                                 @if (!string.IsNullOrEmpty(contract.Incoterms))
                                 {
-                                    <input type="text" name="Incoterms" id="Incoterms" value="@contract.Incoterms" placeholder="Incoterms " class="form-control default-disabled" disabled />
+                                    <input type="text" name="Incoterms" id="Incoterms" value="@contract.Incoterms" placeholder="Incoterms " class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="Incoterms" id="Incoterms" placeholder="Incoterms " class="form-control default-disabled" disabled />
+                                    <input type="text" name="Incoterms" id="Incoterms" placeholder="Incoterms " class="form-control default-disabled" disabled autocomplete="off" />
                                 }
 
 
@@ -275,11 +284,11 @@
                             <div class="form-group m-0">
                                 @if (!string.IsNullOrEmpty(contract.Warranty))
                                 {
-                                    <input type="text" name="Warranty" id="Warranty" value="@contract.Warranty" placeholder="Warranty " class="form-control default-disabled" disabled />
+                                    <input type="text" name="Warranty" id="Warranty" value="@contract.Warranty" placeholder="Warranty " class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="Warranty" id="Warranty" placeholder="Warranty " class="form-control default-disabled" disabled />
+                                    <input type="text" name="Warranty" id="Warranty" placeholder="Warranty " class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -289,7 +298,7 @@
                         <div class="col-md-4 col-sm-4 col-lg-4">
                             <label for=" " class=" col-form-label">Contract Value<span style="color:red;">*</span><span id="vldContractValue" style="color:red;display:none">Please enter ContractValue</span></label>
                             <div class="form-group m-0">
-                                <input type="text" name="ContractValue" id="ContractValue" value="@contract.ContractValue" placeholder="Contract Value " class="form-control default-disabled AllowDecimal" disabled />
+                                <input type="text" name="ContractValue" id="ContractValue" value="@contract.ContractValue" placeholder="Contract Value " class="form-control default-disabled AllowDecimal" disabled autocomplete="off"/>
 
                             </div>
                         </div>
@@ -321,11 +330,11 @@
                             <div class="form-group m-0">
                                 @if (!string.IsNullOrEmpty(contract.TaxesAndDuties))
                                 {
-                                    <input type="text" name="TaxesAndDuties" value="@contract.TaxesAndDuties" id="TaxesAndDuties" placeholder="Taxes and Duties" class="form-control default-disabled" disabled />
+                                    <input type="text" name="TaxesAndDuties" value="@contract.TaxesAndDuties" id="TaxesAndDuties" placeholder="Taxes and Duties" class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="TaxesAndDuties" id="TaxesAndDuties" placeholder="Taxes and Duties" class="form-control default-disabled" disabled />
+                                    <input type="text" name="TaxesAndDuties" id="TaxesAndDuties" placeholder="Taxes and Duties" class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -336,11 +345,11 @@
                             <div class="form-group m-0">
                                 @if (contract.FinalDeliveryDate != null)
                                 {
-                                    <input type="text" name="FinalDeliveryDate" value="@contract.FinalDeliveryDate.Value.ToString("dd/M/yyyy").Replace('-','/')" id="FinalDeliveryDate" placeholder="Final Delivery Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="FinalDeliveryDate" value="@contract.FinalDeliveryDate.Value.ToString("dd/M/yyyy").Replace('-','/')" id="FinalDeliveryDate" placeholder="Final Delivery Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="FinalDeliveryDate" id="FinalDeliveryDate" placeholder="Final Delivery Date" class="form-control datepicker default-disabled" disabled />
+                                    <input type="text" name="FinalDeliveryDate" id="FinalDeliveryDate" placeholder="Final Delivery Date" class="form-control datepicker default-disabled" disabled autocomplete="off"/>
                                 }
 
 
@@ -351,11 +360,11 @@
                             <div class="form-group m-0">
                                 @if (string.IsNullOrEmpty(contract.GracePeriod))
                                 {
-                                    <input type="text" name="GracePeriod" id="GracePeriod" value="@contract.GracePeriod" placeholder="Grace Period" class="form-control default-disabled" disabled />
+                                    <input type="text" name="GracePeriod" id="GracePeriod" value="@contract.GracePeriod" placeholder="Grace Period" class="form-control default-disabled" disabled autocomplete="off"/>
                                 }
                                 else
                                 {
-                                    <input type="text" name="GracePeriod" id="GracePeriod" placeholder="Grace Period" class="form-control default-disabled" disabled />
+                                    <input type="text" name="GracePeriod" id="GracePeriod" placeholder="Grace Period" class="form-control default-disabled" disabled autocomplete="off" />
                                 }
 
 
@@ -389,7 +398,7 @@
                                                 <input type="hidden" class="StageId" value="@item.Id" />
                                                 <div class="form-group">
                                                     <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>
-                                                    <input type="text" name="StageNumber" placeholder="Stage Number" value="@item.StageNumber" class="form-control StageNumber  AllowNumber" disabled />
+                                                    <input type="text" name="StageNumber" placeholder="Stage Number" value="@item.StageNumber" class="form-control StageNumber  AllowNumber" disabled autocomplete="off"/>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
@@ -397,11 +406,11 @@
                                                     <label>Stage Description</label>
                                                     @if (string.IsNullOrEmpty(item.stageDescription))
                                                     {
-                                                        <input type="text" name="stageDescription" placeholder="Stage Description" value="@item.stageDescription" class="form-control StageDescription " disabled />
+                                                        <input type="text" name="stageDescription" placeholder="Stage Description" value="@item.stageDescription" class="form-control StageDescription " disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription " disabled />
+                                                        <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription " disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -411,11 +420,11 @@
                                                     <label>Stage Start Date</label>
                                                     @if (item.StageStartdate != null)
                                                     {
-                                                        <input type="text" name="StageStartdate" placeholder="Stage Start Date" value="@item.StageStartdate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageStartDate datepicker " disabled />
+                                                        <input type="text" name="StageStartdate" placeholder="Stage Start Date" value="@item.StageStartdate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageStartDate datepicker " disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker " disabled />
+                                                        <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker " disabled autocomplete="off"/>
                                                     }
                                                 </div>
                                             </div>
@@ -424,11 +433,11 @@
                                                     <label>Stage Completion Date</label>
                                                     @if (item.StageCompletionDate != null)
                                                     {
-                                                        <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" value="@item.StageCompletionDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageCompletionDate datepicker " disabled />
+                                                        <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" value="@item.StageCompletionDate.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control StageCompletionDate datepicker " disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker " disabled />
+                                                        <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker " disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -439,11 +448,11 @@
                                                     <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>
                                                     @if (item.PercentOfContractValue != null)
                                                     {
-                                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" value="@item.PercentOfContractValue" class="form-control PercentOfContractValue AllowNumber" disabled />
+                                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" value="@item.PercentOfContractValue" class="form-control PercentOfContractValue AllowNumber" disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" disabled />
+                                                        <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -451,7 +460,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Amount<span style="color:red;">*</span></label>
-                                                    <input type="text" name="Amount" placeholder="Amount" value="@item.Amount" class="form-control Amount AllowDecimal" disabled />
+                                                    <input type="text" name="Amount" placeholder="Amount" value="@item.Amount" class="form-control Amount AllowDecimal" disabled autocomplete="off"/>
                                                 </div>
                                             </div>
 
@@ -460,11 +469,11 @@
                                                     <label>Due Date Of Payment<span style="color:red;">*</span></label>
                                                     @if (item.DueDateOfPayment != null)
                                                     {
-                                                        <input type="text" name="DueDateOfPayment" value="@item.DueDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" disabled />
+                                                        <input type="text" name="DueDateOfPayment" value="@item.DueDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" disabled />
+                                                        <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" disabled autocomplete="off"/>
                                                     }
                                                 </div>
                                             </div>
@@ -473,11 +482,11 @@
                                                     <label>Conditions</label>
                                                     @if (!string.IsNullOrEmpty(item.Conditions))
                                                     {
-                                                        <input type="text" name="Conditions" placeholder="Conditions" value="@item.Conditions" class="form-control Conditions" disabled />
+                                                        <input type="text" name="Conditions" placeholder="Conditions" value="@item.Conditions" class="form-control Conditions" disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" disabled />
+                                                        <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -487,11 +496,11 @@
                                                     <label>Revised Date Of Payment</label>
                                                     @if (item.RevisedDateOfpayment != null)
                                                     {
-                                                        <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" value="@item.RevisedDateOfpayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control RevisedDateOfPayment datepicker " disabled />
+                                                        <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" value="@item.RevisedDateOfpayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control RevisedDateOfPayment datepicker " disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment"  class="form-control RevisedDateOfPayment datepicker " disabled />
+                                                        <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment"  class="form-control RevisedDateOfPayment datepicker " disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -501,11 +510,11 @@
                                                     <label>Reason For Slippage</label>
                                                     @if (!string.IsNullOrEmpty(item.ReasonsForSlippage))
                                                     {
-                                                        <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" value="@item.ReasonsForSlippage" class="form-control ReasonForSlippage " disabled />
+                                                        <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" value="@item.ReasonsForSlippage" class="form-control ReasonForSlippage " disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage"  class="form-control ReasonForSlippage " disabled />
+                                                        <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage"  class="form-control ReasonForSlippage " disabled autocomplete="off"/>
                                                     }
 
                                                 </div>
@@ -513,14 +522,14 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>
-                                                    <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" value="@item.ActualDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control ActualDateOfPayment datepicker" disabled />
+                                                    <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" value="@item.ActualDateOfPayment.Value.ToString("dd/M/yyyy").Replace('-','/')" class="form-control ActualDateOfPayment datepicker" disabled autocomplete="off"/>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>
-                                                    <input type="text" name="TotalPaymentMade" value="@item.TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade  AllowDecimal" disabled />
+                                                    <input type="text" name="TotalPaymentMade" value="@item.TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade  AllowDecimal" disabled autocomplete="off"/>
 
                                                 </div>
                                             </div>
@@ -529,11 +538,11 @@
                                                     <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>
                                                     @if (item.ExpendMadeTill31March != null)
                                                     {
-                                                        <input type="text" name="ExpendMadeTill31March" value="@item.ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" disabled />
+                                                        <input type="text" name="ExpendMadeTill31March" value="@item.ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" disabled autocomplete="off"/>
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" name="ExpendMadeTill31March"  placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" disabled />
+                                                        <input type="text" name="ExpendMadeTill31March"  placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" disabled autocomplete="off"/>
                                                     }
 
 
@@ -667,7 +676,7 @@
 
         $(document).on("click", '.AddNewStage', function () {
 
-            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" />                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" />                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>                            <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" />                          </div>                         </div>               <div class="col-sm-4">                                     <div class="form-group ">                                         <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>                                         <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" />                                                                            </div>                                 </div>            <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                    <option value="Full">Full</option>                                             <option value="Part">Part</option>                              </select>                          </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
+            $('.table-body').append(' <div class="Stage"><hr/><div class="row"><div class="col-sm-4"><div class="form-group ">                                 <label class="col-form-label">Stage Number <span style="color:red;">*</span></label>                                 <input type="text" name="StageNumber" placeholder="Stage Number" class="form-control StageNumber AllowNumber" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Description</label>                                 <input type="text" name="stageDescription" placeholder="Stage Description" class="form-control StageDescription" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Start Date</label>                                 <input type="text" name="StageStartdate" placeholder="Stage Start Date" class="form-control StageStartDate datepicker" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Stage Completion Date</label>                                 <input type="text" name="StageCompletionDate" placeholder="Stage Completion Date" class="form-control StageCompletionDate datepicker" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                              <div class="form-group ">                                 <label class="col-form-label">% Of Contract Value<span style="color:red;">*</span></label>                                 <input type="text" name="PercentOfContractValue" placeholder="% Of Contract Value" class="form-control PercentOfContractValue AllowNumber" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Amount<span style="color:red;">*</span></label>                                 <input type="text" name="Amount" placeholder="Amount" class="form-control Amount AllowDecimal" autocomplete="off"/>                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Due Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="DueDateOfPayment" placeholder="Due Date Of Payment" class="form-control DueDateOfPayment datepicker" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Conditions</label>                                 <input type="text" name="Conditions" placeholder="Conditions" class="form-control Conditions" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Revised Date Of Payment</label>                                 <input type="text" name="RevisedDateOfpayment" placeholder="Revised Date Of Payment" class="form-control RevisedDateOfPayment datepicker" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label>Reason For Slippage</label>                                 <input type="text" name="ReasonsForSlippage" placeholder="Reason For Slippage" class="form-control ReasonForSlippage" autocomplete="off"/>                             </div>                         </div>                         <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Actual Date Of Payment<span style="color:red;">*</span></label>                                 <input type="text" name="ActualDateOfPayment" placeholder="Actual Date Of Payment" class="form-control ActualDateOfPayment datepicker" autocomplete="off"/>                             </div>                         </div>                          <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Total Payment Made<span style="color:red;">*</span></label>                            <input type="text" name="TotalPaymentMade" placeholder="Total Payment Made" class="form-control TotalPaymentMade AllowDecimal" autocomplete="off"/>                          </div>                         </div>               <div class="col-sm-4">                                     <div class="form-group ">                                         <label class="col-form-label">Expenditure Made Till 31th  March@*<span style="color:red;">*</span>*@</label>                                         <input type="text" name="ExpendMadeTill31March" placeholder="Expenditure Made Till 31th  March" class="form-control ExpendMadeTill31March AllowDecimal" autocomplete="off"/>                                                                            </div>                                 </div>            <div class="col-sm-4">                             <div class="form-group ">                                 <label class="col-form-label">Full or Part Payment Made<span style="color:red;">*</span></label>                                 <select class="form-select form-control FullorPartPaymentMade" name="FullorPartPaymentMade">                                    <option value="Full">Full</option>                                             <option value="Part">Part</option>                              </select>                          </div>                         </div>                          <div class="col-sm-4">                             <button type="button"  class="btn btn-sm btn-success AddNewStage btn-area"><i class="fa fa-plus" aria-hidden="true"></i></button>             <button type="button" class="btn btn-sm btn-danger DeleteStage btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>                      </div>                      </div>                 </div>');
 
         });
 
@@ -951,6 +960,7 @@
                         }
                         else {
                             toastr.error("form has not been Updated");
+                            window.location.reload();
                         }
                     },
                     failure: function (response) {

@@ -1,0 +1,172 @@
+﻿@model  ACQ.Web.ViewModel.FormMenu.AddFormMenuViewModel
+@{
+    ViewBag.Title = "AddRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+@*@{Html.RenderAction("GetSideMenuBar", "FormMenu");}*@
+@using (Html.BeginForm("AddRole", "FormMenu", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <section class="container-FLUID d-flex justify-content-center align-items-center  pb-4 loginBox" style="flex: 1 0 auto;">
+        <div class="col-md-12 bg-white">
+            <div class="p-4">
+                <h1 class="h2 text-center" style=" color: #3f80ea !important">Add Role  </h1>
+                <hr />
+                @Html.ValidationSummary()
+
+
+
+                <div class="form-group">
+                    @*<label>Select Role</label>*@
+                    <select id="FromName" class="form-control" name="FromName">
+                        <option>Choose Role</option>
+                        @if (Model != null)
+                        {
+                            foreach (var icategory in Model.UserList)
+                            {
+                                <option value="@icategory.UserId">@icategory.UserName</option>
+                            }
+                        }
+                    </select>
+                    <h7 id="categorycheck"></h7>
+                </div>
+
+                <div class="card flex-fill w-100">
+                    @if (Model != null && Model.menuList.Count() > 0)
+                    {
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="div1" class="portlet-body flip-scroll">
+                                    <table class="table mb-0 table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th scope="col">SNO.</th>
+                                                <th scope="col">Form Menu Name </th>
+                                                @*<th scope="col">Action Name</th>
+                                                    <th scope="col">Controller</th>*@
+                                                <th scope="col">IsActive </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int count = 1;}
+                                            @foreach (var SOC in Model.menuList)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input id="isChecked_@SOC.ID" type="checkbox" name="isChecked" value="@SOC.ID" />
+                                                    </td>
+                                                    <th scope="row">@count</th>
+                                                    <td class="text-wrap" id="isChecked_">@SOC.From_menu</td>
+                                                    @*<td>Version @SOC.ActionName</td>
+                                                        <td>@SOC.Controller</td>*@
+                                                    <td id="isChecked_">@SOC.IsActive</td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            Records Not Found.
+                        </div>
+                    }
+
+                </div>
+
+                <button class="btn btn-primary mt-4 mb-4 float-right" id="colcatsubmitbtn" type="submit" value="submit">Submit</button>
+
+
+            </div>
+        </div>
+    </section>
+}
+
+<div id="myModal1" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row register-form">
+                                <div class="col-md-12 ">
+                                    <label>Add Role Successfully.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div><br>
+            <div class="modal-footer">
+                <button type="button" id="btnclose" class="btn btn-sm btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script nonce="r@nd0m">
+    $(document).ready(function () {
+        $("#loader-wrapper").hide();
+        if ('@ViewBag.Msg' === "Save") {
+            $('#myModal1').modal({
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+
+            });
+        }
+    });
+     $('#btnclose').click(function () {
+        document.location = '@Url.Action("AddRole", "FormMenu")';
+     });
+
+
+    $("#FromName").change(function () {
+
+        var selectedCategory = $(this).children("option:selected").val();
+        if (selectedCategory != "Choose option...") {
+            $('#categorycheck').hide();
+            category_err = true;
+            $("#loader-wrapper").show();
+            var categoryId = $(this).val();
+
+            $.getJSON("/FormMenu/GetRoleList", { roleId: selectedCategory },
+                function (classesData1) {
+
+                    for (var i = 0; i < classesData1.length; i++) {
+                        $('#isChecked_' + classesData1[i].FormMenuID).attr('checked', true);
+                    }
+
+                    if (classesData1 != "") {
+                        $("#colcatsubmitbtn").html("Update");
+                    }
+                    else {
+                        $.getJSON("/FormMenu/GetMenuListJSON",
+                            function (classesData2) {
+                                for (var i = 0; i < classesData2.length; i++) {
+                                    $('#isChecked_' + classesData2[i].ID).attr('checked', false);
+                                }
+                                $("#colcatsubmitbtn").html("Submit");
+                            });
+                    }
+                });
+
+        }
+        else {
+
+        }
+    });
+</script>

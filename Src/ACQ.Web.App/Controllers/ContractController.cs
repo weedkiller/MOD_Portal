@@ -34,80 +34,64 @@ namespace ACQ.Web.App.Controllers
 
         public ContractController()
         {
-            if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+            if (BruteForceAttackss.bcontroller != "")
             {
-                BruteForceAttackss.date = System.DateTime.Now;
-                BruteForceAttackss.refreshcount = 1;
-            }
-            else
-            {
-                TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
-                if (tt.TotalSeconds <= 30)
+                if (BruteForceAttackss.bcontroller == "Contract")
                 {
-                    if (BruteForceAttackss.refreshcount > 20)
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
                     {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-                                    }
-                                }
-                            }
-                        }
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
                     }
                     else
                     {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                IEnumerable<LoginViewModel> model = null;
+                                using (var client2 = new HttpClient())
+                                {
+                                    client2.DefaultRequestHeaders.Clear();
+                                    client2.BaseAddress = new Uri(WebAPIUrl);
+                                    client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                                        parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                                    HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        LoginViewModel model1 = new LoginViewModel();
+                                        model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
+                                        if (model.First().Message == "Blocked")
+                                        {
+                                            BruteForceAttackss.refreshcount = 0;
+                                            BruteForceAttackss.date = null;
+                                            BruteForceAttackss.bcontroller = "";
+                                            System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
                     }
+
                 }
                 else
                 {
-                    if (BruteForceAttackss.refreshcount > 20)
-                    {
-                        if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                        {
-                            IEnumerable<LoginViewModel> model = null;
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.BaseAddress = new Uri(WebAPIUrl);
-                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                    parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                                HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                                if (response.IsSuccessStatusCode)
-                                {
-                                    LoginViewModel model1 = new LoginViewModel();
-                                    model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                                    if (model.First().Message == "Blocked")
-                                    {
-                                        System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    }
+                    BruteForceAttackss.refreshcount = 0;
+                    BruteForceAttackss.date = null;
+                    BruteForceAttackss.bcontroller = "Contract";
                 }
-
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "Contract";
             }
         }
 
@@ -126,165 +110,177 @@ namespace ACQ.Web.App.Controllers
             {
                 List<ContractDetails> Contracts = new List<ContractDetails>();
                 string filePath = string.Empty;
-                if (excel.file != null)
+                if (ModelState.IsValid)
                 {
-                    string path = Server.MapPath("/ExcelFile/");
-                    if (!Directory.Exists(path))
+                    if (excel.file != null)
                     {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    filePath = path + Path.GetFileName(excel.file.FileName);
-                    string extension = Path.GetExtension(excel.file.FileName);
-                    excel.file.SaveAs(filePath);
-
-                    string conString = string.Empty;
-                    switch (extension)
-                    {
-                        case ".xls": //Excel 97-03.
-                            //conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
-                            conString = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = { 0 }; Extended Properties = 'Excel 8.0;HDR=YES'";
-                            break;
-                        case ".xlsx": //Excel 07 and above.
-                            //conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
-                            conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'";
-                            break;
-                    }
-
-                    conString = string.Format(conString, filePath);
-
-                    using (OleDbConnection connExcel = new OleDbConnection(conString))
-                    {
-                        using (OleDbCommand cmdExcel = new OleDbCommand())
+                        string path = Server.MapPath("/ExcelFile/");
+                        filePath = path + Path.GetFileName(excel.file.FileName);
+                        string extension = Path.GetExtension(excel.file.FileName);
+                        if (excel.file.ContentType == "application/vnd.ms-excel" || excel.file.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                         {
-                            using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                            if (extension == ".xls" || extension == ".xlsx")
                             {
-                                DataTable dt = new DataTable();
-                                cmdExcel.Connection = connExcel;
-
-                                //Get the name of First Sheet.
-                                connExcel.Open();
-                                DataTable dtExcelSchema;
-                                dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                                string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                                connExcel.Close();
-
-                                //Read Data from First Sheet.
-                                connExcel.Open();
-                                cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
-                                odaExcel.SelectCommand = cmdExcel;
-                                odaExcel.Fill(dt);
-                                connExcel.Close();
-
-                                foreach (DataRow row in dt.Rows)
+                                if (!Directory.Exists(path))
                                 {
-                                    ContractDetails stage = new ContractDetails();
-                                    if (row["ContractId"] != DBNull.Value)
-                                    {
-                                        stage.ContractId = row["ContractId"].ToString();
-                                    }
-                                    if (row["Contract_Number"] != DBNull.Value)
-                                    {
-                                        stage.Contract_Number = row["Contract_Number"].ToString();
-                                    }
-                                    if (row["DateOfContractSigning"] != DBNull.Value)
-                                    {
-                                        stage.DateOfContractSigning = Convert.ToDateTime(row["DateOfContractSigning"]);
-                                    }
-                                    if (row["Descriptions"] != DBNull.Value)
-                                    {
-                                        stage.Descriptions = row["Descriptions"].ToString();
-                                    }
-                                    if (row["Category"] != DBNull.Value)
-                                    {
-                                        stage.Category = row["Category"].ToString();
-                                    }
-                                    if (row["EffectiveDate"] != DBNull.Value)
-                                    {
-                                        stage.EffectiveDate = Convert.ToDateTime(row["EffectiveDate"]);
-                                    }
-                                    if (row["ABGDate"] != DBNull.Value)
-                                    {
-                                        stage.ABGDate = Convert.ToDateTime(row["ABGDate"]);
-                                    }
-                                    if (row["PWBGPercentage"] != DBNull.Value)
-                                    {
-                                        stage.PWBGPercentage = Convert.ToInt32(row["PWBGPercentage"]);
-                                    }
-                                    if (row["PWBGDate"] != DBNull.Value)
-                                    {
-                                        stage.PWBGDate = Convert.ToDateTime(row["PWBGDate"]);
-                                    }
-                                    if (row["Incoterms"] != DBNull.Value)
-                                    {
-                                        stage.Incoterms = row["Incoterms"].ToString();
-                                    }
-                                    if (row["Warranty"] != DBNull.Value)
-                                    {
-                                        stage.Warranty = row["Warranty"].ToString();
-                                    }
-                                    if (row["ContractValue"] != DBNull.Value)
-                                    {
-                                        stage.ContractValue = Convert.ToDecimal(row["ContractValue"]);
-                                    }
-                                    if (row["FEContent"] != DBNull.Value)
-                                    {
-                                        stage.FEContent = row["FEContent"].ToString();
-                                    }
-                                    if (row["TaxesAndDuties"] != DBNull.Value)
-                                    {
-                                        stage.TaxesAndDuties = row["TaxesAndDuties"].ToString();
-                                    }
-                                    if (row["FinalDeliveryDate"] != DBNull.Value)
-                                    {
-                                        stage.FinalDeliveryDate = Convert.ToDateTime(row["FinalDeliveryDate"]);
-                                    }
-                                    if (row["GracePeriod"] != DBNull.Value)
-                                    {
-                                        stage.GracePeriod = row["GracePeriod"].ToString();
-                                    }
-                                    if (row["Services"] != DBNull.Value)
-                                    {
-                                        stage.Services = row["Services"].ToString();
-                                    }
-                                    Contracts.Add(stage);
+                                    Directory.CreateDirectory(path);
+                                }
 
 
+                                excel.file.SaveAs(filePath);
+
+                                string conString = string.Empty;
+                                switch (extension)
+                                {
+                                    case ".xls": //Excel 97-03.
+                                        conString = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = { 0 }; Extended Properties = 'Excel 8.0;HDR=YES'";
+                                        break;
+                                    case ".xlsx": //Excel 07 and above.
+                                        conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'";
+                                        break;
+                                }
+
+                                conString = string.Format(conString, filePath);
+
+                                using (OleDbConnection connExcel = new OleDbConnection(conString))
+                                {
+                                    using (OleDbCommand cmdExcel = new OleDbCommand())
+                                    {
+                                        using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                                        {
+                                            DataTable dt = new DataTable();
+                                            cmdExcel.Connection = connExcel;
+
+                                            //Get the name of First Sheet.
+                                            connExcel.Open();
+                                            DataTable dtExcelSchema;
+                                            dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                                            string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                                            connExcel.Close();
+
+                                            //Read Data from First Sheet.
+                                            connExcel.Open();
+                                            cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                                            odaExcel.SelectCommand = cmdExcel;
+                                            odaExcel.Fill(dt);
+                                            connExcel.Close();
+
+                                            foreach (DataRow row in dt.Rows)
+                                            {
+                                                ContractDetails stage = new ContractDetails();
+                                                if (row["ContractId"] != DBNull.Value)
+                                                {
+                                                    //stage.ContractId = row["ContractId"].ToString();
+                                                    stage.ContractId = sanitizer.Sanitize(row["ContractId"].ToString());
+                                                }
+                                                if (row["Contract_Number"] != DBNull.Value)
+                                                {
+                                                    stage.Contract_Number = sanitizer.Sanitize(row["Contract_Number"].ToString());
+                                                }
+                                                if (row["DateOfContractSigning"] != DBNull.Value)
+                                                {
+                                                    stage.DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(row["DateOfContractSigning"].ToString()));
+                                                }
+                                                if (row["Descriptions"] != DBNull.Value)
+                                                {
+                                                    stage.Descriptions = sanitizer.Sanitize(row["Descriptions"].ToString());
+                                                }
+                                                if (row["Category"] != DBNull.Value)
+                                                {
+                                                    stage.Category = sanitizer.Sanitize(row["Category"].ToString());
+                                                }
+                                                if (row["EffectiveDate"] != DBNull.Value)
+                                                {
+                                                    stage.EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(row["EffectiveDate"].ToString()));
+                                                }
+                                                if (row["ABGDate"] != DBNull.Value)
+                                                {
+                                                    stage.ABGDate = Convert.ToDateTime(sanitizer.Sanitize(row["ABGDate"].ToString()));
+                                                }
+                                                if (row["PWBGPercentage"] != DBNull.Value)
+                                                {
+                                                    stage.PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(row["PWBGPercentage"].ToString()));
+                                                }
+                                                if (row["PWBGDate"] != DBNull.Value)
+                                                {
+                                                    stage.PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(row["PWBGDate"].ToString()));
+                                                }
+                                                if (row["Incoterms"] != DBNull.Value)
+                                                {
+                                                    stage.Incoterms = sanitizer.Sanitize(row["Incoterms"].ToString());
+                                                }
+                                                if (row["Warranty"] != DBNull.Value)
+                                                {
+                                                    stage.Warranty = sanitizer.Sanitize(row["Warranty"].ToString());
+                                                }
+                                                if (row["ContractValue"] != DBNull.Value)
+                                                {
+                                                    stage.ContractValue = Convert.ToDecimal(sanitizer.Sanitize(row["ContractValue"].ToString()));
+                                                }
+                                                if (row["FEContent"] != DBNull.Value)
+                                                {
+                                                    stage.FEContent = sanitizer.Sanitize(row["FEContent"].ToString());
+                                                }
+                                                if (row["TaxesAndDuties"] != DBNull.Value)
+                                                {
+                                                    stage.TaxesAndDuties = sanitizer.Sanitize(row["TaxesAndDuties"].ToString());
+                                                }
+                                                if (row["FinalDeliveryDate"] != DBNull.Value)
+                                                {
+                                                    stage.FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(row["FinalDeliveryDate"].ToString()));
+                                                }
+                                                if (row["GracePeriod"] != DBNull.Value)
+                                                {
+                                                    stage.GracePeriod = sanitizer.Sanitize(row["GracePeriod"].ToString());
+                                                }
+                                                if (row["Services"] != DBNull.Value)
+                                                {
+                                                    stage.Services = sanitizer.Sanitize(row["Services"].ToString());
+                                                }
+                                                Contracts.Add(stage);
+
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    HttpResponseMessage postJob = await client.PostAsJsonAsync<List<ContractDetails>>(WebAPIUrl + "Contract/SaveContractExcel", Contracts);
+                                    bool postResult = postJob.IsSuccessStatusCode;
+                                    if (postResult == true)
+                                    {
+
+                                        Massege = "Success";
+                                        TempData["Uploadsuccess"] = true;
+                                    }
+                                    else
+                                    {
+                                        TempData["Uploadsuccess"] = false;
+                                        Massege = "Failed";
+                                    }
                                 }
                             }
                         }
+                        
                     }
                 }
-
-
-
-
-
-
-
-                using (var client = new HttpClient())
+                else
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    HttpResponseMessage postJob = await client.PostAsJsonAsync<List<ContractDetails>>(WebAPIUrl + "Contract/SaveContractExcel", Contracts);
-                    bool postResult = postJob.IsSuccessStatusCode;
-                    if (postResult == true)
-                    {
+                    TempData["File"] = "Upload Only Excel.";
+                    ModelState.AddModelError("", "Please upload Only Excel File");
+                    return RedirectToAction("Contract", "AONW");
 
-                        Massege = "Success";
-                        TempData["Uploadsuccess"] = true;
-                    }
-                    else
-                    {
-                        TempData["Uploadsuccess"] = false;
-                        Massege = "Failed";
-                    }
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.Message = ex.Message.ToString();
+                ModelState.AddModelError("", "Please upload Only Excel File");
+                return RedirectToAction("Contract", "AONW");
             }
-            //return Json(Massege, JsonRequestBehavior.AllowGet);
             return RedirectToAction("Contract", "AONW");
         }
 
@@ -298,157 +294,176 @@ namespace ACQ.Web.App.Controllers
             {
                 List<StageDetail> Contracts = new List<StageDetail>();
                 string filePath = string.Empty;
-                if (excel.file != null)
+
+                if (ModelState.IsValid)
                 {
-                    string path = Server.MapPath("/ExcelFile/");
-                    if (!Directory.Exists(path))
+                    if (excel.file != null)
                     {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    filePath = path + Path.GetFileName(excel.file.FileName);
-                    string extension = Path.GetExtension(excel.file.FileName);
-                    excel.file.SaveAs(filePath);
-
-                    string conString = string.Empty;
-                    switch (extension)
-                    {
-                        case ".xls": //Excel 97-03.
-                            //conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
-                            conString = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = { 0 }; Extended Properties = 'Excel 8.0;HDR=YES'";
-                            break;
-                        case ".xlsx": //Excel 07 and above.
-                            //conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
-                            conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'";
-                            break;
-                    }
-
-                    conString = string.Format(conString, filePath);
-
-                    using (OleDbConnection connExcel = new OleDbConnection(conString))
-                    {
-                        using (OleDbCommand cmdExcel = new OleDbCommand())
+                        string path = Server.MapPath("/ExcelFile/");
+                        filePath = path + Path.GetFileName(excel.file.FileName);
+                        string extension = Path.GetExtension(excel.file.FileName);
+                        if (excel.file.ContentType == "application/vnd.ms-excel" || excel.file.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                         {
-                            using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                            if (extension == ".xls" || extension == ".xlsx")
                             {
-                                DataTable dt = new DataTable();
-                                cmdExcel.Connection = connExcel;
-
-                                //Get the name of First Sheet.
-                                connExcel.Open();
-                                DataTable dtExcelSchema;
-                                dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                                string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
-                                connExcel.Close();
-
-                                //Read Data from First Sheet.
-                                connExcel.Open();
-                                cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
-                                odaExcel.SelectCommand = cmdExcel;
-                                odaExcel.Fill(dt);
-                                connExcel.Close();
-
-                                foreach (DataRow row in dt.Rows)
+                                if (!Directory.Exists(path))
                                 {
-                                    StageDetail stage = new StageDetail();
-                                    if (row["ContractmasterId"] != DBNull.Value)
-                                    {
-                                        stage.ContractmasterId = Convert.ToInt32(row["ContractmasterId"]);
-                                    }
-                                    if (row["ContractId"] != DBNull.Value)
-                                    {
-                                        stage.ContractId = row["ContractId"].ToString();
-                                    }
-                                    if (row["StageNumber"] != DBNull.Value)
-                                    {
-                                        stage.StageNumber = Convert.ToInt32(row["StageNumber"]);
-                                    }
-                                    if (row["stageDescription"] != DBNull.Value)
-                                    {
-                                        stage.stageDescription = row["stageDescription"].ToString();
-                                    }
-                                    if (row["StageStartdate"] != DBNull.Value)
-                                    {
-                                        stage.StageStartdate = Convert.ToDateTime(row["StageStartdate"]);
-                                    }
-                                    if (row["StageCompletionDate"] != DBNull.Value)
-                                    {
-                                        stage.StageCompletionDate = Convert.ToDateTime(row["StageCompletionDate"]);
-                                    }
-                                    if (row["PercentOfContractValue"] != DBNull.Value)
-                                    {
-                                        stage.PercentOfContractValue = Convert.ToInt32(row["PercentOfContractValue"]);
-                                    }
-                                    if (row["Amount"] != DBNull.Value)
-                                    {
-                                        stage.Amount = Convert.ToDecimal(row["Amount"]);
-                                    }
-                                    if (row["DueDateOfPayment"] != DBNull.Value)
-                                    {
-                                        stage.DueDateOfPayment = Convert.ToDateTime(row["DueDateOfPayment"]);
-                                    }
-                                    if (row["Conditions"] != DBNull.Value)
-                                    {
-                                        stage.Conditions = row["Conditions"].ToString();
-                                    }
-                                    if (row["RevisedDateOfpayment"] != DBNull.Value)
-                                    {
-                                        stage.RevisedDateOfpayment = Convert.ToDateTime(row["RevisedDateOfpayment"]);
-                                    }
-                                    if (row["ReasonsForSlippage"] != DBNull.Value)
-                                    {
-                                        stage.ReasonsForSlippage = row["ReasonsForSlippage"].ToString();
-                                    }
-                                    if (row["ActualDateOfPayment"] != DBNull.Value)
-                                    {
-                                        stage.ActualDateOfPayment = Convert.ToDateTime(row["ActualDateOfPayment"]);
-                                    }
-                                    if (row["TotalPaymentMade"] != DBNull.Value)
-                                    {
-                                        stage.TotalPaymentMade = Convert.ToDecimal(row["TotalPaymentMade"]);
-                                    }
-                                    if (row["FullorPartPaymentMade"] != DBNull.Value)
-                                    {
-                                        stage.FullorPartPaymentMade = row["FullorPartPaymentMade"].ToString();
-                                    }
-                                    if (row["ExpendMadeTill31March"] != DBNull.Value)
-                                    {
-                                        stage.ExpendMadeTill31March = Convert.ToDecimal(row["ExpendMadeTill31March"]);
-                                    }
-
-                                    Contracts.Add(stage);
+                                    Directory.CreateDirectory(path);
+                                }
 
 
+                                excel.file.SaveAs(filePath);
 
+                                string conString = string.Empty;
+                                switch (extension)
+                                {
+                                    case ".xls": //Excel 97-03.
+                                        conString = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = { 0 }; Extended Properties = 'Excel 8.0;HDR=YES'";
+                                        break;
+                                    case ".xlsx": //Excel 07 and above.
+                                                  //conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
+                                        conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'";
+                                        break;
+                                }
+
+                                conString = string.Format(conString, filePath);
+
+                                using (OleDbConnection connExcel = new OleDbConnection(conString))
+                                {
+                                    using (OleDbCommand cmdExcel = new OleDbCommand())
+                                    {
+                                        using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                                        {
+                                            DataTable dt = new DataTable();
+                                            cmdExcel.Connection = connExcel;
+
+                                            //Get the name of First Sheet.
+                                            connExcel.Open();
+                                            DataTable dtExcelSchema;
+                                            dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                                            string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                                            connExcel.Close();
+
+                                            //Read Data from First Sheet.
+                                            connExcel.Open();
+                                            cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                                            odaExcel.SelectCommand = cmdExcel;
+                                            odaExcel.Fill(dt);
+                                            connExcel.Close();
+
+                                            foreach (DataRow row in dt.Rows)
+                                            {
+                                                StageDetail stage = new StageDetail();
+                                                if (row["ContractmasterId"] != DBNull.Value)
+                                                {
+                                                    stage.ContractmasterId = Convert.ToInt32(sanitizer.Sanitize(row["ContractmasterId"].ToString()));
+                                                }
+                                                if (row["ContractId"] != DBNull.Value)
+                                                {
+                                                    stage.ContractId = sanitizer.Sanitize(row["ContractId"].ToString());
+                                                }
+                                                if (row["StageNumber"] != DBNull.Value)
+                                                {
+                                                    stage.StageNumber = Convert.ToInt32(sanitizer.Sanitize(row["StageNumber"].ToString()));
+                                                }
+                                                if (row["stageDescription"] != DBNull.Value)
+                                                {
+                                                    stage.stageDescription = sanitizer.Sanitize(row["stageDescription"].ToString());
+                                                }
+                                                if (row["StageStartdate"] != DBNull.Value)
+                                                {
+                                                    stage.StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(row["StageStartdate"].ToString()));
+                                                }
+                                                if (row["StageCompletionDate"] != DBNull.Value)
+                                                {
+                                                    stage.StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(row["StageCompletionDate"].ToString()));
+                                                }
+                                                if (row["PercentOfContractValue"] != DBNull.Value)
+                                                {
+                                                    stage.PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(row["PercentOfContractValue"].ToString()));
+                                                }
+                                                if (row["Amount"] != DBNull.Value)
+                                                {
+                                                    stage.Amount = Convert.ToDecimal(sanitizer.Sanitize(row["Amount"].ToString()));
+                                                }
+                                                if (row["DueDateOfPayment"] != DBNull.Value)
+                                                {
+                                                    stage.DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(row["DueDateOfPayment"].ToString()));
+                                                }
+                                                if (row["Conditions"] != DBNull.Value)
+                                                {
+                                                    stage.Conditions = sanitizer.Sanitize(row["Conditions"].ToString());
+                                                }
+                                                if (row["RevisedDateOfpayment"] != DBNull.Value)
+                                                {
+                                                    stage.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(row["RevisedDateOfpayment"].ToString()));
+                                                }
+                                                if (row["ReasonsForSlippage"] != DBNull.Value)
+                                                {
+                                                    stage.ReasonsForSlippage = sanitizer.Sanitize(row["ReasonsForSlippage"].ToString());
+                                                }
+                                                if (row["ActualDateOfPayment"] != DBNull.Value)
+                                                {
+                                                    stage.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(row["ActualDateOfPayment"].ToString()));
+                                                }
+                                                if (row["TotalPaymentMade"] != DBNull.Value)
+                                                {
+                                                    stage.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(row["TotalPaymentMade"].ToString()));
+                                                }
+                                                if (row["FullorPartPaymentMade"] != DBNull.Value)
+                                                {
+                                                    stage.FullorPartPaymentMade = sanitizer.Sanitize(row["FullorPartPaymentMade"].ToString());
+                                                }
+                                                if (row["ExpendMadeTill31March"] != DBNull.Value)
+                                                {
+                                                    stage.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(row["ExpendMadeTill31March"].ToString()));
+                                                }
+
+                                                Contracts.Add(stage);
+
+
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                                using (var client = new HttpClient())
+                                {
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    HttpResponseMessage postJob = await client.PostAsJsonAsync<List<StageDetail>>(WebAPIUrl + "Contract/SaveStageExcel", Contracts);
+                                    bool postResult = postJob.IsSuccessStatusCode;
+                                    if (postResult == true)
+                                    {
+
+                                        Massege = "Success";
+                                        TempData["Uploadsuccess"] = true;
+                                    }
+                                    else
+                                    {
+                                        TempData["Uploadsuccess"] = false;
+                                        Massege = "Failed";
+                                    }
                                 }
                             }
                         }
+
+
                     }
                 }
-
-                using (var client = new HttpClient())
+                else
                 {
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    HttpResponseMessage postJob = await client.PostAsJsonAsync<List<StageDetail>>(WebAPIUrl + "Contract/SaveStageExcel", Contracts);
-                    bool postResult = postJob.IsSuccessStatusCode;
-                    if (postResult == true)
-                    {
-
-                        Massege = "Success";
-                        TempData["Uploadsuccess"] = true;
-                    }
-                    else
-                    {
-                        TempData["Uploadsuccess"] = false;
-                        Massege = "Failed";
-                    }
+                    TempData["FileStage"] = "Upload Only Excel.";
+                    ModelState.AddModelError("", "Please upload Only Excel File");
+                    return RedirectToAction("Contract", "AONW");
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.Message = ex.Message.ToString();
+                ModelState.AddModelError("", "Please upload Only Excel File");
+                return RedirectToAction("Contract", "AONW");
             }
-            //return Json(Massege, JsonRequestBehavior.AllowGet);
             return RedirectToAction("Contract", "AONW");
         }
 
@@ -461,8 +476,6 @@ namespace ACQ.Web.App.Controllers
         {
             ContractDetails Socmodel = new ContractDetails();
             List<ContractDetails> listData = new List<ContractDetails>();
-
-
             try
             {
                 using (var client = new HttpClient())
@@ -481,10 +494,9 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                ViewBag.Message = ex.Message.ToString();
+                return View();
             }
-
 
             return View();
         }
@@ -493,7 +505,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult ContractAndStageList(string ContractId, bool cont=false)
+        public ActionResult ContractAndStageList(string ContractId, bool cont = false)
         {
             Contracts contract = new Contracts();
             try
@@ -509,17 +521,15 @@ namespace ACQ.Web.App.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        //ViewBag.ContractStageList = response.Content.ReadAsAsync<Contracts>().Result;
                         contract = response.Content.ReadAsAsync<Contracts>().Result;
-                        var des = contract.Contrct_Detail.Descriptions;
                     }
                 }
                 ViewBag.cont = cont;
             }
             catch (Exception ex)
             {
-
-                
+                ViewBag.Message = ex.Message.ToString();
+                return View();
             }
 
 
@@ -671,7 +681,9 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                Msg = "Failed";
+                ViewBag.Message = ex.Message.ToString();
+                return Json(Msg, JsonRequestBehavior.AllowGet);
             }
             return Json(Msg, JsonRequestBehavior.AllowGet);
         }
@@ -681,15 +693,16 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public ActionResult ContractReport()
         {
-            
-             return View();
+
+            return View();
         }
-      
-        public ActionResult GetContractBaseOnServices(string Service="")
+
+        public ActionResult GetContractBaseOnServices(string Service = "")
         {
             string msg = "";
-            StageDetail contract = new StageDetail();
-          
+            ContractPaymentSum model = new ContractPaymentSum();
+
+            ViewBag.Service = Service;
             try
             {
                 using (var client = new HttpClient())
@@ -703,26 +716,29 @@ namespace ACQ.Web.App.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-
-                        //ViewBag.ContractList = response.Content.ReadAsAsync<List<ContractDetails>>().Result;
-                        contract = response.Content.ReadAsAsync<StageDetail>().Result;
-
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
                     }
                 }
-               
+
             }
             catch (Exception ex)
             {
-
-
+                ViewBag.Message = ex.Message.ToString();
+                return RedirectToAction("ContractReport", "Contract");
             }
-            return PartialView("_ContractMasterPartial", contract);
+            return PartialView("_ContractMasterPartial", model);
         }
 
-        public async Task<PartialViewResult> GetStageSumPayment(string ContractId = "")
+        [Route("GetContractBaseOnFinancialYear")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult GetContractBaseOnFinancialYear(string Service = "", string FinancialYear = "")
         {
-            string msg = "";
-            Contracts contract = new Contracts();
+            ContractPaymentSum model = new ContractPaymentSum();
+            ViewBag.Service = Service;
+            ViewBag.FinancialYear = FinancialYear;
+
             try
             {
                 using (var client = new HttpClient())
@@ -732,12 +748,11 @@ namespace ACQ.Web.App.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = client.GetAsync("Contract/GetSumOfStagePayment?ContractId=" + ContractId + "").Result;
+                    HttpResponseMessage response = client.GetAsync("Contract/GetContractBaseOnFinancialYear?Service=" + Service + "&FinancialYear=" + FinancialYear + "").Result;
 
                     if (response.IsSuccessStatusCode)
                     {
-
-                        ViewBag.SumOfStage = response.Content.ReadAsAsync<List<StageDetail>>().Result;
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
 
                     }
                 }
@@ -745,10 +760,49 @@ namespace ACQ.Web.App.Controllers
             }
             catch (Exception ex)
             {
-
+                ViewBag.Message = ex.Message.ToString();
+                return RedirectToAction("GetContractBaseOnFinancialYear", "Contract", new { Service = Service, FinancialYear = FinancialYear });
 
             }
-            return PartialView("_ContractStagePartial", ViewBag.SumOfStage);
+            return View(model);
+        }
+
+        [Route("GetContractBaseOnContractID")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult GetContractBaseOnContractID(string Service = "", string ContractId = "")
+        {
+            ContractPaymentSum model = new ContractPaymentSum();
+            ViewBag.Service = Service;
+            ViewBag.ContractId = ContractId;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = client.GetAsync("Contract/GetContractBaseOnContractID?Service=" + Service + "&ContractId=" + ContractId + "").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message.ToString();
+                return RedirectToAction("GetContractBaseOnContractID", "Contract", new { Service = Service, ContractId = ContractId });
+
+            }
+            return View(model);
         }
     }
 }

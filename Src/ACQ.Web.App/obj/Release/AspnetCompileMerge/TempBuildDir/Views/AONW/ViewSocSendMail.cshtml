@@ -1,0 +1,107 @@
+﻿@model ACQ.Web.ViewModel.AONW.acqmstmemberSendMailViewModel
+@{
+    ViewBag.Title = "ViewSocSendMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card flex-fill w-100">
+    <div class="col-md-12 ">
+        <label>@TempData["msg"]</label>
+        @if (Model != null && Model.SOCMailVIEW.Count() > 0)
+        {
+            <h3>Members of @Model.SOCMailVIEW[0].meeting_type</h3>
+            <div class="row">
+                <div class="col col-12">
+                    <div id="div1" class="portlet-body flip-scroll">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SNO.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Member Type</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">EmailId</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int count = 1;}
+                                @foreach (var SOC in Model.SOCMailVIEW)
+                                {
+                                    <tr>
+                                        <th scope="row">@count</th>
+                                        <td class="text-wrap">@SOC.meeting_type</td>
+                                        <td>Version @SOC.member_type</td>
+                                        <td>@SOC.designation</td>
+                                        <td>@SOC.Email</td>
+
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div><br>
+                    <button type="button" id="btnclose" class="btn btn-primary float-right">Send SoC notification to members</button>
+                    <div class="clearfix"></div><br>
+                </div>
+
+            </div>
+        }
+    </div>
+
+
+
+</div>
+<div id="successmsg" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div id="myTabContent">
+                        <div class="tab-pane show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row register-form">
+                                <div class="col-md-12 ">
+                                    <label>Notification sent Successfully</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="Ok" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="r@nd0m">
+
+    $(document).ready(function () {
+        $('#btnclose').click(function () {
+        @*var link = '@Url.Action("SendMailToAll", "AONW")';
+        window.location.href = link;*@
+           $.get('@Url.Action("SendMailToAll", "AONW")', function (result) {
+               // TODO: process the results of the server side call
+               if (result != null) {
+                   $("#successmsg").modal('show');
+                   setTimeout(function () {
+                       window.location.href = "/ViewSOC";
+                   }, 5000);
+               }
+});
+        });
+        $('#Ok').click(function () {
+            window.location.href = "/ViewSOC";
+        });
+    })
+
+
+</script>

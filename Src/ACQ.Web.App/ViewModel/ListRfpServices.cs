@@ -61,6 +61,7 @@ namespace ACQ.Web.App.ViewModel
         public int aon_id { get; set; }
         public string UploadedDraftRFP { get; set; }
         public bool IsSent { get; set; }
+        public int VendorType { get; set; }
         public Nullable<System.DateTime> Sentdate { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     }
@@ -82,5 +83,13 @@ namespace ACQ.Web.App.ViewModel
         public bool Status { get; set; }
         public string Message { get; set; }
         public ListRfpServices data { get; set; }
+        public List<VendorsType> vendors { get; set; }
+    }
+
+    public class VendorsType
+    {
+        public int Id { get; set; }
+        public string VendorType { get; set; }
+        public string ConnectedVendors { get; set; }
     }
 }

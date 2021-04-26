@@ -1,0 +1,28 @@
+﻿@model ACQ.Web.ViewModel.AONW.SocCommentViewModel
+@{
+    ViewBag.Title = "ViewSocComments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Soc Comments</h2>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Comment</th>
+            <th>Updated On</th>
+        </tr>
+
+        @foreach (var item in ViewBag.ListData)
+        {
+            <tr>
+                <td>
+                    @item.Comments
+                </td>
+                <td>
+                    @item.Created_on
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

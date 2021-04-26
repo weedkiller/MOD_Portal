@@ -1,11 +1,9 @@
 //using MOD.Models;
-using ACQ.Web.Core.Library;
 using ACQ.Web.ExternalServices.Email;
 using ACQ.Web.ExternalServices.SecurityAudit;
 using ACQ.Web.ViewModel.User;
 using CaptchaMvc.HtmlHelpers;
 using Ganss.XSS;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +13,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -37,6 +34,7 @@ namespace ACQ.Web.App.Controllers
 
         public AccountController()
         {
+
             if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
             {
                 BruteForceAttackss.date = System.DateTime.Now;
@@ -112,10 +110,13 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("login")]
         [HandleError]
+        
         public ActionResult Login()
         {
 
             BruteForceAttackss.refreshcount = 0;
+            BruteForceAttackss.date = null;
+            BruteForceAttackss.bcontroller = "";
             return View();
 
 
@@ -130,13 +131,12 @@ namespace ACQ.Web.App.Controllers
         [Route("Error")]
         public async Task<ActionResult> Error()
         {
-            BruteForceAttackss.refreshcount = 0;
+            
             UserLogViewModel model = new UserLogViewModel();
             if (Session["EmailID"] != null)
             {
                 model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
-                //var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
-               // var formName = sanitizer.Sanitize("AddFormMenu");
+              
             }
             else
             {
@@ -172,6 +172,10 @@ namespace ACQ.Web.App.Controllers
                 Response.Cookies["AuthToken"].Value = string.Empty;
                 Response.Cookies["AuthToken"].Expires = DateTime.Now.AddMonths(-20);
             }
+
+            BruteForceAttackss.refreshcount = 0;
+            BruteForceAttackss.date = null;
+            BruteForceAttackss.bcontroller = "";
 
             return View();
         }
@@ -641,9 +645,6 @@ namespace ACQ.Web.App.Controllers
             }
             else
             {
-
-                //string email = Cryptography.DecryptData(emailid);
-                //string token = Cryptography.DecryptData(tokenid);
                 Session["EmailID"] = emailid;
                 Session["tokenid"] = tokenid;
                 return RedirectToAction("ChangePassword");
@@ -853,7 +854,7 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
-            BruteForceAttackss.refreshcount = 0;
+           
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
             model.IPAddress = Request.UserHostAddress;

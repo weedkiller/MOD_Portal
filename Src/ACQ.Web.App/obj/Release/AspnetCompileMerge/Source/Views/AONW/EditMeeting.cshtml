@@ -1,0 +1,163 @@
+﻿@model ACQ.Web.ViewModel.AONW.SechduleMeetingAgedaViewModel
+@{
+    ViewBag.Title = "EditMeeting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+
+<div class="row m-0">
+    <div class="box-properties col-md-12">
+        <div class="rounded-lg px-3 py-4 p-sm-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center">Edit Meetings</h3>
+                    <div class="bg-white p-3">
+                        <div class="needs-validation p-2" novalidate="">
+                            <div class="">
+                                @using (Html.BeginForm("EditMeeting", "AONW", FormMethod.Post, htmlAttributes: new { autocomplete = "off", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary()
+                                    <input type="hidden" name="meeting_id" value="@Model.meeting_id" />
+                                    <input type="hidden" name="Status" value="@Model.Status" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="recovery-email">Select Meeting Type</label>
+                                                @Html.DropDownListFor(model => model.dac_dpb, new List<SelectListItem>
+                  {
+                     new SelectListItem{ Text="DAC", Value = "DAC" },
+                     new SelectListItem{ Text="DPB", Value = "DPB" },
+                  }, "--Select--", new { @class = "form-control" })
+                                                <div class="invalid-feedback">Please select valid meeting type</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" for="recovery-email">Meeting Number</label>
+                                                <input type="text" class="form-control" placeholder="Meeting No." value="@Model.Meeting_Number" id="Meeting_Number" name="Meeting_Number" />
+                                                <div class="invalid-feedback">Please select Date type</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Date of Meeting</label>
+                                            @Html.TextBoxFor(x => x.meeting_date, String.Format("{0:yyyy-MM-dd}", Model.meeting_date), new { @class = "form-control datepicker", @type = "date" })
+                                            <div class="invalid-feedback">Please enter date of meeting</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="issue_date">Issue Date</label>
+                                            @Html.TextBoxFor(x => x.Date_of_Issue_of_Minutes, String.Format("{0:yyyy-MM-dd}", Model.Date_of_Issue_of_Minutes), new { @class = "form-control datepicker", @type = "date" })
+                                            <div class="invalid-feedback">Please enter issue date</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="recovery-email">Remarks</label>
+                                            <div class="form-floating">
+                                                @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+                                            </div>
+                                            <div class="invalid-feedback">Please enter remarks (max 5000 words)</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Proposal">officers participated <i class="danger">*</i></label>
+                                            <div class="form-floating">
+                                                @{
+                                                    var participantsList = ViewBag.ParticipantsList as List<ACQ.Web.ViewModel.AONW.MeetingParticipants>;
+
+                                                    Html.RenderPartial("_MeetingParticipants", participantsList);
+                                                }
+                                                @*@Html.TextAreaFor(x => x.officers_participated, new { @class = "form-control", @placeholder = "Remarks", @id = "officers_participated", @name = "officers_participated" })
+                                                    <input type="hidden" name="officers_participated" value="@Html.Raw(Model.officers_participated)" required />*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Proposal">Distribution List <i class="danger">*</i></label>
+                                            <div class="form-floating">
+                                                @Html.TextAreaFor(x => x.Distribution_List, new { @class = "form-control", @placeholder = "Distribution List", @id = "Distribution_List", @name = "Distribution_List" })
+                                                <input type="hidden" name="Distribution_List" value='@Html.Raw(Model.Distribution_List)' required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="status">Status</label>
+                                                <div class="form-floating">
+
+                                                    <select name="Status" id="status" class="form-select form-control">
+                                                        <option @if (Model.Status == "Draft") { @Html.Raw("selected") }>Draft</option>
+                                                        <option @if (Model.Status == "Approved") { @Html.Raw("selected") }>Approved</option>
+                                                        <option @if (Model.Status == "Final") { @Html.Raw("selected") }>Final</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-12">
+                                        <div class="float-md-right">
+                                            <button class="btn btn-primary mb-3 mt-2" type="submit">Update Meetings</button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                }
+                            </div>
+                            <div class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @ViewBag.Msgg
+            </div>
+            <div class="modal-footer">
+                <a href="@Url.Action("ViewMeeting","AONW")" type="button" class="btn btn-primary">Ok</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/CkEditor/ckeditor.js" nonce="r@nd0m"></script>
+<script nonce="r@nd0m">
+    CKEDITOR.replace('Distribution_List');
+    CKEDITOR.replace('officers_participated');
+    var officerHdn = $("input[name=officers_participated]");
+    var distributionHdn = $("input[name=Distribution_List]");
+        $(document).ready(function ()
+        {
+            var mtype = '@ViewBag.Msgg';
+            if (mtype != "")
+             {
+        $("#exampleModal").modal('show');
+             }
+        else {
+            $("#exampleModal").modal('hide');
+                }
+        });
+    $('#meetAgenda').on('submit', function () {
+        var officer = CKEDITOR.instances['officers_participated'].getData();
+        $(officerHdn).val(officer);
+        var distribution = CKEDITOR.instances['Distribution_List'].getData();
+        $(decisionHdn).val(distribution);
+    });
+</script>
+
+
+

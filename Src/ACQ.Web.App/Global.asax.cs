@@ -31,7 +31,7 @@ namespace ACQ.Web.App
             Server.ClearError();
             //Response.Redirect(String.Format("~/Error"));
             HttpContext.Current.Response.Redirect("~/Error", false);
-
+       
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
