@@ -28,6 +28,10 @@ namespace ACQ.Web.App.Controllers
 {
     public class SocPdfRegistrationController : Controller
     {
+        private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        public decimal filesize { get; set; }
+        private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
+        private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         public SocPdfRegistrationController()
         {
             if (BruteForceAttackss.bcontroller != "")
@@ -39,8 +43,11 @@ namespace ACQ.Web.App.Controllers
                         BruteForceAttackss.date = System.DateTime.Now;
                         BruteForceAttackss.refreshcount = 1;
                     }
+
                     else
                     {
+
+
                         TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
                         if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
                         {
@@ -93,10 +100,7 @@ namespace ACQ.Web.App.Controllers
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
-        public decimal filesize { get; set; }
-        private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
-        private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
-        private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+
 
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
@@ -144,7 +148,7 @@ namespace ACQ.Web.App.Controllers
                 case "50-4B-03-04":
                     contenttype = "text/docx";
                     break;
-                
+
             }
             if (contenttype != String.Empty)
             {
@@ -201,7 +205,7 @@ namespace ACQ.Web.App.Controllers
                 return false;
             }
 
-            
+
 
 
         }
@@ -210,6 +214,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
+
         public ActionResult SoCPdfRegistration()
         {
             return View();
@@ -613,6 +618,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadOtherSOC(FormCollection collection)
         {
 

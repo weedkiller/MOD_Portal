@@ -1,0 +1,151 @@
+﻿@model ACQ.Web.ViewModel.AONW.SAVESOCVIEWMODEL
+@{
+    ViewBag.Title = "Update SOC Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update SOC Details</h2>
+<form method="post" action="@Url.Action("UpdateSOC","AONW")">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <input type="hidden" name="aon_id" value="@Model.aon_id"/>
+        <div class="col-md-4">
+            <label>Item Name</label>
+            <input type="text" name="item_description" class="form-control" value="@Model.item_description" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Service</label>
+            <input type="text" name="Service_Lead_Service" class="form-control" value="@Model.Service_Lead_Service" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Unique Reference No.</label>
+            <input type="text" name="SoCCase"  readonly class="form-control" value="@Model.SoCCase" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>Quantity</label>
+            <input type="text" name="Quantity" class="form-control" value="@Model.Quantity" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Cost</label>
+            <input type="text" name="Cost" class="form-control" value="@Model.Cost" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Tax &amp; Duties</label>
+            <input type="text" name="Tax_Duties" class="form-control" value="@Model.Tax_Duties" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>IC %</label>
+            <input type="text" name="IC_percentage" class="form-control" value="@Model.IC_percentage" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Essential Parameter B</label>
+            <input type="text" name="Essential_parameters" class="form-control" value="@Model.Essential_parameters" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Any other aspect that require specific approval</label>
+            <input type="text" name="Any_other_aspect" class="form-control" value="@Model.Any_other_aspect" />
+        </div>
+
+        <div class="col-md-4">
+            <label>AMC Remarks</label>
+            <input type="text" disabled class="form-control" value="@Model.AMCRemarks" />
+        </div>
+
+        <div class="col-md-4">
+            <label>AMC Applicable</label>
+            <input type="text" disabled class="form-control" value="@Model.AMC_applicable" />
+        </div>
+
+        <div class="col-md-4">
+            <label>AoN Validity</label>
+            <input type="text" disabled class="form-control" value="@Model.AoN_validity" />
+        </div>
+
+        <div class="col-md-4">
+            <label>AOn Validity Unit</label>
+            <input type="text" disabled class="form-control" value="@Model.AoN_validity_unit" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Offset Applicable</label>
+            <input type="text" disabled class="form-control" value="@Model.Offset_applicable" />
+        </div>
+        <div class="col-md-4">
+            <label>SOc Approval Date</label>
+            <input type="text" disabled class="form-control" value="@Model.SocAApprovalDate" />
+        </div>
+
+        <div class="col-md-4">
+            <label>SoC Approval Ref</label>
+            <input type="text" disabled class="form-control" value="@Model.SocAApprovalRef" />
+        </div>
+        <div class="col-md-4">
+            <label>Soc Designation</label>
+            <input type="text" disabled class="form-control" value="@Model.SocADesignation" />
+        </div>
+
+        <div class="col-md-4">
+            <label>EPP</label>
+            <input type="text" disabled class="form-control" value="@Model.EPP" />
+        </div>
+
+        <div class="col-md-4">
+            <label>SocAName</label>
+            <input type="text" disabled class="form-control" value="@Model.SocAName" />
+        </div>
+        <div class="col-md-4">
+            <label>SoCSD Date</label>
+            <input type="text" disabled class="form-control" value="@Model.SocSDDate" />
+        </div>
+        <div class="col-md-4">
+            <label>SocSD Desgination</label>
+            <input type="text" disabled class="form-control" value="@Model.SocSDDesignation" />
+        </div>
+        <div class="col-md-4">
+            <label>SoC SDName</label>
+            <input type="text" disabled class="form-control" value="@Model.SocSDName" />
+        </div>
+        <div class="col-md-4">
+            <label>SocSDPhone</label>
+            <input type="text" disabled class="form-control" value="@Model.SocSDPhone" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Trials Rdequired</label>
+            <input type="text" disabled class="form-control" value="@Model.Trials_Required" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Type of Acquisition</label>
+            <input type="text" disabled class="form-control" value="@Model.Type_of_Acquisition" />
+        </div>
+        <div class="col-md-4">
+            <label>Warranty Applicable</label>
+            <input type="text" disabled class="form-control" value="@Model.Warrenty_applicable" />
+        </div>
+        <div class="col-md-4">
+            <label>Warranty Remarks</label>
+            <input type="text" disabled class="form-control" value="@Model.Warrenty_Remarks" />
+        </div>
+
+        <div class="col-md-4">
+            <label>Unique ID</label>
+            <input type="text" disabled class="form-control" value="@Model.UniqueID" />
+        </div>
+    </div>
+    <button type="submit" value="Update" class="btn btn-primary">Submit</button>
+    <h3>@ViewBag.Msg</h3>
+</form>
+

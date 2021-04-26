@@ -110,14 +110,6 @@ D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 D:\MOD 20-04-21\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
@@ -126,11 +118,11 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCom
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

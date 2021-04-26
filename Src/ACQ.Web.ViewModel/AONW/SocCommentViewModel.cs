@@ -22,5 +22,6 @@ namespace ACQ.Web.ViewModel.AONW
         public string SignValue { get; set; }
         public string IssuedTo { get; set; }
         public string Path { get; set; }
+
     }
 }

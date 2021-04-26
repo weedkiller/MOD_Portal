@@ -76,6 +76,7 @@
                             <tr>
                                 <th>Comment</th>
                                 <th>Updated On</th>
+                                <th>View certificate</th>
                             </tr>
                             @foreach (var item in ViewBag.ListData)
                             {
@@ -85,6 +86,9 @@
                                     </td>
                                     <td>
                                         @item.Created_on
+                                    </td>
+                                    <td>
+                                        <a href="@item.Path">View</a>
                                     </td>
                                 </tr>
                             }
@@ -155,7 +159,7 @@
                                 var id = $('#id').val();
                                 var item = $('#item').val();
                                 window.location.href = '/ViewSOC';
-                            }, 3000); 
+                            }, 3000);
                         } else {
                             $('#lblmsg').html('Record Not Saved Successfully');
                             $('#myModal').modal({
@@ -168,12 +172,12 @@
                                 var id = $('#id').val();
                                 var item = $('#item').val();
                                 window.location.href = '/ViewSOC';
-                            }, 300000); 
+                            }, 300000);
                         }
                     }
                 });
             }
-        }); 
+        });
     });
 
     if ('@ViewBag.Msg' === "Record Saved Successfully") {
@@ -199,6 +203,6 @@
         }
 
 
-   
+
 </script>
 

@@ -40,8 +40,9 @@ namespace ACQ.Web.App.Controllers
                         BruteForceAttackss.date = System.DateTime.Now;
                         BruteForceAttackss.refreshcount = 1;
                     }
-                    else
-                    {
+                    
+                else
+                {
                         TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
                         if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
                         {

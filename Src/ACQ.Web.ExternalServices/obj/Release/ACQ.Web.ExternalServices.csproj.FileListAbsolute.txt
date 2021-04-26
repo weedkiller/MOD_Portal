@@ -46,3 +46,6 @@ E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.Ext
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.dll
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Release\ACQ.Web.ExternalServices.pdb
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Web.Http.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\System.Net.Http.Formatting.dll
+E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Release\Newtonsoft.Json.dll
