@@ -202,7 +202,6 @@ E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infras
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
-E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\newMoD_portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll
