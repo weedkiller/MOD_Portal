@@ -28,6 +28,7 @@ using System.Xml.Linq;
 using static ACQ.Web.App.MvcApplication;
 
 
+
 namespace ACQ.Web.App.Controllers
 {
     //[Authorize]
@@ -2484,7 +2485,8 @@ namespace ACQ.Web.App.Controllers
             {
                 throw e;
             }
-            return View(model);
+
+            return RedirectToAction("UpdateSoc", new { ID = model.aon_id });
         }
         #endregion
         #region TimeLineCode

@@ -43,11 +43,8 @@ namespace ACQ.Web.App.Controllers
                         BruteForceAttackss.date = System.DateTime.Now;
                         BruteForceAttackss.refreshcount = 1;
                     }
-
                     else
                     {
-
-
                         TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
                         if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
                         {
@@ -100,7 +97,7 @@ namespace ACQ.Web.App.Controllers
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
-
+      
 
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
@@ -148,7 +145,7 @@ namespace ACQ.Web.App.Controllers
                 case "50-4B-03-04":
                     contenttype = "text/docx";
                     break;
-
+                
             }
             if (contenttype != String.Empty)
             {
@@ -205,7 +202,7 @@ namespace ACQ.Web.App.Controllers
                 return false;
             }
 
-
+            
 
 
         }
@@ -214,7 +211,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-
+      
         public ActionResult SoCPdfRegistration()
         {
             return View();
