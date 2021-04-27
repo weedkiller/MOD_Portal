@@ -102,6 +102,9 @@ namespace ACQ.Web.App.Controllers
 
         [Route("SaveContractMasterExcel")]
         [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveContractMasterExcel(ImportExcel excel)
         {
@@ -286,6 +289,9 @@ namespace ACQ.Web.App.Controllers
 
         [Route("SaveStageExcel")]
         [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveStageExcel(ImportExcel excel)
         {
@@ -538,6 +544,9 @@ namespace ACQ.Web.App.Controllers
 
         [Route("UpdateContract")]
         [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> UpdateContract(Contracts cnt)
         {
@@ -696,7 +705,9 @@ namespace ACQ.Web.App.Controllers
 
             return View();
         }
-
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult GetContractBaseOnServices(string Service = "")
         {
             string msg = "";
@@ -736,8 +747,7 @@ namespace ACQ.Web.App.Controllers
         public ActionResult GetContractBaseOnFinancialYear(string Service = "", string FinancialYear = "")
         {
             ContractPaymentSum model = new ContractPaymentSum();
-            ViewBag.Service = Service;
-            ViewBag.FinancialYear = FinancialYear;
+           
 
             try
             {
@@ -753,7 +763,8 @@ namespace ACQ.Web.App.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
-
+                        ViewBag.Service = model.FinancialYear.Select(s=>s.Service).FirstOrDefault();
+                        ViewBag.FinancialYear = model.FinancialYear.Select(f => f.FinancialYear).FirstOrDefault(); 
                     }
                 }
 
@@ -774,8 +785,7 @@ namespace ACQ.Web.App.Controllers
         public ActionResult GetContractBaseOnContractID(string Service = "", string ContractId = "")
         {
             ContractPaymentSum model = new ContractPaymentSum();
-            ViewBag.Service = Service;
-            ViewBag.ContractId = ContractId;
+           
 
             try
             {
@@ -791,7 +801,8 @@ namespace ACQ.Web.App.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         model = response.Content.ReadAsAsync<ContractPaymentSum>().Result;
-
+                        ViewBag.Service = model.FinancialYear.Select(s=>s.Service).FirstOrDefault();
+                        ViewBag.ContractId = model.FinancialYear.Select(s => s.ContractId).FirstOrDefault(); 
                     }
                 }
 
