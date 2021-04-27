@@ -71,7 +71,11 @@ namespace ACQ.Web.App.ViewModel
         public int Id { get; set; }
         public int UserId { get; set; }
         public int Share_RFP { get; set; }
+        public int SOCID { get; set; }
         public string UploadedComment { get; set; }
+        public string UploadedRFP { get; set; }
+        public string Service { get; set; }
+        public string Categorisation { get; set; }
         public Nullable<System.DateTime> CommentedDate { get; set; }
         public Nullable<bool> IsApproved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
