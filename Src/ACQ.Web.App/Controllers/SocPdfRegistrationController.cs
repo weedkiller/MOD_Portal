@@ -28,6 +28,10 @@ namespace ACQ.Web.App.Controllers
 {
     public class SocPdfRegistrationController : Controller
     {
+        private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        public decimal filesize { get; set; }
+        private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
+        private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
         public SocPdfRegistrationController()
         {
             if (BruteForceAttackss.bcontroller != "")
@@ -41,43 +45,6 @@ namespace ACQ.Web.App.Controllers
                     }
                     else
                     {
-                        BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    }
-                }
-                else
-                {
-                    //if (BruteForceAttackss.refreshcount > 20)
-                    //{
-                    //    if (System.Web.HttpContext.Current.Session["EmailID"] != null)
-                    //    {
-                    //        IEnumerable<LoginViewModel> model = null;
-                    //        using (var client2 = new HttpClient())
-                    //        {
-                    //            client2.DefaultRequestHeaders.Clear();
-                    //            client2.BaseAddress = new Uri(WebAPIUrl);
-                    //            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    //            client2.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                    //                parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    //            HttpResponseMessage response = client2.GetAsync(requestUri: "Account/GetUserLoginBlock?EmailId=" + System.Web.HttpContext.Current.Session["EmailID"].ToString()).Result;
-                    //            if (response.IsSuccessStatusCode)
-                    //            {
-                    //                LoginViewModel model1 = new LoginViewModel();
-                    //                model = response.Content.ReadAsAsync<IEnumerable<LoginViewModel>>().Result;
-                    //                if (model.First().Message == "Blocked")
-                    //                {
-                                      
-                    //                    System.Web.HttpContext.Current.Response.Redirect("/Account/Logout");
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
-                    //}
-                }
-
                         TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
                         if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
                         {
@@ -130,10 +97,7 @@ namespace ACQ.Web.App.Controllers
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
-        public decimal filesize { get; set; }
-        private static string UploadPath = ConfigurationManager.AppSettings["SOCImagePath"].ToString();
-        private static string UploadfilePath = ConfigurationManager.AppSettings["SOCPath"].ToString();
-        private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+      
 
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
