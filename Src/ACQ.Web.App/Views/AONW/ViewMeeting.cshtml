@@ -69,6 +69,7 @@
                                                     string date = item.meeting_date.HasValue ? item.meeting_date.Value.ToString("dd/MM/yyyy") : "";
                                                     string classname = "";
                                                     bool isDraftPrepared = false;
+                                                    
                                                     foreach (var p in ViewBag.PrintStatusList)
                                                     {
                                                         classname = "btn btn-primary";
@@ -85,7 +86,7 @@
                                                     {
                                                         isEmailActionDone = false;
                                                         string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                        if (mID == m.MeetingID.ToString())
+                                                        if (mID == m.MeetingID.ToString() && m.Status=="Sent")
                                                         {
                                                             isEmailActionDone = true;
                                                             break;
@@ -123,7 +124,7 @@
                                                     {
                                                         <a href="@Url.Action("AddMeetingAgenda", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date })" type="submit" class="btn btn-info btn-sm" title="Add Comment On Meeting Agenda"><i class="fa fa-edit mr-1"></i></a>
                                                         @*<a href="@Url.Action("LockMeetingComments", "AoNW", new { ID = @item.meeting_id })" type="submit" class="btn btn-info btn-sm" title="Lock Comment On Meeting Agenda"><i class="fa fa-lock mr-1"></i></a>*@
-                                                        <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-primary btn-sm" title="View Comment On Meeting Agenda"><i class="fa fa-eye mr-1"></i></a>
+                                                        <a href=@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id }) class="btn btn-primary btn-sm" title="View Comment On Meeting Agenda"><i class="fa fa-eye mr-1"></i></a>
                                                     }
                                                 }
                                                 else
@@ -154,13 +155,14 @@
                                                 @if (isEmailActionDone)
                                                 {
                                                     <a type="button" class="btn btn-default disabled btn-sm" style="background-color:gray" title="Already Sent Draft MoM to participants"><i class="fa fa-envelope mr-1"></i></a>
-                                                    <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-warning btn-sm" title="View Comments On Draft MoM"><i class="fa fa-eye mr-1"></i></a>
+                                              
+                                                    <a href=@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id }) class="btn btn-warning btn-sm" title="View Comments On Draft MoM"><i class="fa fa-eye mr-1"></i></a>
 
                                                 }
                                                 else
                                                 {
                                                     <a href=@Url.Action("EmailToMeetingParticipants", "AoNW", new { ID = @item.meeting_id }) type="button" class="btn btn-primary btn-sm" title="Send Draft MoM to participants"><i class="fa fa-envelope mr-1"></i></a>
-                                                    <a href="@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id })" class="btn btn-primary btn-sm" title="View Comments On Draft MoM"><i class="fa fa-eye mr-1"></i></a>
+                                                    <a href=@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id }) class="btn btn-primary btn-sm" title="View Comments On Draft MoM"><i class="fa fa-eye mr-1"></i></a>
 
                                                 }
                                                 @{string FinalDraftclass = "btn btn-primary btn-sm";}
@@ -168,13 +170,13 @@
                                                 {
                                                     <a href=@Url.Action("PrepareFinalMeeting", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date }) onclick="return confirm('Are you sure you want to prepare final MOM of @item.dac_dpb meeting dated @date ?')" type="button" class="btn btn-default disabled btn-sm" style="background-color:gray" title="Prepare Final MoM"><i class="fa fa-sticky-note mr-1"></i></a><span>&nbsp;</span>
 
-                                                                                                   }
+                                                }
                                                 else
                                                 {
-                                                    <a href=@Url.Action("PrepareFinalMeeting", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date }) onclick="return confirm('Are you sure you want to prepare final MOM of @item.dac_dpb meeting dated @date ?')" type="button" class="btn btn-primary btn-sm"  title="Prepare Final MoM"><i class="fa fa-sticky-note mr-1"></i></a><span>&nbsp;</span>
+                                                    <a href=@Url.Action("PrepareFinalMeeting", "AoNW", new { ID = @item.meeting_id, mtype = @item.dac_dpb, dated = @date }) onclick="return confirm('Are you sure you want to prepare final MOM of @item.dac_dpb meeting dated @date ?')" type="button" class="btn btn-primary btn-sm" title="Prepare Final MoM"><i class="fa fa-sticky-note mr-1"></i></a><span>&nbsp;</span>
 
                                                 }
-                                                @{ 
+                                                @{
                                                     string type = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Encrypt(item.dac_dpb);
                                                     date = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Encrypt(date);
                                                 }

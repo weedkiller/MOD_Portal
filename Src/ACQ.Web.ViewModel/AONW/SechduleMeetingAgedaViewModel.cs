@@ -106,6 +106,7 @@ namespace ACQ.Web.ViewModel.AONW
         public string DiscussionComment { get; set; }
         public string DecisionComment { get; set; }
         public bool IsDelete { get; set; }
+        public Nullable<int> Locked {get;set;}
     }
    
 }

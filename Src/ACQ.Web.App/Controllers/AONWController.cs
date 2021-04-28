@@ -1670,8 +1670,21 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-        public ActionResult SendMailToParticiants()
+        public ActionResult SendMailToParticiants(string ID)
         {
+            int mId = Convert.ToInt32(Encryption.Decrypt(ID));
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/UpdateMailSent?ID=" + mId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string msg = response.Content.ReadAsStringAsync().Result;
+
+                }
+            }
             List<MeetingParticipants> listData = new List<MeetingParticipants>();
             listData = Session["participants"] as List<MeetingParticipants>;
             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMeetingMailToParticipants.html"));
@@ -2026,7 +2039,7 @@ namespace ACQ.Web.App.Controllers
             {
                 HtmlSanitizer sanitizer = new HtmlSanitizer();
                 int userID = GetUserID();
-
+               
                 if (Convert.ToInt32(Session["SectionId"]) == 1 && Convert.ToInt32(Session["SectionId"]) == 12)
                 {
                     userID = 0;
@@ -2037,7 +2050,7 @@ namespace ACQ.Web.App.Controllers
                     client.BaseAddress = new Uri(WebAPIUrl);
                     //HTTP GET
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response = client.GetAsync("AONW/GetComments?ID=" + sanitizer.Sanitize(Id) + "&userID=" + userID).Result;
+                    HttpResponseMessage response = client.GetAsync("AONW/GetComments?ID=" +Id + "&userID=" + userID).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         listData = response.Content.ReadAsAsync<List<tbl_trn_MeetingAgendaComments>>().Result;
@@ -2124,6 +2137,7 @@ namespace ACQ.Web.App.Controllers
             ViewBag.mtype = sanitizer.Sanitize(mtype);
             ViewBag.dated = sanitizer.Sanitize(dated);
             MeetingAgenda meetingAgenda = new MeetingAgenda();
+
             if (id == "0")
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(id);
@@ -2132,10 +2146,32 @@ namespace ACQ.Web.App.Controllers
             {
                 meetingAgenda.meeting_id = Convert.ToInt16(Encryption.Decrypt(id));
             }
+            
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetMailSent?ID=" + meetingAgenda.meeting_id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string msg = response.Content.ReadAsStringAsync().Result;
+                    if(msg.Contains("ok"))
+                    {
+                        Session["MailSent"] = "sent";
+                    }
+                    else
+                    {
+                        Session["MailSent"] = "not sent";
+                    }
 
+                }
+            }
             meetingAgenda.MeetingAgendaComment = new MeetingAgendaComment();
             meetingAgenda.MeetingAgendaCommentList = new List<MeetingAgendaComment>();
             meetingAgenda.MeetingAgendaComment.UserID = GetUserID();
+
+
             #region Get Meeting Dropdown
             List<SAVESOCVIEWMODEL> dropdownTypeofAgenda = new List<SAVESOCVIEWMODEL>();
             using (var client = new HttpClient())
@@ -2268,8 +2304,7 @@ namespace ACQ.Web.App.Controllers
                         model.TrnListMeeting = new List<MeetingAgenda>();
                         model.TrnListMeeting = listData;
                         ViewBag.MeetingAgendaList = listData;
-
-
+                        
                     }
                 }
                 return View();

@@ -14,5 +14,6 @@ namespace ACQ.Web.ViewModel.AONW
         public string UserName { get; set; }
         public string UserDesignation { get; set; }
         public string MemberType { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -415,6 +415,16 @@
                 keyboard: false
             });
         }
+            if ('@ViewBag.UploadStatus' === "Invalid Service") {
+
+            $('#lblmsg').html('@ViewBag.UploadMsg');
+            $('#myModal').modal({
+
+                display: 'show',
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
 
         if ('@ViewBag.Save' === "SOC Registration Successfully") {
 

@@ -93,26 +93,27 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public async Task<ActionResult> AddFormMenu()
         {
+            AddFormMenuViewModel model = new AddFormMenuViewModel();
             if (Session["UserID"] != null)
             {
-                AddFormMenuViewModel model = new AddFormMenuViewModel();
+              
                 List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
-                using (HttpClient client1 = new HttpClient())
-                {
+                //using (HttpClient client1 = new HttpClient())
+                //{
 
                     var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
                     var formName = sanitizer.Sanitize("AddFormMenu");
-                    client1.BaseAddress = new Uri(WebAPIUrl);
+                    //client1.BaseAddress = new Uri(WebAPIUrl);
 
-                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
-                    if (response1.IsSuccessStatusCode)
-                    {
+                    //client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    //HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    //if (response1.IsSuccessStatusCode)
+                   // {
                         try
                         {
-                            model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
-                            if (model.roleList.Count != 0)
-                            {
+                          //  model = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            //if (model.roleList.Count != 0)
+                            //{
                                 AddFormMenuViewModel model1 = new AddFormMenuViewModel();
                                 using (HttpClient client = new HttpClient())
                                 {
@@ -138,12 +139,13 @@ namespace ACQ.Web.App.Controllers
 
                                     }
                                 }
-                                return View(model);
-                            }
-                            else
-                            {
-                                return RedirectToAction("Login", "Account");
-                            }
+                                
+                                return View(model1);
+                            //}
+                            //else
+                            //{
+                            //    return RedirectToAction("Login", "Account");
+                            //}
 
 
                         }
@@ -152,17 +154,15 @@ namespace ACQ.Web.App.Controllers
 
                         }
 
-                    }
-                    else
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
-                }
+                    //}
+                    //else
+                    //{
+                    //    return RedirectToAction("Login", "Account");
+                    //}
+                //}
                 // return View();
             }
-
-            return View();
-
+            return View(model);
         }
 
         [HttpPost]
@@ -171,8 +171,6 @@ namespace ACQ.Web.App.Controllers
         //[SessionExpire]
         public async Task<ActionResult> AddFormMenu(AddFormMenuViewModel input)
         {
-
-
 
             if (ModelState.IsValid)
             {
@@ -210,6 +208,7 @@ namespace ACQ.Web.App.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("AddRole")]
         public ActionResult AddRole()
         {
             if (Session["UserID"] != null)
@@ -223,65 +222,61 @@ namespace ACQ.Web.App.Controllers
                     var formName = sanitizer.Sanitize("AddRole");
                     client1.BaseAddress = new Uri(WebAPIUrl);
 
-                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
-                    if (response1.IsSuccessStatusCode)
+                    //client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    //HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    //if (response1.IsSuccessStatusCode)
+                    // {
+                    try
                     {
-                        try
+                        // model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                        // if (model1.roleList.Count != 0)
+                        // {
+                        AddFormMenuViewModel model = new AddFormMenuViewModel();
+                        List<UserViewModel> listData = new List<UserViewModel>();
+                        using (HttpClient client = new HttpClient())
                         {
-                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
-                            if (model1.roleList.Count != 0)
+                            client.BaseAddress = new Uri(WebAPIUrl);
+
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                            HttpResponseMessage response = client.GetAsync("MasterFormMenu/GetFormMenuList").Result;
+                            HttpResponseMessage response2 = client.GetAsync("MasterFormMenu/GetUserList").Result;
+
+                            if (response.IsSuccessStatusCode)
                             {
-                                AddFormMenuViewModel model = new AddFormMenuViewModel();
-                                List<UserViewModel> listData = new List<UserViewModel>();
-                                using (HttpClient client = new HttpClient())
+                                try
                                 {
-                                    client.BaseAddress = new Uri(WebAPIUrl);
-
-                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                                    HttpResponseMessage response = client.GetAsync("MasterFormMenu/GetFormMenuList").Result;
-                                    HttpResponseMessage response2 = client.GetAsync("MasterFormMenu/GetUserList").Result;
-
-                                    if (response.IsSuccessStatusCode)
-                                    {
-                                        try
-                                        {
-                                            model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
-                                            listData = response2.Content.ReadAsAsync<List<UserViewModel>>().Result;
-                                            model.UserList = listData;
-                                            // List list = (List)model1.UserList;
-                                            // model.userList = (List<userViewModel>)(List)model1.UserList;
-                                        }
-                                        catch (Exception ex)
-                                        {
-
-                                        }
-
-                                    }
-                                    else
-                                    {
-
-                                    }
+                                    model = response.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                                    listData = response2.Content.ReadAsAsync<List<UserViewModel>>().Result;
+                                    model.UserList = listData;
+                                    // List list = (List)model1.UserList;
+                                    // model.userList = (List<userViewModel>)(List)model1.UserList;
                                 }
-                                return View(model);
+                                catch (Exception ex)
+                                {
+
+                                }
+
                             }
                             else
                             {
-                                return RedirectToAction("Login", "Account");
+
                             }
 
-
                         }
-                        catch (Exception ex)
-                        {
-
-                        }
-
+                        return View(model);
+                        //}
+                        //else
+                        //{
+                        //    return RedirectToAction("Login", "Account");
+                        //}
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        return RedirectToAction("Login", "Account");
+
                     }
+                //}
+                    
+                   
                 }
                 // return View();
             }
@@ -292,9 +287,11 @@ namespace ACQ.Web.App.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
+        [Route("AddRole")]
         public async Task<ActionResult> AddRole(AddFormMenuViewModel viewModel)
         {
             AddFormMenuViewModel model = new AddFormMenuViewModel();
+           
             if (ModelState.IsValid)
             {
                 //if (Session["emailid"] != null)
@@ -305,6 +302,7 @@ namespace ACQ.Web.App.Controllers
                 // input.Password = sanitizer.Sanitize(input.TokenId);
                 using (HttpClient client = new HttpClient())
                 {
+                    viewModel.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     client.BaseAddress = new Uri(WebAPIUrl + "MasterMenu/AddRole");
                     HttpResponseMessage postJob = await client.PostAsJsonAsync<AddFormMenuViewModel>(WebAPIUrl + "MasterFormMenu/AddRole", viewModel);
                     //string url = postJob.Headers.Location.AbsoluteUri;
@@ -335,20 +333,20 @@ namespace ACQ.Web.App.Controllers
             {
                 AddFormMenuViewModel model1 = new AddFormMenuViewModel();
                 List<AddFormMenuViewModel> listData1 = new List<AddFormMenuViewModel>();
-                using (HttpClient client1 = new HttpClient())
-                {
+               // using (HttpClient client1 = new HttpClient())
+               // {
 
                     var loginid = sanitizer.Sanitize(Session["UserID"].ToString());
                     var formName = sanitizer.Sanitize("SoCPdfRegistration");
-                    client1.BaseAddress = new Uri(WebAPIUrl);
+                    //client1.BaseAddress = new Uri(WebAPIUrl);
 
-                    client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
-                    if (response1.IsSuccessStatusCode)
-                    {
+                    //client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    //HttpResponseMessage response1 = client1.GetAsync("MasterFormMenu/GetRoleByIdUrl?UserID=" + loginid + "&FormName=" + formName + "").Result;
+                    //if (response1.IsSuccessStatusCode)
+                   // {
                         try
                         {
-                            model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
+                            //model1 = response1.Content.ReadAsAsync<AddFormMenuViewModel>().Result;
                             if (model1.roleList.Count != 0)
                             {
                                 AddFormMenuViewModel model = new AddFormMenuViewModel();
@@ -390,14 +388,14 @@ namespace ACQ.Web.App.Controllers
 
                         }
 
-                    }
-                    else
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    return RedirectToAction("Login", "Account");
+                    //}
                 }
                 // return View();
-            }
+           // }
 
             return View();
         }

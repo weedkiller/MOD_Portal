@@ -43,7 +43,7 @@ namespace ACQ.Web.ViewModel.User
         public string ErrorMsg { get; set; }
         public Nullable<int> MemberID { get; set; }
         public string deptt_description { get; set; }
-
+        public string DepartmentName { get; set; }
         public Nullable<int> SrNo { get; set; }
         public string IsActive { get; set; }
         public string Message { get; set; }

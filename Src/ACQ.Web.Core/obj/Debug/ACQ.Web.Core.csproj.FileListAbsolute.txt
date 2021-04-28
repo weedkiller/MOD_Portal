@@ -1,8 +1,0 @@
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
-E:\ACQ\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb

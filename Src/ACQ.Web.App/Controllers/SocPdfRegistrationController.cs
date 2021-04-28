@@ -97,7 +97,7 @@ namespace ACQ.Web.App.Controllers
         // GET: SocPdfRegistration
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         SAVESOCVIEWMODELBluk obj = new SAVESOCVIEWMODELBluk();
-      
+
 
         List<Efile.FileDetail> fileDetails = new List<Efile.FileDetail>();
         List<Efile.FileDetail> fileDetailsA = new List<Efile.FileDetail>();
@@ -145,7 +145,7 @@ namespace ACQ.Web.App.Controllers
                 case "50-4B-03-04":
                     contenttype = "text/docx";
                     break;
-                
+
             }
             if (contenttype != String.Empty)
             {
@@ -202,7 +202,7 @@ namespace ACQ.Web.App.Controllers
                 return false;
             }
 
-            
+
 
 
         }
@@ -211,7 +211,7 @@ namespace ACQ.Web.App.Controllers
         [HandleError]
         [SessionExpire]
         [SessionExpireRefNo]
-      
+
         public ActionResult SoCPdfRegistration()
         {
             return View();
@@ -288,7 +288,13 @@ namespace ACQ.Web.App.Controllers
                             {
                                 mSercive = Session["Department"].ToString();
                             }
-
+                        
+                            if (Session["DepartmentName"].ToString().ToLower().Contains(contentControlText[1].ToString().ToLower())  && Session["DepartmentName"].ToString().ToLower()!="superadmin")
+                            {
+                                ViewBag.UploadStatus = "Invalid Service";
+                                ViewBag.UploadMsg = "You are not authorize to upload Soc belonging to "+contentControlText[1].ToString();
+                                return View();
+                            }
 
                             if (contentControlText.Count > 0)
                             {
@@ -394,13 +400,23 @@ namespace ACQ.Web.App.Controllers
                                 obj.SoC_Type = SoC_Type;
 
                                 ViewBag.UploadStatus = "";
-                                fileSoC.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
-                                Uploadencryption(fileSoC);
-                                fullpath = Server.MapPath(UploadfilePath) + filename;
+                                try
+                                {
 
-                                objattach.AttachmentFileName = "SOC";
-                                objattach.Path = filename;
-                                objattach.RefId = 2;
+                                    fileSoC.SaveAs(Path.Combine(Server.MapPath(UploadfilePath), filename));
+                                }
+                                catch(Exception x)
+                                {
+
+                                }
+                                    Uploadencryption(fileSoC);
+                                    fullpath = Server.MapPath(UploadfilePath) + filename;
+
+                                    objattach.AttachmentFileName = "SOC";
+                                    objattach.Path = filename;
+                                    objattach.RefId = 2;
+                                
+                              
                             }
                             else
                             {

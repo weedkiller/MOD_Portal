@@ -210,6 +210,7 @@ namespace ACQ.Web.App.Controllers
                                 Session["UserName"] = model.First().UserName.ToString();
                                 Session["SectionID"] = model.First().SectionID.ToString();
                                 Session["Department"] = model.First().deptt_description.ToString();
+                                Session["DepartmentName"] = model.First().DepartmentName.ToString();
                                 Session["Emailotp"] = model.First().Emailotp.ToString();
                                 Session["EmailID"] = model.First().InternalEmailID.ToString();
                                 Session["DepartmentID"] = model.First().DepartmentID.ToString();
@@ -420,6 +421,8 @@ namespace ACQ.Web.App.Controllers
         {
 
             string otp = Session["Emailotp"].ToString();
+
+
             UserLogViewModel model = new UserLogViewModel();
             model.UserEmail = Session["EmailID"].ToString();
             model.IPAddress = Request.UserHostAddress;
