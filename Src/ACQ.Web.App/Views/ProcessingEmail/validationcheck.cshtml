@@ -807,7 +807,7 @@ else if (ViewBag.isalertsent == false)
                 {
                     text: 'Download',
                     action: function (e, dt, node, config) {
-                        window.open("/ExportToExcel", "_blank");
+                        window.open("@Url.Action("ExportToExcel", "ProcessingEmail")", "_blank");
                     }
                 },
             //    {

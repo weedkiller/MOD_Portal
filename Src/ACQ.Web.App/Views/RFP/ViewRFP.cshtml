@@ -45,7 +45,7 @@
             @Html.AntiForgeryToken()
             <div class="card">
                 <div class="card-header">
-                    <h6>View RFP</h6>
+                    <h6>View Preliminary RFP</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -124,12 +124,12 @@
                     <div class="actionrow" style="display:none;">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View</a>
-                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
-                                <button id="sendrfp" class="btn btn-sm btn-info btn-bottom">Send</button>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View Preliminary RFP</a>
+                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download Preliminary RFP</a>
+                                <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom">Send Preliminary RFP</button>
                                 <div class="uploadbtn">
                                     <input type="file" id="uploadrfp" hidden />
-                                    <label for="upload" class="file-select">Upload New RFP</label>
+                                    <label for="upload" class="file-select">Upload Updated RFP</label>
                                 </div>
 
                             </div>
@@ -182,7 +182,13 @@
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
-                    if (response == true) {
+                    if (response.Status == true) {
+                        var users = "";
+                        $.each(function () {
+
+
+                        });
+
                         toastr.success("Sent successfully..");
                         $('#sendrfp').attr("disabled", true);
 

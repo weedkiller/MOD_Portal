@@ -96,4 +96,10 @@ namespace ACQ.Web.App.ViewModel
         public string VendorType { get; set; }
         public string ConnectedVendors { get; set; }
     }
+
+    public class UploadComment
+    {
+        public HttpFileCollectionBase MyFile { get; set; }
+        public int CommentId { get; set; }
+    }
 }

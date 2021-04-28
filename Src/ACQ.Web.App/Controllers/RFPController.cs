@@ -315,6 +315,8 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
+
+
         [Route("ViewUploadedRFP")]
         [HandleError]
         [SessionExpire]
@@ -339,6 +341,17 @@ namespace ACQ.Web.App.Controllers
             }
             return View(sharedRFP);
         }
+
+
+        [Route("UploadComments")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> UploadComments(UploadComment model)
+        {
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
 
 
         [Route("GetRFPdata")]
@@ -422,7 +435,6 @@ namespace ACQ.Web.App.Controllers
 
 
         [Route("sharedraftrfp")]
-        [HandleError]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> sharedraftrfp(int Id = 0)
         {
@@ -465,10 +477,13 @@ namespace ACQ.Web.App.Controllers
                 {
                     sent = false;
                 }
-                return Json(sent, JsonRequestBehavior.AllowGet);
+                
             }
-            else return Json(false, JsonRequestBehavior.AllowGet);
-
+            else
+            {
+                sent = false;
+            }
+            return Json(new { Status = sent,Sendto= Users }, JsonRequestBehavior.AllowGet);
         }
 
 

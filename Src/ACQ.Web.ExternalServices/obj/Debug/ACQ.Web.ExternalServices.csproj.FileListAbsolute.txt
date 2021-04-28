@@ -17,3 +17,22 @@ E:\ACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalService
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
 E:\ACQ\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ExternalServices.pdb
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Http.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Mvc.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Net.Http.Formatting.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Newtonsoft.Json.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Razor.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.Razor.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.pdb
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\bin\Debug\ACQ.Web.ViewModel.dll.config
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csprojAssemblyReference.cache
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CoreCompileInputs.cache
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.csproj.CopyComplete
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.ExternalServices\obj\Debug\ACQ.Web.ExternalServices.pdb
