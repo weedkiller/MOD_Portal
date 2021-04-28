@@ -17,6 +17,7 @@ namespace ACQ.Web.App.ViewModel
     {
         public int Id { get; set; }
         public string ContractId { get; set; }
+        public string EncryptContractId { get; set; }
         public string Contract_Number { get; set; }
         public Nullable<System.DateTime> DateOfContractSigning { get; set; }
         public Nullable<System.DateTime> createdate { get; set; }
@@ -90,8 +91,11 @@ namespace ACQ.Web.App.ViewModel
     public class ContractPayment
     {
         public string ContractId { get; set; }
+        public string EncryptContractId { get; set; }
         public string FinancialYear { get; set; }
+        public string EncryptFinancialYear { get; set; }
         public string Service { get; set; }
+        public string EncryptService { get; set; }
         public decimal? ProjectPayment { get; set; }
         public decimal? ActualPayment { get; set; }
         public decimal? BalacePayment { get; set; }

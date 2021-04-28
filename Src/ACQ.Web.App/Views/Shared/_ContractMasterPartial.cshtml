@@ -36,7 +36,7 @@
                                 foreach (var item in Model.FinancialYear)
                                 {
                             <tr>
-                                <td><a href="/GetContractBaseOnFinancialYear?Service=@item.Service&FinancialYear=@item.FinancialYear"> @item.FinancialYear</a></td>
+                                <td><a href="/GetContractBaseOnFinancialYear?Service=@item.EncryptService&FinancialYear=@item.EncryptFinancialYear"> @item.FinancialYear</a></td>
                                 <td>@item.ProjectPayment</td>
                                 <td>@item.ActualPayment</td>
                                 <td>@item.BalacePayment</td>

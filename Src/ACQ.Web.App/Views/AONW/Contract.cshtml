@@ -40,9 +40,13 @@
                 <div class="card-header"><h5>Upload Contract Details</h5></div>
                 <div class="form-group row">
                     <span style="color:red"> @Html.ValidationSummary()</span>
-                    @if (ViewBag.File!=null)
+                    @if (ViewBag.File != null)
                     {
                         <span style="color:red">@ViewBag.File</span>
+                    }
+                    @if (ViewBag.FieldName != null)
+                    {
+                        <span style="color:red">@ViewBag.FieldName</span>
                     }
                     <div class="col-md-4 col-sm-4 col-lg-4">
                         <label for=" " class="col-form-label">Upload Contract Details</label>
@@ -386,10 +390,12 @@
             <div class="form-group row">
                 @if (ViewBag.FileStage != null)
                 {
-                <span style="color:red"> @ViewBag.FileStage</span>
-                   
+                    <span style="color:red"> @ViewBag.FileStage</span>
                 }
-
+                @if (ViewBag.ExcelColoumn != null)
+                {
+                    <span style="color:red"> @ViewBag.ExcelColoumn</span>
+                }
                 <div class="col-md-4 col-sm-4 col-lg-4">
                     <label for=" " class="col-form-label">Upload Stages</label>
                     <div class="form-group m-0">
@@ -514,7 +520,7 @@
             // integer part controlled with the int_num_allow variable
             // float (or decimal) part controlled with the float_num_allow variable
 
-            var int_num_allow = 10;
+            var int_num_allow = 100;
             var float_num_allow = 0;
 
             var iof = $(this).val().indexOf(".");
@@ -567,7 +573,7 @@
             // integer part controlled with the int_num_allow variable
             // float (or decimal) part controlled with the float_num_allow variable
 
-            var int_num_allow = 10;
+            var int_num_allow = 100;
             var float_num_allow = 2;
 
             var iof = $(this).val().indexOf(".");
