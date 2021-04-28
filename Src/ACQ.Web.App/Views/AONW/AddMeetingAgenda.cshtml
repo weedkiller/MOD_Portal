@@ -213,7 +213,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="Background">Background <i class="text-danger">*</i></label>
                                                     </div>
-                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    @if (Model.Pid > 0 && userID > 0 && Session["MailSent"].ToString() == "sent")
                                                     {
                                                         <div class="col-md-6 text-right margin-b-3">
                                                             <button class="btn-sm btn-primary" onclick="return OpenCommentModal('background')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
@@ -239,7 +239,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="Proposal">Proposal <i class="text-danger">*</i></label>
                                                     </div>
-                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    @if (Model.Pid > 0 && userID > 0 && Session["MailSent"].ToString() == "sent")
                                                     {
                                                         <div class="col-md-6 text-right margin-b-3">
                                                             <button class="btn-sm btn-primary" onclick="return OpenCommentModal('proposal')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
@@ -265,7 +265,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="Background">Approval sought <i class="text-danger">*</i></label>
                                                     </div>
-                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    @if (Model.Pid > 0 && userID > 0 && Session["MailSent"].ToString() == "sent")
                                                     {
                                                         <div class="col-md-6 text-right margin-b-3">
                                                             <button class="btn-sm btn-primary" onclick="return OpenCommentModal('approvalsought')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
@@ -292,7 +292,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="Discussion">Discussion</label>
                                                     </div>
-                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    @if (Model.Pid > 0 && userID > 0 && Session["MailSent"].ToString() == "sent")
                                                     {
                                                         <div class="col-md-6 text-right margin-b-3">
                                                             <button class="btn-sm btn-primary" onclick="return OpenCommentModal('discussion')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
@@ -319,7 +319,7 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label" for="Decision">Decision</label>
                                                     </div>
-                                                    @if (Model.Pid > 0 && userID > 0)
+                                                    @if (Model.Pid > 0 && userID > 0 && Session["MailSent"].ToString() == "sent")
                                                     {
                                                         <div class="col-md-6 text-right margin-b-3">
                                                             <button class="btn-sm btn-primary" onclick="return OpenCommentModal('decision')" title="Add Comment"><i class="fa fa-plus-circle mr-1"></i>Add/Edit Comment</button>
@@ -414,7 +414,23 @@
                     <input type="hidden" id="commentType" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    @if (!String.IsNullOrEmpty(Model.MeetingAgendaComment.Locked.ToString()))
+                    {
+                        if (Convert.ToInt32(Model.MeetingAgendaComment.Locked) != 1)
+                        {
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        }
+                        else
+                        {
+                            <span>Can not edit You already submitted this comment.</span>
+                            <button type="submit" class="btn btn-primary" disabled>Save</button>
+                        }
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    }
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -510,7 +526,7 @@
                     alert(response.d);
                 }
         });
-       
+
         function OnSuccess(response) {
 
                 $("#meetingagendatable").DataTable(
@@ -525,6 +541,7 @@
                                     var url = '/AONW/EditMeetingAgenda/?ID='+data;
                                     var meetIdObj = $.grep(response, function (element) { return element.Pid == data });
                                     var status = meetIdObj[meetIdObj.length - 1].Version;
+
                                     var url1 = '@Url.Action("DeleteMeetingAgenda", "AONW")/?id=' + data + '&meeting_id=' + meetIdObj[0].meeting_id;
                                     var html = "";
                                     if ('@Session["SectionID"]' == 1 && '@Session["SectionID"]' == 12) {
@@ -696,7 +713,7 @@
         return false;
     }
     function AddComment() {
-        
+
         var commentArea = $(commentModal).find('#commentArea').val();
         var commentType = $(commentModal).find('#commentType').val();
         if (commentType == "proposal")
@@ -740,7 +757,7 @@
             commentList = JSON.parse(comments);
 
         }
-    
+
     }
     function OpenViewModal(commentType) {
 

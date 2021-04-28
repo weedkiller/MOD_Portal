@@ -74,7 +74,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @msg
+                Email Sent Successfully
             </div>
             <div class="modal-footer">
                 <a href="@Url.Action("ViewMeeting","AONW")" type="button" class="btn btn-primary">Ok</a>
@@ -91,7 +91,12 @@
     function sendMails() {
         if (confirm("Are you sure to send mail?")) {
             $("#btnclose").html('Sending');
-            window.location = '/SendMailToParticiants';
+            $.get('@Url.Action("SendMailToParticiants", "AONW",new { ID= Request.QueryString["ID"] })', function (d, s) {
+                //window.location = '/SendMailToParticiants';
+                    $('#exampleModal').modal('show');
+                
+            });
+          
         }
     }
 </script>
