@@ -1728,6 +1728,8 @@
     <Content Include="Views\Shared\_ContractStagePartial.cshtml" />
     <Content Include="Views\Shared\_ContractMasterPartial.cshtml" />
     <Content Include="Views\AONW\UpdateSOC.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnContractID.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnFinancialYear.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

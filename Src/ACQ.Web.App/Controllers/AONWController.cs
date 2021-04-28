@@ -2536,6 +2536,14 @@ namespace ACQ.Web.App.Controllers
             {
                 ViewBag.FileStage = TempData["FileStage"].ToString();
             }
+            if (TempData["FieldName"] != null)
+            {
+                ViewBag.FieldName = TempData["FieldName"].ToString();
+            }
+            if (TempData["ExcelColoumn"]!=null)
+            {
+                ViewBag.ExcelColoumn = TempData["ExcelColoumn"].ToString();
+            }
             if(TempData["Uploadsuccess"]!=null)
             {
                 bool upload =(bool)TempData["Uploadsuccess"];
