@@ -183,13 +183,8 @@
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
                     if (response.Status == true) {
-                        var users = "";
-                        $.each(function () {
 
-
-                        });
-
-                        toastr.success("Sent successfully..");
+                        toastr.success("Sent successfully to " + response.Sendto);
                         $('#sendrfp').attr("disabled", true);
 
                     } else {
@@ -228,7 +223,7 @@
                         if (response.Status == true) {
                             
                             $('#detaildata').empty();
-                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th></tr></thead>';
+                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th><th>Delegated/Non-Delegated</th></tr></thead>';
                             var v = '<select id="vendor">';
                             v += '<option value="0" selected>Select Vendor</option>';
 
@@ -241,7 +236,7 @@
                                 }
                             });
                             v += '</select>';
-                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>'+ v +'</td></tr></tbody></table >';
+                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>' + v + '</td><td>' + response.data.Delegation +'</td></tr></tbody></table >';
                             $('#detaildata').append(row);
 
                             $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
