@@ -45,7 +45,7 @@
             @Html.AntiForgeryToken()
             <div class="card">
                 <div class="card-header">
-                    <h6>View RFP</h6>
+                    <h6>View Preliminary RFP</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -124,12 +124,12 @@
                     <div class="actionrow" style="display:none;">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View</a>
-                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
-                                <button id="sendrfp" class="btn btn-sm btn-info btn-bottom">Send</button>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View Preliminary RFP</a>
+                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download Preliminary RFP</a>
+                                <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom">Send Preliminary RFP</button>
                                 <div class="uploadbtn">
                                     <input type="file" id="uploadrfp" hidden />
-                                    <label for="upload" class="file-select">Upload New RFP</label>
+                                    <label for="upload" class="file-select">Upload Updated RFP</label>
                                 </div>
 
                             </div>
@@ -182,8 +182,9 @@
                 dataType: "json",
                 success: function (response) {
                     $('.preloader').fadeOut('slow');
-                    if (response == true) {
-                        toastr.success("Sent successfully..");
+                    if (response.Status == true) {
+
+                        toastr.success("Sent successfully to " + response.Sendto);
                         $('#sendrfp').attr("disabled", true);
 
                     } else {
@@ -222,7 +223,7 @@
                         if (response.Status == true) {
                             
                             $('#detaildata').empty();
-                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th></tr></thead>';
+                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th><th>Delegated/Non-Delegated</th></tr></thead>';
                             var v = '<select id="vendor">';
                             v += '<option value="0" selected>Select Vendor</option>';
 
@@ -235,7 +236,7 @@
                                 }
                             });
                             v += '</select>';
-                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>'+ v +'</td></tr></tbody></table >';
+                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>' + v + '</td><td>' + response.data.Delegation +'</td></tr></tbody></table >';
                             $('#detaildata').append(row);
 
                             $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);

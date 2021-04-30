@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<ACQ.Web.App.ViewModel.sharedRFP>
-@{
-    ViewBag.Title = "ViewUploadedRFP";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "ViewUploadedRFP";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
@@ -21,16 +19,28 @@
         border-radius: 2px;
     }
 
-    .file-select {
-        display: inline-block;
-        background-color: #1c2f61;
-        color: white;
-        padding: .25rem .5rem;
-        font-family: sans-serif;
-        border-radius: 0.3rem;
-        cursor: pointer;
-        font-size: 14px;
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+        background-color: #1c2f61 !important;
+        border-color: #1c2f61 !important;
+        margin: 0 10px 10px 0px;
     }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
 
     .btn-bottom {
         margin: 0 10px 10px 0px;
@@ -38,69 +48,133 @@
 </style>
 
 <div class="containers">
-    <div class="container-fluids">
-        <div class="card">
-            <div class="card-header">
-                View Uploaded draft RFP
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="example">
-                        <thead>
-                            <tr>
-                                <th>
-                                    SR. NO
-                                </th>
-                                <th>
-                                    SOC Id
-                                </th>
-                                <th>Service</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if(Model!=null && Model.Count()>0)
-                            {
-                                var sn = 1;
-                                foreach(var item in Model)
+    @using ((Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" })))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluids">
+            <div class="card">
+                <div class="card-header">
+                    View Uploaded Preliminary RFP
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        SR. NO
+                                    </th>
+                                    <th>
+                                        SOC Id
+                                    </th>
+                                    <th>Service</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count() > 0)
                                 {
-                            <tr>
-                                <td>
-                                    @sn
-                                </td>
-                                <td>
-                                    @item.SOCID
-                                </td>
-                                <td>@item.Service</td>
-                                <td class="justify-content-start d-flex">
-                                    <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download</a>
-                                    <div class="uploadbtn">
-                                        <input type="file" id="uploadrfp" hidden />
-                                        <label for="upload" class="file-select">Upload New RFP</label>
-                                    </div>
-                                </td>
-                            </tr>
-                                    sn++;
+                                    var sn = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @sn
+                                            </td>
+                                            <td>
+                                                @item.SOCID
+                                            </td>
+                                            <td>@item.Service</td>
+                                            <td class="justify-content-start d-flex">
+                                                <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">View Preliminary RFP</a>
+                                                @if(item.CommentedDate==null)
+                                                { 
+                                                <span class="btn btn-sm btn-primary btn-file">
+                                                    Upload Comment <input type="file" s-id="@item.Id" accept="application/pdf" class="uploadrfp">
+                                                </span>
+                                                }
+                        
+
+                                            </td>
+                                        </tr>
+                                        sn++;
+                                    }
                                 }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
 <script src="~/assets/datatable/js/jquery.dataTables.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
 <script>
     $(document).ready(function () {
-
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "10000",
+            "hideDuration": "10000",
+            "timeOut": "10000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
         $('#example').DataTable({
             dom: 'Bfrtip',
             pageLength: 50
         });
+        $('.uploadrfp').on('change', function () {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+            var fileUpload = $(this).get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            var fileData = new FormData();
+            fileData.append("CommentId", parseInt($(this).attr("s-id")));
+            fileData.append("__RequestVerificationToken", token);
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("MyFile", files[i]);
+            }
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                url: '/UploadComments',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                async: false,
+                success: function (result) {
+                    $('.preloader').fadeOut('slow');
+                    if (result == true) {
+                        toastr.success("Comments Uploaded successfully");
+                        window.location.reload();
+                    }
+                    else {
+                        toastr.error("Something went wrong on server.");
+                    }
+
+                },
+                error: function (err) {
+                    toastr.error(err.statusText);
+                }
+            });
+        });
+
     });
 </script>
 

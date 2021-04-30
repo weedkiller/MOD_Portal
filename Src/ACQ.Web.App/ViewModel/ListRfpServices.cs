@@ -52,6 +52,7 @@ namespace ACQ.Web.App.ViewModel
         public DateTime? SOCDate { get; set; }
         public string SOCCase { get; set; }
         public string SOCAname { get; set; }
+        public string Delegation { get; set; }
         public AttachmentData attachment { get; set; }
     }
 
@@ -76,6 +77,7 @@ namespace ACQ.Web.App.ViewModel
         public string UploadedRFP { get; set; }
         public string Service { get; set; }
         public string Categorisation { get; set; }
+        public string UserRole { get; set; }
         public Nullable<System.DateTime> CommentedDate { get; set; }
         public Nullable<bool> IsApproved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
@@ -95,5 +97,11 @@ namespace ACQ.Web.App.ViewModel
         public int Id { get; set; }
         public string VendorType { get; set; }
         public string ConnectedVendors { get; set; }
+    }
+
+    public class UploadComment
+    {
+        public HttpPostedFileBase MyFile { get; set; }
+        public int CommentId { get; set; }
     }
 }

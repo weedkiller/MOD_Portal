@@ -32,6 +32,7 @@ namespace ACQ.Web.App.Controllers
 
         HtmlSanitizer sanitizer = new HtmlSanitizer();
         private static string WebAPIUrl = ConfigurationManager.AppSettings["APIUrl"].ToString();
+        public decimal filesize { get; set; }
 
         public RFPController()
         {
@@ -195,8 +196,7 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult RFPComments()
         {
-            IEnumerable<Service> listdata = new List<Service>();
-            IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
+            IEnumerable<sharedRFP> SOCData = new List<sharedRFP>();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -204,36 +204,19 @@ namespace ACQ.Web.App.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
+                HttpResponseMessage response = client.GetAsync("RFP/GetCommentedrfp").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<Service>>().Result;
-                }
-            }
-
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response1 = client.GetAsync("RFP/GetSOCData").Result;
-                if (response1.IsSuccessStatusCode)
-                {
-                    SOCData = response1.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
+                    SOCData = response.Content.ReadAsAsync<IEnumerable<sharedRFP>>().Result;
                 }
             }
 
             
-
-
-            ViewBag.services = listdata;
             if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
             {
                 if (Convert.ToInt32(Session["SectionID"]) == 14)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "airforce").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -242,7 +225,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 11)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "army").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "army").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -251,7 +234,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 15)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "navy").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "navy").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -260,7 +243,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 16)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "icg").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "icg").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -269,7 +252,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 17)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "ids").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "ids").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -315,6 +298,8 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
+
+
         [Route("ViewUploadedRFP")]
         [HandleError]
         [SessionExpire]
@@ -340,6 +325,121 @@ namespace ACQ.Web.App.Controllers
             return View(sharedRFP);
         }
 
+
+        [Route("UploadComments")]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> UploadComments(UploadComment model)
+        {
+            bool taskstatus = false;
+            if (ModelState.IsValid)
+            {
+                if (model.MyFile != null && FileCheckformat(model.MyFile, Path.GetExtension(model.MyFile.FileName)))
+                {
+                    
+                    var content = model.MyFile.ContentType;
+                    string path = Path.Combine(Server.MapPath("~/UploadSOC"), Path.GetFileName(model.MyFile.FileName));
+                    model.MyFile.SaveAs(path);
+                    sharedRFP shared = new sharedRFP();
+                    shared.Id= Convert.ToInt32(sanitizer.Sanitize(model.CommentId.ToString()));
+                    shared.UploadedComment = "~/UploadSOC/" + model.MyFile.FileName;
+                    using (var client = new HttpClient())
+                    { 
+                        client.DefaultRequestHeaders.Clear();
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
+                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
+                    HttpResponseMessage response = await client.PostAsJsonAsync<sharedRFP>(WebAPIUrl + "RFP/UploadComments", shared);
+                    bool postResult = response.IsSuccessStatusCode;
+                        if(postResult)
+                        {
+                            taskstatus = true;
+                        }
+                    }
+
+                }
+            }
+                return Json(taskstatus, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool FileCheckformat(HttpPostedFileBase file, string mFileExtension)
+        {
+
+            filesize = 1024;
+            string FileExtension = Path.GetExtension(file.FileName);
+            int count = file.FileName.Count(f => f == '.');
+            if (count > 1)
+            {
+                return false;
+            }
+
+            if (file.ContentLength > (filesize * 1024))
+            {
+                return false;
+            }
+            string contenttype = String.Empty;
+            Stream checkStream = file.InputStream;
+            BinaryReader chkBinary = new BinaryReader(checkStream);
+            Byte[] chkbytes = chkBinary.ReadBytes(0x10);
+
+            string data_as_hex = BitConverter.ToString(chkbytes);
+            string magicCheck = data_as_hex.Substring(0, 11);
+
+            //Set the contenttype based on File Extension
+            switch (magicCheck)
+            {
+                case "FF-D8-FF-E1":
+                    contenttype = "image/jpg";
+                    break;
+                case "FF-D8-FF-E0":
+                    contenttype = "image/jpeg";
+                    break;
+                case "25-50-44-46":
+                    contenttype = "text/pdf";
+                    break;
+                case "D0-CF-11-E0":
+                    contenttype = "text/xls";
+                    break;
+                case "50-4B-03-04":
+                    contenttype = "text/xlsx";
+                    break;
+
+            }
+            if (contenttype != String.Empty)
+            {
+                Byte[] bytes = chkBinary.ReadBytes((Int32)checkStream.Length);
+
+
+                if (file.ContentType != "application/pdf")
+                {
+                    return false;
+                }
+                else
+                {
+
+                    if (FileExtension == ".pdf")
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+        }
 
         [Route("GetRFPdata")]
         [HandleError]
@@ -422,11 +522,11 @@ namespace ACQ.Web.App.Controllers
 
 
         [Route("sharedraftrfp")]
-        [HandleError]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> sharedraftrfp(int Id = 0)
         {
             IEnumerable<UserViewModel> Users = new List<UserViewModel>();
+            string roles = "";
             bool sent = false;
             if (Id != 0)
             {
@@ -450,6 +550,8 @@ namespace ACQ.Web.App.Controllers
                         }
                     }
 
+                    
+
                     if(Users!=null && Users.Count()>0)
                     {
                         foreach(var item in Users)
@@ -457,6 +559,15 @@ namespace ACQ.Web.App.Controllers
                             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
                             string Messge = "Draft RFP uploaded. Please login to your account to download and provide comments.";
                             EmailHelper.sendEmailEscalation(item.UserEmail, Messge, mailPath);
+                            if(string.IsNullOrEmpty(roles))
+                            {
+                                roles = roles + item.Designation;
+                            }
+                            else
+                            {
+                                roles = roles +","+ item.Designation;
+                            }
+                            
                         }
                     }
                     sent = true;
@@ -465,10 +576,13 @@ namespace ACQ.Web.App.Controllers
                 {
                     sent = false;
                 }
-                return Json(sent, JsonRequestBehavior.AllowGet);
+                
             }
-            else return Json(false, JsonRequestBehavior.AllowGet);
-
+            else
+            {
+                sent = false;
+            }
+            return Json(new { Status = sent,Sendto= roles }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -485,5 +599,8 @@ namespace ACQ.Web.App.Controllers
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             return File(FileBytes, "application/pdf");
         }
+
+
+        
     }
 }
