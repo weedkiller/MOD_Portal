@@ -1827,6 +1827,8 @@
     <Content Include="Views\AONW\UpdateSOC.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <Content Include="Views\Contract\GetContractBaseOnContractID.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnFinancialYear.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

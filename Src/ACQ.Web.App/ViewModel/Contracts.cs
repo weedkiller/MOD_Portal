@@ -100,5 +100,18 @@ namespace ACQ.Web.App.ViewModel
         public decimal? ActualPayment { get; set; }
         public decimal? BalacePayment { get; set; }
     }
-   
+    public partial class ContractStagePayment
+    {
+        public int Id { get; set; }
+        public string PaymentId { get; set; }
+        public string ContractId { get; set; }
+        public Nullable<int> StageNumber { get; set; }
+        public Nullable<System.DateTime> RevisedDateOfpayment { get; set; }
+        public string ReasonsForSlippage { get; set; }
+        public Nullable<System.DateTime> ActualDateOfPayment { get; set; }
+        public string FullorPartPaymentMade { get; set; }
+        public Nullable<decimal> TotalPaymentMade { get; set; }
+        public Nullable<decimal> ExpendMadeTill31March { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+    }
 }
