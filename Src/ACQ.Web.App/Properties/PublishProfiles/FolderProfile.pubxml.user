@@ -1420,34 +1420,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.dll">
-      <publishTime>04/27/2021 15:44:42</publishTime>
+      <publishTime>04/29/2021 10:04:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.App.pdb">
-      <publishTime>04/27/2021 15:44:42</publishTime>
+      <publishTime>04/29/2021 10:04:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll">
-      <publishTime>04/27/2021 14:48:11</publishTime>
+      <publishTime>04/29/2021 09:42:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.dll.config">
       <publishTime>04/15/2021 09:12:06</publishTime>
     </File>
     <File Include="bin/ACQ.Web.Core.pdb">
-      <publishTime>04/27/2021 14:48:11</publishTime>
+      <publishTime>04/29/2021 09:42:24</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.dll">
-      <publishTime>04/27/2021 14:48:12</publishTime>
+      <publishTime>04/29/2021 09:42:28</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ExternalServices.pdb">
-      <publishTime>04/27/2021 14:48:12</publishTime>
+      <publishTime>04/29/2021 09:42:28</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll">
-      <publishTime>04/27/2021 14:48:11</publishTime>
+      <publishTime>04/29/2021 09:42:26</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.dll.config">
       <publishTime>04/15/2021 09:12:07</publishTime>
     </File>
     <File Include="bin/ACQ.Web.ViewModel.pdb">
-      <publishTime>04/27/2021 14:48:11</publishTime>
+      <publishTime>04/29/2021 09:42:26</publishTime>
     </File>
     <File Include="bin/AngleSharp.Css.dll">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4425,6 +4425,300 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="ExcelFile/StageDetails.xlsx">
       <publishTime>04/26/2021 12:57:44</publishTime>
     </File>
+    <File Include="excelfolder/01160508soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07200435soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07281023soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07321001soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07341039soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07381053soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07411005soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07421023soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/07431033soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/18500957soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/20020807soc.docx">
+      <publishTime>04/20/2021 20:02:29</publishTime>
+    </File>
+    <File Include="excelfolder/20141007soc_format_word_250221 %283%29.docx">
+      <publishTime>04/20/2021 10:14:57</publishTime>
+    </File>
+    <File Include="excelfolder/20381058soc.docx">
+      <publishTime>04/20/2021 10:39:09</publishTime>
+    </File>
+    <File Include="excelfolder/20401016soc.docx">
+      <publishTime>04/20/2021 10:40:45</publishTime>
+    </File>
+    <File Include="excelfolder/20441032soc.docx">
+      <publishTime>04/20/2021 10:44:45</publishTime>
+    </File>
+    <File Include="excelfolder/20481011soc.docx">
+      <publishTime>04/20/2021 10:49:17</publishTime>
+    </File>
+    <File Include="excelfolder/20521031soc.docx">
+      <publishTime>04/20/2021 10:53:10</publishTime>
+    </File>
+    <File Include="excelfolder/20541057soc.docx">
+      <publishTime>04/20/2021 10:55:13</publishTime>
+    </File>
+    <File Include="excelfolder/20581011soc.docx">
+      <publishTime>04/20/2021 10:58:27</publishTime>
+    </File>
+    <File Include="excelfolder/20581011soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/21280138soc.docx">
+      <publishTime>04/21/2021 13:29:12</publishTime>
+    </File>
+    <File Include="excelfolder/22380927soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22460813soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22460929soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22500921soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22510806soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22530947soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/22590905soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/24440912soc_format_word_250221 %283%29.doc">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222201600.crt">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222203011.crt">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222203732.crt">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222203853.crt">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222test.xml">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/2624377545046701222test[signed].xml">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/27171127soc.docx">
+      <publishTime>04/27/2021 11:17:27</publishTime>
+    </File>
+    <File Include="excelfolder/27201151soc.docx">
+      <publishTime>04/27/2021 11:20:51</publishTime>
+    </File>
+    <File Include="excelfolder/27261028soc.docx">
+      <publishTime>04/27/2021 10:26:28</publishTime>
+    </File>
+    <File Include="excelfolder/27271033soc.docx">
+      <publishTime>04/27/2021 10:27:50</publishTime>
+    </File>
+    <File Include="excelfolder/27381053soc.docx">
+      <publishTime>04/27/2021 10:38:53</publishTime>
+    </File>
+    <File Include="excelfolder/27411039soc.docx">
+      <publishTime>04/27/2021 10:41:39</publishTime>
+    </File>
+    <File Include="excelfolder/27441044soc.docx">
+      <publishTime>04/27/2021 10:44:45</publishTime>
+    </File>
+    <File Include="excelfolder/27471033soc.docx">
+      <publishTime>04/27/2021 10:47:33</publishTime>
+    </File>
+    <File Include="excelfolder/27501042soc.docx">
+      <publishTime>04/27/2021 10:50:42</publishTime>
+    </File>
+    <File Include="excelfolder/27531034soc.docx">
+      <publishTime>04/27/2021 10:53:35</publishTime>
+    </File>
+    <File Include="excelfolder/27551053soc.docx">
+      <publishTime>04/27/2021 10:55:53</publishTime>
+    </File>
+    <File Include="excelfolder/Acq_portal error %281%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decrpt_sample - Copy.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decry_encry_sample.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decry_MOM1.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decry_sample - Copy.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decry_sample.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/decry_soc_format_word_250221 %283%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/Doc1.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/encry_sample.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/error portal.docx">
+      <publishTime>04/20/2021 11:02:47</publishTime>
+    </File>
+    <File Include="excelfolder/file-sample_100kB %281%29.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/iNVOICE.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/Item Name.pdf">
+      <publishTime>04/16/2021 17:27:19</publishTime>
+    </File>
+    <File Include="excelfolder/ItemName.pdf">
+      <publishTime>04/16/2021 17:38:31</publishTime>
+    </File>
+    <File Include="excelfolder/MOM1.pdf">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/sample - Copy.pdf">
+      <publishTime>04/20/2021 10:44:26</publishTime>
+    </File>
+    <File Include="excelfolder/Sample-PPT-File-500kb.ppt">
+      <publishTime>04/20/2021 10:53:21</publishTime>
+    </File>
+    <File Include="excelfolder/sample.pdf">
+      <publishTime>04/28/2021 13:46:51</publishTime>
+    </File>
+    <File Include="excelfolder/soc.docx">
+      <publishTime>04/21/2021 13:28:38</publishTime>
+    </File>
+    <File Include="excelfolder/soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/soc_format_word_250221 %283%29.doc">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/soc_format_word_250221 %283%29.docx">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/soc_format_word_250221 %284%29.doc">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/soc_format_word_250221 %284%291.doc">
+      <publishTime>04/26/2021 12:57:44</publishTime>
+    </File>
+    <File Include="excelfolder/~%24041007soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24071040soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24071115soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24080159soc_format_word_sample.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24090139soc_format_word_sample.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24121257soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24140347soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24181048soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24190125soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24221230soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24321056soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24371033soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24420149soc_format_word_sample.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24440111soc_format_word_sample.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24460116soc_format_word_sample.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24460157soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24480113soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24480909soc_format_word_250221 %282%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24491238soc_format_word %282%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24520807soc_format_word %282%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24540158soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24560920soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24580903soc_format_word.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24c_format_word_250221 %284%29.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24Doc1.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24le-sample_100kB %281%29.doc">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24NVOICE.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
+    <File Include="excelfolder/~%24q_portal error %281%29.docx">
+      <publishTime>04/15/2021 09:12:06</publishTime>
+    </File>
     <File Include="favicon.ico">
       <publishTime>04/15/2021 09:12:06</publishTime>
     </File>
@@ -4483,7 +4777,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Views/AONW/Contract.cshtml">
-      <publishTime>04/26/2021 12:57:44</publishTime>
+      <publishTime>04/28/2021 17:15:13</publishTime>
     </File>
     <File Include="Views/AONW/createMeeting.cshtml">
       <publishTime>04/19/2021 15:34:16</publishTime>
@@ -4525,7 +4819,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/27/2021 10:04:13</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeeting.cshtml">
-      <publishTime>04/27/2021 12:09:37</publishTime>
+      <publishTime>04/28/2021 17:29:22</publishTime>
     </File>
     <File Include="Views/AONW/ViewMeetingComments.cshtml">
       <publishTime>04/27/2021 10:04:13</publishTime>
@@ -4552,7 +4846,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/26/2021 12:57:44</publishTime>
     </File>
     <File Include="Views/Contract/ContractList.cshtml">
-      <publishTime>04/26/2021 12:57:44</publishTime>
+      <publishTime>04/28/2021 17:15:13</publishTime>
     </File>
     <File Include="Views/Contract/ContractReport.cshtml">
       <publishTime>04/27/2021 10:04:13</publishTime>
@@ -4591,10 +4885,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/27/2021 10:04:13</publishTime>
     </File>
     <File Include="Views/Shared/_ContractMasterPartial.cshtml">
-      <publishTime>04/27/2021 10:04:13</publishTime>
+      <publishTime>04/28/2021 17:15:13</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/27/2021 15:43:38</publishTime>
+      <publishTime>04/29/2021 09:45:40</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutErrorPage.cshtml">
       <publishTime>04/15/2021 09:12:04</publishTime>
@@ -4615,7 +4909,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/15/2021 09:12:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/27/2021 15:44:43</publishTime>
+      <publishTime>04/29/2021 09:42:38</publishTime>
     </File>
   </ItemGroup>
 </Project>

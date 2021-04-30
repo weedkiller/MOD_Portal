@@ -22,7 +22,28 @@
                         <div class="row">
                             <div class="col-md-6"><h3>View Meetings</h3></div>
                             <div class="col-md-6 text-right">
-                                <a href="@Url.Action("createMeeting", "AONW")" id="movetoaddmeeting" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i>Create Meetings</a>
+                                @{
+                                    List<ACQ.Web.ViewModel.MasterRole.tbl_Master_Role> RoleList = (List<ACQ.Web.ViewModel.MasterRole.tbl_Master_Role>)Session["RoleList"];
+                                    if (Convert.ToInt32(Session["SectionID"]) == 13)
+                                    {
+                                        <a href="@Url.Action("createMeeting", "AONW")" id="movetoaddmeeting" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i>Create Meetings</a>
+
+                                    }
+                                    else
+                                    {
+                                        foreach (ACQ.Web.ViewModel.MasterRole.tbl_Master_Role item in RoleList)
+                                        {
+                                            if (item.FormName.ToLower().Contains("createmeeting"))
+                                            {
+                                                <a href="@Url.Action("createMeeting", "AONW")" id="movetoaddmeeting" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i>Create Meetings</a>
+                                            }
+
+                                        }
+                                    }
+                                }
+
+
+
                             </div>
                         </div>
                     </div>
@@ -59,6 +80,7 @@
                                 <tbody>
                                     @foreach (var item in Model.ListofMeeting)
                                     {
+
                                         <tr>
                                             <td>@item.dac_dpb</td>
                                             <td>@Convert.ToDateTime(@item.meeting_date.ToString()).ToShortDateString()</td>
@@ -69,38 +91,46 @@
                                                     string date = item.meeting_date.HasValue ? item.meeting_date.Value.ToString("dd/MM/yyyy") : "";
                                                     string classname = "";
                                                     bool isDraftPrepared = false;
-                                                    
-                                                    foreach (var p in ViewBag.PrintStatusList)
+                                                    if (ViewBag.PrintStatusList != null)
                                                     {
-                                                        classname = "btn btn-primary";
-                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                        if (mID == p.meetingid.ToString())
+                                                        foreach (var p in ViewBag.PrintStatusList)
                                                         {
-                                                            classname = "btn btn-warning";
-                                                            isDraftPrepared = true;
-                                                            break;
+                                                            classname = "btn btn-primary";
+                                                            string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                            if (mID == p.meetingid.ToString())
+                                                            {
+                                                                classname = "btn btn-warning";
+                                                                isDraftPrepared = true;
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                     bool isEmailActionDone = false;
-                                                    foreach (var m in ViewBag.MeetingPartcipantsList)
+                                                    if (ViewBag.MeetingPartcipantsList != null)
                                                     {
-                                                        isEmailActionDone = false;
-                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                        if (mID == m.MeetingID.ToString() && m.Status=="Sent")
+                                                        foreach (var m in ViewBag.MeetingPartcipantsList)
                                                         {
-                                                            isEmailActionDone = true;
-                                                            break;
+                                                            isEmailActionDone = false;
+                                                            string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                            if (mID == m.MeetingID.ToString() && m.Status == "Sent")
+                                                            {
+                                                                isEmailActionDone = true;
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                     bool isMomApprovalActionDone = false;
-                                                    foreach (var m in ViewBag.MOMApproval)
+                                                    if (ViewBag.MOMApproval != null)
                                                     {
-                                                        isMomApprovalActionDone = false;
-                                                        string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
-                                                        if (mID == m.meeting_Id.ToString())
+                                                        foreach (var m in ViewBag.MOMApproval)
                                                         {
-                                                            isMomApprovalActionDone = true;
-                                                            break;
+                                                            isMomApprovalActionDone = false;
+                                                            string mID = ACQ.Web.ExternalServices.SecurityAudit.Encryption.Decrypt(item.meeting_id);
+                                                            if (mID == m.meeting_Id.ToString())
+                                                            {
+                                                                isMomApprovalActionDone = true;
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -155,7 +185,6 @@
                                                 @if (isEmailActionDone)
                                                 {
                                                     <a type="button" class="btn btn-default disabled btn-sm" style="background-color:gray" title="Already Sent Draft MoM to participants"><i class="fa fa-envelope mr-1"></i></a>
-                                              
                                                     <a href=@Url.Action("ViewMeetingComments", "AoNW", new { ID = @item.meeting_id }) class="btn btn-warning btn-sm" title="View Comments On Draft MoM"><i class="fa fa-eye mr-1"></i></a>
 
                                                 }
