@@ -10,7 +10,7 @@ namespace ACQ.Web.ExternalServices.Email
 {
     public class EmailHelper
     {
-        private static void SendEmail(string Email, string Body)
+        public static void SendEmail(string Email, string Body, string subject = "MoD (ACQUISITION) DASHBOARD")
         {
             try
             {
@@ -22,10 +22,10 @@ namespace ACQ.Web.ExternalServices.Email
                 message.From = mailAddress;
                 message.To.Add(Email);
                 message.Priority = MailPriority.High;
-                message.Subject = "MoD (ACQUISITION) DASHBOARD";
+                message.Subject = subject;
                 message.Body = Body.ToString();
                 message.IsBodyHtml = true;
-                smtpClient.EnableSsl = false;
+                smtpClient.EnableSsl = true;
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
                 smtpClient.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                 smtpClient.Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
@@ -46,7 +46,7 @@ namespace ACQ.Web.ExternalServices.Email
             try
             {
                 string Body = EmailHelper.SendOTpPopulateBody(InputModel, emaid, mailPath);
-                EmailHelper.SendEmail(emaid, Body);
+                EmailHelper.SendEmail(emaid,Body);
             }
             catch (Exception)
             {

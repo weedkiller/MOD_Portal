@@ -19,7 +19,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using static ACQ.Web.App.MvcApplication;
 using ACQ.Web.ViewModel.MasterRole;
-
+using ACQ.Web.ViewModel.AONW;
+using ACQ.Web.App.ViewModel;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -821,6 +822,54 @@ namespace ACQ.Web.App.Controllers
                 }
 
 
+            }
+            return View();
+        }
+        [Route("LoginHistory")]
+        [HttpGet]
+        public ActionResult LoginHistory()
+        {
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("Account/GetUsersList").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.UserList = response.Content.ReadAsAsync<List<UserViewModel>>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [Route("LoginTrails")]
+        public ActionResult LoginTrails(string UserID)
+        {
+            int uId = Convert.ToInt32(Encryption.Decrypt(UserID));
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("Account/GetLoginTrails?UserId="+uId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.LoginTrailList = response.Content.ReadAsAsync<List<UserLogViewModel>>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
             }
             return View();
         }

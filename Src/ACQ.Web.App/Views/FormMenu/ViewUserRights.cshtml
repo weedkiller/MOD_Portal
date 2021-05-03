@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "GetMenuList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>View User Rights</h2>
+            <form class="form-inline" method="post" action="@Url.Action("ViewUserRights","FormMenu")" enctype="multipart/form-data">
+                <select name="MenuItem" class="form-control">
+                    <option value="0">--Select Menu Item--</option>
+                    @if (ViewBag.MenuList != null)
+                    {
+
+                        foreach (var item in ViewBag.MenuList)
+                        {
+                            string isSelected = "";
+                            if (ViewBag.SelectedMenuItem != null)
+                            {
+                                if (ViewBag.SelectedMenuItem == item.ID.ToString())
+                                {
+                                    isSelected = "selected";
+                                }
+
+                            }
+                            <option @isSelected value="@item.ID">@item.From_menu</option>
+                        }
+                    }
+                </select>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Designation</th>
+                            <th>Department</th>
+                            <th>Assign Role On</th>
+                            <th>Assign Role By</th>
+                            <th>Role History</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (ViewBag.UserList != null)
+                        {
+                            foreach (var item in ViewBag.UserList)
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>@item.Designation</td>
+                                    <td>@item.DepartmentName</td>
+                                    <td>@item.ValidFrom</td>
+                                    <td>@item.Message</td>
+                                    <td><a href="@Url.Action("RolesHistory","FormMenu",new { UserId=ACQ.Web.ExternalServices.SecurityAudit.Encryption.Encrypt(item.UserId.ToString())})"><button class="btn btn-primary btn-sm" type="button">View</button></a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    No User assigned in this Module..!!
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+

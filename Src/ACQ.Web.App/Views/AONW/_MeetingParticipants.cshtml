@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            <input type="checkbox" id="cbx_@item.UserID" name="officers_participated_list" value="@item.UserID" @if (item.IsSelected) { @Html.Raw("checked"); } />
+                            <input type="checkbox" checked id="cbx_@item.UserID" name="officers_participated_list" value="@item.UserID" @if (item.IsSelected) { @Html.Raw("checked"); } />
                             <label for="cbx_@item.UserID"><span>@item.designation</span>&nbsp; <span>@item.UserName</span></label>
                         </div>
                     </div>
@@ -21,3 +21,4 @@
         </div>
     }
 </div>
+

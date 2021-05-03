@@ -53,6 +53,59 @@
 
 
 </div>
+
+
+
+
+
+<!--Sending Draft RFP Mail Start-->
+<div class="card flex-fill w-100">
+    <div class="col-md-12 ">
+        @if (ViewBag.MemberList != null)
+        {
+            <h3>Draft RFP to be send to.</h3>
+            <div class="row">
+                <div class="col col-12">
+                    <div id="div1" class="portlet-body flip-scroll">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SNO.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">EmailId</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int count = 1;}
+                                @foreach (var item in ViewBag.MemberList)
+                                {
+                                    <tr>
+                                        <th scope="row">@count</th>
+                                        <td class="text-wrap">@item.UserName</td>
+                                        <td>@item.Designation</td>
+                                        <td>@item.InternalEmailID</td>
+
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div><br>
+                    <button type="button" id="btndraftRfp" class="btn btn-primary float-right">Send Draft RFP notification to members</button>
+                    <div class="clearfix"></div><br>
+                </div>
+
+            </div>
+        }
+    </div>
+
+
+
+</div>
+<!--Sending Draft RFP Mail End-->
 <div id="successmsg" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -88,20 +141,42 @@
         $('#btnclose').click(function () {
         @*var link = '@Url.Action("SendMailToAll", "AONW")';
         window.location.href = link;*@
-           $.get('@Url.Action("SendMailToAll", "AONW")', function (result) {
-               // TODO: process the results of the server side call
-               if (result != null) {
-                   $("#successmsg").modal('show');
-                   setTimeout(function () {
-                       window.location.href = "/ViewSOC";
-                   }, 5000);
-               }
-});
+            $.get('@Url.Action("SendSocMailToAll", "AONW")', function (result) {
+                // TODO: process the results of the server side call
+                if (result != null) {
+                    $("#successmsg").modal('show');
+                    setTimeout(function () {
+                        window.location.href = "/ViewSOC";
+                    }, 5000);
+                }
+            });
+
+
+
+        });
+
+        $('#btndraftRfp').click(function () {
+        @*var link = '@Url.Action("SendMailToAll", "AONW")';
+        window.location.href = link;*@
+            $.get('@Url.Action("SendDraftRFPMailToAll", "AONW")', function (result) {
+                // TODO: process the results of the server side call
+                if (result != null) {
+                    $("#successmsg").modal('show');
+                    setTimeout(function () {
+                        window.location.href = "/ViewSOC";
+                    }, 5000);
+                }
+            });
+
+
+
         });
         $('#Ok').click(function () {
             window.location.href = "/ViewSOC";
         });
-    })
+
+      
+    });
 
 
 </script>

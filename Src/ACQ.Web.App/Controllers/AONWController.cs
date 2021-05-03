@@ -233,11 +233,76 @@ namespace ACQ.Web.App.Controllers
 
                 }
             }
-
             Socmodel.SOCMailVIEW = listData;
+
+            /*Getting member for sending draft rfp*/
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMailForDraftRFP?ID=" + ID + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Session["id"] = ID;
+                    List<UserViewModel> UserList = response.Content.ReadAsAsync<List<UserViewModel>>().Result;
+                    ViewBag.MemberList = UserList;
+
+                }
+            }
+            /*End*/
             return View(Socmodel);
         }
 
+        [Route("SendDraftRFPMailToAll")]
+        [HandleError]
+        [SessionExpire]
+        public ActionResult SendDraftRFPMailToAll()
+        {
+            acqmstmemberSendMailViewModel Socmodel = new acqmstmemberSendMailViewModel();
+            List<acqmstmemberSendMailViewModel> listData = new List<acqmstmemberSendMailViewModel>();
+            var id = sanitizer.Sanitize(Session["id"].ToString());
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMail?ID=" + id + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
+                }
+            }
+            Socmodel.SOCMailVIEW = listData;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebAPIUrl);
+                //HTTP GET
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client.GetAsync("AONW/GetSendMailForDraftRFP?ID=" + id + "").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    List<UserViewModel> userList = response.Content.ReadAsAsync<List<UserViewModel>>().Result;
+                    ViewBag.MemberList = userList;
+
+                    response = client.GetAsync("AONW/BindDDlSoCMByID?id=" + id + "").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        List<SAVESOCVIEWMODEL> socList = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
+                        foreach (var dummyList in userList)
+                        {
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendDraftRFP.html"));
+                            string body = @"Respected Sir/Madam,<br/>A draft RFP for "+socList[0].item_description+ @" pertaining to "+socList[0].Service_Lead_Service+@" is sent to you for comments. Please login to view details. 
+Regards, <br/>
+Acquisition team";
+                            EmailHelper.SendEmail(dummyList.InternalEmailID,body,"Draft Mom for Comments");
+                            //EmailHelper.SendAllDetails(dummyList.InternalEmailID, mailPath);
+                        }
+                    }
+                }
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
 
         [Route("SendMailToAll")]
         [HandleError]
@@ -258,11 +323,20 @@ namespace ACQ.Web.App.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     listData = response.Content.ReadAsAsync<List<acqmstmemberSendMailViewModel>>().Result;
-                    foreach (var dummyList in listData)
+                    response = client.GetAsync("AONW/BindDDlSoCMByID?id=" + id + "").Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendOTPMailFormat.html"));
-                        EmailHelper.SendAllDetails(dummyList.Email, mailPath);
-                        ViewBag.Message = "RegistrationSuccessful";
+                        List<SAVESOCVIEWMODEL> socList = response.Content.ReadAsAsync<List<SAVESOCVIEWMODEL>>().Result;
+                        foreach (var dummyList in listData)
+                        {
+                            string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/SendMailAllMembers.html"));
+                            string body = @"A Soc for " + socList[0].item_description + @" pertaining to " + socList[0].Service_Lead_Service + @" is sent to you for comments. Please login to view details. 
+Regards, <br/>
+Acquisition team";
+                            EmailHelper.SendEmail(dummyList.Email, body,"SoC for Comments");
+                            // EmailHelper.SendAllDetails(dummyList.Email, mailPath);
+                            ViewBag.Message = "RegistrationSuccessful";
+                        }
                     }
                 }
             }
@@ -1110,70 +1184,70 @@ namespace ACQ.Web.App.Controllers
                 return RedirectToAction("Login", "Account");
             }
             //end
-                try
+            try
+            {
+                SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
+                List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
+                int UserID = GetUserID();
+
+                using (var client = new HttpClient())
                 {
-                    SechduleMeetingAgedaViewModel Socmodel = new SechduleMeetingAgedaViewModel();
-                    List<SechduleMeetingAgedaViewModel> listData = new List<SechduleMeetingAgedaViewModel>();
-                    int UserID = GetUserID();
-
-                    using (var client = new HttpClient())
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/CreateMeetings?UserID=" + UserID).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        //HTTP GET
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client.GetAsync("AONW/CreateMeetings?UserID=" + UserID).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            listData = response.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
-                        }
+                        listData = response.Content.ReadAsAsync<List<SechduleMeetingAgedaViewModel>>().Result;
                     }
-
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        //HTTP GET
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
-                            ViewBag.PrintStatusList = PrintStatusList;
-                        }
-                    }
-
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        //HTTP GET
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
-                            ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
-                        }
-                    }
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        //HTTP GET
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
-                            ViewBag.MOMApproval = MOMApproval;
-                        }
-                    }
-
-                    ViewBag.UserID = UserID;
-                    Socmodel.ListofMeeting = listData;
-                    return View(Socmodel);
                 }
-                catch (Exception ex)
+
+                using (var client = new HttpClient())
                 {
-                    throw ex;
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetPrintStatus").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var PrintStatusList = response.Content.ReadAsAsync<List<tbl_print_history>>().Result;
+                        ViewBag.PrintStatusList = PrintStatusList;
+                    }
                 }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMailParticipants").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MeetingPartcipantsList = response.Content.ReadAsAsync<List<tbl_trn_MeetingParticipants>>().Result;
+                        ViewBag.MeetingPartcipantsList = MeetingPartcipantsList;
+                    }
+                }
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    //HTTP GET
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                    HttpResponseMessage response = client.GetAsync("AONW/GetMOMApproval").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var MOMApproval = response.Content.ReadAsAsync<List<tbl_mom_approval>>().Result;
+                        ViewBag.MOMApproval = MOMApproval;
+                    }
+                }
+
+                ViewBag.UserID = UserID;
+                Socmodel.ListofMeeting = listData;
+                return View(Socmodel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         [Route("PrepareFinalMeeting")]
         [HandleError]
@@ -1193,7 +1267,7 @@ namespace ACQ.Web.App.Controllers
                     isAccessible = true;
                 }
             }
-            if(Convert.ToInt32(Session["SectionID"])==13)
+            if (Convert.ToInt32(Session["SectionID"]) == 13)
             {
                 isAccessible = true;
             }

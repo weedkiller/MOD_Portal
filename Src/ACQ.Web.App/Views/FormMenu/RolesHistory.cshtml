@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "RolesHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>View Role History</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Menu Name</th>
+                        <th>Role Assigned By</th>
+                        <th>Role Assigned On</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (ViewBag.UserRoleList != null)
+                    {
+                        foreach (var item in ViewBag.UserRoleList)
+                        {
+                            <tr>
+                                <td>@item.FormName</td>
+                                <td>@item.UserName</td>
+                                <td>@item.RecTime</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">No Hostory Found..!!</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
