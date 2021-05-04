@@ -1,0 +1,152 @@
+﻿@model ACQ.Web.App.ViewModel.ApiResponseRfp
+
+
+<div class="details">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <table class="table">
+                @if (Model.data.aon_id > 0)
+                {
+                    <thead>
+                        <tr>
+                            <th>SOC ID</th>
+                            <th>Categorisation</th>
+                            <th>Service</th>
+                            <th>SOC Date</th>
+                            <th>Vendor Type</th>
+                            <th>Delegated/Non-Delegated</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="socname">@Model.data.aon_id</td>
+                            <td id="category">@Model.data.Categorisation</td>
+                            <td id="service">@Model.data.Service_Lead_Service</td>
+                            <td id="socdate">@Model.data.SOCDate.Value.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                @if (Model.data.attachment.VendorType == 0)
+                                {
+                                    <select id="vendor" autofocus>
+                                        <option value="0" selected>Select Vendor</option>
+                                        @if (Model.vendors != null)
+                                        {
+                                            foreach (var item in Model.vendors)
+                                            {
+                                               
+                                                    <option value="@item.Id">@item.VendorType</option>
+                                                
+                                            }
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select id="vendor" disabled>
+                                        <option value="0">Select Vendor</option>
+                                        @if (Model.vendors != null)
+                                        {
+                                            foreach (var item in Model.vendors)
+                                            {
+                                                if (item.Id == Model.data.attachment.VendorType && Model.data.attachment.VendorType > 0)
+                                                {
+                                                    <option value="@item.Id" selected>@item.VendorType</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.VendorType</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                }
+                            </td>
+                            <td>
+                                @if (Model.data.Delegation.ToLower() == "dac" || Model.data.Delegation.ToLower() == "dpb")
+                                {
+                                    <span>Non Delegate</span>
+                                }
+                                else
+                                {
+                                    <span>Delegate</span>
+                                }
+                            </td>
+                            <td>
+                                @if (Model.data.attachment.Status == false)
+                                {
+                                    <span>Not Accepted</span>
+                                }
+                                else if (Model.data.attachment.Status == true)
+                                {
+                                    <span>Accepted and shared with Collegiate Members</span>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+                else
+                {
+                    <tr>
+                        <th>Information</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            No data found.
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+@if (Model.data.aon_id > 0)
+{
+    <div class="actionrow">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
+                <a href="javascript:void(0)" s-path="@Model.data.attachment.UploadedDraftRFP" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View Preliminary RFP</a>
+                <a href="~/UploadSOC/@Model.data.attachment.UploadedDraftRFP" s-path="@Model.data.attachment.UploadedDraftRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download Preliminary RFP</a>
+                @if (Model.data.attachment.VendorType == 0)
+                {
+                    <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom" s-id="@Model.data.attachment.Id" style="display:none;">Send Preliminary RFP</button>
+
+
+                    <span class="btn btn-sm btn-primary btn-file uploadbtn" style="display:none;">
+                        Upload Updated RFP <input type="file" accept="application/pdf" class="uploadrfp" s-aon="@Model.data.aon_id">
+                    </span>
+                }
+                else if (Model.data.attachment.IsSent == false)
+                {
+                    <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom" s-id="@Model.data.attachment.Id">Send Preliminary RFP</button>
+                    <span class="btn btn-sm btn-primary btn-file uploadbtn" style="display:none;">
+                        Upload Updated RFP <input type="file" accept="application/pdf" class="uploadrfp" s-aon="@Model.data.aon_id">
+                    </span>
+                }
+                else if (Model.data.attachment.IsSent == true && Model.data.attachment.Status == false)
+                {
+                    <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom" style="display:none;" s-id="@Model.data.attachment.Id">Send Preliminary RFP</button>
+                    <span class="btn btn-sm btn-primary btn-file uploadbtn" style="cursor:pointer;">
+                        Upload Updated RFP <input type="file" accept="application/pdf" class="uploadrfp" s-aon="@Model.data.aon_id">
+                    </span>
+                }
+                else if (Model.data.attachment.Status == true)
+                {
+                    <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom" style="display:none;" s-id="@Model.data.attachment.Id">Send Preliminary RFP</button>
+                    <span class="btn btn-sm btn-primary btn-file uploadbtn" style="display:none;">
+                        Upload Updated RFP <input type="file" accept="application/pdf" class="uploadrfp" s-aon="@Model.data.aon_id">
+                    </span>
+                    @*<button type="button" id="shareToCollegiate" class="btn btn-sm btn-bitbucket">Share Accepted RFP To Collegiate Members</button>*@
+
+                }
+                else
+                {
+                    <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom" style="display:none;" s-id="@Model.data.attachment.Id">Send Preliminary RFP</button>
+                    <span class="btn btn-sm btn-primary btn-file uploadbtn" style="display:none;">
+                        Upload Updated RFP <input type="file" accept="application/pdf" class="uploadrfp" s-aon="@Model.data.aon_id">
+                    </span>
+                }
+
+            </div>
+        </div>
+    </div>
+}

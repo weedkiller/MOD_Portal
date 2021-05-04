@@ -1834,8 +1834,10 @@
     <Content Include="Views\RFP\RFPComments.cshtml" />
     <Content Include="Views\RFP\RODApproval.cshtml" />
     <Content Include="Views\RFP\ViewUploadedRFP.cshtml" />
-    <Content Include="Views\Contract\GetContractBaseOnContractID.cshtml" />
-    <Content Include="Views\Contract\GetContractBaseOnFinancialYear.cshtml" />
+    <Content Include="Views\RFP\_ViewRFP.cshtml" />
+    <Content Include="Views\RFP\_ViewComments.cshtml" />
+    <Content Include="Views\RFP\DiscussionOnUpdatedRFP.cshtml" />
+    <Content Include="Views\RFP\_ViewCollegiateDiscussion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ACQ.Web.ViewModel.MasterRole;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -466,6 +467,100 @@ namespace ACQ.Web.App.Controllers
             }
            // return View(model);
             return PartialView(model);
+        }
+        [HttpGet]
+        [Route("ViewUserRights")]
+        public ActionResult ViewUserRights()
+        {
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetMenuList").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.MenuList = response.Content.ReadAsAsync<List<AddFormMenuViewModel>>().Result;
+                        
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+            }
+                return View();
+        }
+
+        [HttpPost]
+        [Route("ViewUserRights")]
+        public ActionResult ViewUserRights(string MenuItem)
+        {
+            ViewBag.SelectedMenuItem = MenuItem;
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetAssignedMenuUsers?menuId="+MenuItem).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.UserList = response.Content.ReadAsAsync<List<UserViewModel>>().Result;
+
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetMenuList").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.MenuList = response.Content.ReadAsAsync<List<AddFormMenuViewModel>>().Result;
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return View();
+        }
+        [HttpGet]
+        [Route("RolesHistory")]
+        public ActionResult RolesHistory(string UserId)
+        {
+            string uId = Encryption.Decrypt(UserId);
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("MasterFormMenu/GetUserRolesHistory?userId="+uId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.UserRoleList = response.Content.ReadAsAsync<List<tbl_Master_Role>>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return View();
         }
 
         [HttpGet]

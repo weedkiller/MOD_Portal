@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.sharedRFP>
+
+<div class="details">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <table class="table" style="width:100%">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    var sn = 1;
+                    <thead>
+                        <tr>
+                            <th>S.NO.</th>
+                            <th>Commented By</th>
+                            <th>SOC ID</th>
+                            <th>Service</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @sn
+                                </td>
+                                <td>
+                                    @item.UserRole
+                                </td>
+                                <td>
+                                    @item.SOCID
+                                </td>
+                                <td>@item.Service</td>
+                                <td>@item.UploadedComment</td>
+                            </tr>
+                            sn++;
+                        }
+                    </tbody>
+                }
+                else
+                {
+                    <tr>
+                        <th>Information</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            No data found.
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
