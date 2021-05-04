@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "LoginTrails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Login Trails</h2>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <td>Email</td>
+                        <td>IPAddress</td>
+                        <td>Status</td>
+                        <td>Time</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.LoginTrailList != null)
+                    {
+                        foreach (var item in ViewBag.LoginTrailList)
+                        {
+                            <tr>
+                                <td>@item.UserEmail</td>
+                                <td>@item.IPAddress</td>
+                                <td>@item.Status</td>
+                                <td>@item.Restime</td>
+                               
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

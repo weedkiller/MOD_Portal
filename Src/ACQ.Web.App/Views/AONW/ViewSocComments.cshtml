@@ -12,8 +12,10 @@
             <th>Updated On</th>
         </tr>
 
-        @foreach (var item in ViewBag.ListData)
+        @if (ViewBag.ListData!=null)
         {
+            foreach (var item in ViewBag.ListData)
+            {
             <tr>
                 <td>
                     @item.Comments
@@ -22,6 +24,7 @@
                     @item.Created_on
                 </td>
             </tr>
+            }
         }
     </table>
 </div>

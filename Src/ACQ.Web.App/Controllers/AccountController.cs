@@ -18,7 +18,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using static ACQ.Web.App.MvcApplication;
-
+using ACQ.Web.ViewModel.MasterRole;
+using ACQ.Web.ViewModel.AONW;
+using ACQ.Web.App.ViewModel;
 
 namespace ACQ.Web.App.Controllers
 {
@@ -32,7 +34,7 @@ namespace ACQ.Web.App.Controllers
         private static string DashboardUrl = ConfigurationManager.AppSettings["DashboardUrl"].ToString();
         // GET: Account
 
-       
+
 
         [Route("imagelogo")]
         public ActionResult imagelogo()
@@ -58,7 +60,7 @@ namespace ACQ.Web.App.Controllers
         }
         [Route("login")]
         [HandleError]
-        
+
         public ActionResult Login()
         {
 
@@ -79,12 +81,12 @@ namespace ACQ.Web.App.Controllers
         [Route("Error")]
         public async Task<ActionResult> Error()
         {
-            
+
             UserLogViewModel model = new UserLogViewModel();
             if (Session["EmailID"] != null)
             {
-                model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
-              
+                model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
+
             }
             else
             {
@@ -205,7 +207,30 @@ namespace ACQ.Web.App.Controllers
 
                             if (model.Count() > 0)
                             {
+                                //Getting User Rights
+                                using (HttpClient client = new HttpClient())
+                                {
+                                    int userid = model.First().UserId;
+                                    client.BaseAddress = new Uri(WebAPIUrl);
+                                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                                    HttpResponseMessage UserRightsresponse = client.GetAsync("Account/GetUserRights?UserId="+userid).Result;
 
+                                    if (UserRightsresponse.IsSuccessStatusCode)
+                                    {
+                                        try
+                                        {
+                                            List<tbl_Master_Role> list = UserRightsresponse.Content.ReadAsAsync<List<tbl_Master_Role>>().Result;
+                                            Session["RoleList"] = list;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            throw ex;
+                                        }
+
+
+                                    }
+                                }
+                                // UserRights End
                                 Session["UserID"] = model.First().UserId.ToString();
                                 Session["UserName"] = model.First().UserName.ToString();
                                 Session["SectionID"] = model.First().SectionID.ToString();
@@ -428,7 +453,7 @@ namespace ACQ.Web.App.Controllers
             model.IPAddress = Request.UserHostAddress;
             model.Action = "Verify Otp";
 
-            if (otp == sanitizer.Sanitize(emailotp) || sanitizer.Sanitize(emailotp) == "098765")
+            if (otp == sanitizer.Sanitize(emailotp))
             {
                 model.Status = sanitizer.Sanitize("OTP Verified");
                 using (HttpClient client1 = new HttpClient())
@@ -473,8 +498,8 @@ namespace ACQ.Web.App.Controllers
                     UserLogViewModel model21 = new UserLogViewModel();
                     model21.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
                     model21.IPAddress = Request.UserHostAddress;
-                    model21.Status = sanitizer.Sanitize("Login Successfully"); 
-                    model21.Action = sanitizer.Sanitize("Login"); 
+                    model21.Status = sanitizer.Sanitize("Login Successfully");
+                    model21.Action = sanitizer.Sanitize("Login");
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
                     HttpResponseMessage postJob = await client.PostAsJsonAsync<UserLogViewModel>(WebAPIUrl + "Account/UpdateUserLogTable", model21);
 
@@ -524,8 +549,8 @@ namespace ACQ.Web.App.Controllers
                 UserLogViewModel model21 = new UserLogViewModel();
                 model21.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
                 model21.IPAddress = Request.UserHostAddress;
-                model21.Action = sanitizer.Sanitize("Login"); 
-                model21.Status = sanitizer.Sanitize("OTP Not Verified"); 
+                model21.Action = sanitizer.Sanitize("Login");
+                model21.Status = sanitizer.Sanitize("OTP Not Verified");
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
@@ -622,8 +647,8 @@ namespace ACQ.Web.App.Controllers
                 using (HttpClient client = new HttpClient())
                 {
                     resetpwdViewModel Rmode = new resetpwdViewModel();
-                    Rmode.UserName = sanitizer.Sanitize(Session["EmailID"].ToString()); 
-                    Rmode.mTokenId = sanitizer.Sanitize(Session["tokenid"].ToString()); 
+                    Rmode.UserName = sanitizer.Sanitize(Session["EmailID"].ToString());
+                    Rmode.mTokenId = sanitizer.Sanitize(Session["tokenid"].ToString());
                     client.BaseAddress = new Uri(WebAPIUrl + "Account/ResetPwdlog");
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                      parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
@@ -725,7 +750,7 @@ namespace ACQ.Web.App.Controllers
         public ActionResult ResetPwd()
         {
             ChangePasswordViewModel model = new ChangePasswordViewModel();
-            model.EmailID = sanitizer.Sanitize(Session["EmailID"].ToString()); 
+            model.EmailID = sanitizer.Sanitize(Session["EmailID"].ToString());
             model.EmailID = sanitizer.Sanitize(model.EmailID);
             return View(model);
         }
@@ -740,8 +765,8 @@ namespace ACQ.Web.App.Controllers
             {
                 if (Session["UserName"] != null)
                 {
-                    model.EmailID = sanitizer.Sanitize(Session["eEmailID"].ToString()); 
-                    model.UserName = sanitizer.Sanitize(Session["EmailID"].ToString()); 
+                    model.EmailID = sanitizer.Sanitize(Session["eEmailID"].ToString());
+                    model.UserName = sanitizer.Sanitize(Session["EmailID"].ToString());
 
                     using (HttpClient client1 = new HttpClient())
                     {
@@ -800,17 +825,65 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
+        [Route("LoginHistory")]
+        [HttpGet]
+        public ActionResult LoginHistory()
+        {
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("Account/GetUsersList").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.UserList = response.Content.ReadAsAsync<List<UserViewModel>>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [Route("LoginTrails")]
+        public ActionResult LoginTrails(string UserID)
+        {
+            int uId = Convert.ToInt32(Encryption.Decrypt(UserID));
+            using (HttpClient client1 = new HttpClient())
+            {
+                client1.BaseAddress = new Uri(WebAPIUrl);
+                client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+                HttpResponseMessage response = client1.GetAsync("Account/GetLoginTrails?UserId="+uId).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        ViewBag.LoginTrailList = response.Content.ReadAsAsync<List<UserLogViewModel>>().Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return View();
+        }
 
         [Route("Logout")]
         [SessionExpireRefNo]
         public async Task<ActionResult> Logout()
         {
-           
+
             UserLogViewModel model = new UserLogViewModel();
-            model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString()); 
+            model.UserEmail = sanitizer.Sanitize(Session["EmailID"].ToString());
             model.IPAddress = Request.UserHostAddress;
-            model.Status = sanitizer.Sanitize("Logout Successfully"); 
-            model.Action = sanitizer.Sanitize("Logout"); 
+            model.Status = sanitizer.Sanitize("Logout Successfully");
+            model.Action = sanitizer.Sanitize("Logout");
             using (HttpClient client1 = new HttpClient())
             {
                 client1.BaseAddress = new Uri(WebAPIUrl + "Account/UpdateUserLogTable");
