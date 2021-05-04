@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.collegiateRFP>
+<style>
+    /*tr:nth-child(even) {
+        background-color: #c3e3ef;
+    }*/
+
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #1976ad;
+            color: white;
+        }
+</style>
+
+
+<div class="table-responsive">
+    <table style="width:100%;">
+        @if (Model != null && Model.Count() > 0)
+        {
+            var sn = 1;
+            <thead>
+                <tr>
+                    <th>S.NO.</th>
+                    <th>Comments By</th>
+                    <th>Chapter</th>
+                    <th>Page</th>
+                    <th>Para</th>
+                    <th>For</th>
+                    <th>Suggested Correction</th>
+                    <th>Decision by Collegiate</th>
+                    <th>Remarks by Collegiate</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@sn</td>
+                        <td>@item.UserRole</td>
+                        <td>@item.Chapter</td>
+                        <td>@item.Page</td>
+                        <td>@item.Para</td>
+                        <td>@item.CorrectionFor</td>
+                        <td>@item.Suggestion</td>
+                        <td>
+                            @if (item.IsAccepted == false && item.IsRejected == true)
+                            {
+                                <span>Change Rejected</span>
+                            }
+                            else if (item.IsAccepted == true && item.IsRejected == false)
+                            {
+                                <span>Change Accepted</span>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-primary btn-accept mt-1" type="button" s-id="@item.Id">Accept</button>
+                                <button class="btn btn-sm btn-danger btn-reject mt-1" type="button" s-id="@item.Id">Reject</button>
+                            }
+
+                        </td>
+                        <td>@item.Remarks</td>
+                    </tr>
+                }
+
+            </tbody>
+        }
+        else
+        {
+            <thead>
+                <tr>
+                    <th>Information</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        No data found.
+                    </td>
+                </tr>
+            </tbody>
+        }
+
+    </table>
+</div>

@@ -4,107 +4,292 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    /*tr:nth-child(even) {
-        background-color: #c3e3ef;
-    }*/
 
-    table {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+<link href="~/assets/css/toastr.css" rel="stylesheet" />
+
+<style>
+    .bg-primary {
+        background: #1c2f61 !important;
     }
 
-        table td, table th {
-            border: 1px solid #ddd;
-            padding: 8px;
+    .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6 {
+        color: #fff !important;
+    }
+
+    .selectot {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #c7c8cc;
+        border-radius: 2px;
+    }
+
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+        background-color: #1c2f61 !important;
+        border-color: #1c2f61 !important;
+        margin: 0 10px 10px 0px;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
         }
 
-        table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        table tr:hover {
-            background-color: #ddd;
-        }
-
-        table th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #1976ad;
-            color: white;
-        }
+    .btn-bottom {
+        margin: 0 10px 10px 0px;
+    }
 </style>
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-header">Collegiate Meeting Review's</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table  style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>S.NO.</th>
-                            <th>Comments By</th>
-                            <th>Chapter</th>
-                            <th>Page</th>
-                            <th>Para</th>
-                            <th>For</th>
-                            <th>Suggested Correction</th>
-                            <th>Decision by Collegiate</th>
-                            <th>Remarks by Collegiate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>DGQA</td>
-                            <td>11</td>
-                            <td>12</td>
-                            <td>2</td>
-                            <td>Minimum altitude should be 2000</td>
-                            <td>Minimum altitude should be 1500</td>
-                            <td>Change Rejected</td>
-                            <td>Minimum altitude can be 1800</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>DGQA</td>
-                            <td>11</td>
-                            <td>12</td>
-                            <td>2</td>
-                            <td>Minimum altitude should be 2000</td>
-                            <td>Minimum altitude should be 1500</td>
-                            <td>Change Rejected</td>
-                            <td>Minimum altitude can be 1800</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>DGQA</td>
-                            <td>11</td>
-                            <td>12</td>
-                            <td>2</td>
-                            <td>Minimum altitude should be 2000</td>
-                            <td>Minimum altitude should be 1500</td>
-                            <td>Change Rejected</td>
-                            <td>Minimum altitude can be 1800</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>DGQA</td>
-                            <td>11</td>
-                            <td>12</td>
-                            <td>2</td>
-                            <td>Minimum altitude should be 2000</td>
-                            <td>Minimum altitude should be 1500</td>
-                            <td>Change Rejected</td>
-                            <td>Minimum altitude can be 1800</td>
-                        </tr>
-                    </tbody>
 
-                </table>
+<div class="containers">
+    <div class="container-fluid">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card">
+                <div class="card-header">
+                    <h6>View Collegiate Discussion</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select Service</label>
+                            <div class="form-group">
+                                <select id="services" class="selectot" disabled>
+                                    <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
+                                    {
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.Service>)
+                                        {
+                                            if (Convert.ToInt32(Session["SectionID"]) == 11 && item.SectionId == 1)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 14 && item.SectionId == 2)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 15 && item.SectionId == 3)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 16 && item.SectionId == 8)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 17 && item.SectionId == 6)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.SectionId">@item.Services</option>
+                                            }
+
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select SOC</label>
+                            <div class="form-group">
+                                <select id="SOC" class="selectot">
+                                    <option value="0">Select SOC</option>
+                                    @if (ViewBag.SOC != null)
+                                    {
+
+                                        foreach (var item in ViewBag.SOC as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.aon_id - @item.SOCCase</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="detaildata" id="detaildata">
+
+                    </div>
+                </div>
+
+
+
             </div>
-        </div>
+
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h6 class="modal-title">Add Remarks</h6>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+
+                            <div class="form-group row">
+                                <label for="Message">Remarks</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <textarea id="Message" class="form-control" placeholder="Remarks" title="Add Remarks" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
     </div>
 </div>
 
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
+<script>
+    $(document).ready(function () {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+
+        $('#SOC').change(function () {
+            if (parseInt($(this).val()) > 0) {
+
+                loadRFPdata(parseInt($(this).val()));
+
+            }
+
+        });
+
+        $(document).on("click", ".btn-accept", function () {
+            $('#Message').attr('s-id', $(this).attr("s-id"));
+            $('#Message').attr('s-status', '1');
+            $('#myModal').modal('show');
+        });
+
+        $(document).on("click", ".btn-reject", function () {
+            $('#Message').attr('s-id', $(this).attr("s-id"));
+            $('#Message').attr('s-status', '0');
+            $('#myModal').modal('show');
+        });
+
+        $(document).on('click', '#submit', function () {
+            if ($("#Message").val() != "") {
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var btn = $(this);
+                var data = {};
+                data["Remarks"] = $("#Message").val();
+                data["Id"] = parseInt($("#Message").attr("s-id"));
+                if (parseInt($("#Message").attr("s-status") == 0))
+                {
+
+                    data["IsAccepted"] = false;
+                    data["IsRejected"] = true;
+                }
+                else {
+                    data["IsAccepted"] = true;
+                    data["IsRejected"] = false;
+                }
+
+
+                $(btn).attr('disabled', true);
+
+
+                $.ajax({
+                    beforeSend: function () {
+                        $('.preloader').show();
+                    },
+                    type: "POST",
+                    url: "/UpdateRemarksByCollegiate",
+                    data: { __RequestVerificationToken: token, data: data },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        $(btn).attr('disabled', false);
+                        if (response.Status == true) {
+                            toastr.success(response.Message);
+                            $('#Message').removeAttr('s-id');
+                            $('#myModal').modal('hide');
+                            loadRFPdata(parseInt($('#SOC').val()));
+                        } else {
+                            toastr.error(response.Message);
+
+                        }
+                    },
+                    failure: function (response) {
+                        toastr.error("Please check your internet connection...");
+
+                        window.location.href = "@Url.Action("Account","Login")";
+                    },
+                    error: function (response) {
+                        toastr.error("Please check your internet connection...");
+
+                        window.location.href = "@Url.Action("Account","Login")";
+                    }
+                });
+            }
+            else {
+                toastr.error("Please enter remarks");
+            }
+        });
+
+    });
+
+
+    function loadRFPdata(socid) {
+        $('.preloader').show();
+        $("#detaildata").load("@Url.Action("GetRFPDiscussiondata", "RFP")?service=" + socid);
+        $('.preloader').fadeOut('slow');
+    }
+
+</script>

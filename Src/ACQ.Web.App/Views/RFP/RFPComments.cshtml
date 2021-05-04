@@ -5,8 +5,8 @@
 }
 
 
-<link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/css/toastr.css" rel="stylesheet" />
+
 <style>
     .bg-primary {
         background: #1c2f61 !important;
@@ -52,59 +52,135 @@
 </style>
 
 <div class="containers">
-    
-        <div class="container-fluids">
+    <div class="container-fluid">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
             <div class="card">
                 <div class="card-header">
-                    View Uploaded Comments
+                    <h6>View Preliminary RFP</h6>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table" id="example">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        SR. NO
-                                    </th>
-                                    <th>Commented by</th>
-                                    <th>
-                                        SOC Id
-                                    </th>
-                                    <th>Service</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (ViewBag.SOC != null)
-                                {
-                                    var sn = 1;
-                                    foreach (var item in ViewBag.SOC as List<ACQ.Web.App.ViewModel.sharedRFP>)
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select Service</label>
+                            <div class="form-group">
+                                <select id="services" class="selectot" disabled>
+                                    <option value="0">Select Service</option>
+                                    @if (ViewBag.services != null)
                                     {
-                                        <tr>
-                                            <td>
-                                                @sn
-                                            </td>
-                                            <td>
-                                                @item.UserRole
-                                            </td>
-                                            <td>
-                                                @item.SOCID
-                                            </td>
-                                            <td>@item.Service</td>
-                                            <td class="justify-content-start d-flex">
-                                                <a href="@item.UploadedComment.Remove('~')" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">View Uploaded Comments</a>
-                                               
-                                            </td>
-                                        </tr>
-                                        sn++;
+                                        foreach (var item in ViewBag.services as List<ACQ.Web.App.ViewModel.Service>)
+                                        {
+                                            if (Convert.ToInt32(Session["SectionID"]) == 11 && item.SectionId == 1)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 14 && item.SectionId == 2)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 15 && item.SectionId == 3)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 16 && item.SectionId == 8)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else if (Convert.ToInt32(Session["SectionID"]) == 17 && item.SectionId == 6)
+                                            {
+                                                <option value="@item.SectionId" selected>@item.Services</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.SectionId">@item.Services</option>
+                                            }
+
+
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label for="items">Select SOC</label>
+                            <div class="form-group">
+                                <select id="SOC" class="selectot">
+                                    <option value="0">Select SOC</option>
+                                    @if (ViewBag.SOC != null)
+                                    {
+
+                                        foreach (var item in ViewBag.SOC as List<ACQ.Web.App.ViewModel.ListRfpServices>)
+                                        {
+                                            <option value="@item.aon_id">@item.aon_id - @item.SOCCase</option>
+
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="detaildata" id="detaildata">
+
                     </div>
                 </div>
+
+
+
             </div>
-        </div>
-   
+        }
+
+    </div>
 </div>
+
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
+<script src="~/assets/js/toastr.js" nonce="r@nd0m"></script>
+<script>
+    $(document).ready(function () {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "5000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        
+        $('#SOC').change(function () {
+            if (parseInt($(this).val()) > 0) {
+
+                loadRFPdata(parseInt($(this).val()));
+
+            }
+
+        });
+     
+    });
+    
+
+    function loadRFPdata(socid) {
+        $('.preloader').show();
+        $("#detaildata").load("@Url.Action("GetRFPComments", "RFP")?service=" + socid);
+        $('.preloader').fadeOut('slow');
+    }
+
+</script>
 

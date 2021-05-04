@@ -1,6 +1,9 @@
-﻿@model IEnumerable<ACQ.Web.App.ViewModel.sharedRFP>
-@{ ViewBag.Title = "ViewUploadedRFP";
-    Layout = "~/Views/Shared/_Layout.cshtml"; }
+﻿@model IEnumerable<ACQ.Web.App.ViewModel.collegiateRFP>
+@{
+    ViewBag.Title = "DiscussionOnUpdatedRFP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <link href="~/assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/assets/css/toastr.css" rel="stylesheet" />
 <style>
@@ -68,6 +71,7 @@
                                         SOC Id
                                     </th>
                                     <th>Service</th>
+                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -85,23 +89,11 @@
                                                 @item.SOCID
                                             </td>
                                             <td>@item.Service</td>
+                                            <td>@item.Categorisation</td>
                                             <td class="justify-content-start d-flex">
-                                                <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">View Preliminary RFP</a>
-                                                @if (item.ApprovedDate == null && item.CommentedDate == null)
-                                                {
-                                                    @*<span class="btn btn-sm btn-primary btn-file btn-bottom">
-                                                            Upload Comment <input type="file" s-id="@item.Id" accept="application/pdf" class="uploadrfp">
-                                                        </span>*@
+                                                <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">View Updated RFP</a>
 
-                                                    <button class="btn btn-sm btn-primary btn-bottom upload-comment" type="button" s-id="@item.Id">Add Comment</button>
-                                                }
-
-                                                @if (item.ApprovedDate == null && item.CommentedDate == null)
-                                                {
-                                                    <button class="btn btn-sm btn-success btn-bottom accept" type="button" s-id="@item.Id">Accept RFP</button>
-                                                }
-
-
+                                                <button class="btn btn-sm btn-primary btn-bottom upload-comment" type="button" s-id="@item.Id">Add Discussion/Correction Comments</button>
                                             </td>
                                         </tr>
                                         sn++;
@@ -115,22 +107,61 @@
         </div>
 
         <div class="modal" id="myModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h6 class="modal-title">Edit <small><i class="fa fa-edit"></i></small> </h6>
+                        <h6 class="modal-title">Add your correction comments</h6>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
                     <!-- Modal body -->
                     <div class="modal-body">
+                        <div class="form-group row">
+
+
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label for="Message">Chapter</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Chapter" placeholder="Add Chapter number" title="Add Chapter number" />
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label for="Message">Page</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Page" placeholder="Add Page number" title="Add Page number" />
+                                </div>
+
+                            </div>
+
+                        </div>
 
                         <div class="form-group row">
-                            <label for="Message">Your comments</label>
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <textarea id="Message" class="form-control" placeholder="Add your comments" title="Add your comments" rows="3"></textarea>
+                                <label for="Message">Paragrapgh</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Para" placeholder="Add Paragrapgh number" title="Add Paragrapgh number" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <label for="Message">Correction For</label>
+                                <div class="form-group">
+                                    <textarea id="CorrectionFor" class="form-control" placeholder="Add Correction For" title="Add Correction For" rows="5"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Message">Your Suggestion</label>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <textarea id="Suggestion" class="form-control" placeholder="Add your Suggestion" title="Add your Suggestion" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -178,18 +209,23 @@
         });
 
         $(document).on("click", ".upload-comment", function () {
-            $('#Message').attr('s-id', $(this).attr('s-id'));
+            $('#Suggestion').attr('s-id', $(this).attr('s-id'));
             $('#myModal').modal('show');
         });
 
         $(document).on('click', '#submit', function () {
-            if ($("#Message").val() != "") {
+            if ($("#Suggestion").val() != "" && $("#CorrectionFor").val() != "") {
                 var form = $('#__AjaxAntiForgeryForm');
                 var token = $('input[name="__RequestVerificationToken"]', form).val();
                 var btn = $(this);
-                var data = {};
-                data["UploadedComment"] = $("#Message").val();
-                data["Id"] = parseInt($("#Message").attr("s-id"));
+                var data = {
+                    Id: parseInt($('#Suggestion').attr('s-id')),
+                    Page: $('#Page').val(),
+                    Chapter: $('#Chapter').val(),
+                    Para: $('#Para').val(),
+                    CorrectionFor: $('#CorrectionFor').val(),
+                    Suggestion: $('#Suggestion').val()
+                };
 
                 $(btn).attr('disabled', true);
 
@@ -199,7 +235,7 @@
                         $('.preloader').show();
                     },
                     type: "POST",
-                    url: "/UploadComments",
+                    url: "/UploadCollegiateComments",
                     data: { __RequestVerificationToken: token, data: data },
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     dataType: "json",
@@ -208,7 +244,8 @@
                         $(btn).attr('disabled', false);
                         if (response.Status == true) {
                             toastr.success(response.Message);
-                            $('#Message').removeAttr('s-id');
+                            $('#Suggestion').removeAttr('s-id');
+                            $('#Suggestion').val('');
                             $('#myModal').modal('hide');
                             window.location.reload();
                         } else {
@@ -229,7 +266,7 @@
                 });
             }
             else {
-                toastr.error("Please enter your comments");
+                toastr.error("Please fill all the fields.");
             }
         });
 
@@ -278,6 +315,10 @@
         });
 
     });
+
+
 </script>
+
+
 
 
