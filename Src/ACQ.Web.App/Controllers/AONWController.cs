@@ -2579,6 +2579,14 @@ namespace ACQ.Web.App.Controllers
             {
                 ViewBag.ExcelColoumn = TempData["ExcelColoumn"].ToString();
             }
+            if (TempData["StagePaymentColoumn"]!=null)
+            {
+                ViewBag.StagePaymentColoumn = TempData["StagePaymentColoumn"].ToString();
+            }
+            if (TempData["FileStagePayment"]!=null)
+            {
+                ViewBag.FileStagePayment = TempData["FileStagePayment"].ToString();
+            }
             if(TempData["Uploadsuccess"]!=null)
             {
                 bool upload =(bool)TempData["Uploadsuccess"];
@@ -2713,31 +2721,66 @@ namespace ACQ.Web.App.Controllers
                     {
                         stageDetail.Conditions = sanitizer.Sanitize(item.Conditions);
                     }
-                    if (item.RevisedDateOfpayment != null)
-                    {
-                        stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
-                    }
-                    if (item.ReasonsForSlippage != null)
-                    {
-                        stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
-                    }
-                    if (item.ActualDateOfPayment != null)
-                    {
-                        stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
-                    }
+                    //if (item.RevisedDateOfpayment != null)
+                    //{
+                    //    stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
+                    //}
+                    //if (item.ReasonsForSlippage != null)
+                    //{
+                    //    stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
+                    //}
+                    //if (item.ActualDateOfPayment != null)
+                    //{
+                    //    stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
+                    //}
 
-                    stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
-                    stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
-                    if (item.ExpendMadeTill31March != null)
-                    {
-                        stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
-                    }
+                    //stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
+                    //stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
+                    //if (item.ExpendMadeTill31March != null)
+                    //{
+                    //    stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
+                    //}
 
                     stages.Add(stageDetail);
                 }
 
                 _contracts.Stage_Detail = stages;
+                List<ContractStagePayment> stagesPayList = new List<ContractStagePayment>();
+                foreach (var pay in cnt.Stage_Payment_Detail.ToList())
+                {
+                    ContractStagePayment stagepay = new ContractStagePayment();
+                    if (pay.StageNumber != null)
+                    {
+                        stagepay.StageNumber = Convert.ToInt32(sanitizer.Sanitize(pay.StageNumber.ToString()));
+                    }
+                    if (pay.RevisedDateOfpayment != null)
+                    {
+                        stagepay.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(pay.RevisedDateOfpayment.ToString()));
+                    }
+                    if (pay.ReasonsForSlippage != null)
+                    {
+                        stagepay.ReasonsForSlippage = sanitizer.Sanitize(pay.ReasonsForSlippage);
+                    }
+                    if (pay.ActualDateOfPayment != null)
+                    {
+                        stagepay.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(pay.ActualDateOfPayment.ToString()));
+                    }
 
+                    if (pay.TotalPaymentMade>0)
+                    {
+                        stagepay.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(pay.TotalPaymentMade.ToString())); 
+                    }
+                    if (pay.FullorPartPaymentMade!=null)
+                    {
+                        stagepay.FullorPartPaymentMade = sanitizer.Sanitize(pay.FullorPartPaymentMade); 
+                    }
+                    if (pay.ExpendMadeTill31March != null)
+                    {
+                        stagepay.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(pay.ExpendMadeTill31March.ToString()));
+                    }
+                    stagesPayList.Add(stagepay);
+                }
+                _contracts.Stage_Payment_Detail = stagesPayList;
 
                 using (var client = new HttpClient())
                 {

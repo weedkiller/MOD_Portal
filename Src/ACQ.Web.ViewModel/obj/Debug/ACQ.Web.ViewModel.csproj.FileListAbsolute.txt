@@ -31,6 +31,7 @@ E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\Microsoft.Web.Infrastr
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\System.Web.WebPages.Deployment.dll
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.xml
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csprojAssemblyReference.cache
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CoreCompileInputs.cache
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.csproj.CopyComplete
 E:\DPIT\Portal\MOD_Portal\Src\ACQ.Web.ViewModel\obj\Debug\ACQ.Web.ViewModel.dll

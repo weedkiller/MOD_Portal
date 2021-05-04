@@ -453,10 +453,10 @@ namespace ACQ.Web.App.Controllers
                                 foreach (DataRow row in dt.Rows)
                                 {
                                     StageDetail stage = new StageDetail();
-                                    if (row["ContractmasterId"] != DBNull.Value)
-                                    {
-                                        stage.ContractmasterId = Convert.ToInt32(sanitizer.Sanitize(row["ContractmasterId"].ToString()));
-                                    }
+                                    //if (row["ContractmasterId"] != DBNull.Value)
+                                    //{
+                                    //    stage.ContractmasterId = Convert.ToInt32(sanitizer.Sanitize(row["ContractmasterId"].ToString()));
+                                    //}
                                     if (row["ContractId"] != DBNull.Value)
                                     {
                                         stage.ContractId = sanitizer.Sanitize(row["ContractId"].ToString());
@@ -493,30 +493,30 @@ namespace ACQ.Web.App.Controllers
                                     {
                                         stage.Conditions = sanitizer.Sanitize(row["Conditions"].ToString());
                                     }
-                                    if (row["RevisedDateOfpayment"] != DBNull.Value)
-                                    {
-                                        stage.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(row["RevisedDateOfpayment"].ToString()));
-                                    }
-                                    if (row["ReasonsForSlippage"] != DBNull.Value)
-                                    {
-                                        stage.ReasonsForSlippage = sanitizer.Sanitize(row["ReasonsForSlippage"].ToString());
-                                    }
-                                    if (row["ActualDateOfPayment"] != DBNull.Value)
-                                    {
-                                        stage.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(row["ActualDateOfPayment"].ToString()));
-                                    }
-                                    if (row["TotalPaymentMade"] != DBNull.Value)
-                                    {
-                                        stage.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(row["TotalPaymentMade"].ToString()));
-                                    }
-                                    if (row["FullorPartPaymentMade"] != DBNull.Value)
-                                    {
-                                        stage.FullorPartPaymentMade = sanitizer.Sanitize(row["FullorPartPaymentMade"].ToString());
-                                    }
-                                    if (row["ExpendMadeTill31March"] != DBNull.Value)
-                                    {
-                                        stage.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(row["ExpendMadeTill31March"].ToString()));
-                                    }
+                                    //if (row["RevisedDateOfpayment"] != DBNull.Value)
+                                    //{
+                                    //    stage.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(row["RevisedDateOfpayment"].ToString()));
+                                    //}
+                                    //if (row["ReasonsForSlippage"] != DBNull.Value)
+                                    //{
+                                    //    stage.ReasonsForSlippage = sanitizer.Sanitize(row["ReasonsForSlippage"].ToString());
+                                    //}
+                                    //if (row["ActualDateOfPayment"] != DBNull.Value)
+                                    //{
+                                    //    stage.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(row["ActualDateOfPayment"].ToString()));
+                                    //}
+                                    //if (row["TotalPaymentMade"] != DBNull.Value)
+                                    //{
+                                    //    stage.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(row["TotalPaymentMade"].ToString()));
+                                    //}
+                                    //if (row["FullorPartPaymentMade"] != DBNull.Value)
+                                    //{
+                                    //    stage.FullorPartPaymentMade = sanitizer.Sanitize(row["FullorPartPaymentMade"].ToString());
+                                    //}
+                                    //if (row["ExpendMadeTill31March"] != DBNull.Value)
+                                    //{
+                                    //    stage.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(row["ExpendMadeTill31March"].ToString()));
+                                    //}
 
                                     Contracts.Add(stage);
 
@@ -573,7 +573,171 @@ namespace ACQ.Web.App.Controllers
             return RedirectToAction("Contract", "AONW");
         }
 
+        [Route("SaveStagePaymentExcel")]
+        [HttpPost]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SaveStagePaymentExcel(ImportExcel excel)
+        {
+            string Massege = "";
+            try
+            {
+                List<ContractStagePayment> Contracts = new List<ContractStagePayment>();
+                string filePath = string.Empty;
 
+                //if (ModelState.IsValid)
+                //{
+                if (excel.file != null)
+                {
+                    string path = Server.MapPath("/ExcelFile/");
+                    filePath = path + Path.GetFileName(excel.file.FileName);
+                    string extension = Path.GetExtension(excel.file.FileName);
+                    if (!FileCheckformat(excel.file, extension))
+                    {
+                        TempData["FileStagePayment"] = "Please upload only .xls or .xlsx file and File size Should Be UpTo 1 MB";
+                        ModelState.AddModelError("file", "Please upload Only Excel File");
+                        return RedirectToAction("Contract", "AONW");
+                    }
+                    //if (excel.file.ContentType == "application/vnd.ms-excel" || excel.file.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    //{
+                    //if (extension == ".xls" || extension == ".xlsx")
+                    //{
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    excel.file.SaveAs(filePath);
+
+                    string conString = string.Empty;
+                    switch (extension)
+                    {
+                        case ".xls": //Excel 97-03.
+                            conString = "Provider = Microsoft.Jet.OLEDB.4.0; Data Source = { 0 }; Extended Properties = 'Excel 8.0;HDR=YES'";
+                            break;
+                        case ".xlsx": //Excel 07 and above.
+                                      //conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
+                            conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'";
+                            break;
+                    }
+
+                    conString = string.Format(conString, filePath);
+
+                    using (OleDbConnection connExcel = new OleDbConnection(conString))
+                    {
+                        using (OleDbCommand cmdExcel = new OleDbCommand())
+                        {
+                            using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                            {
+                                DataTable dt = new DataTable();
+                                cmdExcel.Connection = connExcel;
+
+                                //Get the name of First Sheet.
+                                connExcel.Open();
+                                DataTable dtExcelSchema;
+                                dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                                string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                                connExcel.Close();
+
+                                //Read Data from First Sheet.
+                                connExcel.Open();
+                                cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                                odaExcel.SelectCommand = cmdExcel;
+                                odaExcel.Fill(dt);
+                                connExcel.Close();
+
+                                foreach (DataRow row in dt.Rows)
+                                {
+                                    ContractStagePayment stage = new ContractStagePayment();
+                                    
+                                    if (row["ContractId"] != DBNull.Value)
+                                    {
+                                        stage.ContractId = sanitizer.Sanitize(row["ContractId"].ToString());
+                                    }
+                                    if (row["StageNumber"] != DBNull.Value)
+                                    {
+                                        stage.StageNumber = Convert.ToInt32(sanitizer.Sanitize(row["StageNumber"].ToString()));
+                                    }
+                                    if (row["RevisedDateOfpayment"] != DBNull.Value)
+                                    {
+                                        stage.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(row["RevisedDateOfpayment"].ToString()));
+                                    }
+                                    if (row["ReasonsForSlippage"] != DBNull.Value)
+                                    {
+                                        stage.ReasonsForSlippage = sanitizer.Sanitize(row["ReasonsForSlippage"].ToString());
+                                    }
+                                    if (row["ActualDateOfPayment"] != DBNull.Value)
+                                    {
+                                        stage.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(row["ActualDateOfPayment"].ToString()));
+                                    }
+                                    if (row["TotalPaymentMade"] != DBNull.Value)
+                                    {
+                                        stage.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(row["TotalPaymentMade"].ToString()));
+                                    }
+                                    if (row["FullorPartPaymentMade"] != DBNull.Value)
+                                    {
+                                        stage.FullorPartPaymentMade = sanitizer.Sanitize(row["FullorPartPaymentMade"].ToString());
+                                    }
+                                    if (row["ExpendMadeTill31March"] != DBNull.Value)
+                                    {
+                                        stage.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(row["ExpendMadeTill31March"].ToString()));
+                                    }
+
+                                    Contracts.Add(stage);
+
+
+
+                                }
+                            }
+                        }
+                    }
+
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(WebAPIUrl);
+                        HttpResponseMessage postJob = await client.PostAsJsonAsync<List<ContractStagePayment>>(WebAPIUrl + "Contract/SaveStagePaymentExcel", Contracts);
+                        bool postResult = postJob.IsSuccessStatusCode;
+                        if (postResult == true)
+                        {
+
+                            Massege = "Success";
+                            TempData["Uploadsuccess"] = true;
+                        }
+                        else
+                        {
+                            TempData["Uploadsuccess"] = false;
+                            Massege = "Failed";
+                        }
+                    }
+                    //}
+                    //}
+
+
+                }
+                //}
+                //else
+                //{
+                //    TempData["FileStage"] = "Upload Only Excel.";
+                //    ModelState.AddModelError("", "Please upload Only Excel File");
+                //    return RedirectToAction("Contract", "AONW");
+                //}
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message.ToString();
+                string val = ex.Message.ToString();
+                Match match = Regex.Match(val, @"'([^']*)");
+                if (match.Success)
+                {
+                    string col = match.Groups[1].Value;
+                    TempData["StagePaymentColoumn"] = "Please check excel coloumn name. It should be" + " " + col + ".";
+                }
+                ModelState.AddModelError("", "Please upload Only Excel File");
+                return RedirectToAction("Contract", "AONW");
+            }
+            return RedirectToAction("Contract", "AONW");
+        }
         [Route("ContractList")]
         [HandleError]
         [SessionExpire]
@@ -745,32 +909,70 @@ namespace ACQ.Web.App.Controllers
                     {
                         stageDetail.Conditions = sanitizer.Sanitize(item.Conditions);
                     }
-                    if (item.RevisedDateOfpayment != null)
-                    {
-                        stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
-                    }
-                    if (item.ReasonsForSlippage != null)
-                    {
-                        stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
-                    }
-                    if (item.ActualDateOfPayment != null)
-                    {
-                        stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
-                    }
-                    if (item.TotalPaymentMade > 0)
-                    {
-                        stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
-                    }
-                    stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
-                    if (item.ExpendMadeTill31March > 0)
-                    {
-                        stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
-                    }
+                    //if (item.RevisedDateOfpayment != null)
+                    //{
+                    //    stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
+                    //}
+                    //if (item.ReasonsForSlippage != null)
+                    //{
+                    //    stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
+                    //}
+                    //if (item.ActualDateOfPayment != null)
+                    //{
+                    //    stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
+                    //}
+                    //if (item.TotalPaymentMade > 0)
+                    //{
+                    //    stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
+                    //}
+                    //stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
+                    //if (item.ExpendMadeTill31March > 0)
+                    //{
+                    //    stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
+                    //}
 
                     stages.Add(stageDetail);
                 }
 
                 _contracts.Stage_Detail = stages;
+
+                List<ContractStagePayment> stagesPayList = new List<ContractStagePayment>();
+                foreach (var pay in cnt.Stage_Payment_Detail.ToList())
+                {
+                    ContractStagePayment stagepay = new ContractStagePayment();
+                    stagepay.Id = Convert.ToInt32(sanitizer.Sanitize(pay.Id.ToString()));
+                    if (pay.StageNumber != null)
+                    {
+                        stagepay.StageNumber = Convert.ToInt32(sanitizer.Sanitize(pay.StageNumber.ToString()));
+                    }
+                    if (pay.RevisedDateOfpayment != null)
+                    {
+                        stagepay.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(pay.RevisedDateOfpayment.ToString()));
+                    }
+                    if (pay.ReasonsForSlippage != null)
+                    {
+                        stagepay.ReasonsForSlippage = sanitizer.Sanitize(pay.ReasonsForSlippage);
+                    }
+                    if (pay.ActualDateOfPayment != null)
+                    {
+                        stagepay.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(pay.ActualDateOfPayment.ToString()));
+                    }
+
+                    if (pay.TotalPaymentMade > 0)
+                    {
+                        stagepay.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(pay.TotalPaymentMade.ToString()));
+                    }
+                    if (pay.FullorPartPaymentMade != null)
+                    {
+                        stagepay.FullorPartPaymentMade = sanitizer.Sanitize(pay.FullorPartPaymentMade);
+                    }
+                    if (pay.ExpendMadeTill31March != null)
+                    {
+                        stagepay.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(pay.ExpendMadeTill31March.ToString()));
+                    }
+                    stagesPayList.Add(stagepay);
+                }
+                _contracts.Stage_Payment_Detail = stagesPayList;
 
 
                 using (var client = new HttpClient())
@@ -916,6 +1118,78 @@ namespace ACQ.Web.App.Controllers
             return View(model);
         }
 
-       
+        [Route("UpdateContractStagePayment")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> UpdateContractStagePayment(ContractStagePayment cnt)
+        {
+            string msg = "";
+            try
+            {
+                ContractStagePayment _contracts = new ContractStagePayment();
+                ContractStagePayment contractDetails = new ContractStagePayment();
+                if (cnt.ContractId != null)
+                {
+                    contractDetails.ContractId = sanitizer.Sanitize(cnt.ContractId);
+                }
+                if (cnt.StageNumber > 0)
+                {
+                    contractDetails.StageNumber = Convert.ToInt32(sanitizer.Sanitize(cnt.StageNumber.ToString()));
+                }
+                if (cnt.RevisedDateOfpayment != null)
+                {
+                    contractDetails.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(cnt.RevisedDateOfpayment.ToString()));
+                }
+                if (cnt.ReasonsForSlippage != null)
+                {
+                    contractDetails.ReasonsForSlippage = sanitizer.Sanitize(cnt.ReasonsForSlippage.ToString());
+                }
+                if (cnt.ActualDateOfPayment != null)
+                {
+                    contractDetails.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(cnt.ActualDateOfPayment.ToString()));
+                }
+
+                if (cnt.FullorPartPaymentMade != null)
+                {
+                    contractDetails.FullorPartPaymentMade = sanitizer.Sanitize(cnt.FullorPartPaymentMade.ToString());
+                }
+
+                if (cnt.TotalPaymentMade > 0)
+                {
+                    contractDetails.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(cnt.TotalPaymentMade.ToString()));
+                }
+                if (cnt.ExpendMadeTill31March > 0)
+                {
+                    contractDetails.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(cnt.ExpendMadeTill31March.ToString()));
+                }
+
+                _contracts = contractDetails;
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<ContractStagePayment>(WebAPIUrl + "Contract/UpdateContractStagePayment", _contracts);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+
+                        msg = "Success";
+                    }
+                    else
+                    {
+
+                        msg = "Failed";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = "Failed";
+                ViewBag.Message = ex.Message.ToString();
+                return Json(msg, JsonRequestBehavior.AllowGet);
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
