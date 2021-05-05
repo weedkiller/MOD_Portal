@@ -1,0 +1,8 @@
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll.config
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\bin\Debug\ACQ.Web.Core.pdb
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csprojAssemblyReference.cache
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CoreCompileInputs.cache
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.csproj.CopyComplete
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.dll
+D:\DPIT New\Portal\MOD_Portal\Src\ACQ.Web.Core\obj\Debug\ACQ.Web.Core.pdb
