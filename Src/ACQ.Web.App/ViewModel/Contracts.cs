@@ -10,44 +10,9 @@ namespace ACQ.Web.App.ViewModel
     {
         public ContractDetails Contrct_Detail { get; set; }
         public List<StageDetail> Stage_Detail { get; set; }
-        public List<ContractStagePayment> Stage_Payment_Detail { get; set; }
-        
         public string Message { get; set; }
     }
-    public class ContractsAndStageList
-    {
-        public ContractDetails Contrct_Detail { get; set; }
-        public List<StageWithPayment> Stages { get; set; }
-    }
 
-
-    public class StageWithPayment
-    {
-        public int Id { get; set; }
-
-        public string PaymentId { get; set; }
-        public string ContractId { get; set; }
-        public Nullable<decimal> DuePayment { get; set; }
-        public Nullable<int> ContractmasterId { get; set; }
-        public Nullable<int> StageNumber { get; set; }
-        public string stageDescription { get; set; }
-        public Nullable<System.DateTime> StageStartdate { get; set; }
-        public Nullable<System.DateTime> StageCompletionDate { get; set; }
-        public Nullable<int> PercentOfContractValue { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public Nullable<System.DateTime> DueDateOfPayment { get; set; }
-        public string Conditions { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        //public Nullable<System.DateTime> RevisedDateOfpayment { get; set; }
-        //public string ReasonsForSlippage { get; set; }
-        //public Nullable<System.DateTime> ActualDateOfPayment { get; set; }
-        //public decimal? TotalPaymentMade { get; set; }
-
-        //public string FullorPartPaymentMade { get; set; }
-
-        //public Nullable<decimal> ExpendMadeTill31March { get; set; }
-        public List<ContractStagePayment> paymentlist { get; set; }
-    }
     public partial class ContractDetails
     {
         public int Id { get; set; }
@@ -74,9 +39,6 @@ namespace ACQ.Web.App.ViewModel
     public partial class StageDetail
     {
         public int Id { get; set; }
-        public string PaymentId { get; set; }
-        public string ContractId { get; set; }
-        public Nullable<decimal> DuePayment { get; set; }
         public Nullable<int> ContractmasterId { get; set; }
         public Nullable<int> StageNumber { get; set; }
         public string stageDescription { get; set; }
@@ -86,17 +48,16 @@ namespace ACQ.Web.App.ViewModel
         public Nullable<decimal> Amount { get; set; }
         public Nullable<System.DateTime> DueDateOfPayment { get; set; }
         public string Conditions { get; set; }
+        public Nullable<System.DateTime> RevisedDateOfpayment { get; set; }
+        public string ReasonsForSlippage { get; set; }
+        public Nullable<System.DateTime> ActualDateOfPayment { get; set; }
+        public decimal? TotalPaymentMade { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
-        //public Nullable<System.DateTime> RevisedDateOfpayment { get; set; }
-        //public string ReasonsForSlippage { get; set; }
-        //public Nullable<System.DateTime> ActualDateOfPayment { get; set; }
-        //public decimal? TotalPaymentMade { get; set; }
-      
-        //public string FullorPartPaymentMade { get; set; }
-      
-        //public Nullable<decimal> ExpendMadeTill31March { get; set; }
-       
-       
+        public string FullorPartPaymentMade { get; set; }
+        public string ContractId { get; set; }
+        public Nullable<decimal> ExpendMadeTill31March { get; set; }
+        public string PaymentId { get; set; }
+        public Nullable<decimal> DuePayment { get; set; }
     }
     public class ImportExcel
     {

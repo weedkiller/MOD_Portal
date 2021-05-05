@@ -137,16 +137,16 @@ namespace ACQ.Web.App.Controllers
             }
 
             ViewBag.services = listdata;
-            if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
+            if(SOCData!=null && SOCData.Count()>0 && Session["SectionID"]!=null)
             {
-                if (Convert.ToInt32(Session["SectionID"]) == 14)
+                if(Convert.ToInt32(Session["SectionID"])==14)
                 {
                     var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
-                    if (data != null && data.Count() > 0)
+                    if(data!=null && data.Count()>0)
                     {
                         ViewBag.SOC = data;
                     }
-
+                    
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 11)
                 {
@@ -185,7 +185,7 @@ namespace ACQ.Web.App.Controllers
 
                 }
             }
-
+            
             return View();
         }
 
@@ -196,8 +196,7 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult RFPComments()
         {
-            IEnumerable<Service> listdata = new List<Service>();
-            IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
+            IEnumerable<sharedRFP> SOCData = new List<sharedRFP>();
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -205,33 +204,19 @@ namespace ACQ.Web.App.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
+                HttpResponseMessage response = client.GetAsync("RFP/GetCommentedrfp").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<Service>>().Result;
+                    SOCData = response.Content.ReadAsAsync<IEnumerable<sharedRFP>>().Result;
                 }
             }
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response1 = client.GetAsync("RFP/GetSOCData").Result;
-                if (response1.IsSuccessStatusCode)
-                {
-                    SOCData = response1.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
-                }
-            }
-
-            ViewBag.services = listdata;
+            
             if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
             {
                 if (Convert.ToInt32(Session["SectionID"]) == 14)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "airforce").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -240,7 +225,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 11)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "army").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "army").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -249,7 +234,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 15)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "navy").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "navy").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -258,7 +243,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 16)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "icg").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "icg").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -267,7 +252,7 @@ namespace ACQ.Web.App.Controllers
                 }
                 else if (Convert.ToInt32(Session["SectionID"]) == 17)
                 {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "ids").ToList();
+                    var data = SOCData.Where(x => x.Service.ToLower() == "ids").ToList();
                     if (data != null && data.Count() > 0)
                     {
                         ViewBag.SOC = data;
@@ -277,8 +262,6 @@ namespace ACQ.Web.App.Controllers
             }
             return View();
         }
-
-
         [Route("CollegiateMeetings")]
         [HandleError]
         [SessionExpire]
@@ -286,89 +269,8 @@ namespace ACQ.Web.App.Controllers
         [HttpGet]
         public ActionResult CollegiateMeetings()
         {
-            IEnumerable<Service> listdata = new List<Service>();
-            IEnumerable<ListRfpServices> SOCData = new List<ListRfpServices>();
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("RFP/GetServices").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    listdata = response.Content.ReadAsAsync<IEnumerable<Service>>().Result;
-                }
-            }
-
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response1 = client.GetAsync("RFP/GetSOCData").Result;
-                if (response1.IsSuccessStatusCode)
-                {
-                    SOCData = response1.Content.ReadAsAsync<IEnumerable<ListRfpServices>>().Result;
-                }
-            }
-
-            ViewBag.services = listdata;
-            if (SOCData != null && SOCData.Count() > 0 && Session["SectionID"] != null)
-            {
-                if (Convert.ToInt32(Session["SectionID"]) == 14)
-                {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "airforce").ToList();
-                    if (data != null && data.Count() > 0)
-                    {
-                        ViewBag.SOC = data;
-                    }
-
-                }
-                else if (Convert.ToInt32(Session["SectionID"]) == 11)
-                {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "army").ToList();
-                    if (data != null && data.Count() > 0)
-                    {
-                        ViewBag.SOC = data;
-                    }
-
-                }
-                else if (Convert.ToInt32(Session["SectionID"]) == 15)
-                {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "navy").ToList();
-                    if (data != null && data.Count() > 0)
-                    {
-                        ViewBag.SOC = data;
-                    }
-
-                }
-                else if (Convert.ToInt32(Session["SectionID"]) == 16)
-                {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "icg").ToList();
-                    if (data != null && data.Count() > 0)
-                    {
-                        ViewBag.SOC = data;
-                    }
-
-                }
-                else if (Convert.ToInt32(Session["SectionID"]) == 17)
-                {
-                    var data = SOCData.Where(x => x.Service_Lead_Service.ToLower() == "ids").ToList();
-                    if (data != null && data.Count() > 0)
-                    {
-                        ViewBag.SOC = data;
-                    }
-
-                }
-            }
             return View();
         }
-
-
         [Route("RODApproval")]
         [HandleError]
         [SessionExpire]
@@ -378,8 +280,6 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
-
-
         [Route("FinalRFPUpload")]
         [HandleError]
         [SessionExpire]
@@ -389,8 +289,6 @@ namespace ACQ.Web.App.Controllers
         {
             return View();
         }
-
-
         [Route("IssueOfRFP")]
         [HandleError]
         [SessionExpire]
@@ -418,7 +316,7 @@ namespace ACQ.Web.App.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                          parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("RFP/Getsharedrfp?UserId=" + id).Result;
+                HttpResponseMessage response = client.GetAsync("RFP/Getsharedrfp?UserId="+ id).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     sharedRFP = response.Content.ReadAsAsync<IEnumerable<sharedRFP>>().Result;
@@ -428,77 +326,41 @@ namespace ACQ.Web.App.Controllers
         }
 
 
-        [Route("DiscussionOnUpdatedRFP")]
-        [HandleError]
-        [SessionExpire]
-        [SessionExpireRefNo]
-        [HttpGet]
-        public ActionResult DiscussionOnUpdatedRFP()
-        {
-            IEnumerable<collegiateRFP> sharedRFP = new List<collegiateRFP>();
-            var id = Session["UserID"].ToString();
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri(WebAPIUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                         parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                HttpResponseMessage response = client.GetAsync("RFP/GetsharedrfpToCollegiate?UserId=" + id).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    sharedRFP = response.Content.ReadAsAsync<IEnumerable<collegiateRFP>>().Result;
-                }
-            }
-            return View(sharedRFP);
-        }
-
         [Route("UploadComments")]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> UploadComments(circulationComment data)
+        public async Task<JsonResult> UploadComments(UploadComment model)
         {
-            bool result = false;
-            try
+            bool taskstatus = false;
+            if (ModelState.IsValid)
             {
-                circulationComment model = new circulationComment();
-                model.circulation_Id = Convert.ToInt32(sanitizer.Sanitize(data.circulation_Id.ToString()));
-                model.Chapter = sanitizer.Sanitize(data.Chapter);
-                model.Page = sanitizer.Sanitize(data.Page);
-                model.Para = sanitizer.Sanitize(data.Para);
-                model.CorrectionFor = sanitizer.Sanitize(data.CorrectionFor);
-                model.Suggestion = sanitizer.Sanitize(data.Suggestion);
-
-                using (var client = new HttpClient())
+                if (model.MyFile != null && FileCheckformat(model.MyFile, Path.GetExtension(model.MyFile.FileName)))
                 {
-                    client.DefaultRequestHeaders.Clear();
+                    
+                    var content = model.MyFile.ContentType;
+                    string path = Path.Combine(Server.MapPath("~/UploadSOC"), Path.GetFileName(model.MyFile.FileName));
+                    model.MyFile.SaveAs(path);
+                    sharedRFP shared = new sharedRFP();
+                    shared.Id= Convert.ToInt32(sanitizer.Sanitize(model.CommentId.ToString()));
+                    shared.UploadedComment = "~/UploadSOC/" + model.MyFile.FileName;
+                    using (var client = new HttpClient())
+                    { 
+                        client.DefaultRequestHeaders.Clear();
                     client.BaseAddress = new Uri(WebAPIUrl);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                              parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = await client.PostAsJsonAsync<circulationComment>(WebAPIUrl + "RFP/UploadComments", model);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-
-                        result = true;
+                    HttpResponseMessage response = await client.PostAsJsonAsync<sharedRFP>(WebAPIUrl + "RFP/UploadComments", shared);
+                    bool postResult = response.IsSuccessStatusCode;
+                        if(postResult)
+                        {
+                            taskstatus = true;
+                        }
                     }
-                    else
-                    {
 
-                        result = false;
-                    }
                 }
-
-
             }
-            catch (Exception ex)
-            {
-                result = false;
-            }
-
-            return Json(new { Status = result, Message = result ? "Comments Uploaded succefully!" : "server connection failed!" }, JsonRequestBehavior.AllowGet);
-
+                return Json(taskstatus, JsonRequestBehavior.AllowGet);
         }
 
         public bool FileCheckformat(HttpPostedFileBase file, string mFileExtension)
@@ -580,10 +442,12 @@ namespace ACQ.Web.App.Controllers
         }
 
         [Route("GetRFPdata")]
-        public ActionResult GetRFPdata(int service = 0)
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public JsonResult GetRFPdata(int service=0)
         {
             ApiResponseRfp responseAPI = new ApiResponseRfp();
-            if (service > 0)
+            if(service>0)
             {
                 try
                 {
@@ -614,41 +478,7 @@ namespace ACQ.Web.App.Controllers
                 responseAPI.Status = false;
                 responseAPI.Message = "Incorrect input provided...";
             }
-            return PartialView("_ViewRFP", responseAPI);
-        }
-
-
-        [Route("GetRFPComments")]
-        public ActionResult GetRFPComments(int Service = 0)
-        {
-            IEnumerable<sharedRFP> shareds = new List<sharedRFP>();
-            if (Service > 0)
-            {
-                try
-                {
-                    var aon = Convert.ToInt32(sanitizer.Sanitize(Service.ToString()));
-                    using (var client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Clear();
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client.GetAsync("RFP/GetCommentedrfp?aonId=" + aon).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            shareds = response.Content.ReadAsAsync<IEnumerable<sharedRFP>>().Result;
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-
-                }
-            }
-
-            return PartialView("_ViewComments", shareds);
+            return Json(responseAPI, JsonRequestBehavior.AllowGet);
         }
 
         [Route("Updatevendor")]
@@ -657,12 +487,11 @@ namespace ACQ.Web.App.Controllers
         public async Task<JsonResult> UpdatevendorType(int VendorType = 0, int Id = 0)
         {
             if (VendorType != 0 && Id != 0)
-            {
-                bool Updatestatus = false;
+            { bool Updatestatus = false;
                 try
                 {
                     AttachmentData model = new AttachmentData();
-                    model.Id = Convert.ToInt32(sanitizer.Sanitize(Id.ToString()));
+                    model.Id= Convert.ToInt32(sanitizer.Sanitize(Id.ToString()));
                     model.VendorType = Convert.ToInt32(sanitizer.Sanitize(VendorType.ToString()));
 
                     using (var client = new HttpClient())
@@ -672,9 +501,9 @@ namespace ACQ.Web.App.Controllers
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                                  parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/UpdateVendorType", model);
+                        HttpResponseMessage response =await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/UpdateVendorType", model);
                         bool postResult = response.IsSuccessStatusCode;
-                        if (postResult)
+                        if(postResult)
                         {
                             Updatestatus = true;
                         }
@@ -714,31 +543,31 @@ namespace ACQ.Web.App.Controllers
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
                                  parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
                         HttpResponseMessage response = await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/SendDraftRFP", model);
-
+                      
                         if (response.IsSuccessStatusCode)
                         {
-                            Users = response.Content.ReadAsAsync<IEnumerable<UserViewModel>>().Result;
+                            Users= response.Content.ReadAsAsync<IEnumerable<UserViewModel>>().Result;
                         }
                     }
 
+                    
 
-
-                    if (Users != null && Users.Count() > 0)
+                    if(Users!=null && Users.Count()>0)
                     {
-                        foreach (var item in Users)
+                        foreach(var item in Users)
                         {
                             string mailPath = System.IO.File.ReadAllText(Server.MapPath(@"~/Email/EscalationEmailFormat.html"));
                             string Messge = "Draft RFP uploaded. Please login to your account to download and provide comments.";
                             EmailHelper.sendEmailEscalation(item.UserEmail, Messge, mailPath);
-                            if (string.IsNullOrEmpty(roles))
+                            if(string.IsNullOrEmpty(roles))
                             {
                                 roles = roles + item.Designation;
                             }
                             else
                             {
-                                roles = roles + "," + item.Designation;
+                                roles = roles +","+ item.Designation;
                             }
-
+                            
                         }
                     }
                     sent = true;
@@ -747,52 +576,17 @@ namespace ACQ.Web.App.Controllers
                 {
                     sent = false;
                 }
-
+                
             }
             else
             {
                 sent = false;
             }
-            return Json(new { Status = sent, Sendto = roles }, JsonRequestBehavior.AllowGet);
+            return Json(new { Status = sent,Sendto= roles }, JsonRequestBehavior.AllowGet);
         }
 
 
-        [Route("UploadUpdatedRFP")]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> UploadUpdatedRFP(UploadComment model)
-        {
-            bool taskstatus = false;
-            if (ModelState.IsValid)
-            {
-                if (model.MyFile != null && FileCheckformat(model.MyFile, Path.GetExtension(model.MyFile.FileName)))
-                {
 
-                    var content = model.MyFile.ContentType;
-                    string path = Path.Combine(Server.MapPath("~/UploadSOC"), Path.GetFileName(model.MyFile.FileName));
-                    model.MyFile.SaveAs(path);
-                    AttachmentData shared = new AttachmentData();
-                    shared.aon_id = Convert.ToInt32(sanitizer.Sanitize(model.CommentId.ToString()));
-                    shared.UploadedDraftRFP = model.MyFile.FileName;
-                    using (var client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Clear();
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = await client.PostAsJsonAsync<AttachmentData>(WebAPIUrl + "RFP/UploadUpdatedRFP", shared);
-                        bool postResult = response.IsSuccessStatusCode;
-                        if (postResult)
-                        {
-                            taskstatus = true;
-                        }
-                    }
-
-                }
-            }
-            return Json(taskstatus, JsonRequestBehavior.AllowGet);
-        }
 
 
         [Route("viewfile")]
@@ -801,177 +595,12 @@ namespace ACQ.Web.App.Controllers
         [SessionExpireRefNo]
         public FileResult viewfile(string filename)
         {
-            string ReportURL = Server.MapPath("~/UploadSOC/" + filename);
+            string ReportURL = Server.MapPath("~/UploadSOC/"+filename);
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             return File(FileBytes, "application/pdf");
         }
 
-        [Route("AcceptRFP")]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> AcceptRFP(int Service = 0)
-        {
-            if (Service != 0)
-            {
-                bool Updatestatus = false;
-                try
-                {
-                    sharedRFP model = new sharedRFP();
-                    model.Id = Convert.ToInt32(sanitizer.Sanitize(Service.ToString()));
 
-                    using (var client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Clear();
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = await client.PostAsJsonAsync<sharedRFP>(WebAPIUrl + "RFP/AcceptRFP", model);
-                        bool postResult = response.IsSuccessStatusCode;
-                        if (postResult)
-                        {
-                            Updatestatus = true;
-                        }
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    Updatestatus = false;
-                }
-                return Json(Updatestatus, JsonRequestBehavior.AllowGet);
-            }
-            else return Json(false, JsonRequestBehavior.AllowGet);
-
-        }
-
-
-        [Route("UploadCollegiateComments")]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> UploadCollegiateComments(collegiateRFP data)
-        {
-            bool result = false;
-            try
-            {
-                collegiateRFP model = new collegiateRFP();
-                model.Id = Convert.ToInt32(sanitizer.Sanitize(data.Id.ToString()));
-                model.Page = sanitizer.Sanitize(data.Page);
-                model.Chapter = sanitizer.Sanitize(data.Chapter);
-                model.Para = sanitizer.Sanitize(data.Para);
-                model.CorrectionFor = sanitizer.Sanitize(data.CorrectionFor);
-                model.Suggestion = sanitizer.Sanitize(data.Suggestion);
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Clear();
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = await client.PostAsJsonAsync<collegiateRFP>(WebAPIUrl + "RFP/UploadCollegiateComments", model);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-
-                        result = true;
-                    }
-                    else
-                    {
-
-                        result = false;
-                    }
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                result = false;
-            }
-
-            return Json(new { Status = result, Message = result ? "Comments Uploaded succefully!" : "server connection failed!" }, JsonRequestBehavior.AllowGet);
-
-        }
-
-
-        [Route("GetRFPDiscussiondata")]
-        public ActionResult GetRFPDiscussiondata(int Service = 0)
-        {
-            IEnumerable<collegiateRFP> shareds = new List<collegiateRFP>();
-            if (Service > 0)
-            {
-                try
-                {
-                    var aon = Convert.ToInt32(sanitizer.Sanitize(Service.ToString()));
-                    using (var client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Clear();
-                        client.BaseAddress = new Uri(WebAPIUrl);
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                                 parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                        HttpResponseMessage response = client.GetAsync("RFP/GetRFPDiscussiondata?aonId=" + aon).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            shareds = response.Content.ReadAsAsync<IEnumerable<collegiateRFP>>().Result;
-                        }
-                    }
-
-                }
-                catch (Exception e)
-                {
-
-                }
-            }
-
-            return PartialView("_ViewCollegiateDiscussion", shareds);
-        }
-
-
-        [Route("UpdateRemarksByCollegiate")]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> UpdateRemarksByCollegiate(collegiateRFP data)
-        {
-            bool result = false;
-            try
-            {
-                collegiateRFP model = new collegiateRFP();
-                model.Id = Convert.ToInt32(sanitizer.Sanitize(data.Id.ToString()));
-                model.Remarks = sanitizer.Sanitize(data.Remarks);
-                model.IsAccepted = data.IsAccepted;
-                model.IsRejected = data.IsRejected;
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Clear();
-                    client.BaseAddress = new Uri(WebAPIUrl);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Basic",
-                             parameter: "GipInfoSystem" + ":" + "QmludGVzaEAxMDE");
-                    HttpResponseMessage response = await client.PostAsJsonAsync<collegiateRFP>(WebAPIUrl + "RFP/UpdateRemarksByCollegiate", model);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-
-                        result = true;
-                    }
-                    else
-                    {
-
-                        result = false;
-                    }
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                result = false;
-            }
-
-            return Json(new { Status = result, Message = result ? "Comments Uploaded succefully!" : "server connection failed!" }, JsonRequestBehavior.AllowGet);
-
-        }
-
+        
     }
 }

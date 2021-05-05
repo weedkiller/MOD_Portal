@@ -22,28 +22,16 @@
         border-radius: 2px;
     }
 
-    .btn-file {
-        position: relative;
-        overflow: hidden;
-        background-color: #1c2f61 !important;
-        border-color: #1c2f61 !important;
-        margin: 0 10px 10px 0px;
+    .file-select {
+        display: inline-block;
+        background-color: #1c2f61;
+        color: white;
+        padding: .25rem .5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 14px;
     }
-
-        .btn-file input[type=file] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            min-width: 100%;
-            min-height: 100%;
-            font-size: 100px;
-            text-align: right;
-            opacity: 0;
-            outline: none;
-            background: white;
-            cursor: inherit;
-            display: block;
-        }
 
     .btn-bottom {
         margin: 0 10px 10px 0px;
@@ -126,9 +114,26 @@
                         </div>
                     </div>
 
+                    <div class="details">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12" id="detaildata">
 
-                    <div class="detaildata" id="detaildata">
-                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actionrow" style="display:none;">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 justify-content-start d-flex" id="actions">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-bottom" id="viewrfp">View Preliminary RFP</a>
+                                <a href="javascript:void(0)" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">Download Preliminary RFP</a>
+                                <button id="sendrfp" type="button" class="btn btn-sm btn-info btn-bottom">Send Preliminary RFP</button>
+                                <div class="uploadbtn">
+                                    <input type="file" id="uploadrfp" hidden />
+                                    <label for="upload" class="file-select">Upload Updated RFP</label>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -162,7 +167,7 @@
             "hideMethod": "fadeOut"
         };
 
-        $(document).on("click","#sendrfp",function () {
+        $('#sendrfp').click(function () {
             var form = $('#__AjaxAntiForgeryForm');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
 
@@ -180,7 +185,7 @@
                     if (response.Status == true) {
 
                         toastr.success("Sent successfully to " + response.Sendto);
-                        loadRFPdata(parseInt($('#SOC').val()));
+                        $('#sendrfp').attr("disabled", true);
 
                     } else {
 
@@ -201,16 +206,90 @@
         });
         $('#SOC').change(function () {
             if (parseInt($(this).val()) > 0) {
-                
-                loadRFPdata(parseInt($(this).val()));
-                
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.ajax({
+                    beforeSend: function () {
+                        $('.preloader').show();
+                    },
+                    type: "POST",
+                    url: "/GetRFPdata",
+                    data: { __RequestVerificationToken: token, service: parseInt($(this).val()) },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        if (response.Status == true) {
+                            
+                            $('#detaildata').empty();
+                            var row = '<table class="table"><thead><tr><th>SOC ID</th><th>Categorisation</th><th>Service</th><th>SOC Date</th><th>Vendor Type</th><th>Delegated/Non-Delegated</th></tr></thead>';
+                            var v = '<select id="vendor">';
+                            v += '<option value="0" selected>Select Vendor</option>';
+
+                            $.each(response.vendors, function (key, item) {
+                                if (item.Id == response.data.attachment.VendorType) {
+                                    v += '<option value="' + item.Id + '" selected>' + item.VendorType + '</option>';
+                                }
+                                else {
+                                    v += '<option value="' + item.Id + '">' + item.VendorType + '</option>';
+                                }
+                            });
+                            v += '</select>';
+                            row += '<tbody><tr><td id="socname">' + response.data.aon_id + '</td><td id="category">' + response.data.Categorisation + '</td><td id="service">' + response.data.Service_Lead_Service + '</td><td id="socdate">' + getFormattedDate(response.data.SOCDate) + '</td><td>' + v + '</td><td>' + response.data.Delegation +'</td></tr></tbody></table >';
+                            $('#detaildata').append(row);
+
+                            $('#viewrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
+                            $('#downloadfp').attr("href", "/UploadSOC/" + response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-path", response.data.attachment.UploadedDraftRFP);
+                            $('#sendrfp').attr("s-id", response.data.attachment.Id);
+                            $('#sendrfp').attr("s-aon", response.data.attachment.aon_id);
+                            if (response.data.attachment.VendorType == 0) {
+                                toastr.info("Vendor has not been selected. Please select a vendor to send..");
+                                $('#sendrfp').attr("disabled", true);
+                                $('.uploadbtn').css('display', 'none');
+                                $('#vendor').focus();
+                            }
+                            else if (response.data.attachment.IsSent == false) {
+                                $('#vendor').attr("disabled", true);
+                                $('#sendrfp').attr("disabled", false);
+                                $('.uploadbtn').css('display', 'none');
+                            }
+                            else if (response.data.attachment.IsSent == true) {
+                                $('#vendor').attr("disabled", true);
+                                $('#sendrfp').attr("disabled", true);
+                                $('.uploadbtn').css('display', 'block');
+                            }
+                            else {
+                                $('.uploadbtn').css('display', 'none');
+                            }
+                            $('.actionrow').show();
+
+                        } else {
+                            $('#detaildata').empty();
+                            toastr.info("No data found");
+                        }
+                    },
+                    failure: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        toastr.error("Please check your internet connection...");
+
+                    },
+                    error: function (response) {
+                        $('.preloader').fadeOut('slow');
+                        toastr.error("Please check your internet connection...");
+
+                    }
+                });
             }
-            
+            else {
+                $('.actionrow').hide();
+                $('#detaildata').empty();
+            }
+
         });
 
-        
-
-        $(document).on("click","#viewrfp",function () {
+        $('#viewrfp').click(function () {
             var file = $(this).attr("s-path");
             if (file != null && file != undefined) {
 
@@ -241,7 +320,8 @@
                         $('.preloader').fadeOut('slow');
                         if (response == true) {
                             toastr.success("Vendor type has been selected...");
-                            loadRFPdata(parseInt($('#SOC').val()));
+                            $('#sendrfp').attr("disabled", false);
+                            $('#vendor').attr("disabled", true);
 
                         } else {
 
@@ -264,47 +344,6 @@
                 toastr.error("Please select vendor type..");
             }
         });
-
-        $(document).on('change',".uploadrfp", function () {
-
-            $('.preloader').show();
-            var form = $('#__AjaxAntiForgeryForm');
-            var token = $('input[name="__RequestVerificationToken"]', form).val();
-
-            var fileUpload = $(this).get(0);
-            var files = fileUpload.files;
-            // Create FormData object
-            var fileData = new FormData();
-            fileData.append("CommentId", parseInt($(this).attr("s-aon")));
-            fileData.append("__RequestVerificationToken", token);
-            // Looping over all files and add it to FormData object
-            for (var i = 0; i < files.length; i++) {
-                fileData.append("MyFile", files[i]);
-            }
-            $.ajax({
-                url: '/UploadUpdatedRFP',
-                type: "POST",
-                contentType: false, // Not to set any content header
-                processData: false, // Not to process data
-                data: fileData,
-                async: false,
-                success: function (result) {
-                    $('.preloader').fadeOut('slow');
-                    if (result == true) {
-                        toastr.success("File Uploaded successfully");
-                        loadRFPdata(parseInt($('#SOC').val()));
-                    }
-                    else {
-                        toastr.error("Something went wrong on server.");
-                    }
-
-                },
-                error: function (err) {
-                    $('.preloader').fadeOut('slow');
-                    toastr.error(err.statusText);
-                }
-            });
-        });
     });
     function getFormattedDate(datestring) {
 
@@ -319,12 +358,6 @@
         day = day.length > 1 ? day : '0' + day;
 
         return month + '/' + day + '/' + year;
-    }
-
-    function loadRFPdata(socid) {
-        $('.preloader').show();
-        $("#detaildata").load("@Url.Action("GetRFPdata", "RFP")?service=" + socid);
-        $('.preloader').fadeOut('slow');
     }
 
 </script>

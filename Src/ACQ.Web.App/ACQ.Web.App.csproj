@@ -1595,6 +1595,8 @@
     <Content Include="Email\BadgePassess.html" />
     <Content Include="Email\SendLinkBadgeRegistration - Copy.html" />
     <Content Include="Email\DownloadBadge.html" />
+    <Content Include="Email\SendDraftRFP.html" />
+    <Content Include="Email\SendMailAllMember.html" />
     <Content Include="Email\SendMeetingMailToParticipants.html" />
     <Content Include="Email\SendBlockedMailFormat.html" />
     <Content Include="Email\SendOTPMailFormat.html" />
@@ -1834,11 +1836,12 @@
     <Content Include="Views\RFP\RFPComments.cshtml" />
     <Content Include="Views\RFP\RODApproval.cshtml" />
     <Content Include="Views\RFP\ViewUploadedRFP.cshtml" />
-    <Content Include="Views\RFP\_ViewRFP.cshtml" />
-    <Content Include="Views\RFP\_ViewComments.cshtml" />
-    <Content Include="Views\RFP\DiscussionOnUpdatedRFP.cshtml" />
-    <Content Include="Views\RFP\_ViewCollegiateDiscussion.cshtml" />
-    <Content Include="Views\Contract\Contract.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnContractID.cshtml" />
+    <Content Include="Views\Contract\GetContractBaseOnFinancialYear.cshtml" />
+    <Content Include="Views\FormMenu\ViewUserRights.cshtml" />
+    <Content Include="Views\FormMenu\RolesHistory.cshtml" />
+    <Content Include="Views\Account\LoginHistory.cshtml" />
+    <Content Include="Views\Account\LoginTrails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

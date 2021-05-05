@@ -2748,6 +2748,214 @@ Acquisition team";
         }
         #endregion
 
-      
+        #region Contract
+        [Route("Contract")]
+        [HandleError]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        public ActionResult Contract()
+        {
+            if (TempData["File"] != null)
+            {
+                ViewBag.File = TempData["File"].ToString();
+            }
+            if (TempData["FileStage"] != null)
+            {
+                ViewBag.FileStage = TempData["FileStage"].ToString();
+            }
+            if (TempData["FieldName"] != null)
+            {
+                ViewBag.FieldName = TempData["FieldName"].ToString();
+            }
+            if (TempData["ExcelColoumn"] != null)
+            {
+                ViewBag.ExcelColoumn = TempData["ExcelColoumn"].ToString();
+            }
+            if (TempData["Uploadsuccess"] != null)
+            {
+                bool upload = (bool)TempData["Uploadsuccess"];
+                if (upload)
+                {
+                    ViewBag.Uploadsuccess = "True";
+                }
+                else
+                {
+                    ViewBag.Uploadsuccess = "False";
+
+                }
+
+                TempData["Uploadsuccess"] = null;
+
+
+            }
+
+            return View();
+        }
+
+
+        [Route("SaveContract")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> SaveContract(Contracts cnt)
+        {
+            int i = 0;
+            try
+            {
+                Contracts _contracts = new Contracts();
+                ContractDetails contractDetails = new ContractDetails();
+                contractDetails.ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId);
+                contractDetails.Contract_Number = sanitizer.Sanitize(cnt.Contrct_Detail.Contract_Number);
+                if (cnt.Contrct_Detail.Services != null)
+                {
+                    contractDetails.Services = sanitizer.Sanitize(cnt.Contrct_Detail.Services.ToString());
+                }
+                if (cnt.Contrct_Detail.DateOfContractSigning != null)
+                {
+                    contractDetails.DateOfContractSigning = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.DateOfContractSigning.ToString()));
+                }
+                if (cnt.Contrct_Detail.Descriptions != null)
+                {
+                    contractDetails.Descriptions = sanitizer.Sanitize(cnt.Contrct_Detail.Descriptions);
+                }
+
+                if (cnt.Contrct_Detail.Category != null)
+                {
+                    contractDetails.Category = sanitizer.Sanitize(cnt.Contrct_Detail.Category);
+                }
+
+
+
+                if (cnt.Contrct_Detail.EffectiveDate != null)
+                {
+                    contractDetails.EffectiveDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.EffectiveDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.ABGDate != null)
+                {
+                    contractDetails.ABGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.ABGDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.PWBGPercentage != null)
+                {
+                    contractDetails.PWBGPercentage = Convert.ToInt32(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGPercentage.ToString()));
+                }
+                if (cnt.Contrct_Detail.PWBGDate != null)
+                {
+                    contractDetails.PWBGDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.PWBGDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.Incoterms != null)
+                {
+                    contractDetails.Incoterms = sanitizer.Sanitize(cnt.Contrct_Detail.Incoterms);
+                }
+                if (cnt.Contrct_Detail.Warranty != null)
+                {
+                    contractDetails.Warranty = sanitizer.Sanitize(cnt.Contrct_Detail.Warranty);
+                }
+                if (cnt.Contrct_Detail.ContractValue != null)
+                {
+                    contractDetails.ContractValue = Convert.ToDecimal(sanitizer.Sanitize(cnt.Contrct_Detail.ContractValue.ToString()));
+                }
+                if (cnt.Contrct_Detail.FEContent != null)
+                {
+                    contractDetails.FEContent = sanitizer.Sanitize(cnt.Contrct_Detail.FEContent);
+                }
+                if (cnt.Contrct_Detail.TaxesAndDuties != null)
+                {
+                    contractDetails.TaxesAndDuties = sanitizer.Sanitize(cnt.Contrct_Detail.TaxesAndDuties);
+                }
+                if (cnt.Contrct_Detail.FinalDeliveryDate != null)
+                {
+                    contractDetails.FinalDeliveryDate = Convert.ToDateTime(sanitizer.Sanitize(cnt.Contrct_Detail.FinalDeliveryDate.ToString()));
+                }
+                if (cnt.Contrct_Detail.GracePeriod != null)
+                {
+                    contractDetails.GracePeriod = sanitizer.Sanitize(cnt.Contrct_Detail.GracePeriod);
+                }
+
+
+                _contracts.Contrct_Detail = contractDetails;
+
+                List<StageDetail> stages = new List<StageDetail>();
+                foreach (var item in cnt.Stage_Detail.ToList())
+                {
+                    StageDetail stageDetail = new StageDetail();
+
+                    stageDetail.ContractId = sanitizer.Sanitize(cnt.Contrct_Detail.ContractId);
+                    stageDetail.StageNumber = Convert.ToInt32(sanitizer.Sanitize(item.StageNumber.ToString()));
+                    stageDetail.stageDescription = sanitizer.Sanitize(item.stageDescription);
+                    if (item.StageCompletionDate != null)
+                    {
+                        stageDetail.StageStartdate = Convert.ToDateTime(sanitizer.Sanitize(item.StageStartdate.ToString()));
+                    }
+                    if (item.StageCompletionDate != null)
+                    {
+                        stageDetail.StageCompletionDate = Convert.ToDateTime(sanitizer.Sanitize(item.StageCompletionDate.ToString()));
+                    }
+                    if (item.PercentOfContractValue != null)
+                    {
+                        stageDetail.PercentOfContractValue = Convert.ToInt32(sanitizer.Sanitize(item.PercentOfContractValue.ToString()));
+                    }
+                    if (item.Amount > 0)
+                    {
+                        stageDetail.Amount = Convert.ToDecimal(sanitizer.Sanitize(item.Amount.ToString()));
+                    }
+                    if (item.DueDateOfPayment != null)
+                    {
+                        stageDetail.DueDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.DueDateOfPayment.ToString()));
+                    }
+                    if (item.Conditions != null)
+                    {
+                        stageDetail.Conditions = sanitizer.Sanitize(item.Conditions);
+                    }
+                    if (item.RevisedDateOfpayment != null)
+                    {
+                        stageDetail.RevisedDateOfpayment = Convert.ToDateTime(sanitizer.Sanitize(item.RevisedDateOfpayment.ToString()));
+                    }
+                    if (item.ReasonsForSlippage != null)
+                    {
+                        stageDetail.ReasonsForSlippage = sanitizer.Sanitize(item.ReasonsForSlippage);
+                    }
+                    if (item.ActualDateOfPayment != null)
+                    {
+                        stageDetail.ActualDateOfPayment = Convert.ToDateTime(sanitizer.Sanitize(item.ActualDateOfPayment.ToString()));
+                    }
+
+                    stageDetail.TotalPaymentMade = Convert.ToDecimal(sanitizer.Sanitize(item.TotalPaymentMade.ToString()));
+                    stageDetail.FullorPartPaymentMade = sanitizer.Sanitize(item.FullorPartPaymentMade);
+                    if (item.ExpendMadeTill31March != null)
+                    {
+                        stageDetail.ExpendMadeTill31March = Convert.ToDecimal(sanitizer.Sanitize(item.ExpendMadeTill31March.ToString()));
+                    }
+
+                    stages.Add(stageDetail);
+                }
+
+                _contracts.Stage_Detail = stages;
+
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(WebAPIUrl);
+                    HttpResponseMessage postJob = await client.PostAsJsonAsync<Contracts>(WebAPIUrl + "AONW/SaveContract", _contracts);
+                    bool postResult = postJob.IsSuccessStatusCode;
+                    if (postResult == true)
+                    {
+                        //TempData["Msg"] = "Record Saved Successfully";
+                        i = 1;
+                    }
+                    else
+                    {
+                        //TempData["Msg"] = "Record Not Saved Successfully";
+                        i = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                i = 0;
+                ViewBag.Message = ex.Message.ToString();
+                return Json(i, JsonRequestBehavior.AllowGet);
+            }
+            return Json(i, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

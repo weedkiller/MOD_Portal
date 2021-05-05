@@ -87,20 +87,13 @@
                                             <td>@item.Service</td>
                                             <td class="justify-content-start d-flex">
                                                 <a href="/UploadSOC/@item.UploadedRFP" id="downloadfp" class="btn btn-sm btn-primary btn-bottom" target="_blank">View Preliminary RFP</a>
-                                                @if (item.ApprovedDate == null && item.CommentedDate == null)
-                                                {
-                                                    @*<span class="btn btn-sm btn-primary btn-file btn-bottom">
-                                                            Upload Comment <input type="file" s-id="@item.Id" accept="application/pdf" class="uploadrfp">
-                                                        </span>*@
-
-                                                    <button class="btn btn-sm btn-primary btn-bottom upload-comment" type="button" s-id="@item.Id">Add Comment</button>
+                                                @if(item.CommentedDate==null)
+                                                { 
+                                                <span class="btn btn-sm btn-primary btn-file">
+                                                    Upload Comment <input type="file" s-id="@item.Id" accept="application/pdf" class="uploadrfp">
+                                                </span>
                                                 }
-
-                                                @if (item.ApprovedDate == null && item.CommentedDate == null)
-                                                {
-                                                    <button class="btn btn-sm btn-success btn-bottom accept" type="button" s-id="@item.Id">Accept RFP</button>
-                                                }
-
+                        
 
                                             </td>
                                         </tr>
@@ -110,42 +103,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h6 class="modal-title">Edit <small><i class="fa fa-edit"></i></small> </h6>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-
-                        <div class="form-group row">
-                            <label for="Message">Your comments</label>
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <textarea id="Message" class="form-control" placeholder="Add your comments" title="Add your comments" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <button class="btn btn-sm btn-primary" id="submit" title="Update" type="button">Save</button>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -176,105 +133,46 @@
             dom: 'Bfrtip',
             pageLength: 50
         });
+        $('.uploadrfp').on('change', function () {
 
-        $(document).on("click", ".upload-comment", function () {
-            $('#Message').attr('s-id', $(this).attr('s-id'));
-            $('#myModal').modal('show');
-        });
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
 
-        $(document).on('click', '#submit', function () {
-            if ($("#Message").val() != "") {
-                var form = $('#__AjaxAntiForgeryForm');
-                var token = $('input[name="__RequestVerificationToken"]', form).val();
-                var btn = $(this);
-                var data = {};
-                data["UploadedComment"] = $("#Message").val();
-                data["Id"] = parseInt($("#Message").attr("s-id"));
-
-                $(btn).attr('disabled', true);
-
-
-                $.ajax({
-                    beforeSend: function () {
-                        $('.preloader').show();
-                    },
-                    type: "POST",
-                    url: "/UploadComments",
-                    data: { __RequestVerificationToken: token, data: data },
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        $(btn).attr('disabled', false);
-                        if (response.Status == true) {
-                            toastr.success(response.Message);
-                            $('#Message').removeAttr('s-id');
-                            $('#myModal').modal('hide');
-                            window.location.reload();
-                        } else {
-                            toastr.error(response.Message);
-
-                        }
-                    },
-                    failure: function (response) {
-                        toastr.error("Please check your internet connection...");
-
-                        window.location.href = "@Url.Action("Account","Login")";
-                    },
-                    error: function (response) {
-                        toastr.error("Please check your internet connection...");
-
-                        window.location.href = "@Url.Action("Account","Login")";
+            var fileUpload = $(this).get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            var fileData = new FormData();
+            fileData.append("CommentId", parseInt($(this).attr("s-id")));
+            fileData.append("__RequestVerificationToken", token);
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("MyFile", files[i]);
+            }
+            $.ajax({
+                beforeSend: function () {
+                    $('.preloader').show();
+                },
+                url: '/UploadComments',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                async: false,
+                success: function (result) {
+                    $('.preloader').fadeOut('slow');
+                    if (result == true) {
+                        toastr.success("Comments Uploaded successfully");
+                        window.location.reload();
                     }
-                });
-            }
-            else {
-                toastr.error("Please enter your comments");
-            }
-        });
-
-
-        $(document).on("click", ".accept", function () {
-            var vend = $(this).attr("s-id");
-            if (parseInt(vend) > 0) {
-                var form = $('#__AjaxAntiForgeryForm');
-                var token = $('input[name="__RequestVerificationToken"]', form).val();
-
-                $.ajax({
-                    beforeSend: function () {
-                        $('.preloader').show();
-                    },
-                    type: "POST",
-                    url: "/AcceptRFP",
-                    data: { __RequestVerificationToken: token, Service: parseInt(vend) },
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        if (response == true) {
-                            toastr.success("Vendor type has been selected...");
-                            window.location.reload();
-
-                        } else {
-
-                            toastr.error("Failed to update vendor type..");
-                        }
-                    },
-                    failure: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        toastr.error("Please check your internet connection...");
-
-                    },
-                    error: function (response) {
-                        $('.preloader').fadeOut('slow');
-                        toastr.error("Please check your internet connection...");
-
+                    else {
+                        toastr.error("Something went wrong on server.");
                     }
-                });
-            }
-            else {
-                toastr.error("Please select vendor type..");
-            }
+
+                },
+                error: function (err) {
+                    toastr.error(err.statusText);
+                }
+            });
         });
 
     });
