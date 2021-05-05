@@ -1838,6 +1838,7 @@
     <Content Include="Views\RFP\_ViewComments.cshtml" />
     <Content Include="Views\RFP\DiscussionOnUpdatedRFP.cshtml" />
     <Content Include="Views\RFP\_ViewCollegiateDiscussion.cshtml" />
+    <Content Include="Views\Contract\Contract.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
