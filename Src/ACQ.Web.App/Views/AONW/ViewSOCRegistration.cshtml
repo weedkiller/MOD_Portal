@@ -3,12 +3,19 @@
     ViewBag.Title = "ViewSOCRegistration";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .active {
+        color: #0d6efd !important;
+    }
+</style>
 <script src="~/assets/js/jquery-3.6.0.min.js" nonce="r@nd0m"></script>
 <script nonce="r@nd0m">
     $(document).ready(function () {
         $("#pages").addClass("show");
         $("#mPrintingUser").addClass("activetextclr");
     });
+
+
 </script>
 
 <div class="container-fluid">
@@ -19,75 +26,251 @@
     </div>
 </div>
 
-<div class="card flex-fill w-100">
-    @if (Model != null && Model.SOCVIEW.Count() > 0)
-    {
-        <div class="row">
-            <div class="col col-12">
-                <div id="div1" class="portlet-body flip-scroll">
-                    <table class="table mb-0 table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">SNO.</th>
-                                <th scope="col">Item Description</th>
-                                <th scope="col">Version</th>
-                                <th scope="col">Categorisation</th>
-                                <th scope="col">Service Lead Service</th>
-                                <th scope="col">4 digit Unique No</th>
-                                <th scope="col">SOC Date</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">
-                                    Cost
-                                </th>
-                                <th scope="col">Status</th>
-                                <th scope="col">View SoC</th>
-                                <th scope="col">Send Notification To Participants</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{ int count = 1;}
-                            @foreach (var SOC in Model.SOCVIEW)
-                            {
-                            <tr>
-                                <th scope="row">@count</th>
-                                <td class="text-wrap">@SOC.item_description</td>
-                                <td>Version @SOC.UniqueID</td>
-                                <td>@SOC.Categorisation</td>
-                                <td>@SOC.Service_Lead_Service</td>
-                                <td>@SOC.SoCCase</td>
-                                @if (@SOC.SoDate != null)
-                                {
-                                    <td>@SOC.SoDate.Value.ToString("dd-MMM-yyyy")</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                <td>@SOC.Quantity</td>
-                                <td>@SOC.Cost</td>
-                                <td>@Html.Raw(SOC.Status)</td>
-                                <td> <a href="@Url.Action("ViewSocMaster", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
-                                <td> <a href="@Url.Action("ViewSocSendMail", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark active" id="home-tab" data-toggle="tab" href="#sentToDACDPB" role="tab" aria-controls="home" aria-selected="true">SoCs to be sent to DAC/DPB members</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark" id="profile-tab" data-toggle="tab" href="#sentForComments" role="tab" aria-controls="profile" aria-selected="false">SoCs sent for Comments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-dark" id="contact-tab" data-toggle="tab" href="#olderSoc" role="tab" aria-controls="contact" aria-selected="false">Older SoCs</a>
+    </li>
+</ul>
+<div class="tab-content broder_ mb-5" id="myTabContent">
+    <div class="tab-pane p-4 fade show active" id="sentToDACDPB" role="tabpanel" aria-labelledby="home-tab">
+        <p class=" text-dark">
+            <!-- Soc View Start-->
+            <div class="card flex-fill w-100">
+                @if (Model != null && Model.SOCVIEW.Count() > 0)
+                {
+                    <div class="row">
+                        <div class="col col-12">
+                            <div id="div1" class="portlet-body flip-scroll">
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">SNO.</th>
+                                            <th scope="col">Item Description</th>
+                                            <th scope="col">Version</th>
+                                            <th scope="col">Categorisation</th>
+                                            <th scope="col">Service Lead Service</th>
+                                            <th scope="col">4 digit Unique No</th>
+                                            <th scope="col">SOC Date</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">
+                                                Cost
+                                            </th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">View SoC</th>
+                                            <th scope="col">Send Notification To Participants</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int count = 1;}
+                                        @foreach (var SOC in Model.SOCVIEW)
+                                        {
+                                            <tr>
+                                                <th scope="row">@count</th>
+                                                <td class="text-wrap">@SOC.item_description</td>
+                                                <td>Version @SOC.UniqueID</td>
+                                                <td>@SOC.Categorisation</td>
+                                                <td>@SOC.Service_Lead_Service</td>
+                                                <td>@SOC.SoCCase</td>
+                                                @if (@SOC.SoDate != null)
+                                                {
+                                                    <td>@SOC.SoDate.Value.ToString("dd-MMM-yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                <td>@SOC.Quantity</td>
+                                                <td>@SOC.Cost</td>
+                                                <td>@Html.Raw(SOC.Status)</td>
+                                                <td> <a href="@Url.Action("ViewSocMaster", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
+                                                <td> <a href="@Url.Action("ViewSocSendMail", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Records Not Found.
+                    </div>
+                }
 
-                            </tr>
-                                count++;
-                            }
-                        </tbody>
-                    </table>
-                </div>
             </div>
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-danger" role="alert">
-            Records Not Found.
-        </div>
-    }
 
+            <!--Soc View End-->
+        </p>
+    </div>
+    <div class="tab-pane p-4 text-dark fade" id="sentForComments" role="tabpanel" aria-labelledby="profile-tab">
+        <p class=" text-dark">
+            <!-- Soc View Start-->
+            <div class="card flex-fill w-100">
+                @if (Model != null && Model.SOCVIEW.Count() > 0)
+                {
+                    <div class="row">
+                        <div class="col col-12">
+                            <div id="div1" class="portlet-body flip-scroll">
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">SNO.</th>
+                                            <th scope="col">Item Description</th>
+                                            <th scope="col">Version</th>
+                                            <th scope="col">Categorisation</th>
+                                            <th scope="col">Service Lead Service</th>
+                                            <th scope="col">4 digit Unique No</th>
+                                            <th scope="col">SOC Date</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">
+                                                Cost
+                                            </th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">View SoC</th>
+                                            @if (Convert.ToInt32(Session["SectionID"]) == 1 || Convert.ToInt32(Session["SectionID"]) == 12 || Convert.ToInt32(Session["SectionID"]) == 13)
+                                            {
+                                                <th scope="col">View all Comments</th>
+                                            }
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int count = 1;}
+                                        @foreach (var SOC in Model.SOCVIEW)
+                                        {
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td class="text-wrap">@SOC.item_description</td>
+                                            <td>Version @SOC.UniqueID</td>
+                                            <td>@SOC.Categorisation</td>
+                                            <td>@SOC.Service_Lead_Service</td>
+                                            <td>@SOC.SoCCase</td>
+                                            @if (@SOC.SoDate != null)
+                                            {
+                                                <td>@SOC.SoDate.Value.ToString("dd-MMM-yyyy")</td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            <td>@SOC.Quantity</td>
+                                            <td>@SOC.Cost</td>
+                                            <td>@Html.Raw(SOC.Status)</td>
+                                            <td style="width:30px"> <a href="@Url.Action("ViewSocMaster", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
+                                           
+                                            @if (Convert.ToInt32(Session["SectionID"]) == 1 || Convert.ToInt32(Session["SectionID"]) == 12 || Convert.ToInt32(Session["SectionID"])==13)
+                                            {
+                                                <td><a href="@Url.Action("ViewSocComments", "AONW", new { id = SOC.aon_id })" class="btn btn-danger btn sm">View</a></td>
+                                            }
+
+                                        </tr>
+                                            count++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Records Not Found.
+                    </div>
+                }
+
+            </div>
+
+            <!--Soc View End-->
+        </p>
+    </div>
+
+    <div class="tab-pane p-4 text-dark fade" id="olderSoc" role="tabpanel" aria-labelledby="contact-tab">
+        <p class=" text-dark">
+            <!-- Soc View Start-->
+            <div class="card flex-fill w-100">
+                @if (Model != null && Model.SOCVIEW.Count() > 0)
+                {
+                    <div class="row">
+                        <div class="col col-12">
+                            <div id="div1" class="portlet-body flip-scroll">
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">SNO.</th>
+                                            <th scope="col">Item Description</th>
+                                            <th scope="col">Version</th>
+                                            <th scope="col">Categorisation</th>
+                                            <th scope="col">Service Lead Service</th>
+                                            <th scope="col">4 digit Unique No</th>
+                                            <th scope="col">SOC Date</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">
+                                                Cost
+                                            </th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">View SoC</th>
+                                                @*<th scope="col">Send Notification To Participants</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int count = 1;}
+                                        @foreach (var SOC in Model.SOCVIEW)
+                                        {
+                                            <tr>
+                                                <th scope="row">@count</th>
+                                                <td class="text-wrap">@SOC.item_description</td>
+                                                <td>Version @SOC.UniqueID</td>
+                                                <td>@SOC.Categorisation</td>
+                                                <td>@SOC.Service_Lead_Service</td>
+                                                <td>@SOC.SoCCase</td>
+                                                @if (@SOC.SoDate != null)
+                                                {
+                                                    <td>@SOC.SoDate.Value.ToString("dd-MMM-yyyy")</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                <td>@SOC.Quantity</td>
+                                                <td>@SOC.Cost</td>
+                                                <td>@Html.Raw(SOC.Status)</td>
+                                                <td> <a href="@Url.Action("ViewSocMaster", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>
+                                                  @*  <td> <a href="@Url.Action("ViewSocSendMail", "AONW", new { ID = SOC.aon_id,mtype=SOC.aon_id})"><i class="fas fa-eye mr-1"></i> </a></td>*@
+
+
+                                            </tr>
+                                            count++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Records Not Found.
+                    </div>
+                }
+
+            </div>
+
+            <!--Soc View End-->
+        </p>
+    </div>
 </div>
-
 
 <div id="successmsg" class="modal fade" role="dialog">
     <div class="modal-dialog">

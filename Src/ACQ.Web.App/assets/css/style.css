@@ -118,3 +118,8 @@ input {
         transform: rotate( -35deg );
         width: max-content;
     }
+
+.broder_{
+    border: 1px solid #0000002b;
+    border-radius: 5px;
+}
